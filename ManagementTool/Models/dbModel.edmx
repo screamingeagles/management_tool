@@ -1,0 +1,1253 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ManagementTool.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="001_PROJECT">
+          <Key>
+            <PropertyRef Name="ProjectId" />
+          </Key>
+          <Property Name="ProjectId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProjectName" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="002_TASK_DATA">
+          <Key>
+            <PropertyRef Name="TaskId" />
+          </Key>
+          <Property Name="TaskId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProjectId" Type="int" />
+          <Property Name="LocationId" Type="int" Nullable="false" />
+          <Property Name="CompanyId" Type="int" Nullable="false" />
+          <Property Name="DivisionId" Type="int" Nullable="false" />
+          <Property Name="AreaId" Type="int" Nullable="false" />
+          <Property Name="SubAreaId" Type="int" Nullable="false" />
+          <Property Name="SName" Type="nvarchar" MaxLength="900" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="900" />
+          <Property Name="StartDate" Type="datetime" />
+          <Property Name="Deadline" Type="datetime" />
+          <Property Name="ManDays" Type="float" />
+          <Property Name="ServiceOwnerId" Type="int" Nullable="false" />
+          <Property Name="CreatedById" Type="int" Nullable="false" />
+          <Property Name="CreateByName" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="DocsLink" Type="nvarchar" MaxLength="1000" />
+          <Property Name="TypeId" Type="int" Nullable="false" />
+          <Property Name="StatusId" Type="int" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="003_SUB_TASKS">
+          <Key>
+            <PropertyRef Name="SubTaskId" />
+          </Key>
+          <Property Name="SubTaskId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TaskId" Type="int" Nullable="false" />
+          <Property Name="Comment" Type="nvarchar" MaxLength="900" />
+          <Property Name="TaskDate" Type="datetime" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="TaskActive" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="004_LOCATION">
+          <Key>
+            <PropertyRef Name="LocationId" />
+          </Key>
+          <Property Name="LocationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LocationName" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDatetime" Type="datetime" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="005_COMPANY">
+          <Key>
+            <PropertyRef Name="CompanyId" />
+          </Key>
+          <Property Name="CompanyId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LocationId" Type="int" Nullable="false" />
+          <Property Name="CompanyName" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDatetime" Type="datetime" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="006_DIVISION">
+          <Key>
+            <PropertyRef Name="DivisionId" />
+          </Key>
+          <Property Name="DivisionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DivisionName" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDatetime" Type="datetime" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="007_AREA">
+          <Key>
+            <PropertyRef Name="AreaId" />
+          </Key>
+          <Property Name="AreaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DivisionId" Type="int" Nullable="false" />
+          <Property Name="AreaName" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDatetime" Type="datetime" Nullable="false" />
+          <Property Name="isActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="008_SUB_AREA">
+          <Key>
+            <PropertyRef Name="SubAreaId" />
+          </Key>
+          <Property Name="SubAreaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AreaId" Type="int" Nullable="false" />
+          <Property Name="SubAreaName" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="AreaActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="009_TYPE">
+          <Key>
+            <PropertyRef Name="TypeId" />
+          </Key>
+          <Property Name="TypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TypeName" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="010_STATUS">
+          <Key>
+            <PropertyRef Name="StatusId" />
+          </Key>
+          <Property Name="StatusId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TaskStatus" Type="nvarchar" MaxLength="700" Nullable="false" />
+          <Property Name="TaskActive" Type="bit" Nullable="false" />
+          <Property Name="TaskCreatedBy" Type="int" Nullable="false" />
+          <Property Name="TaskCreatedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="011_coOwners">
+          <Key>
+            <PropertyRef Name="CoOwnerId" />
+          </Key>
+          <Property Name="CoOwnerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TaskId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="OwnerContribution" Type="nvarchar" MaxLength="900" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="012_Attachments">
+          <Key>
+            <PropertyRef Name="AttachId" />
+          </Key>
+          <Property Name="AttachId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TaskId" Type="int" Nullable="false" />
+          <Property Name="AName" Type="nvarchar" MaxLength="500" />
+          <Property Name="ASize" Type="bigint" />
+          <Property Name="AContent" Type="varbinary(max)" />
+          <Property Name="AContentType" Type="nvarchar" MaxLength="500" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="013_CYCLED">
+          <Key>
+            <PropertyRef Name="CycledId" />
+          </Key>
+          <Property Name="CycledId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TaskId" Type="int" Nullable="false" />
+          <Property Name="CycledType" Type="int" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EndUser">
+          <Key>
+            <PropertyRef Name="UID" />
+          </Key>
+          <Property Name="UID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="UserPassword" Type="nvarchar" MaxLength="150" />
+          <Property Name="UserEmail" Type="nvarchar" MaxLength="250" />
+          <Property Name="IsValidLogin" Type="bit" Nullable="false" />
+          <Property Name="LastLogin" Type="datetime" />
+          <Property Name="UserType" Type="int" />
+          <Property Name="UserCreated" Type="datetime" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="Company" Type="int" />
+        </EntityType>
+        <EntityType Name="EndUser_Details">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="decimal" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="500" />
+          <Property Name="UserEmail" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="EndUser_LoginDetails">
+          <Key>
+            <PropertyRef Name="LID" />
+          </Key>
+          <Property Name="LID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="SessionId" Type="nvarchar" MaxLength="250" />
+          <Property Name="LoginDate" Type="datetime" />
+          <Property Name="LogOut" Type="datetime" />
+          <Property Name="SessionDuration" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="UserIp" Type="nvarchar" MaxLength="20" />
+          <Property Name="LoginLocation" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="Mailer_Details">
+          <Key>
+            <PropertyRef Name="TicketId" />
+          </Key>
+          <Property Name="TicketId" Type="int" Nullable="false" />
+          <Property Name="State" Type="nvarchar" MaxLength="50" />
+          <Property Name="EntryDate" Type="datetime" />
+          <Property Name="Mailed" Type="bit" />
+          <Property Name="MailSentDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Smart_Login">
+          <Key>
+            <PropertyRef Name="SID" />
+          </Key>
+          <Property Name="SID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="GUID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ModelName" Type="nvarchar" MaxLength="250" />
+          <Property Name="DeviceName" Type="nvarchar" MaxLength="250" />
+          <Property Name="DeviceUsername" Type="nvarchar" MaxLength="250" />
+          <Property Name="ApplicationVersion" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="LoginDateTime" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="STATUS">
+          <Key>
+            <PropertyRef Name="SID" />
+          </Key>
+          <Property Name="SID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StatusName" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <Association Name="FK_AREA__SUB_AREA">
+          <End Role="007_AREA" Type="Self.007_AREA" Multiplicity="1" />
+          <End Role="008_SUB_AREA" Type="Self.008_SUB_AREA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="007_AREA">
+              <PropertyRef Name="AreaId" />
+            </Principal>
+            <Dependent Role="008_SUB_AREA">
+              <PropertyRef Name="AreaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LOCATION__TASK_DATA">
+          <End Role="004_LOCATION" Type="Self.004_LOCATION" Multiplicity="1" />
+          <End Role="002_TASK_DATA" Type="Self.002_TASK_DATA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="004_LOCATION">
+              <PropertyRef Name="LocationId" />
+            </Principal>
+            <Dependent Role="002_TASK_DATA">
+              <PropertyRef Name="LocationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PROJECT__TASK_DATA">
+          <End Role="001_PROJECT" Type="Self.001_PROJECT" Multiplicity="0..1" />
+          <End Role="002_TASK_DATA" Type="Self.002_TASK_DATA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="001_PROJECT">
+              <PropertyRef Name="ProjectId" />
+            </Principal>
+            <Dependent Role="002_TASK_DATA">
+              <PropertyRef Name="ProjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_STATUS__TASK_DATA">
+          <End Role="010_STATUS" Type="Self.010_STATUS" Multiplicity="0..1" />
+          <End Role="002_TASK_DATA" Type="Self.002_TASK_DATA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="010_STATUS">
+              <PropertyRef Name="StatusId" />
+            </Principal>
+            <Dependent Role="002_TASK_DATA">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SUB_AREA__TASK_DATA">
+          <End Role="008_SUB_AREA" Type="Self.008_SUB_AREA" Multiplicity="1" />
+          <End Role="002_TASK_DATA" Type="Self.002_TASK_DATA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="008_SUB_AREA">
+              <PropertyRef Name="SubAreaId" />
+            </Principal>
+            <Dependent Role="002_TASK_DATA">
+              <PropertyRef Name="SubAreaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TASK_DATA__TYPE">
+          <End Role="009_TYPE" Type="Self.009_TYPE" Multiplicity="1" />
+          <End Role="002_TASK_DATA" Type="Self.002_TASK_DATA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="009_TYPE">
+              <PropertyRef Name="TypeId" />
+            </Principal>
+            <Dependent Role="002_TASK_DATA">
+              <PropertyRef Name="TypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TASK_DATA_AREA">
+          <End Role="007_AREA" Type="Self.007_AREA" Multiplicity="1" />
+          <End Role="002_TASK_DATA" Type="Self.002_TASK_DATA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="007_AREA">
+              <PropertyRef Name="AreaId" />
+            </Principal>
+            <Dependent Role="002_TASK_DATA">
+              <PropertyRef Name="AreaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TASK_DATA_Attachments">
+          <End Role="002_TASK_DATA" Type="Self.002_TASK_DATA" Multiplicity="1" />
+          <End Role="012_Attachments" Type="Self.012_Attachments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="002_TASK_DATA">
+              <PropertyRef Name="TaskId" />
+            </Principal>
+            <Dependent Role="012_Attachments">
+              <PropertyRef Name="TaskId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TASK_DATA_COMPANY">
+          <End Role="005_COMPANY" Type="Self.005_COMPANY" Multiplicity="1" />
+          <End Role="002_TASK_DATA" Type="Self.002_TASK_DATA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="005_COMPANY">
+              <PropertyRef Name="CompanyId" />
+            </Principal>
+            <Dependent Role="002_TASK_DATA">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TASK_DATA_coOwners">
+          <End Role="002_TASK_DATA" Type="Self.002_TASK_DATA" Multiplicity="1" />
+          <End Role="011_coOwners" Type="Self.011_coOwners" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="002_TASK_DATA">
+              <PropertyRef Name="TaskId" />
+            </Principal>
+            <Dependent Role="011_coOwners">
+              <PropertyRef Name="TaskId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TASK_DATA_CYCLED">
+          <End Role="002_TASK_DATA" Type="Self.002_TASK_DATA" Multiplicity="1" />
+          <End Role="013_CYCLED" Type="Self.013_CYCLED" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="002_TASK_DATA">
+              <PropertyRef Name="TaskId" />
+            </Principal>
+            <Dependent Role="013_CYCLED">
+              <PropertyRef Name="TaskId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TASK_DATA_DIVISION">
+          <End Role="006_DIVISION" Type="Self.006_DIVISION" Multiplicity="1" />
+          <End Role="002_TASK_DATA" Type="Self.002_TASK_DATA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="006_DIVISION">
+              <PropertyRef Name="DivisionId" />
+            </Principal>
+            <Dependent Role="002_TASK_DATA">
+              <PropertyRef Name="DivisionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TASK_DATA_SUB_TASK">
+          <End Role="002_TASK_DATA" Type="Self.002_TASK_DATA" Multiplicity="1" />
+          <End Role="003_SUB_TASKS" Type="Self.003_SUB_TASKS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="002_TASK_DATA">
+              <PropertyRef Name="TaskId" />
+            </Principal>
+            <Dependent Role="003_SUB_TASKS">
+              <PropertyRef Name="TaskId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ManagementToolStoreContainer">
+          <EntitySet Name="001_PROJECT" EntityType="Self.001_PROJECT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="002_TASK_DATA" EntityType="Self.002_TASK_DATA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="003_SUB_TASKS" EntityType="Self.003_SUB_TASKS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="004_LOCATION" EntityType="Self.004_LOCATION" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="005_COMPANY" EntityType="Self.005_COMPANY" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="006_DIVISION" EntityType="Self.006_DIVISION" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="007_AREA" EntityType="Self.007_AREA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="008_SUB_AREA" EntityType="Self.008_SUB_AREA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="009_TYPE" EntityType="Self.009_TYPE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="010_STATUS" EntityType="Self.010_STATUS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="011_coOwners" EntityType="Self.011_coOwners" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="012_Attachments" EntityType="Self.012_Attachments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="013_CYCLED" EntityType="Self.013_CYCLED" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EndUser" EntityType="Self.EndUser" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EndUser_Details" EntityType="Self.EndUser_Details" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EndUser_LoginDetails" EntityType="Self.EndUser_LoginDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Mailer_Details" EntityType="Self.Mailer_Details" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Smart_Login" EntityType="Self.Smart_Login" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="STATUS" EntityType="Self.STATUS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_AREA__SUB_AREA" Association="Self.FK_AREA__SUB_AREA">
+            <End Role="007_AREA" EntitySet="007_AREA" />
+            <End Role="008_SUB_AREA" EntitySet="008_SUB_AREA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LOCATION__TASK_DATA" Association="Self.FK_LOCATION__TASK_DATA">
+            <End Role="004_LOCATION" EntitySet="004_LOCATION" />
+            <End Role="002_TASK_DATA" EntitySet="002_TASK_DATA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PROJECT__TASK_DATA" Association="Self.FK_PROJECT__TASK_DATA">
+            <End Role="001_PROJECT" EntitySet="001_PROJECT" />
+            <End Role="002_TASK_DATA" EntitySet="002_TASK_DATA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_STATUS__TASK_DATA" Association="Self.FK_STATUS__TASK_DATA">
+            <End Role="010_STATUS" EntitySet="010_STATUS" />
+            <End Role="002_TASK_DATA" EntitySet="002_TASK_DATA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SUB_AREA__TASK_DATA" Association="Self.FK_SUB_AREA__TASK_DATA">
+            <End Role="008_SUB_AREA" EntitySet="008_SUB_AREA" />
+            <End Role="002_TASK_DATA" EntitySet="002_TASK_DATA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TASK_DATA__TYPE" Association="Self.FK_TASK_DATA__TYPE">
+            <End Role="009_TYPE" EntitySet="009_TYPE" />
+            <End Role="002_TASK_DATA" EntitySet="002_TASK_DATA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TASK_DATA_AREA" Association="Self.FK_TASK_DATA_AREA">
+            <End Role="007_AREA" EntitySet="007_AREA" />
+            <End Role="002_TASK_DATA" EntitySet="002_TASK_DATA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TASK_DATA_Attachments" Association="Self.FK_TASK_DATA_Attachments">
+            <End Role="002_TASK_DATA" EntitySet="002_TASK_DATA" />
+            <End Role="012_Attachments" EntitySet="012_Attachments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TASK_DATA_COMPANY" Association="Self.FK_TASK_DATA_COMPANY">
+            <End Role="005_COMPANY" EntitySet="005_COMPANY" />
+            <End Role="002_TASK_DATA" EntitySet="002_TASK_DATA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TASK_DATA_coOwners" Association="Self.FK_TASK_DATA_coOwners">
+            <End Role="002_TASK_DATA" EntitySet="002_TASK_DATA" />
+            <End Role="011_coOwners" EntitySet="011_coOwners" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TASK_DATA_CYCLED" Association="Self.FK_TASK_DATA_CYCLED">
+            <End Role="002_TASK_DATA" EntitySet="002_TASK_DATA" />
+            <End Role="013_CYCLED" EntitySet="013_CYCLED" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TASK_DATA_DIVISION" Association="Self.FK_TASK_DATA_DIVISION">
+            <End Role="006_DIVISION" EntitySet="006_DIVISION" />
+            <End Role="002_TASK_DATA" EntitySet="002_TASK_DATA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TASK_DATA_SUB_TASK" Association="Self.FK_TASK_DATA_SUB_TASK">
+            <End Role="002_TASK_DATA" EntitySet="002_TASK_DATA" />
+            <End Role="003_SUB_TASKS" EntitySet="003_SUB_TASKS" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ManagementTool" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="C001_PROJECT">
+          <Key>
+            <PropertyRef Name="ProjectId" />
+          </Key>
+          <Property Name="ProjectId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProjectName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="C002_TASK_DATA" Relationship="Self.FK_PROJECT__TASK_DATA" FromRole="C001_PROJECT" ToRole="C002_TASK_DATA" />
+        </EntityType>
+        <EntityType Name="C002_TASK_DATA">
+          <Key>
+            <PropertyRef Name="TaskId" />
+          </Key>
+          <Property Name="TaskId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProjectId" Type="Int32" />
+          <Property Name="LocationId" Type="Int32" Nullable="false" />
+          <Property Name="CompanyId" Type="Int32" Nullable="false" />
+          <Property Name="DivisionId" Type="Int32" Nullable="false" />
+          <Property Name="AreaId" Type="Int32" Nullable="false" />
+          <Property Name="SubAreaId" Type="Int32" Nullable="false" />
+          <Property Name="SName" Type="String" MaxLength="900" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="900" FixedLength="false" Unicode="true" />
+          <Property Name="StartDate" Type="DateTime" Precision="3" />
+          <Property Name="Deadline" Type="DateTime" Precision="3" />
+          <Property Name="ManDays" Type="Double" />
+          <Property Name="ServiceOwnerId" Type="Int32" Nullable="false" />
+          <Property Name="CreatedById" Type="Int32" Nullable="false" />
+          <Property Name="CreateByName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DocsLink" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="TypeId" Type="Int32" Nullable="false" />
+          <Property Name="StatusId" Type="Int32" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="C001_PROJECT" Relationship="Self.FK_PROJECT__TASK_DATA" FromRole="C002_TASK_DATA" ToRole="C001_PROJECT" />
+          <NavigationProperty Name="C004_LOCATION" Relationship="Self.FK_LOCATION__TASK_DATA" FromRole="C002_TASK_DATA" ToRole="C004_LOCATION" />
+          <NavigationProperty Name="C010_STATUS" Relationship="Self.FK_STATUS__TASK_DATA" FromRole="C002_TASK_DATA" ToRole="C010_STATUS" />
+          <NavigationProperty Name="C008_SUB_AREA" Relationship="Self.FK_SUB_AREA__TASK_DATA" FromRole="C002_TASK_DATA" ToRole="C008_SUB_AREA" />
+          <NavigationProperty Name="C009_TYPE" Relationship="Self.FK_TASK_DATA__TYPE" FromRole="C002_TASK_DATA" ToRole="C009_TYPE" />
+          <NavigationProperty Name="C007_AREA" Relationship="Self.FK_TASK_DATA_AREA" FromRole="C002_TASK_DATA" ToRole="C007_AREA" />
+          <NavigationProperty Name="C012_Attachments" Relationship="Self.FK_TASK_DATA_Attachments" FromRole="C002_TASK_DATA" ToRole="C012_Attachments" />
+          <NavigationProperty Name="C005_COMPANY" Relationship="Self.FK_TASK_DATA_COMPANY" FromRole="C002_TASK_DATA" ToRole="C005_COMPANY" />
+          <NavigationProperty Name="C011_coOwners" Relationship="Self.FK_TASK_DATA_coOwners" FromRole="C002_TASK_DATA" ToRole="C011_coOwners" />
+          <NavigationProperty Name="C013_CYCLED" Relationship="Self.FK_TASK_DATA_CYCLED" FromRole="C002_TASK_DATA" ToRole="C013_CYCLED" />
+          <NavigationProperty Name="C006_DIVISION" Relationship="Self.FK_TASK_DATA_DIVISION" FromRole="C002_TASK_DATA" ToRole="C006_DIVISION" />
+          <NavigationProperty Name="C003_SUB_TASKS" Relationship="Self.FK_TASK_DATA_SUB_TASK" FromRole="C002_TASK_DATA" ToRole="C003_SUB_TASKS" />
+        </EntityType>
+        <EntityType Name="C003_SUB_TASKS">
+          <Key>
+            <PropertyRef Name="SubTaskId" />
+          </Key>
+          <Property Name="SubTaskId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TaskId" Type="Int32" Nullable="false" />
+          <Property Name="Comment" Type="String" MaxLength="900" FixedLength="false" Unicode="true" />
+          <Property Name="TaskDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="TaskActive" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="C002_TASK_DATA" Relationship="Self.FK_TASK_DATA_SUB_TASK" FromRole="C003_SUB_TASKS" ToRole="C002_TASK_DATA" />
+        </EntityType>
+        <EntityType Name="C004_LOCATION">
+          <Key>
+            <PropertyRef Name="LocationId" />
+          </Key>
+          <Property Name="LocationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LocationName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDatetime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="C002_TASK_DATA" Relationship="Self.FK_LOCATION__TASK_DATA" FromRole="C004_LOCATION" ToRole="C002_TASK_DATA" />
+        </EntityType>
+        <EntityType Name="C005_COMPANY">
+          <Key>
+            <PropertyRef Name="CompanyId" />
+          </Key>
+          <Property Name="CompanyId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LocationId" Type="Int32" Nullable="false" />
+          <Property Name="CompanyName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDatetime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="C002_TASK_DATA" Relationship="Self.FK_TASK_DATA_COMPANY" FromRole="C005_COMPANY" ToRole="C002_TASK_DATA" />
+        </EntityType>
+        <EntityType Name="C006_DIVISION">
+          <Key>
+            <PropertyRef Name="DivisionId" />
+          </Key>
+          <Property Name="DivisionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DivisionName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDatetime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="C002_TASK_DATA" Relationship="Self.FK_TASK_DATA_DIVISION" FromRole="C006_DIVISION" ToRole="C002_TASK_DATA" />
+        </EntityType>
+        <EntityType Name="C007_AREA">
+          <Key>
+            <PropertyRef Name="AreaId" />
+          </Key>
+          <Property Name="AreaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DivisionId" Type="Int32" Nullable="false" />
+          <Property Name="AreaName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDatetime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="isActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="C002_TASK_DATA" Relationship="Self.FK_TASK_DATA_AREA" FromRole="C007_AREA" ToRole="C002_TASK_DATA" />
+          <NavigationProperty Name="C008_SUB_AREA" Relationship="Self.FK_AREA__SUB_AREA" FromRole="C007_AREA" ToRole="C008_SUB_AREA" />
+        </EntityType>
+        <EntityType Name="C008_SUB_AREA">
+          <Key>
+            <PropertyRef Name="SubAreaId" />
+          </Key>
+          <Property Name="SubAreaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AreaId" Type="Int32" Nullable="false" />
+          <Property Name="SubAreaName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="AreaActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="C002_TASK_DATA" Relationship="Self.FK_SUB_AREA__TASK_DATA" FromRole="C008_SUB_AREA" ToRole="C002_TASK_DATA" />
+          <NavigationProperty Name="C007_AREA" Relationship="Self.FK_AREA__SUB_AREA" FromRole="C008_SUB_AREA" ToRole="C007_AREA" />
+        </EntityType>
+        <EntityType Name="C009_TYPE">
+          <Key>
+            <PropertyRef Name="TypeId" />
+          </Key>
+          <Property Name="TypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TypeName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="C002_TASK_DATA" Relationship="Self.FK_TASK_DATA__TYPE" FromRole="C009_TYPE" ToRole="C002_TASK_DATA" />
+        </EntityType>
+        <EntityType Name="C010_STATUS">
+          <Key>
+            <PropertyRef Name="StatusId" />
+          </Key>
+          <Property Name="StatusId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TaskStatus" Type="String" MaxLength="700" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TaskActive" Type="Boolean" Nullable="false" />
+          <Property Name="TaskCreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="TaskCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="C002_TASK_DATA" Relationship="Self.FK_STATUS__TASK_DATA" FromRole="C010_STATUS" ToRole="C002_TASK_DATA" />
+        </EntityType>
+        <EntityType Name="C011_coOwners">
+          <Key>
+            <PropertyRef Name="CoOwnerId" />
+          </Key>
+          <Property Name="CoOwnerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TaskId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="OwnerContribution" Type="String" MaxLength="900" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="C002_TASK_DATA" Relationship="Self.FK_TASK_DATA_coOwners" FromRole="C011_coOwners" ToRole="C002_TASK_DATA" />
+        </EntityType>
+        <EntityType Name="C012_Attachments">
+          <Key>
+            <PropertyRef Name="AttachId" />
+          </Key>
+          <Property Name="AttachId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TaskId" Type="Int32" Nullable="false" />
+          <Property Name="AName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ASize" Type="Int64" />
+          <Property Name="AContent" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="AContentType" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" />
+          <NavigationProperty Name="C002_TASK_DATA" Relationship="Self.FK_TASK_DATA_Attachments" FromRole="C012_Attachments" ToRole="C002_TASK_DATA" />
+        </EntityType>
+        <EntityType Name="C013_CYCLED">
+          <Key>
+            <PropertyRef Name="CycledId" />
+          </Key>
+          <Property Name="CycledId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TaskId" Type="Int32" Nullable="false" />
+          <Property Name="CycledType" Type="Int32" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="C002_TASK_DATA" Relationship="Self.FK_TASK_DATA_CYCLED" FromRole="C013_CYCLED" ToRole="C002_TASK_DATA" />
+        </EntityType>
+        <EntityType Name="EndUser">
+          <Key>
+            <PropertyRef Name="UID" />
+          </Key>
+          <Property Name="UID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserPassword" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="UserEmail" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="IsValidLogin" Type="Boolean" Nullable="false" />
+          <Property Name="LastLogin" Type="DateTime" Precision="3" />
+          <Property Name="UserType" Type="Int32" />
+          <Property Name="UserCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="Company" Type="Int32" />
+        </EntityType>
+        <EntityType Name="EndUser_Details">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="UserEmail" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="EndUser_LoginDetails">
+          <Key>
+            <PropertyRef Name="LID" />
+          </Key>
+          <Property Name="LID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="SessionId" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="LoginDate" Type="DateTime" Precision="3" />
+          <Property Name="LogOut" Type="DateTime" Precision="3" />
+          <Property Name="SessionDuration" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="UserIp" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="LoginLocation" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Mailer_Details">
+          <Key>
+            <PropertyRef Name="TicketId" />
+          </Key>
+          <Property Name="TicketId" Type="Int32" Nullable="false" />
+          <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EntryDate" Type="DateTime" Precision="3" />
+          <Property Name="Mailed" Type="Boolean" />
+          <Property Name="MailSentDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Smart_Login">
+          <Key>
+            <PropertyRef Name="SID" />
+          </Key>
+          <Property Name="SID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="GUID" Type="Guid" Nullable="false" />
+          <Property Name="ModelName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="DeviceName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="DeviceUsername" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="ApplicationVersion" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="LoginDateTime" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="STATUS">
+          <Key>
+            <PropertyRef Name="SID" />
+          </Key>
+          <Property Name="SID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StatusName" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK_PROJECT__TASK_DATA">
+          <End Role="C001_PROJECT" Type="Self.C001_PROJECT" Multiplicity="0..1" />
+          <End Role="C002_TASK_DATA" Type="Self.C002_TASK_DATA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="C001_PROJECT">
+              <PropertyRef Name="ProjectId" />
+            </Principal>
+            <Dependent Role="C002_TASK_DATA">
+              <PropertyRef Name="ProjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LOCATION__TASK_DATA">
+          <End Role="C004_LOCATION" Type="Self.C004_LOCATION" Multiplicity="1" />
+          <End Role="C002_TASK_DATA" Type="Self.C002_TASK_DATA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="C004_LOCATION">
+              <PropertyRef Name="LocationId" />
+            </Principal>
+            <Dependent Role="C002_TASK_DATA">
+              <PropertyRef Name="LocationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_STATUS__TASK_DATA">
+          <End Role="C010_STATUS" Type="Self.C010_STATUS" Multiplicity="0..1" />
+          <End Role="C002_TASK_DATA" Type="Self.C002_TASK_DATA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="C010_STATUS">
+              <PropertyRef Name="StatusId" />
+            </Principal>
+            <Dependent Role="C002_TASK_DATA">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SUB_AREA__TASK_DATA">
+          <End Role="C008_SUB_AREA" Type="Self.C008_SUB_AREA" Multiplicity="1" />
+          <End Role="C002_TASK_DATA" Type="Self.C002_TASK_DATA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="C008_SUB_AREA">
+              <PropertyRef Name="SubAreaId" />
+            </Principal>
+            <Dependent Role="C002_TASK_DATA">
+              <PropertyRef Name="SubAreaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TASK_DATA__TYPE">
+          <End Role="C009_TYPE" Type="Self.C009_TYPE" Multiplicity="1" />
+          <End Role="C002_TASK_DATA" Type="Self.C002_TASK_DATA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="C009_TYPE">
+              <PropertyRef Name="TypeId" />
+            </Principal>
+            <Dependent Role="C002_TASK_DATA">
+              <PropertyRef Name="TypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TASK_DATA_AREA">
+          <End Role="C007_AREA" Type="Self.C007_AREA" Multiplicity="1" />
+          <End Role="C002_TASK_DATA" Type="Self.C002_TASK_DATA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="C007_AREA">
+              <PropertyRef Name="AreaId" />
+            </Principal>
+            <Dependent Role="C002_TASK_DATA">
+              <PropertyRef Name="AreaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TASK_DATA_Attachments">
+          <End Role="C002_TASK_DATA" Type="Self.C002_TASK_DATA" Multiplicity="1" />
+          <End Role="C012_Attachments" Type="Self.C012_Attachments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="C002_TASK_DATA">
+              <PropertyRef Name="TaskId" />
+            </Principal>
+            <Dependent Role="C012_Attachments">
+              <PropertyRef Name="TaskId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TASK_DATA_COMPANY">
+          <End Role="C005_COMPANY" Type="Self.C005_COMPANY" Multiplicity="1" />
+          <End Role="C002_TASK_DATA" Type="Self.C002_TASK_DATA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="C005_COMPANY">
+              <PropertyRef Name="CompanyId" />
+            </Principal>
+            <Dependent Role="C002_TASK_DATA">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TASK_DATA_coOwners">
+          <End Role="C002_TASK_DATA" Type="Self.C002_TASK_DATA" Multiplicity="1" />
+          <End Role="C011_coOwners" Type="Self.C011_coOwners" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="C002_TASK_DATA">
+              <PropertyRef Name="TaskId" />
+            </Principal>
+            <Dependent Role="C011_coOwners">
+              <PropertyRef Name="TaskId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TASK_DATA_CYCLED">
+          <End Role="C002_TASK_DATA" Type="Self.C002_TASK_DATA" Multiplicity="1" />
+          <End Role="C013_CYCLED" Type="Self.C013_CYCLED" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="C002_TASK_DATA">
+              <PropertyRef Name="TaskId" />
+            </Principal>
+            <Dependent Role="C013_CYCLED">
+              <PropertyRef Name="TaskId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TASK_DATA_DIVISION">
+          <End Role="C006_DIVISION" Type="Self.C006_DIVISION" Multiplicity="1" />
+          <End Role="C002_TASK_DATA" Type="Self.C002_TASK_DATA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="C006_DIVISION">
+              <PropertyRef Name="DivisionId" />
+            </Principal>
+            <Dependent Role="C002_TASK_DATA">
+              <PropertyRef Name="DivisionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TASK_DATA_SUB_TASK">
+          <End Role="C002_TASK_DATA" Type="Self.C002_TASK_DATA" Multiplicity="1" />
+          <End Role="C003_SUB_TASKS" Type="Self.C003_SUB_TASKS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="C002_TASK_DATA">
+              <PropertyRef Name="TaskId" />
+            </Principal>
+            <Dependent Role="C003_SUB_TASKS">
+              <PropertyRef Name="TaskId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AREA__SUB_AREA">
+          <End Role="C007_AREA" Type="Self.C007_AREA" Multiplicity="1" />
+          <End Role="C008_SUB_AREA" Type="Self.C008_SUB_AREA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="C007_AREA">
+              <PropertyRef Name="AreaId" />
+            </Principal>
+            <Dependent Role="C008_SUB_AREA">
+              <PropertyRef Name="AreaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ProjectEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="C001_PROJECT" EntityType="Self.C001_PROJECT" />
+          <EntitySet Name="C002_TASK_DATA" EntityType="Self.C002_TASK_DATA" />
+          <EntitySet Name="C003_SUB_TASKS" EntityType="Self.C003_SUB_TASKS" />
+          <EntitySet Name="C004_LOCATION" EntityType="Self.C004_LOCATION" />
+          <EntitySet Name="C005_COMPANY" EntityType="Self.C005_COMPANY" />
+          <EntitySet Name="C006_DIVISION" EntityType="Self.C006_DIVISION" />
+          <EntitySet Name="C007_AREA" EntityType="Self.C007_AREA" />
+          <EntitySet Name="C008_SUB_AREA" EntityType="Self.C008_SUB_AREA" />
+          <EntitySet Name="C009_TYPE" EntityType="Self.C009_TYPE" />
+          <EntitySet Name="C010_STATUS" EntityType="Self.C010_STATUS" />
+          <EntitySet Name="C011_coOwners" EntityType="Self.C011_coOwners" />
+          <EntitySet Name="C012_Attachments" EntityType="Self.C012_Attachments" />
+          <EntitySet Name="C013_CYCLED" EntityType="Self.C013_CYCLED" />
+          <EntitySet Name="EndUsers" EntityType="Self.EndUser" />
+          <EntitySet Name="EndUser_Details" EntityType="Self.EndUser_Details" />
+          <EntitySet Name="EndUser_LoginDetails" EntityType="Self.EndUser_LoginDetails" />
+          <EntitySet Name="Mailer_Details" EntityType="Self.Mailer_Details" />
+          <EntitySet Name="Smart_Login" EntityType="Self.Smart_Login" />
+          <EntitySet Name="STATUS" EntityType="Self.STATUS" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <AssociationSet Name="FK_PROJECT__TASK_DATA" Association="Self.FK_PROJECT__TASK_DATA">
+            <End Role="C001_PROJECT" EntitySet="C001_PROJECT" />
+            <End Role="C002_TASK_DATA" EntitySet="C002_TASK_DATA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LOCATION__TASK_DATA" Association="Self.FK_LOCATION__TASK_DATA">
+            <End Role="C004_LOCATION" EntitySet="C004_LOCATION" />
+            <End Role="C002_TASK_DATA" EntitySet="C002_TASK_DATA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_STATUS__TASK_DATA" Association="Self.FK_STATUS__TASK_DATA">
+            <End Role="C010_STATUS" EntitySet="C010_STATUS" />
+            <End Role="C002_TASK_DATA" EntitySet="C002_TASK_DATA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SUB_AREA__TASK_DATA" Association="Self.FK_SUB_AREA__TASK_DATA">
+            <End Role="C008_SUB_AREA" EntitySet="C008_SUB_AREA" />
+            <End Role="C002_TASK_DATA" EntitySet="C002_TASK_DATA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TASK_DATA__TYPE" Association="Self.FK_TASK_DATA__TYPE">
+            <End Role="C009_TYPE" EntitySet="C009_TYPE" />
+            <End Role="C002_TASK_DATA" EntitySet="C002_TASK_DATA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TASK_DATA_AREA" Association="Self.FK_TASK_DATA_AREA">
+            <End Role="C007_AREA" EntitySet="C007_AREA" />
+            <End Role="C002_TASK_DATA" EntitySet="C002_TASK_DATA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TASK_DATA_Attachments" Association="Self.FK_TASK_DATA_Attachments">
+            <End Role="C002_TASK_DATA" EntitySet="C002_TASK_DATA" />
+            <End Role="C012_Attachments" EntitySet="C012_Attachments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TASK_DATA_COMPANY" Association="Self.FK_TASK_DATA_COMPANY">
+            <End Role="C005_COMPANY" EntitySet="C005_COMPANY" />
+            <End Role="C002_TASK_DATA" EntitySet="C002_TASK_DATA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TASK_DATA_coOwners" Association="Self.FK_TASK_DATA_coOwners">
+            <End Role="C002_TASK_DATA" EntitySet="C002_TASK_DATA" />
+            <End Role="C011_coOwners" EntitySet="C011_coOwners" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TASK_DATA_CYCLED" Association="Self.FK_TASK_DATA_CYCLED">
+            <End Role="C002_TASK_DATA" EntitySet="C002_TASK_DATA" />
+            <End Role="C013_CYCLED" EntitySet="C013_CYCLED" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TASK_DATA_DIVISION" Association="Self.FK_TASK_DATA_DIVISION">
+            <End Role="C006_DIVISION" EntitySet="C006_DIVISION" />
+            <End Role="C002_TASK_DATA" EntitySet="C002_TASK_DATA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TASK_DATA_SUB_TASK" Association="Self.FK_TASK_DATA_SUB_TASK">
+            <End Role="C002_TASK_DATA" EntitySet="C002_TASK_DATA" />
+            <End Role="C003_SUB_TASKS" EntitySet="C003_SUB_TASKS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AREA__SUB_AREA" Association="Self.FK_AREA__SUB_AREA">
+            <End Role="C007_AREA" EntitySet="C007_AREA" />
+            <End Role="C008_SUB_AREA" EntitySet="C008_SUB_AREA" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ManagementToolStoreContainer" CdmEntityContainer="ProjectEntities">
+          <EntitySetMapping Name="C001_PROJECT">
+            <EntityTypeMapping TypeName="ManagementTool.C001_PROJECT">
+              <MappingFragment StoreEntitySet="001_PROJECT">
+                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+                <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="C002_TASK_DATA">
+            <EntityTypeMapping TypeName="ManagementTool.C002_TASK_DATA">
+              <MappingFragment StoreEntitySet="002_TASK_DATA">
+                <ScalarProperty Name="TaskId" ColumnName="TaskId" />
+                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+                <ScalarProperty Name="LocationId" ColumnName="LocationId" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="DivisionId" ColumnName="DivisionId" />
+                <ScalarProperty Name="AreaId" ColumnName="AreaId" />
+                <ScalarProperty Name="SubAreaId" ColumnName="SubAreaId" />
+                <ScalarProperty Name="SName" ColumnName="SName" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="Deadline" ColumnName="Deadline" />
+                <ScalarProperty Name="ManDays" ColumnName="ManDays" />
+                <ScalarProperty Name="ServiceOwnerId" ColumnName="ServiceOwnerId" />
+                <ScalarProperty Name="CreatedById" ColumnName="CreatedById" />
+                <ScalarProperty Name="CreateByName" ColumnName="CreateByName" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="DocsLink" ColumnName="DocsLink" />
+                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="C003_SUB_TASKS">
+            <EntityTypeMapping TypeName="ManagementTool.C003_SUB_TASKS">
+              <MappingFragment StoreEntitySet="003_SUB_TASKS">
+                <ScalarProperty Name="SubTaskId" ColumnName="SubTaskId" />
+                <ScalarProperty Name="TaskId" ColumnName="TaskId" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="TaskDate" ColumnName="TaskDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="TaskActive" ColumnName="TaskActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="C004_LOCATION">
+            <EntityTypeMapping TypeName="ManagementTool.C004_LOCATION">
+              <MappingFragment StoreEntitySet="004_LOCATION">
+                <ScalarProperty Name="LocationId" ColumnName="LocationId" />
+                <ScalarProperty Name="LocationName" ColumnName="LocationName" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDatetime" ColumnName="CreatedDatetime" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="C005_COMPANY">
+            <EntityTypeMapping TypeName="ManagementTool.C005_COMPANY">
+              <MappingFragment StoreEntitySet="005_COMPANY">
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="LocationId" ColumnName="LocationId" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDatetime" ColumnName="CreatedDatetime" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="C006_DIVISION">
+            <EntityTypeMapping TypeName="ManagementTool.C006_DIVISION">
+              <MappingFragment StoreEntitySet="006_DIVISION">
+                <ScalarProperty Name="DivisionId" ColumnName="DivisionId" />
+                <ScalarProperty Name="DivisionName" ColumnName="DivisionName" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDatetime" ColumnName="CreatedDatetime" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="C007_AREA">
+            <EntityTypeMapping TypeName="ManagementTool.C007_AREA">
+              <MappingFragment StoreEntitySet="007_AREA">
+                <ScalarProperty Name="AreaId" ColumnName="AreaId" />
+                <ScalarProperty Name="DivisionId" ColumnName="DivisionId" />
+                <ScalarProperty Name="AreaName" ColumnName="AreaName" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDatetime" ColumnName="CreatedDatetime" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="C008_SUB_AREA">
+            <EntityTypeMapping TypeName="ManagementTool.C008_SUB_AREA">
+              <MappingFragment StoreEntitySet="008_SUB_AREA">
+                <ScalarProperty Name="SubAreaId" ColumnName="SubAreaId" />
+                <ScalarProperty Name="AreaId" ColumnName="AreaId" />
+                <ScalarProperty Name="SubAreaName" ColumnName="SubAreaName" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="AreaActive" ColumnName="AreaActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="C009_TYPE">
+            <EntityTypeMapping TypeName="ManagementTool.C009_TYPE">
+              <MappingFragment StoreEntitySet="009_TYPE">
+                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+                <ScalarProperty Name="TypeName" ColumnName="TypeName" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="C010_STATUS">
+            <EntityTypeMapping TypeName="ManagementTool.C010_STATUS">
+              <MappingFragment StoreEntitySet="010_STATUS">
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+                <ScalarProperty Name="TaskStatus" ColumnName="TaskStatus" />
+                <ScalarProperty Name="TaskActive" ColumnName="TaskActive" />
+                <ScalarProperty Name="TaskCreatedBy" ColumnName="TaskCreatedBy" />
+                <ScalarProperty Name="TaskCreatedDate" ColumnName="TaskCreatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="C011_coOwners">
+            <EntityTypeMapping TypeName="ManagementTool.C011_coOwners">
+              <MappingFragment StoreEntitySet="011_coOwners">
+                <ScalarProperty Name="CoOwnerId" ColumnName="CoOwnerId" />
+                <ScalarProperty Name="TaskId" ColumnName="TaskId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="OwnerContribution" ColumnName="OwnerContribution" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="C012_Attachments">
+            <EntityTypeMapping TypeName="ManagementTool.C012_Attachments">
+              <MappingFragment StoreEntitySet="012_Attachments">
+                <ScalarProperty Name="AttachId" ColumnName="AttachId" />
+                <ScalarProperty Name="TaskId" ColumnName="TaskId" />
+                <ScalarProperty Name="AName" ColumnName="AName" />
+                <ScalarProperty Name="ASize" ColumnName="ASize" />
+                <ScalarProperty Name="AContent" ColumnName="AContent" />
+                <ScalarProperty Name="AContentType" ColumnName="AContentType" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="C013_CYCLED">
+            <EntityTypeMapping TypeName="ManagementTool.C013_CYCLED">
+              <MappingFragment StoreEntitySet="013_CYCLED">
+                <ScalarProperty Name="CycledId" ColumnName="CycledId" />
+                <ScalarProperty Name="TaskId" ColumnName="TaskId" />
+                <ScalarProperty Name="CycledType" ColumnName="CycledType" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EndUsers">
+            <EntityTypeMapping TypeName="ManagementTool.EndUser">
+              <MappingFragment StoreEntitySet="EndUser">
+                <ScalarProperty Name="UID" ColumnName="UID" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserPassword" ColumnName="UserPassword" />
+                <ScalarProperty Name="UserEmail" ColumnName="UserEmail" />
+                <ScalarProperty Name="IsValidLogin" ColumnName="IsValidLogin" />
+                <ScalarProperty Name="LastLogin" ColumnName="LastLogin" />
+                <ScalarProperty Name="UserType" ColumnName="UserType" />
+                <ScalarProperty Name="UserCreated" ColumnName="UserCreated" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Company" ColumnName="Company" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EndUser_Details">
+            <EntityTypeMapping TypeName="ManagementTool.EndUser_Details">
+              <MappingFragment StoreEntitySet="EndUser_Details">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserEmail" ColumnName="UserEmail" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EndUser_LoginDetails">
+            <EntityTypeMapping TypeName="ManagementTool.EndUser_LoginDetails">
+              <MappingFragment StoreEntitySet="EndUser_LoginDetails">
+                <ScalarProperty Name="LID" ColumnName="LID" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="SessionId" ColumnName="SessionId" />
+                <ScalarProperty Name="LoginDate" ColumnName="LoginDate" />
+                <ScalarProperty Name="LogOut" ColumnName="LogOut" />
+                <ScalarProperty Name="SessionDuration" ColumnName="SessionDuration" />
+                <ScalarProperty Name="UserIp" ColumnName="UserIp" />
+                <ScalarProperty Name="LoginLocation" ColumnName="LoginLocation" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Mailer_Details">
+            <EntityTypeMapping TypeName="ManagementTool.Mailer_Details">
+              <MappingFragment StoreEntitySet="Mailer_Details">
+                <ScalarProperty Name="TicketId" ColumnName="TicketId" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
+                <ScalarProperty Name="Mailed" ColumnName="Mailed" />
+                <ScalarProperty Name="MailSentDate" ColumnName="MailSentDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Smart_Login">
+            <EntityTypeMapping TypeName="ManagementTool.Smart_Login">
+              <MappingFragment StoreEntitySet="Smart_Login">
+                <ScalarProperty Name="SID" ColumnName="SID" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="GUID" ColumnName="GUID" />
+                <ScalarProperty Name="ModelName" ColumnName="ModelName" />
+                <ScalarProperty Name="DeviceName" ColumnName="DeviceName" />
+                <ScalarProperty Name="DeviceUsername" ColumnName="DeviceUsername" />
+                <ScalarProperty Name="ApplicationVersion" ColumnName="ApplicationVersion" />
+                <ScalarProperty Name="LoginDateTime" ColumnName="LoginDateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="STATUS">
+            <EntityTypeMapping TypeName="ManagementTool.STATUS">
+              <MappingFragment StoreEntitySet="STATUS">
+                <ScalarProperty Name="SID" ColumnName="SID" />
+                <ScalarProperty Name="StatusName" ColumnName="StatusName" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="ManagementTool.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

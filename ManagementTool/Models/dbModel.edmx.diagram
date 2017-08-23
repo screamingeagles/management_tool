@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="e026104ae8754b6f975677a1fbbc7754" Name="Diagram1" ZoomLevel="64">
+        <EntityTypeShape EntityType="ManagementTool.C001_PROJECT" Width="1.5" PointX="3" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ManagementTool.C002_TASK_DATA" Width="1.5" PointX="5.25" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ManagementTool.C003_SUB_TASKS" Width="1.5" PointX="7.5" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ManagementTool.C004_LOCATION" Width="1.5" PointX="3" PointY="10.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ManagementTool.C005_COMPANY" Width="1.5" PointX="3" PointY="13.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ManagementTool.C006_DIVISION" Width="1.5" PointX="3" PointY="16.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ManagementTool.C007_AREA" Width="1.5" PointX="0.75" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ManagementTool.C008_SUB_AREA" Width="1.5" PointX="3" PointY="21.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ManagementTool.C009_TYPE" Width="1.5" PointX="3" PointY="25.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ManagementTool.C010_STATUS" Width="1.5" PointX="3" PointY="28.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ManagementTool.C011_coOwners" Width="1.5" PointX="7.5" PointY="13.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ManagementTool.C012_Attachments" Width="1.5" PointX="7.5" PointY="16.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ManagementTool.C013_CYCLED" Width="1.5" PointX="7.5" PointY="20" IsExpanded="true" />
+        <EntityTypeShape EntityType="ManagementTool.EndUser" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ManagementTool.EndUser_Details" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ManagementTool.EndUser_LoginDetails" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ManagementTool.Mailer_Details" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ManagementTool.Smart_Login" Width="1.5" PointX="4.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ManagementTool.STATUS" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ManagementTool.sysdiagram" Width="1.5" PointX="6.75" PointY="3.75" IsExpanded="true" />
+        <AssociationConnector Association="ManagementTool.FK_PROJECT__TASK_DATA" ManuallyRouted="false" />
+        <AssociationConnector Association="ManagementTool.FK_LOCATION__TASK_DATA" ManuallyRouted="false" />
+        <AssociationConnector Association="ManagementTool.FK_STATUS__TASK_DATA" ManuallyRouted="false" />
+        <AssociationConnector Association="ManagementTool.FK_SUB_AREA__TASK_DATA" ManuallyRouted="false" />
+        <AssociationConnector Association="ManagementTool.FK_TASK_DATA__TYPE" ManuallyRouted="false" />
+        <AssociationConnector Association="ManagementTool.FK_TASK_DATA_AREA" ManuallyRouted="false" />
+        <AssociationConnector Association="ManagementTool.FK_TASK_DATA_Attachments" ManuallyRouted="false" />
+        <AssociationConnector Association="ManagementTool.FK_TASK_DATA_COMPANY" ManuallyRouted="false" />
+        <AssociationConnector Association="ManagementTool.FK_TASK_DATA_coOwners" ManuallyRouted="false" />
+        <AssociationConnector Association="ManagementTool.FK_TASK_DATA_CYCLED" ManuallyRouted="false" />
+        <AssociationConnector Association="ManagementTool.FK_TASK_DATA_DIVISION" ManuallyRouted="false" />
+        <AssociationConnector Association="ManagementTool.FK_TASK_DATA_SUB_TASK" ManuallyRouted="false" />
+        <AssociationConnector Association="ManagementTool.FK_AREA__SUB_AREA" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
