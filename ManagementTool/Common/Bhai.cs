@@ -67,7 +67,7 @@ namespace ManagementTool.Common
         {
             int? q = 0;
 
-            using (TicketEntities db = new TicketEntities())
+            using (ProjectEntities db = new ProjectEntities())
             {
                 q = (from e in db.EndUsers
                      where e.UserEmail == userid
@@ -92,10 +92,10 @@ namespace ManagementTool.Common
         {
             int? q = 0;
 
-            using (TicketEntities db = new TicketEntities())
+            using (ProjectEntities db = new ProjectEntities())
             {
-                q = (from e in db.Tickets
-                     where e.TicketId == TicketId
+                q = (from e in db.C002_TASK_DATA
+                     where e.TaskId == TicketId
                      select e.AssignedTo).FirstOrDefault();
             }
 
@@ -116,7 +116,7 @@ namespace ManagementTool.Common
         {
             string q = "";
 
-            using (TicketEntities db = new TicketEntities()) {
+            using (ProjectEntities db = new ProjectEntities()) {
                 q = (from e in db.EndUsers
                      where e.UID == userid
                      select e.UserName).FirstOrDefault();
@@ -129,7 +129,7 @@ namespace ManagementTool.Common
         {
             string q = "";
 
-            using (TicketEntities db = new TicketEntities())
+            using (ProjectEntities db = new ProjectEntities())
             {
                 q = (from e in db.EndUsers
                      where e.UID == userid
@@ -143,7 +143,7 @@ namespace ManagementTool.Common
         {
             int q = 0;
 
-            using (TicketEntities db = new TicketEntities())
+            using (ProjectEntities db = new ProjectEntities())
             {
                 EndUser e = db.EndUsers.Find(uid);
                 e.UserPassword = txtpass;
@@ -159,7 +159,7 @@ namespace ManagementTool.Common
         public static int SaveNewUser           (string userid, string password)            
         {
             int uid = 0;
-            using (TicketEntities db = new TicketEntities()) {
+            using (ProjectEntities db = new ProjectEntities()) {
                 EndUser e = new EndUser();
                 e.UserName = userid.Substring(0, userid.IndexOf("@"));
                 e.UserEmail = userid;
@@ -180,7 +180,7 @@ namespace ManagementTool.Common
         public static int SaveToSession         (int uid, string remoteip, string location) 
         {
             int sid = 0;
-            using (TicketEntities db = new TicketEntities())
+            using (ProjectEntities db = new ProjectEntities())
             {
                 LOGIN_DETAIL ld = new LOGIN_DETAIL();
                 ld.UserId = uid;
@@ -202,7 +202,7 @@ namespace ManagementTool.Common
             int ret = 0;
             try
             {
-                using (TicketEntities _db = new TicketEntities())
+                using (ProjectEntities _db = new ProjectEntities())
                 {
                     ret = (from l in _db.SmartLogins
                            where (l.GUID == guid)
@@ -221,7 +221,7 @@ namespace ManagementTool.Common
             int ret = 0;
             try
             {
-                using (TicketEntities _db = new TicketEntities())
+                using (ProjectEntities _db = new ProjectEntities())
                 {
                     ret = (from l in _db.vw_SessionUser
                            where (l.LID.Equals(Sessionid))
@@ -238,7 +238,7 @@ namespace ManagementTool.Common
         public static int getUserTypeId         (int UserId)                                
         {
             int r = 0;
-            using (TicketEntities db = new TicketEntities())
+            using (ProjectEntities db = new ProjectEntities())
             {
                 var q = (from e in db.EndUsers
                          where (e.UID == UserId)
@@ -254,7 +254,7 @@ namespace ManagementTool.Common
             int q = 0;
             Guid g = new Guid(guid);
 
-            using (TicketEntities db = new TicketEntities()) {
+            using (ProjectEntities db = new ProjectEntities()) {
                 q = (from t in db.Tickets
                      where (t.emailguid == g)
                      select t.TicketId).FirstOrDefault();
@@ -268,7 +268,7 @@ namespace ManagementTool.Common
             int q = 0;
             
 
-            using (TicketEntities db = new TicketEntities())
+            using (ProjectEntities db = new ProjectEntities())
             {
                 q = (from t in db.Tickets
                      where (t.TicketId == Ticketid)
@@ -281,7 +281,7 @@ namespace ManagementTool.Common
         {
 
             int result = 0;
-            using (TicketEntities db = new TicketEntities())
+            using (ProjectEntities db = new ProjectEntities())
             {
                 result = (from tk in db.Tickets
                           where (tk.TicketId == TicketId)
@@ -316,7 +316,7 @@ namespace ManagementTool.Common
             int q = 0;
             try
             {
-                using (TicketEntities db = new TicketEntities())
+                using (ProjectEntities db = new ProjectEntities())
                 {
                     Ticket t = db.Tickets.Find(Ticketid);
                     t.TSubject = "[Helpdesk Ticket # : " + Ticketid + "] " + t.TSubject;
@@ -335,7 +335,7 @@ namespace ManagementTool.Common
 
             int q = 0;           
 
-            using (TicketEntities db = new TicketEntities())
+            using (ProjectEntities db = new ProjectEntities())
             {
                 q = (from c in db.Ticket_Communication
                      where (c.TicketId == TicketId)
@@ -351,7 +351,7 @@ namespace ManagementTool.Common
             List<SelectListItem> tech = new List<SelectListItem>();
             try
             {
-                using (TicketEntities _db = new TicketEntities())
+                using (ProjectEntities _db = new ProjectEntities())
                 {
                     var queryc = (from t in _db.EndUsers
                                   orderby t.UserName
@@ -387,7 +387,7 @@ namespace ManagementTool.Common
             List<SelectListItem> status = new List<SelectListItem>();
             try
             {
-                using (TicketEntities _db = new TicketEntities())
+                using (ProjectEntities _db = new ProjectEntities())
                 {
                     var querys = (from s in _db.C_service_status
                                   orderby s.StatusName
@@ -419,7 +419,7 @@ namespace ManagementTool.Common
         public static DataTable GetDataTable    (string tablename, string sSQL)             
         {
             DataTable dt = new DataTable(tablename);
-            using (TicketEntities _db = new TicketEntities())
+            using (ProjectEntities _db = new ProjectEntities())
             {
                 using (SqlConnection con = new SqlConnection(_db.Database.Connection.ConnectionString))
                 {
