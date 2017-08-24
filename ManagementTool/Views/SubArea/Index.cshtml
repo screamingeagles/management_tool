@@ -1,0 +1,58 @@
+﻿@model IEnumerable<ManagementTool.Models.C008_SUB_AREA>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SubAreaName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedBy)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AreaActive)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.C007_AREA.AreaName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.SubAreaName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreatedBy)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreatedDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AreaActive)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.C007_AREA.AreaName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.SubAreaId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.SubAreaId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.SubAreaId })
+        </td>
+    </tr>
+}
+
+</table>

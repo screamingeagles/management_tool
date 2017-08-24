@@ -45,5 +45,7 @@ namespace ManagementTool.Models
         public virtual DbSet<Smart_Login> Smart_Login { get; set; }
         public virtual DbSet<STATUS> STATUS { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
+        public virtual DbSet<LOGIN_DETAIL> LOGIN_DETAIL { get; set; }
+        public virtual DbSet<vw_SessionUser> vw_SessionUser { get; set; }
     }
 }

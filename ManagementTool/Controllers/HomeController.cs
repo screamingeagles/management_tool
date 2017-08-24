@@ -2,13 +2,19 @@
 using System.Web;
 using System.Linq;
 using System.Web.Mvc;
+using System.ComponentModel;
+using ManagementTool.Models;
 using ManagementTool.Common;
 using System.Collections.Generic;
+using Microsoft.Exchange.WebServices.Data;
+
 
 namespace ManagementTool.Controllers
 {
     public class HomeController : Controller
     {
+        private ProjectEntities db = new ProjectEntities();
+
         public ActionResult Index()
         {            
             ViewData["SubTitle"] = "Welcome in ASP.NET MVC 5 INSPINIA SeedProject ";

@@ -1,0 +1,171 @@
+﻿@model ManagementTool.Models.C002_TASK_DATA
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>C002_TASK_DATA</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.SName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StartDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Deadline)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Deadline)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ManDays)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ManDays)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ServiceOwnerId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ServiceOwnerId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedById)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedById)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreateByName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreateByName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DocsLink)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DocsLink)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsActive)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.C001_PROJECT.ProjectName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.C001_PROJECT.ProjectName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.C004_LOCATION.LocationName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.C004_LOCATION.LocationName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.C010_STATUS.TaskStatus)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.C010_STATUS.TaskStatus)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.C008_SUB_AREA.SubAreaName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.C008_SUB_AREA.SubAreaName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.C009_TYPE.TypeName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.C009_TYPE.TypeName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.C007_AREA.AreaName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.C007_AREA.AreaName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.C005_COMPANY.CompanyName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.C005_COMPANY.CompanyName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.C006_DIVISION.DivisionName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.C006_DIVISION.DivisionName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.TaskId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

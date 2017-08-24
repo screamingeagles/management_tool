@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ManagementTool.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ManagementTool.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="001_PROJECT">
           <Key>
             <PropertyRef Name="ProjectId" />
@@ -197,6 +197,22 @@
           <Property Name="UserIp" Type="nvarchar" MaxLength="20" />
           <Property Name="LoginLocation" Type="nvarchar" MaxLength="250" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'db_management_tool.dbo.LOGIN_DETAIL' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="LOGIN_DETAIL">
+          <Key>
+            <PropertyRef Name="LID" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="SessionId" Type="nvarchar" MaxLength="250" />
+          <Property Name="LoginDate" Type="datetime" />
+          <Property Name="LogOut" Type="datetime" />
+          <Property Name="SessionDuration" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="UserIp" Type="nvarchar" MaxLength="20" />
+          <Property Name="LoginLocation" Type="nvarchar" MaxLength="250" />
+        </EntityType>
         <EntityType Name="Mailer_Details">
           <Key>
             <PropertyRef Name="TicketId" />
@@ -239,6 +255,30 @@
           <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'db_management_tool.dbo.vw_SessionUser' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vw_SessionUser">
+          <Key>
+            <PropertyRef Name="LID" />
+            <PropertyRef Name="UID" />
+            <PropertyRef Name="UserName" />
+            <PropertyRef Name="UserCreated" />
+            <PropertyRef Name="IsActive" />
+          </Key>
+          <Property Name="LID" Type="int" Nullable="false" />
+          <Property Name="UID" Type="int" Nullable="false" />
+          <Property Name="SessionId" Type="nvarchar" MaxLength="250" />
+          <Property Name="LoginDate" Type="datetime" />
+          <Property Name="LogOut" Type="datetime" />
+          <Property Name="SessionDuration" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="UserIp" Type="nvarchar" MaxLength="20" />
+          <Property Name="LoginLocation" Type="nvarchar" MaxLength="250" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="UserEmail" Type="nvarchar" MaxLength="250" />
+          <Property Name="LastLogin" Type="datetime" />
+          <Property Name="UserCreated" Type="datetime" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
         <Association Name="FK_AREA__SUB_AREA">
           <End Role="007_AREA" Type="Self.007_AREA" Multiplicity="1" />
@@ -417,6 +457,35 @@
           <EntitySet Name="Smart_Login" EntityType="Self.Smart_Login" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="STATUS" EntityType="Self.STATUS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LOGIN_DETAIL" EntityType="Self.LOGIN_DETAIL" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [LOGIN_DETAIL].[LID] AS [LID], 
+    [LOGIN_DETAIL].[UserId] AS [UserId], 
+    [LOGIN_DETAIL].[SessionId] AS [SessionId], 
+    [LOGIN_DETAIL].[LoginDate] AS [LoginDate], 
+    [LOGIN_DETAIL].[LogOut] AS [LogOut], 
+    [LOGIN_DETAIL].[SessionDuration] AS [SessionDuration], 
+    [LOGIN_DETAIL].[UserIp] AS [UserIp], 
+    [LOGIN_DETAIL].[LoginLocation] AS [LoginLocation]
+    FROM [dbo].[LOGIN_DETAIL] AS [LOGIN_DETAIL]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vw_SessionUser" EntityType="Self.vw_SessionUser" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_SessionUser].[LID] AS [LID], 
+    [vw_SessionUser].[UID] AS [UID], 
+    [vw_SessionUser].[SessionId] AS [SessionId], 
+    [vw_SessionUser].[LoginDate] AS [LoginDate], 
+    [vw_SessionUser].[LogOut] AS [LogOut], 
+    [vw_SessionUser].[SessionDuration] AS [SessionDuration], 
+    [vw_SessionUser].[UserIp] AS [UserIp], 
+    [vw_SessionUser].[LoginLocation] AS [LoginLocation], 
+    [vw_SessionUser].[UserName] AS [UserName], 
+    [vw_SessionUser].[UserEmail] AS [UserEmail], 
+    [vw_SessionUser].[LastLogin] AS [LastLogin], 
+    [vw_SessionUser].[UserCreated] AS [UserCreated], 
+    [vw_SessionUser].[IsActive] AS [IsActive]
+    FROM [dbo].[vw_SessionUser] AS [vw_SessionUser]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_AREA__SUB_AREA" Association="Self.FK_AREA__SUB_AREA">
             <End Role="007_AREA" EntitySet="007_AREA" />
             <End Role="008_SUB_AREA" EntitySet="008_SUB_AREA" />
@@ -470,8 +539,7 @@
             <End Role="003_SUB_TASKS" EntitySet="003_SUB_TASKS" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ManagementTool" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -965,7 +1033,45 @@
             <End Role="C007_AREA" EntitySet="C007_AREA" />
             <End Role="C008_SUB_AREA" EntitySet="C008_SUB_AREA" />
           </AssociationSet>
+          <EntitySet Name="LOGIN_DETAIL" EntityType="ManagementTool.LOGIN_DETAIL" />
+          <EntitySet Name="vw_SessionUser" EntityType="ManagementTool.vw_SessionUser" />
         </EntityContainer>
+        <EntityType Name="LOGIN_DETAIL">
+          <Key>
+            <PropertyRef Name="LID" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="SessionId" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="LoginDate" Type="DateTime" Precision="3" />
+          <Property Name="LogOut" Type="DateTime" Precision="3" />
+          <Property Name="SessionDuration" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="UserIp" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="LoginLocation" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="vw_SessionUser">
+          <Key>
+            <PropertyRef Name="LID" />
+            <PropertyRef Name="UID" />
+            <PropertyRef Name="UserName" />
+            <PropertyRef Name="UserCreated" />
+            <PropertyRef Name="IsActive" />
+          </Key>
+          <Property Name="LID" Type="Int32" Nullable="false" />
+          <Property Name="UID" Type="Int32" Nullable="false" />
+          <Property Name="SessionId" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="LoginDate" Type="DateTime" Precision="3" />
+          <Property Name="LogOut" Type="DateTime" Precision="3" />
+          <Property Name="SessionDuration" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="UserIp" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="LoginLocation" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="UserEmail" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="LastLogin" Type="DateTime" Precision="3" />
+          <Property Name="UserCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1224,6 +1330,39 @@
                 <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
                 <ScalarProperty Name="version" ColumnName="version" />
                 <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LOGIN_DETAIL">
+            <EntityTypeMapping TypeName="ManagementTool.LOGIN_DETAIL">
+              <MappingFragment StoreEntitySet="LOGIN_DETAIL">
+                <ScalarProperty Name="LoginLocation" ColumnName="LoginLocation" />
+                <ScalarProperty Name="UserIp" ColumnName="UserIp" />
+                <ScalarProperty Name="SessionDuration" ColumnName="SessionDuration" />
+                <ScalarProperty Name="LogOut" ColumnName="LogOut" />
+                <ScalarProperty Name="LoginDate" ColumnName="LoginDate" />
+                <ScalarProperty Name="SessionId" ColumnName="SessionId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="LID" ColumnName="LID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_SessionUser">
+            <EntityTypeMapping TypeName="ManagementTool.vw_SessionUser">
+              <MappingFragment StoreEntitySet="vw_SessionUser">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="UserCreated" ColumnName="UserCreated" />
+                <ScalarProperty Name="LastLogin" ColumnName="LastLogin" />
+                <ScalarProperty Name="UserEmail" ColumnName="UserEmail" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="LoginLocation" ColumnName="LoginLocation" />
+                <ScalarProperty Name="UserIp" ColumnName="UserIp" />
+                <ScalarProperty Name="SessionDuration" ColumnName="SessionDuration" />
+                <ScalarProperty Name="LogOut" ColumnName="LogOut" />
+                <ScalarProperty Name="LoginDate" ColumnName="LoginDate" />
+                <ScalarProperty Name="SessionId" ColumnName="SessionId" />
+                <ScalarProperty Name="UID" ColumnName="UID" />
+                <ScalarProperty Name="LID" ColumnName="LID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

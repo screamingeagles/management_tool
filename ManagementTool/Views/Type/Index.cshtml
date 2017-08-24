@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ManagementTool.Models.C004_LOCATION>
+﻿@model IEnumerable<ManagementTool.Models.C009_TYPE>
 
 @{
     ViewBag.Title = "Index";
@@ -13,13 +13,13 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.LocationName)
+            @Html.DisplayNameFor(model => model.TypeName)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.CreatedBy)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.CreatedDatetime)
+            @Html.DisplayNameFor(model => model.CreatedDate)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.IsActive)
@@ -30,21 +30,21 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.LocationName)
+            @Html.DisplayFor(modelItem => item.TypeName)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.CreatedBy)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.CreatedDatetime)
+            @Html.DisplayFor(modelItem => item.CreatedDate)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.IsActive)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.LocationId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.LocationId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.LocationId })
+            @Html.ActionLink("Edit", "Edit", new { id=item.TypeId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.TypeId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.TypeId })
         </td>
     </tr>
 }

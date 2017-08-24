@@ -1,0 +1,142 @@
+﻿@model IEnumerable<ManagementTool.Models.C002_TASK_DATA>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Deadline)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ManDays)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ServiceOwnerId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedById)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreateByName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DocsLink)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.C001_PROJECT.ProjectName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.C004_LOCATION.LocationName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.C010_STATUS.TaskStatus)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.C008_SUB_AREA.SubAreaName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.C009_TYPE.TypeName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.C007_AREA.AreaName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.C005_COMPANY.CompanyName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.C006_DIVISION.DivisionName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.SName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StartDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Deadline)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ManDays)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ServiceOwnerId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreatedById)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreateByName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreatedDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DocsLink)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsActive)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.C001_PROJECT.ProjectName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.C004_LOCATION.LocationName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.C010_STATUS.TaskStatus)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.C008_SUB_AREA.SubAreaName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.C009_TYPE.TypeName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.C007_AREA.AreaName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.C005_COMPANY.CompanyName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.C006_DIVISION.DivisionName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.TaskId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.TaskId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.TaskId })
+        </td>
+    </tr>
+}
+
+</table>

@@ -88,31 +88,7 @@ namespace ManagementTool.Common
         }
 
 
-        public static int GetTicketAssignedUserId(int TicketId)
-        {
-            int? q = 0;
-
-            using (ProjectEntities db = new ProjectEntities())
-            {
-                q = (from e in db.C002_TASK_DATA
-                     where e.TaskId == TicketId
-                     select e.AssignedTo).FirstOrDefault();
-            }
-
-            if (q.HasValue) {
-                if (q.Value > 0) { return q.Value; }
-                else { return 0; }
-            }
-            else {
-                q = 0;
-            }
-
-            return q.Value;
-        }
-
-
-
-        public static string GetUserName        (int userid)                                
+       public static string GetUserName        (int userid)                                
         {
             string q = "";
 
@@ -197,24 +173,6 @@ namespace ManagementTool.Common
             return sid;
         }
 
-        public static int GetUserIdFromSmartGuid(Guid guid)                                 
-        {
-            int ret = 0;
-            try
-            {
-                using (ProjectEntities _db = new ProjectEntities())
-                {
-                    ret = (from l in _db.SmartLogins
-                           where (l.GUID == guid)
-                           select l.UserId).FirstOrDefault();
-                }
-                return ret;
-            }
-            catch
-            {
-                return -1;
-            }
-        }
 
         public static int GetUserIdFromSession  (int Sessionid)                             
         {
@@ -248,56 +206,7 @@ namespace ManagementTool.Common
             return r;
         }
 
-        public static int getTicketId           (string guid)                               
-        {
-
-            int q = 0;
-            Guid g = new Guid(guid);
-
-            using (ProjectEntities db = new ProjectEntities()) {
-                q = (from t in db.Tickets
-                     where (t.emailguid == g)
-                     select t.TicketId).FirstOrDefault();
-            }
-            return q;
-        }
-
-        public static int getTicketUser         (int Ticketid)                              
-        {
-
-            int q = 0;
-            
-
-            using (ProjectEntities db = new ProjectEntities())
-            {
-                q = (from t in db.Tickets
-                     where (t.TicketId == Ticketid)
-                     select t.UserId).FirstOrDefault();
-            }
-            return q;
-        }
-
-        public static int SetTicketRead         (int userid, int  TicketId)                 
-        {
-
-            int result = 0;
-            using (ProjectEntities db = new ProjectEntities())
-            {
-                result = (from tk in db.Tickets
-                          where (tk.TicketId == TicketId)
-                          select tk.TicketId).FirstOrDefault();
-
-                Ticket t = db.Tickets.Find(result);
-                t.IsNew = false;
-                t.IsRead = true;
-                db.Tickets.Attach(t);
-                db.Entry(t).State = System.Data.Entity.EntityState.Modified;
-                result = db.SaveChanges();
-            }
-
-            return result;
-        }
-
+ 
         public static bool IsNumeric            (string s)                                  
         {
             foreach (char c in s)
@@ -311,38 +220,7 @@ namespace ManagementTool.Common
             return true;
         }
         
-        public static int UpdateTicketSubject   (int Ticketid)                              
-        {
-            int q = 0;
-            try
-            {
-                using (ProjectEntities db = new ProjectEntities())
-                {
-                    Ticket t = db.Tickets.Find(Ticketid);
-                    t.TSubject = "[Helpdesk Ticket # : " + Ticketid + "] " + t.TSubject;
-                    db.Tickets.Attach(t);
-                    db.Entry(t).State = System.Data.Entity.EntityState.Modified;
-                    q = db.SaveChanges();
-                }
-            }
-            catch {
-                q = 0;
-            }            
-            return q;
-        }
-
-        public static int GetReplyNo            (int TicketId)                              {
-
-            int q = 0;           
-
-            using (ProjectEntities db = new ProjectEntities())
-            {
-                q = (from c in db.Ticket_Communication
-                     where (c.TicketId == TicketId)
-                     select (int?)c.ReplyNo).Max() ?? 0;
-            }
-            return (q == 0) ? 1 : q + 1;
-        }
+ 
 
         public static List<SelectListItem>      GetTechnicianList   (int id)                {
 
@@ -379,43 +257,7 @@ namespace ManagementTool.Common
             return tech;
         }
 
-        public static List<SelectListItem>      GetStatusList       (int id)                
-        {
-
-
-            SelectListItem _SelectListItem;
-            List<SelectListItem> status = new List<SelectListItem>();
-            try
-            {
-                using (ProjectEntities _db = new ProjectEntities())
-                {
-                    var querys = (from s in _db.C_service_status
-                                  orderby s.StatusName
-                                  where s.IsActive == true
-                                  select new { s.SID, s.StatusName }).ToList();
-                    foreach (var sitem in querys)
-                    {
-                        _SelectListItem = new SelectListItem();
-                        _SelectListItem.Value = sitem.SID.ToString();
-                        _SelectListItem.Text = sitem.StatusName;
-                        if (id > 0) {
-                            if (sitem.SID == id) { _SelectListItem.Selected = true; }
-                        }
-                        status.Add(_SelectListItem);
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                _SelectListItem = new SelectListItem();
-                _SelectListItem.Value = "0";
-                _SelectListItem.Text = e.Message;
-                status.Add(_SelectListItem);
-            }
-            return status;
-        }
-
-
+  
         public static DataTable GetDataTable    (string tablename, string sSQL)             
         {
             DataTable dt = new DataTable(tablename);
