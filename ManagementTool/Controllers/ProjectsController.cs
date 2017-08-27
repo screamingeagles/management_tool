@@ -1,12 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity;
+using ManagementTool.Common;
 using ManagementTool.Models;
+using System.Collections.Generic;
 
 namespace ManagementTool.Controllers
 {
@@ -19,6 +20,28 @@ namespace ManagementTool.Controllers
         {
             return View(db.C001_PROJECT.ToList());
         }
+
+        public ActionResult Add()
+        {
+            projectmodel pm = new projectmodel(0);
+            return View(pm);
+        }
+
+
+
+        [HttpPost]
+        public JsonResult GetCompaniesbyLocation(int SelectedLocation)
+        {
+            using (ProjectEntities _db = new ProjectEntities())
+            {
+                var q = (from c in _db.C005_COMPANY
+                         where (c.IsActive.Equals(true)) && (c.LocationId == SelectedLocation)
+                         select new { c.CompanyId, c.CompanyName }).ToList();
+                return Json(new { data = q });
+            }
+        }
+
+
 
         // GET: Projects/Details/5
         public ActionResult Details(int? id)

@@ -158,7 +158,7 @@ namespace ManagementTool.Common
             int sid = 0;
             using (ProjectEntities db = new ProjectEntities())
             {
-                LOGIN_DETAIL ld = new LOGIN_DETAIL();
+                EndUser_LoginDetails ld = new EndUser_LoginDetails();
                 ld.UserId = uid;
                 ld.LoginDate = DateTime.Now;
                 ld.LogOut = null;
@@ -166,7 +166,7 @@ namespace ManagementTool.Common
                 ld.UserIp = remoteip;
                 ld.SessionDuration = 0;
                 ld.LoginLocation = location;
-                db.LOGIN_DETAIL.Add(ld);
+                db.EndUser_LoginDetails.Add(ld);
                 sid = db.SaveChanges();
                 sid = ld.LID;
             }

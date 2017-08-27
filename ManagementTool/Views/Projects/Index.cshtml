@@ -8,52 +8,57 @@
 
 <br/>
 <div class="row">
-
+    <br />
     <div class="col-lg-12">
-        <div class="ibox float-e-margins">
-            <div class="ibox-title">
-                <h5>Complete Projects Listing</h5>
-                <div class="ibox-tools">
-                    <a class="collapse-link">
-                        <i class="fa fa-chevron-up"></i>
-                    </a>
-                    <a class="close-link">
-                        <i class="fa fa-times"></i>
-                    </a>
+        <button class="btn btn-sm btn-primary pull-left m-t-n-xs" type="button" onclick="window.location.href='@Url.Content("~/Projects/Add")'"><strong>Add New Project</strong></button>
+   </div>
+
+  
+    <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Complete Projects Listing</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
                 </div>
-            </div>
-            <div class="ibox-content">
-                <div class="table-responsive">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Project Name </th>
-                                <th>Created By</th>
-                                <th>Created Date </th>
-                                <th>Status</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model)
-                            {
+                <div class="ibox-content">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
                                 <tr>
-                                    <td>@index</td>
-                                    <td>@item.ProjectName <small><i>project title</i></small></td>
-                                    <td>@item.CreatedBy</td>
-                                    <td>@item.CreatedDate.ToString("MMM dd, yyyy")</td>
-                                    <td><i class="fa fa-check-square text-navy"></i><!--i class="fa fa-square text-navy"></i--></td>
-                                    <td>Action</td>
+                                    <th>#</th>
+                                    <th>Project Name </th>
+                                    <th>Created By</th>
+                                    <th>Created Date </th>
+                                    <th>Status</th>
+                                    <th>Action</th>
                                 </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                            {
+                            <tr>
+                                <td>@index</td>
+                                <td>@item.ProjectName <small><i>project title</i></small></td>
+                                <td>@item.CreatedBy</td>
+                                <td>@item.CreatedDate.ToString("MMM dd, yyyy")</td>
+                                <td><i class="fa fa-check-square text-navy"></i><!--i class="fa fa-square text-navy"></i--></td>
+                                <td>Action</td>
+                            </tr>
                                 index = index + 1;
                             }
-                        </tbody>
-                    </table>
-                </div>
+                            </tbody>
+                        </table>
+                    </div>
 
+                </div>
             </div>
         </div>
-    </div>
 
 </div>

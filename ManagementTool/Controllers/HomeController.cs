@@ -80,7 +80,7 @@ namespace ManagementTool.Controllers
                     {
                         // the user name and password is not present in the system
                         // its not matching with the ews as well .... return;
-                        return RedirectToAction("Index", "Login", new { x = 3 });
+                        return RedirectToAction("Index", "Home", new { x = 3 });
                     }
                 }
                 else
@@ -96,7 +96,7 @@ namespace ManagementTool.Controllers
                         if (LoginResult == false)
                         {
                             //return to home and tell him to use new password
-                            return RedirectToAction("Index", "Login", new { x = 4 });
+                            return RedirectToAction("Index", "Home", new { x = 4 });
                         }
                         else
                         {
@@ -115,13 +115,13 @@ namespace ManagementTool.Controllers
                 if (string.IsNullOrEmpty(hid) == false) { return RedirectToAction("Body", "Tickets", new { id = hid }); }
                 #endregion
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Welcome", "Home");
                 //return RedirectToAction("Index", "Login", new { x = 3 });
             }
             catch (Exception exi)
             {
                 string m = exi.Message;
-                return RedirectToAction("Index", "Login", new { x = 1 });
+                return RedirectToAction("Index", "Home", new { x = 1 });
             }
         }
 
