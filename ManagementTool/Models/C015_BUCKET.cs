@@ -12,19 +12,16 @@ namespace ManagementTool.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class C003_SUB_TASKS
+    public partial class C015_BUCKET
     {
-        public int SubTaskId { get; set; }
-        public int TaskId { get; set; }
-        public string Comment { get; set; }
-        public Nullable<System.DateTime> TaskDate { get; set; }
-        public System.DateTime CreatedDate { get; set; }
+        public int BucketId { get; set; }
+        public string Name { get; set; }
+        public Nullable<System.DateTime> StartDate { get; set; }
+        public Nullable<System.DateTime> EndDate { get; set; }
+        public Nullable<int> BucketType { get; set; }
         public int CreatedBy { get; set; }
-        public int TaskActive { get; set; }
-        public Nullable<int> OrderId { get; set; }
+        public System.DateTime CreatedDate { get; set; }
         public int UpdatedBy { get; set; }
         public System.DateTime UpdatedDate { get; set; }
-    
-        public virtual C002_TASK_DATA C002_TASK_DATA { get; set; }
     }
 }

@@ -599,6 +599,7 @@
     <Compile Include="Common\projectmodel.cs" />
     <Compile Include="Controllers\ActivityController.cs" />
     <Compile Include="Controllers\AreaController.cs" />
+    <Compile Include="Controllers\BucketsController.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\DivisionController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -649,6 +650,12 @@
       <DependentUpon>dbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\C013_CYCLED.cs">
+      <DependentUpon>dbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\C014_MEETING.cs">
+      <DependentUpon>dbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\C015_BUCKET.cs">
       <DependentUpon>dbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\dbModel.Context.cs">
@@ -825,6 +832,11 @@
     <Content Include="Scripts\js\plugins\justified-gallery\README.md" />
     <Content Include="Scripts\js\plugins\topojson\LICENSE" />
     <Content Include="Views\Projects\Add.cshtml" />
+    <Content Include="Views\Buckets\Create.cshtml" />
+    <Content Include="Views\Buckets\Delete.cshtml" />
+    <Content Include="Views\Buckets\Details.cshtml" />
+    <Content Include="Views\Buckets\Edit.cshtml" />
+    <Content Include="Views\Buckets\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

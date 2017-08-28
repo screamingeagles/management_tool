@@ -47,5 +47,7 @@ namespace ManagementTool.Models
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<LOGIN_DETAIL> LOGIN_DETAIL { get; set; }
         public virtual DbSet<vw_SessionUser> vw_SessionUser { get; set; }
+        public virtual DbSet<C014_MEETING> C014_MEETING { get; set; }
+        public virtual DbSet<C015_BUCKET> C015_BUCKET { get; set; }
     }
 }

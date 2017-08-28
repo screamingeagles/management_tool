@@ -1,0 +1,95 @@
+﻿@model ManagementTool.Models.C015_BUCKET
+
+@{
+    ViewBag.Title = "Create New Bucket";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Create</h2>
+
+<div class="row">
+
+    <div class="col-lg-10 col-lg-offset-1">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Add new Bucket</h5>
+                <div class="ibox-tools">
+                    <a class="collapse-link">
+                        <i class="fa fa-chevron-up"></i>
+                    </a>
+                    <a class="close-link">
+                        <i class="fa fa-times"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="ibox-content">
+                <div class="table-responsive">
+                    @using (Html.BeginForm("Save", "Buckets", FormMethod.Post, new { id = "frmMain" }))
+                    {
+                        @Html.AntiForgeryToken();
+
+                    <!-- / Project Name -->
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">New Bucket Name</label>
+                            <div class="col-lg-10">
+                                <input id="txtBucketName" name="txtBucketName" type="text" placeholder="Bucket Name" class="form-control m-b">
+                            </div>
+                        </div>
+
+                    <!-- / Bucket Type-->
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Select Bucket Type (optional)</label>
+                            <div class="col-lg-10">
+                                <select class="form-control m-b" id="selBucketType" name="selBucketType">
+                                    <option value="">Select Type</option>
+                                    <option value="100">Type 1</option>
+                                    <option value="101">Type 2</option>    
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-lg-12">
+                                <button class="btn btn-sm btn-primary pull-left m-t-n-xs" type="submit">
+                                    <strong>Save</strong>
+                                </button>
+
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(
+        function () {
+            $("#frmMain").validate({
+                rules: {
+                    txtBucketName: {
+                        minlength: 3,
+                        maxlength: 250,
+                        required: true
+                    }
+                },
+
+                highlight: function (element) {
+                    $(element).closest('.control-group').addClass('has-error');
+                },
+
+                unhighlight: function (element) {
+                    $(element).closest('.control-group').removeClass('has-error');
+                },
+
+                submitHandler: function (form) { // for demo
+                    form.submit();
+                    return false;
+                }
+            });
+        });
+</script>

@@ -24,6 +24,8 @@ namespace ManagementTool.Common
         public int UpdatedById { get; set; }
         public DateTime UpdatedDate { get; set; }
 
+        public projectmodel() {
+        }
         public projectmodel(int projectId)
         {
             List<SelectListItem> lst;

@@ -26,7 +26,6 @@
                 @using (Html.BeginForm("Save", "Projects", FormMethod.Post, new { id = "frmMain" }))
                 {
                     @Html.AntiForgeryToken();
-                    @Html.HiddenFor(model => model.ProjetId)
 
                     <!-- / Project Name -->
                     <div class="form-group">

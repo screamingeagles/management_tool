@@ -30,6 +30,7 @@
           <Property Name="Description" Type="nvarchar" MaxLength="900" />
           <Property Name="StartDate" Type="datetime" />
           <Property Name="Deadline" Type="datetime" />
+          <Property Name="OrderId" Type="int" />
           <Property Name="ManDays" Type="float" />
           <Property Name="ServiceOwnerId" Type="int" Nullable="false" />
           <Property Name="CreatedById" Type="int" Nullable="false" />
@@ -48,8 +49,11 @@
           <Property Name="TaskId" Type="int" Nullable="false" />
           <Property Name="Comment" Type="nvarchar" MaxLength="900" />
           <Property Name="TaskDate" Type="datetime" />
+          <Property Name="OrderId" Type="int" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="UpdatedBy" Type="int" Nullable="false" />
+          <Property Name="UpdatedDate" Type="datetime" Nullable="false" />
           <Property Name="TaskActive" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="004_LOCATION">
@@ -160,6 +164,48 @@
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="CreatedBy" Type="int" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="014_MEETING">
+          <Key>
+            <PropertyRef Name="MID" />
+          </Key>
+          <Property Name="MID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" />
+          <Property Name="Notes" Type="nvarchar" MaxLength="500" />
+          <Property Name="Attachment" Type="nvarchar" MaxLength="250" />
+          <Property Name="mType" Type="int" />
+          <Property Name="InternalAttendance" Type="ntext" />
+          <Property Name="VendorName" Type="nvarchar" MaxLength="250" />
+          <Property Name="VendorType" Type="int" />
+          <Property Name="ManDays" Type="int" />
+          <Property Name="MeetingDate" Type="datetime" />
+          <Property Name="MeetingStatus" Type="int" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedBy" Type="int" Nullable="false" />
+          <Property Name="UpdatedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'db_management_tool.dbo.015_BUCKET' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="015_BUCKET">
+          <Key>
+            <PropertyRef Name="BucketId" />
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="CreatedBy" />
+            <PropertyRef Name="CreatedDate" />
+            <PropertyRef Name="UpdatedBy" />
+            <PropertyRef Name="UpdatedDate" />
+          </Key>
+          <Property Name="BucketId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="StartDate" Type="datetime" />
+          <Property Name="EndDate" Type="datetime" />
+          <Property Name="BucketType" Type="int" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedBy" Type="int" Nullable="false" />
+          <Property Name="UpdatedDate" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="EndUser">
           <Key>
@@ -450,6 +496,7 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_SessionUser' does not ha
           <EntitySet Name="011_coOwners" EntityType="Self.011_coOwners" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="012_Attachments" EntityType="Self.012_Attachments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="013_CYCLED" EntityType="Self.013_CYCLED" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="014_MEETING" EntityType="Self.014_MEETING" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EndUser" EntityType="Self.EndUser" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EndUser_Details" EntityType="Self.EndUser_Details" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EndUser_LoginDetails" EntityType="Self.EndUser_LoginDetails" Schema="dbo" store:Type="Tables" />
@@ -457,6 +504,19 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_SessionUser' does not ha
           <EntitySet Name="Smart_Login" EntityType="Self.Smart_Login" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="STATUS" EntityType="Self.STATUS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="015_BUCKET" EntityType="Self.015_BUCKET" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [015_BUCKET].[BucketId] AS [BucketId], 
+    [015_BUCKET].[Name] AS [Name], 
+    [015_BUCKET].[StartDate] AS [StartDate], 
+    [015_BUCKET].[EndDate] AS [EndDate], 
+    [015_BUCKET].[BucketType] AS [BucketType], 
+    [015_BUCKET].[CreatedBy] AS [CreatedBy], 
+    [015_BUCKET].[CreatedDate] AS [CreatedDate], 
+    [015_BUCKET].[UpdatedBy] AS [UpdatedBy], 
+    [015_BUCKET].[UpdatedDate] AS [UpdatedDate]
+    FROM [dbo].[015_BUCKET] AS [015_BUCKET]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="LOGIN_DETAIL" EntityType="Self.LOGIN_DETAIL" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [LOGIN_DETAIL].[LID] AS [LID], 
@@ -590,6 +650,7 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_SessionUser' does not ha
           <NavigationProperty Name="C013_CYCLED" Relationship="Self.FK_TASK_DATA_CYCLED" FromRole="C002_TASK_DATA" ToRole="C013_CYCLED" />
           <NavigationProperty Name="C006_DIVISION" Relationship="Self.FK_TASK_DATA_DIVISION" FromRole="C002_TASK_DATA" ToRole="C006_DIVISION" />
           <NavigationProperty Name="C003_SUB_TASKS" Relationship="Self.FK_TASK_DATA_SUB_TASK" FromRole="C002_TASK_DATA" ToRole="C003_SUB_TASKS" />
+          <Property Name="OrderId" Type="Int32" />
         </EntityType>
         <EntityType Name="C003_SUB_TASKS">
           <Key>
@@ -603,6 +664,9 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_SessionUser' does not ha
           <Property Name="CreatedBy" Type="Int32" Nullable="false" />
           <Property Name="TaskActive" Type="Int32" Nullable="false" />
           <NavigationProperty Name="C002_TASK_DATA" Relationship="Self.FK_TASK_DATA_SUB_TASK" FromRole="C003_SUB_TASKS" ToRole="C002_TASK_DATA" />
+          <Property Name="OrderId" Type="Int32" />
+          <Property Name="UpdatedBy" Type="Int32" Nullable="false" />
+          <Property Name="UpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <EntityType Name="C004_LOCATION">
           <Key>
@@ -1035,6 +1099,8 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_SessionUser' does not ha
           </AssociationSet>
           <EntitySet Name="LOGIN_DETAIL" EntityType="ManagementTool.LOGIN_DETAIL" />
           <EntitySet Name="vw_SessionUser" EntityType="ManagementTool.vw_SessionUser" />
+          <EntitySet Name="C014_MEETING" EntityType="ManagementTool.C014_MEETING" />
+          <EntitySet Name="C015_BUCKET" EntityType="ManagementTool.C015_BUCKET" />
         </EntityContainer>
         <EntityType Name="LOGIN_DETAIL">
           <Key>
@@ -1072,6 +1138,46 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_SessionUser' does not ha
           <Property Name="UserCreated" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
         </EntityType>
+        <EntityType Name="C014_MEETING">
+          <Key>
+            <PropertyRef Name="MID" />
+          </Key>
+          <Property Name="MID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Notes" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Attachment" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="mType" Type="Int32" />
+          <Property Name="InternalAttendance" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="VendorName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="VendorType" Type="Int32" />
+          <Property Name="ManDays" Type="Int32" />
+          <Property Name="MeetingDate" Type="DateTime" Precision="3" />
+          <Property Name="MeetingStatus" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="Int32" Nullable="false" />
+          <Property Name="UpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="C015_BUCKET">
+          <Key>
+            <PropertyRef Name="BucketId" />
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="CreatedBy" />
+            <PropertyRef Name="CreatedDate" />
+            <PropertyRef Name="UpdatedBy" />
+            <PropertyRef Name="UpdatedDate" />
+          </Key>
+          <Property Name="BucketId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="StartDate" Type="DateTime" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Precision="3" />
+          <Property Name="BucketType" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="Int32" Nullable="false" />
+          <Property Name="UpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1092,6 +1198,7 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_SessionUser' does not ha
           <EntitySetMapping Name="C002_TASK_DATA">
             <EntityTypeMapping TypeName="ManagementTool.C002_TASK_DATA">
               <MappingFragment StoreEntitySet="002_TASK_DATA">
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
                 <ScalarProperty Name="TaskId" ColumnName="TaskId" />
                 <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
                 <ScalarProperty Name="LocationId" ColumnName="LocationId" />
@@ -1118,6 +1225,9 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_SessionUser' does not ha
           <EntitySetMapping Name="C003_SUB_TASKS">
             <EntityTypeMapping TypeName="ManagementTool.C003_SUB_TASKS">
               <MappingFragment StoreEntitySet="003_SUB_TASKS">
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
                 <ScalarProperty Name="SubTaskId" ColumnName="SubTaskId" />
                 <ScalarProperty Name="TaskId" ColumnName="TaskId" />
                 <ScalarProperty Name="Comment" ColumnName="Comment" />
@@ -1363,6 +1473,43 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_SessionUser' does not ha
                 <ScalarProperty Name="SessionId" ColumnName="SessionId" />
                 <ScalarProperty Name="UID" ColumnName="UID" />
                 <ScalarProperty Name="LID" ColumnName="LID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="C014_MEETING">
+            <EntityTypeMapping TypeName="ManagementTool.C014_MEETING">
+              <MappingFragment StoreEntitySet="014_MEETING">
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="MeetingStatus" ColumnName="MeetingStatus" />
+                <ScalarProperty Name="MeetingDate" ColumnName="MeetingDate" />
+                <ScalarProperty Name="ManDays" ColumnName="ManDays" />
+                <ScalarProperty Name="VendorType" ColumnName="VendorType" />
+                <ScalarProperty Name="VendorName" ColumnName="VendorName" />
+                <ScalarProperty Name="InternalAttendance" ColumnName="InternalAttendance" />
+                <ScalarProperty Name="mType" ColumnName="mType" />
+                <ScalarProperty Name="Attachment" ColumnName="Attachment" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="MID" ColumnName="MID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="C015_BUCKET">
+            <EntityTypeMapping TypeName="ManagementTool.C015_BUCKET">
+              <MappingFragment StoreEntitySet="015_BUCKET">
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="BucketType" ColumnName="BucketType" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="BucketId" ColumnName="BucketId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

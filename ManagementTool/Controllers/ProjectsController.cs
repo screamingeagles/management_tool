@@ -18,6 +18,17 @@ namespace ManagementTool.Controllers
         // GET: Projects
         public ActionResult Index()
         {
+            //var q = (from p in db.C001_PROJECT
+            //         join e in db.EndUsers on p.CreatedBy equals e.UID
+            //         where p.IsActive == true
+            //         select new {
+            //             ProjetId       = p.ProjectId,
+            //             ProjectName    = p.ProjectName,
+            //             CreatedDate    = p.CreatedDate,
+            //             CreatedName    = e.UserName
+            //         }).ToList();
+
+            //return View(q);
             return View(db.C001_PROJECT.ToList());
         }
 
@@ -27,7 +38,20 @@ namespace ManagementTool.Controllers
             return View(pm);
         }
 
+        [HttpPost]
+        public ActionResult Save(FormCollection frm)
+        {
+            if (ModelState.IsValid) {
+                string pname = "";
+                // pname = "arsalan";
+                // c001_PROJECT.CreatedBy = 1020;
+                // db.C001_PROJECT.Add(c001_PROJECT);
+                // db.SaveChanges();
+                return RedirectToAction("Index");
+            }
 
+            return RedirectToAction("Index");
+        }
 
         [HttpPost]
         public JsonResult GetCompaniesbyLocation(int SelectedLocation)

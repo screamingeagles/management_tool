@@ -43,6 +43,7 @@ namespace ManagementTool.Models
         public int TypeId { get; set; }
         public Nullable<int> StatusId { get; set; }
         public bool IsActive { get; set; }
+        public Nullable<int> OrderId { get; set; }
     
         public virtual C001_PROJECT C001_PROJECT { get; set; }
         public virtual C004_LOCATION C004_LOCATION { get; set; }
