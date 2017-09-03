@@ -39,7 +39,10 @@ namespace ManagementTool
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.min.css",
                       "~/Content/animate.css",
-                      "~/Content/style.css"));
+                      "~/Content/style.css",
+                      "~/Content/css/plugins/jQueryUI/jquery-ui.css",
+                      "~/Content/css/plugins/jQueryUI/jquery-ui-1.10.4.custom.min.css",                      
+                      "~/Content/css/plugins/datepicker/datepicker3.css"));
 
             // Font Awesome icons
             bundles.Add(new StyleBundle("~/font-awesome/css").Include(

@@ -26,7 +26,7 @@
             </div>
             <div class="ibox-content">
                 <div class="table-responsive">
-                    @using (Html.BeginForm("Save", "Projects", FormMethod.Post, new { id = "frmMain" }))
+                    @using (Html.BeginForm("Create", "Project", FormMethod.Post, new { id = "frmMain" }))
                     {
                         @Html.AntiForgeryToken();
 
@@ -34,7 +34,7 @@
                         <div class="form-group">
                             <label class="col-lg-3 control-label">New Project Name</label>
                             <div class="col-lg-9">
-                                <input id="txtprojectName" name="txtprojectName" type="text" placeholder="Project Name" class="form-control m-b">
+                                <input id="ProjectName" name="ProjectName" type="text" placeholder="Project Name" class="form-control m-b">
                             </div>
                         </div>
 
@@ -42,7 +42,7 @@
                         <div class="form-group">
                             <label class="col-lg-3 control-label">Select Location</label>
                             <div class="col-lg-9">
-                                @Html.DropDownList("LocationId", null, "Select Location", htmlAttributes: new { @class = "form-control m-b" })
+                                @Html.DropDownList("LocationId", null, "Select Location", htmlAttributes: new { @class = "form-control m-b", onchange= "FillCompany(this);" })
                             </div>
                         </div>
 
@@ -62,6 +62,22 @@
                             </div>
                         </div>
 
+                    <!-- / Start Date-->
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Project Start Date</label>
+                            <div class="col-lg-9">
+                                <input id="StartDate" name="StartDate" type="text" placeholder="Start Date" class="form-control m-b">
+                            </div>
+                        </div>
+
+                   <!-- / End Date -->
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Project End Date</label>
+                            <div class="col-lg-9">
+                                <input id="EndDate" name="EndDate" type="text" placeholder="End Date" class="form-control m-b">
+                            </div>
+                        </div>
+                        
                     <!-- / Project Type -->
                         <div class="form-group">
                             <label class="col-lg-3 control-label">Select Project Type</label>
@@ -69,8 +85,7 @@
                                 @Html.DropDownList("ProjectType", null,"Select Project Type", htmlAttributes: new { @class = "form-control m-b" })
                             </div>
                         </div>
-
-
+                        
                     <!-- / Save Button -->
                         <div class="form-group">
                             <div class="col-lg-12">
@@ -86,6 +101,117 @@
             </div>
         </div>
     </div>
-
-
 </div>
+
+
+<script type="text/javascript">
+
+    $(document).ready(
+    function () {
+            $('#StartDate').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                minDate: "-15w",
+                dateFormat: "dd-M-yy" /*format: 'dd-M-yyyy'*/
+            });
+
+            $('#EndDate').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                numberOfMonths: 1,
+                dateFormat: "dd-M-yy"
+            });
+
+            $("#frmMain").validate({
+            rules: {
+                ProjectName : {
+                    minlength: 3,
+                    maxlength: 250,
+                    required: true
+                },
+                LocationId  : { required: true },
+                CompanyId   : { required: true  },
+                DivisionId  : { required: true },
+                ProjectType : { required: true },
+                StartDate   : {
+                    minlength: 6,
+                    maxlength: 15,
+                    required: true
+                },
+                EndDate     : {
+                    minlength: 6,
+                    maxlength: 15,
+                    required: true
+                },
+            },
+            highlight       : function (element) {
+                $(element).closest('.control-group').addClass('has-error');
+            },
+            unhighlight     : function (element) {
+                $(element).closest('.control-group').removeClass('has-error');
+            },
+            submitHandler   : function (form) { // for demo
+                form.submit();
+                return false;
+            }
+        });
+        });
+
+
+    function FillCompany    (obj) {
+        var sel = obj.options[obj.selectedIndex].value;
+        if (sel == "") { return; }
+
+        var postedContent = { SelectedLocation: sel }
+        $.ajax({
+            type: "POST",
+            url: "/Project/GetCompaniesbyLocation",
+            data: postedContent,
+            success: function (message) {
+                var res = message.data;
+                if (res.length > 0) {
+                    $("#CompanyId").empty()
+                    for (var i = 0; i < message.data.length; i++) {
+                        $('#CompanyId').append($('<option>', { value: message.data[i].CompanyId, text: message.data[i].CompanyName }));
+                    } // end of for loop
+                } // end of if for length
+            },
+            error: function (xerr) {
+                /* $('#txteng').val("err : " +xerr);*/
+            }
+        });
+
+    }
+
+    function Confirm        () {
+        return confirm('Are you sure you want delete');
+    }
+
+    function GetFileName    ()           {
+        var fullPath = document.getElementById('attachment').value;
+        if (fullPath) {
+            var startIndex = (fullPath.indexOf('\\') >= 0 ? fullPath.lastIndexOf('\\') : fullPath.lastIndexOf('/'));
+            var filename = fullPath.substring(startIndex);
+            if (filename.indexOf('\\') === 0 || filename.indexOf('/') === 0) {
+                filename = filename.substring(1);
+            }
+            document.getElementById('idFileAdd').innerHTML = filename;
+
+        }
+    }
+
+    function getDate        (element)    {
+        var date;
+        try {
+            date = $.datepicker.parseDate("dd-M-yyyy", element.value);
+            //date = $.datepicker.parseDate(dateFormat, element.value);
+
+        } catch (error) {
+            //alert(error.message);
+            date = null;
+        }
+        return date;
+    }
+</script>
+
+
