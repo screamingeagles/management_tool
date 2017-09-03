@@ -1,0 +1,91 @@
+﻿@model ManagementTool.Models.C001_PROJECT
+
+@{
+    ViewBag.Title = "Add New";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<br />
+
+<div class="row">
+
+    <div class="col-lg-10 col-lg-offset-1">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Add new Project</h5>
+                <div class="ibox-tools">
+                    <a class="collapse-link">
+                        <i class="fa fa-chevron-up"></i>
+                    </a>
+                    <a class="close-link">
+                        <i class="fa fa-times"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="ibox-content">
+                <div class="table-responsive">
+                    @using (Html.BeginForm("Save", "Projects", FormMethod.Post, new { id = "frmMain" }))
+                    {
+                        @Html.AntiForgeryToken();
+
+                    <!-- / Project Name -->
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">New Project Name</label>
+                            <div class="col-lg-9">
+                                <input id="txtprojectName" name="txtprojectName" type="text" placeholder="Project Name" class="form-control m-b">
+                            </div>
+                        </div>
+
+                    <!-- / Location -->
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Select Location</label>
+                            <div class="col-lg-9">
+                                @Html.DropDownList("LocationId", null, "Select Location", htmlAttributes: new { @class = "form-control m-b" })
+                            </div>
+                        </div>
+
+                    <!-- / Company -->
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Select Company</label>
+                            <div class="col-lg-9">
+                                @Html.DropDownList("CompanyId", null, "Select Company" , htmlAttributes: new { @class = "form-control m-b" })
+                            </div>
+                        </div>
+
+                    <!-- / Division -->
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Select Division</label>
+                            <div class="col-lg-9">
+                                @Html.DropDownList("DivisionId", null, "Select Division", htmlAttributes: new { @class = "form-control m-b" })
+                            </div>
+                        </div>
+
+                    <!-- / Project Type -->
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Select Project Type</label>
+                            <div class="col-lg-9">
+                                @Html.DropDownList("ProjectType", null,"Select Project Type", htmlAttributes: new { @class = "form-control m-b" })
+                            </div>
+                        </div>
+
+
+                    <!-- / Save Button -->
+                        <div class="form-group">
+                            <div class="col-lg-12">
+                                <button class="btn btn-sm btn-primary pull-left m-t-n-xs" type="submit">
+                                    <strong>Save</strong>
+                                </button>
+
+                                @Html.ActionLink("Back to List", "Index",null, htmlAttributes: new { @class = "btn btn-sm btn-primary pull-right m-t-n-xs" })
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>

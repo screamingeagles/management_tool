@@ -53,18 +53,18 @@ namespace helpdesk.Common
 
                 using (ProjectEntities _db = new ProjectEntities())
                 {
-                    var q = (from m in _db.C002_TASK_DATA
-                             join u in _db.EndUsers on m.ServiceOwnerId equals u.UID
-                             join x in _db.EndUsers on m.CreatedById equals x.UID
+                    var q = (from m in _db.C005_TASK_DATA
+                             join u in _db.EndUsers on m.OwnerId equals u.UID
+                             join x in _db.EndUsers on m.GeneratedBy equals x.UID
                              where (m.TaskId == ServiceId)
-                             select new {   CreatorEmail = x.UserEmail, CreatorName = m.CreateByName,
+                             select new {   CreatorEmail = x.UserEmail, CreatorName = m.GeneratedBy,
                                             OwnerEmail   = u.UserEmail, OwnerName   = u.UserName,
                                             m.StartDate, m.Deadline   , ServiceName = m.SName }).FirstOrDefault();
 
                     Subject = q.ServiceName.Trim();
 
                     CEmail = q.CreatorEmail.Trim();
-                    CName  = q.CreatorName.Trim();
+                    CName  = q.CreatorName.ToString().Trim();
 
                     OEmail = q.OwnerEmail.Trim();
                     OName  = q.OwnerName.Trim();

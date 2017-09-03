@@ -25,29 +25,32 @@ namespace ManagementTool.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<C001_PROJECT> C001_PROJECT { get; set; }
-        public virtual DbSet<C002_TASK_DATA> C002_TASK_DATA { get; set; }
-        public virtual DbSet<C003_SUB_TASKS> C003_SUB_TASKS { get; set; }
-        public virtual DbSet<C004_LOCATION> C004_LOCATION { get; set; }
-        public virtual DbSet<C005_COMPANY> C005_COMPANY { get; set; }
-        public virtual DbSet<C006_DIVISION> C006_DIVISION { get; set; }
-        public virtual DbSet<C007_AREA> C007_AREA { get; set; }
-        public virtual DbSet<C008_SUB_AREA> C008_SUB_AREA { get; set; }
-        public virtual DbSet<C009_TYPE> C009_TYPE { get; set; }
-        public virtual DbSet<C010_STATUS> C010_STATUS { get; set; }
-        public virtual DbSet<C011_coOwners> C011_coOwners { get; set; }
-        public virtual DbSet<C012_Attachments> C012_Attachments { get; set; }
-        public virtual DbSet<C013_CYCLED> C013_CYCLED { get; set; }
+        public virtual DbSet<C002_PHASE> C002_PHASE { get; set; }
+        public virtual DbSet<C003_SUB_PHASE> C003_SUB_PHASE { get; set; }
+        public virtual DbSet<C004_BUCKET> C004_BUCKET { get; set; }
+        public virtual DbSet<C005_TASK_DATA> C005_TASK_DATA { get; set; }
+        public virtual DbSet<C006_SUB_TASKS> C006_SUB_TASKS { get; set; }
+        public virtual DbSet<C007_LOCATION> C007_LOCATION { get; set; }
+        public virtual DbSet<C008_COMPANY> C008_COMPANY { get; set; }
+        public virtual DbSet<C009_DIVISION> C009_DIVISION { get; set; }
+        public virtual DbSet<C010_AREA> C010_AREA { get; set; }
+        public virtual DbSet<C011_SUB_AREA> C011_SUB_AREA { get; set; }
+        public virtual DbSet<C012_SUB_SUB_AREA> C012_SUB_SUB_AREA { get; set; }
+        public virtual DbSet<C013_PROJECT_TYPE> C013_PROJECT_TYPE { get; set; }
+        public virtual DbSet<C014_TASK_TYPE> C014_TASK_TYPE { get; set; }
+        public virtual DbSet<C015_STATUS> C015_STATUS { get; set; }
+        public virtual DbSet<C016_CYCLED> C016_CYCLED { get; set; }
+        public virtual DbSet<C017_MEETING> C017_MEETING { get; set; }
+        public virtual DbSet<C018_coOwners> C018_coOwners { get; set; }
+        public virtual DbSet<C019_Attachments> C019_Attachments { get; set; }
         public virtual DbSet<EndUser> EndUsers { get; set; }
         public virtual DbSet<EndUser_Details> EndUser_Details { get; set; }
         public virtual DbSet<EndUser_LoginDetails> EndUser_LoginDetails { get; set; }
         public virtual DbSet<Mailer_Details> Mailer_Details { get; set; }
         public virtual DbSet<Smart_Login> Smart_Login { get; set; }
         public virtual DbSet<STATUS> STATUS { get; set; }
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<LOGIN_DETAIL> LOGIN_DETAIL { get; set; }
         public virtual DbSet<vw_SessionUser> vw_SessionUser { get; set; }
-        public virtual DbSet<C014_MEETING> C014_MEETING { get; set; }
-        public virtual DbSet<C015_BUCKET> C015_BUCKET { get; set; }
+        public virtual DbSet<C001_PROJECT> C001_PROJECT { get; set; }
     }
 }

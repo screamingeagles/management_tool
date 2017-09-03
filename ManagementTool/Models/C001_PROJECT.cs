@@ -17,16 +17,30 @@ namespace ManagementTool.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public C001_PROJECT()
         {
-            this.C002_TASK_DATA = new HashSet<C002_TASK_DATA>();
+            this.C004_BUCKET = new HashSet<C004_BUCKET>();
+            this.C002_PHASE = new HashSet<C002_PHASE>();
         }
     
         public int ProjectId { get; set; }
         public string ProjectName { get; set; }
-        public int CreatedBy { get; set; }
-        public System.DateTime CreatedDate { get; set; }
+        public int LocationId { get; set; }
+        public int CompanyId { get; set; }
+        public int DivisionId { get; set; }
+        public int ProjectType { get; set; }
+        public System.DateTime StartDate { get; set; }
+        public Nullable<System.DateTime> EndDate { get; set; }
+        public int GeneratedBy { get; set; }
+        public System.DateTime GeneratedDate { get; set; }
         public bool IsActive { get; set; }
     
+        public virtual C008_COMPANY C008_COMPANY { get; set; }
+        public virtual C009_DIVISION C009_DIVISION { get; set; }
+        public virtual EndUser EndUser { get; set; }
+        public virtual C007_LOCATION C007_LOCATION { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<C002_TASK_DATA> C002_TASK_DATA { get; set; }
+        public virtual ICollection<C004_BUCKET> C004_BUCKET { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<C002_PHASE> C002_PHASE { get; set; }
+        public virtual C013_PROJECT_TYPE C013_PROJECT_TYPE { get; set; }
     }
 }

@@ -12,32 +12,26 @@ namespace ManagementTool.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class EndUser
+    public partial class C011_SUB_AREA
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public EndUser()
+        public C011_SUB_AREA()
         {
             this.C005_TASK_DATA = new HashSet<C005_TASK_DATA>();
-            this.C005_TASK_DATA1 = new HashSet<C005_TASK_DATA>();
-            this.C001_PROJECT = new HashSet<C001_PROJECT>();
+            this.C012_SUB_SUB_AREA = new HashSet<C012_SUB_SUB_AREA>();
         }
     
-        public int UID { get; set; }
-        public string UserName { get; set; }
-        public string UserPassword { get; set; }
-        public string UserEmail { get; set; }
-        public bool IsValidLogin { get; set; }
-        public Nullable<System.DateTime> LastLogin { get; set; }
-        public Nullable<int> UserType { get; set; }
-        public System.DateTime UserCreated { get; set; }
-        public bool IsActive { get; set; }
-        public Nullable<int> Company { get; set; }
+        public int SubAreaId { get; set; }
+        public int AreaId { get; set; }
+        public string SubAreaName { get; set; }
+        public int CreatedBy { get; set; }
+        public System.DateTime CreatedDate { get; set; }
+        public bool AreaActive { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<C005_TASK_DATA> C005_TASK_DATA { get; set; }
+        public virtual C010_AREA C010_AREA { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<C005_TASK_DATA> C005_TASK_DATA1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<C001_PROJECT> C001_PROJECT { get; set; }
+        public virtual ICollection<C012_SUB_SUB_AREA> C012_SUB_SUB_AREA { get; set; }
     }
 }

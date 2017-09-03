@@ -17,8 +17,8 @@ namespace ManagementTool.Common
         public List<SelectListItem> Company { get; set; }
         public List<SelectListItem> Division { get; set; }
         public List<SelectListItem> ProjectType { get; set; }
-
-
+        
+        
         public int CreatedById { get; set; }
         public DateTime CreatedDate { get; set; }
         public int UpdatedById { get; set; }
@@ -26,6 +26,8 @@ namespace ManagementTool.Common
 
         public projectmodel() {
         }
+
+        // this fiunction will return filled model
         public projectmodel(int projectId)
         {
             List<SelectListItem> lst;
@@ -41,7 +43,7 @@ namespace ManagementTool.Common
                 {
                     lst = new List<SelectListItem>();
                     #region  // :- L o c a t i o n  :. 
-                    var query = (from l in _db.C004_LOCATION
+                    var query = (from l in _db.C007_LOCATION
                                  orderby l.LocationName
                                  where (l.IsActive == true)
                                  select new { l.LocationId, l.LocationName }).ToList();
@@ -59,7 +61,7 @@ namespace ManagementTool.Common
                     lst = null;
                     lst = new List<SelectListItem>();
                     #region  // :- c o m p a n y  :.
-                    var queryc = (from c in _db.C005_COMPANY
+                    var queryc = (from c in _db.C008_COMPANY
                                   orderby c.CompanyName
                                   where (c.IsActive == true)
                                   select new { c.CompanyId, c.CompanyName }).ToList();
@@ -77,7 +79,7 @@ namespace ManagementTool.Common
                     lst = null;
                     lst = new List<SelectListItem>();
                     #region  // :- D i v i s i o n :.
-                    var queryd = (from c in _db.C006_DIVISION
+                    var queryd = (from c in _db.C009_DIVISION
                                   orderby c.DivisionName
                                   where (c.IsActive == true)
                                   select new { c.DivisionId, c.DivisionName }).ToList();
@@ -95,9 +97,9 @@ namespace ManagementTool.Common
                     lst = null;
                     lst = new List<SelectListItem>();
                     #region  // :- T y p e  :.
-                    var queryt = (from ty in _db.C009_TYPE
+                    var queryt = (from ty in _db.C013_PROJECT_TYPE
                                   where (ty.IsActive == true)
-                                  select new { ty.TypeId, ty.TypeName }).ToList();
+                                  select new { TypeId = ty.ProjectTypeId, TypeName = ty.ProjectType }).ToList();
                     foreach (var litem in queryt)
                     {
                         _SelectListItem = new SelectListItem();
