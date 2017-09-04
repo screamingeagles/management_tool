@@ -52,5 +52,7 @@ namespace ManagementTool.Models
         public virtual DbSet<C002_PHASE> C002_PHASE { get; set; }
         public virtual DbSet<C003_SUB_PHASE> C003_SUB_PHASE { get; set; }
         public virtual DbSet<C004_BUCKET> C004_BUCKET { get; set; }
+        public virtual DbSet<ROLE_DETAIL> ROLE_DETAIL { get; set; }
+        public virtual DbSet<ROLE_MASTER> ROLE_MASTER { get; set; }
     }
 }

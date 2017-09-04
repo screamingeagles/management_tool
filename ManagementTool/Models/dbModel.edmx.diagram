@@ -59,6 +59,9 @@
         <AssociationConnector Association="ManagementTool.FK_SUB_PHASE__BUCKET" />
         <AssociationConnector Association="ManagementTool.FK_BUCKET_TASK_DATA" />
         <AssociationConnector Association="ManagementTool.FK_Generated_BUCKET" />
+        <EntityTypeShape EntityType="ManagementTool.ROLE_DETAIL" Width="1.5" PointX="12.625" PointY="10" />
+        <EntityTypeShape EntityType="ManagementTool.ROLE_MASTER" Width="1.5" PointX="10.375" PointY="10.5" />
+        <AssociationConnector Association="ManagementTool.FK_ROLE__MASTER_DETAIL" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -311,6 +311,26 @@ warning 6002: The table/view 'db_management_tool.dbo.LOGIN_DETAIL' does not have
           <Property Name="Mailed" Type="bit" />
           <Property Name="MailSentDate" Type="datetime" />
         </EntityType>
+        <EntityType Name="ROLE_DETAIL">
+          <Key>
+            <PropertyRef Name="RoleDetailId" />
+          </Key>
+          <Property Name="RoleDetailId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleId" Type="int" Nullable="false" />
+          <Property Name="Controller" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="Action" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="Allowed" Type="bit" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="GeneratedDate" Type="datetime" Nullable="false" />
+          <Property Name="GeneratedBy" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ROLE_MASTER">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleName" Type="nvarchar" MaxLength="250" Nullable="false" />
+        </EntityType>
         <EntityType Name="Smart_Login">
           <Key>
             <PropertyRef Name="SID" />
@@ -574,6 +594,18 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_SessionUser' does not ha
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ROLE__MASTER_DETAIL">
+          <End Role="ROLE_MASTER" Type="Self.ROLE_MASTER" Multiplicity="1" />
+          <End Role="ROLE_DETAIL" Type="Self.ROLE_DETAIL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ROLE_MASTER">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="ROLE_DETAIL">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_STATUS__TASK_DATA">
           <End Role="015_STATUS" Type="Self.015_STATUS" Multiplicity="1" />
           <End Role="005_TASK_DATA" Type="Self.005_TASK_DATA" Multiplicity="*" />
@@ -706,6 +738,8 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_SessionUser' does not ha
           <EntitySet Name="EndUser_Details" EntityType="Self.EndUser_Details" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EndUser_LoginDetails" EntityType="Self.EndUser_LoginDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Mailer_Details" EntityType="Self.Mailer_Details" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ROLE_DETAIL" EntityType="Self.ROLE_DETAIL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ROLE_MASTER" EntityType="Self.ROLE_MASTER" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Smart_Login" EntityType="Self.Smart_Login" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="STATUS" EntityType="Self.STATUS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LOGIN_DETAIL" EntityType="Self.LOGIN_DETAIL" store:Type="Tables" store:Schema="dbo">
@@ -808,6 +842,10 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_SessionUser' does not ha
           <AssociationSet Name="FK_PROJECT_TYPE_PROJECT" Association="Self.FK_PROJECT_TYPE_PROJECT">
             <End Role="013_PROJECT_TYPE" EntitySet="013_PROJECT_TYPE" />
             <End Role="001_PROJECT" EntitySet="001_PROJECT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ROLE__MASTER_DETAIL" Association="Self.FK_ROLE__MASTER_DETAIL">
+            <End Role="ROLE_MASTER" EntitySet="ROLE_MASTER" />
+            <End Role="ROLE_DETAIL" EntitySet="ROLE_DETAIL" />
           </AssociationSet>
           <AssociationSet Name="FK_STATUS__TASK_DATA" Association="Self.FK_STATUS__TASK_DATA">
             <End Role="015_STATUS" EntitySet="015_STATUS" />
@@ -985,6 +1023,12 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_SessionUser' does not ha
           <AssociationSet Name="FK_Generated_BUCKET" Association="ManagementTool.FK_Generated_BUCKET">
             <End Role="EndUser" EntitySet="EndUsers" />
             <End Role="C004_BUCKET" EntitySet="C004_BUCKET" />
+          </AssociationSet>
+          <EntitySet Name="ROLE_DETAIL" EntityType="ManagementTool.ROLE_DETAIL" />
+          <EntitySet Name="ROLE_MASTER" EntityType="ManagementTool.ROLE_MASTER" />
+          <AssociationSet Name="FK_ROLE__MASTER_DETAIL" Association="ManagementTool.FK_ROLE__MASTER_DETAIL">
+            <End Role="ROLE_MASTER" EntitySet="ROLE_MASTER" />
+            <End Role="ROLE_DETAIL" EntitySet="ROLE_DETAIL" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="C005_TASK_DATA">
@@ -1714,6 +1758,40 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_SessionUser' does not ha
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="ROLE_DETAIL">
+          <Key>
+            <PropertyRef Name="RoleDetailId" />
+          </Key>
+          <Property Name="RoleDetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleId" Type="Int32" Nullable="false" />
+          <Property Name="Controller" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Action" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Allowed" Type="Boolean" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="GeneratedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="GeneratedBy" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ROLE_MASTER" Relationship="ManagementTool.FK_ROLE__MASTER_DETAIL" FromRole="ROLE_DETAIL" ToRole="ROLE_MASTER" />
+        </EntityType>
+        <EntityType Name="ROLE_MASTER">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ROLE_DETAIL" Relationship="ManagementTool.FK_ROLE__MASTER_DETAIL" FromRole="ROLE_MASTER" ToRole="ROLE_DETAIL" />
+        </EntityType>
+        <Association Name="FK_ROLE__MASTER_DETAIL">
+          <End Type="ManagementTool.ROLE_MASTER" Role="ROLE_MASTER" Multiplicity="1" />
+          <End Type="ManagementTool.ROLE_DETAIL" Role="ROLE_DETAIL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ROLE_MASTER">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="ROLE_DETAIL">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2088,6 +2166,28 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_SessionUser' does not ha
                 <ScalarProperty Name="PhaseId" ColumnName="PhaseId" />
                 <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
                 <ScalarProperty Name="BucketId" ColumnName="BucketId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ROLE_DETAIL">
+            <EntityTypeMapping TypeName="ManagementTool.ROLE_DETAIL">
+              <MappingFragment StoreEntitySet="ROLE_DETAIL">
+                <ScalarProperty Name="GeneratedBy" ColumnName="GeneratedBy" />
+                <ScalarProperty Name="GeneratedDate" ColumnName="GeneratedDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Allowed" ColumnName="Allowed" />
+                <ScalarProperty Name="Action" ColumnName="Action" />
+                <ScalarProperty Name="Controller" ColumnName="Controller" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="RoleDetailId" ColumnName="RoleDetailId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ROLE_MASTER">
+            <EntityTypeMapping TypeName="ManagementTool.ROLE_MASTER">
+              <MappingFragment StoreEntitySet="ROLE_MASTER">
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
