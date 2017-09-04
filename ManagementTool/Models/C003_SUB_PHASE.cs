@@ -14,14 +14,24 @@ namespace ManagementTool.Models
     
     public partial class C003_SUB_PHASE
     {
-        public int SPID { get; set; }
-        public int PhaseId { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public C003_SUB_PHASE()
+        {
+            this.C004_BUCKET = new HashSet<C004_BUCKET>();
+        }
+    
+        public int SubPhaseId { get; set; }
         public int ProjectId { get; set; }
+        public int PhaseId { get; set; }
         public string SubPhaseName { get; set; }
         public bool IsActive { get; set; }
-        public System.DateTime GenerationDate { get; set; }
-        public int GenerationBy { get; set; }
+        public System.DateTime GeneratedDate { get; set; }
+        public int GeneratedBy { get; set; }
     
+        public virtual C001_PROJECT C001_PROJECT { get; set; }
         public virtual C002_PHASE C002_PHASE { get; set; }
+        public virtual EndUser EndUser { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<C004_BUCKET> C004_BUCKET { get; set; }
     }
 }

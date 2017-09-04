@@ -22,14 +22,18 @@ namespace ManagementTool.Models
     
         public int BucketId { get; set; }
         public int ProjectId { get; set; }
+        public int PhaseId { get; set; }
+        public int SubPhaseId { get; set; }
         public string Name { get; set; }
-        public Nullable<System.DateTime> StartDate { get; set; }
-        public Nullable<System.DateTime> EndDate { get; set; }
+        public bool IsActive { get; set; }
         public int GeneratedBy { get; set; }
         public System.DateTime GenerationDate { get; set; }
     
+        public virtual C001_PROJECT C001_PROJECT { get; set; }
+        public virtual C002_PHASE C002_PHASE { get; set; }
+        public virtual C003_SUB_PHASE C003_SUB_PHASE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<C005_TASK_DATA> C005_TASK_DATA { get; set; }
-        public virtual C001_PROJECT C001_PROJECT { get; set; }
+        public virtual EndUser EndUser { get; set; }
     }
 }

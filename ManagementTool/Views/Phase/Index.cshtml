@@ -57,7 +57,11 @@
                                     <td><small>@Html.DisplayFor(modelItem => item.C001_PROJECT.ProjectName)</small></td>
                                     <td>@item.GeneratedDate.ToString("MMM dd, yyyy")                        </td>
                                     <td>@Html.DisplayFor(modelItem => item.EndUser.UserName)                </td>
-                                    <td><i class="fa fa-check-square text-navy"></i><!--i class="fa fa-square text-navy"></i--></td>
+                                    <td>@if (item.IsActive == true) {
+                                            WriteLiteral("<i class='fa fa-check-square text-navy'></i>");
+                                        }else {
+                                            WriteLiteral("<i class='fa fa-square text-navy'></i>");
+                                    }</td>
                                     <td>
                                         @Html.ActionLink("Edit", "Edit", new { id = item.PhaseId }) |
                                         @Html.ActionLink("Details", "Details", new { id = item.PhaseId }) |

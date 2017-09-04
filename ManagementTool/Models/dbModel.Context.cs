@@ -25,8 +25,6 @@ namespace ManagementTool.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<C003_SUB_PHASE> C003_SUB_PHASE { get; set; }
-        public virtual DbSet<C004_BUCKET> C004_BUCKET { get; set; }
         public virtual DbSet<C005_TASK_DATA> C005_TASK_DATA { get; set; }
         public virtual DbSet<C006_SUB_TASKS> C006_SUB_TASKS { get; set; }
         public virtual DbSet<C007_LOCATION> C007_LOCATION { get; set; }
@@ -52,5 +50,7 @@ namespace ManagementTool.Models
         public virtual DbSet<vw_SessionUser> vw_SessionUser { get; set; }
         public virtual DbSet<C001_PROJECT> C001_PROJECT { get; set; }
         public virtual DbSet<C002_PHASE> C002_PHASE { get; set; }
+        public virtual DbSet<C003_SUB_PHASE> C003_SUB_PHASE { get; set; }
+        public virtual DbSet<C004_BUCKET> C004_BUCKET { get; set; }
     }
 }

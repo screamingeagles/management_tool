@@ -17,6 +17,7 @@ namespace ManagementTool.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public C002_PHASE()
         {
+            this.C004_BUCKET = new HashSet<C004_BUCKET>();
             this.C003_SUB_PHASE = new HashSet<C003_SUB_PHASE>();
         }
     
@@ -31,6 +32,8 @@ namespace ManagementTool.Models
     
         public virtual C001_PROJECT C001_PROJECT { get; set; }
         public virtual EndUser EndUser { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<C004_BUCKET> C004_BUCKET { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<C003_SUB_PHASE> C003_SUB_PHASE { get; set; }
     }

@@ -5,8 +5,6 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="e026104ae8754b6f975677a1fbbc7754" Name="Diagram1" ZoomLevel="55">
-        <EntityTypeShape EntityType="ManagementTool.C003_SUB_PHASE" Width="2" PointX="7.875" PointY="24.875" />
-        <EntityTypeShape EntityType="ManagementTool.C004_BUCKET" Width="1.5" PointX="3" PointY="30.5" />
         <EntityTypeShape EntityType="ManagementTool.C005_TASK_DATA" Width="1.5" PointX="5.25" PointY="13.625" />
         <EntityTypeShape EntityType="ManagementTool.C006_SUB_TASKS" Width="1.5" PointX="7.5" PointY="13.5" />
         <EntityTypeShape EntityType="ManagementTool.C007_LOCATION" Width="1.75" PointX="1.25" PointY="41.25" />
@@ -30,7 +28,6 @@
         <EntityTypeShape EntityType="ManagementTool.STATUS" Width="1.5" PointX="7.75" PointY="4.75" />
         <EntityTypeShape EntityType="ManagementTool.LOGIN_DETAIL" Width="1.5" PointX="8.75" PointY="0.75" />
         <EntityTypeShape EntityType="ManagementTool.vw_SessionUser" Width="1.5" PointX="9.75" PointY="4.75" />
-        <AssociationConnector Association="ManagementTool.FK_BUCKET_TASK_DATA" />
         <AssociationConnector Association="ManagementTool.FK_AREA__TASK_DATA" />
         <AssociationConnector Association="ManagementTool.FK_Generated__TASK_DATA" />
         <AssociationConnector Association="ManagementTool.FK_OwnerID__TASK_DATA" />
@@ -48,12 +45,20 @@
         <AssociationConnector Association="ManagementTool.FK_DIVISION_PROJECT" />
         <AssociationConnector Association="ManagementTool.FK_GeneratedBy_PROJECT" />
         <AssociationConnector Association="ManagementTool.FK_LOCATION_PROJECT" />
-        <AssociationConnector Association="ManagementTool.FK_PROJECT_BUCKET" />
         <AssociationConnector Association="ManagementTool.FK_PROJECT_TYPE_PROJECT" />
         <EntityTypeShape EntityType="ManagementTool.C002_PHASE" Width="1.5" PointX="10.5" PointY="20.125" />
+        <EntityTypeShape EntityType="ManagementTool.C003_SUB_PHASE" Width="1.5" PointX="12.75" PointY="20.25" />
+        <EntityTypeShape EntityType="ManagementTool.C004_BUCKET" Width="1.5" PointX="15" PointY="20" />
+        <AssociationConnector Association="ManagementTool.FK_PROJECT__SUB_PHASE" />
+        <AssociationConnector Association="ManagementTool.FK_PROJECT_BUCKET" />
         <AssociationConnector Association="ManagementTool.FK_PROJECT_PHASE" />
         <AssociationConnector Association="ManagementTool.FK_Generated_PHASE" />
+        <AssociationConnector Association="ManagementTool.FK_PHASE__BUCKET" />
         <AssociationConnector Association="ManagementTool.FK_PHASE_SUB_PHASE" />
+        <AssociationConnector Association="ManagementTool.FK_Generated__SUB_PHASE" />
+        <AssociationConnector Association="ManagementTool.FK_SUB_PHASE__BUCKET" />
+        <AssociationConnector Association="ManagementTool.FK_BUCKET_TASK_DATA" />
+        <AssociationConnector Association="ManagementTool.FK_Generated_BUCKET" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

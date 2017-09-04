@@ -20,6 +20,9 @@ namespace ManagementTool.Models
             this.C005_TASK_DATA = new HashSet<C005_TASK_DATA>();
             this.C005_TASK_DATA1 = new HashSet<C005_TASK_DATA>();
             this.C001_PROJECT = new HashSet<C001_PROJECT>();
+            this.C002_PHASE = new HashSet<C002_PHASE>();
+            this.C003_SUB_PHASE = new HashSet<C003_SUB_PHASE>();
+            this.C004_BUCKET = new HashSet<C004_BUCKET>();
         }
     
         public int UID { get; set; }
@@ -39,6 +42,11 @@ namespace ManagementTool.Models
         public virtual ICollection<C005_TASK_DATA> C005_TASK_DATA1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<C001_PROJECT> C001_PROJECT { get; set; }
-        public virtual C002_PHASE C002_PHASE { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<C002_PHASE> C002_PHASE { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<C003_SUB_PHASE> C003_SUB_PHASE { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<C004_BUCKET> C004_BUCKET { get; set; }
     }
 }
