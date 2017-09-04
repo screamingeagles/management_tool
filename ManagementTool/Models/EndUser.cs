@@ -39,5 +39,6 @@ namespace ManagementTool.Models
         public virtual ICollection<C005_TASK_DATA> C005_TASK_DATA1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<C001_PROJECT> C001_PROJECT { get; set; }
+        public virtual C002_PHASE C002_PHASE { get; set; }
     }
 }

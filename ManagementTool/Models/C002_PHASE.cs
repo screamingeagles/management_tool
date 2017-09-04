@@ -23,14 +23,15 @@ namespace ManagementTool.Models
         public int PhaseId { get; set; }
         public int ProjectId { get; set; }
         public string PhaseName { get; set; }
-        public Nullable<System.DateTime> StartDate { get; set; }
+        public System.DateTime StartDate { get; set; }
         public System.DateTime EndDate { get; set; }
         public bool IsActive { get; set; }
-        public System.DateTime GenerationDate { get; set; }
-        public int GenerationBy { get; set; }
+        public System.DateTime GeneratedDate { get; set; }
+        public int GeneratedBy { get; set; }
     
+        public virtual C001_PROJECT C001_PROJECT { get; set; }
+        public virtual EndUser EndUser { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<C003_SUB_PHASE> C003_SUB_PHASE { get; set; }
-        public virtual C001_PROJECT C001_PROJECT { get; set; }
     }
 }

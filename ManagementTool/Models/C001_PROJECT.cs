@@ -39,8 +39,8 @@ namespace ManagementTool.Models
         public virtual C007_LOCATION C007_LOCATION { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<C004_BUCKET> C004_BUCKET { get; set; }
+        public virtual C013_PROJECT_TYPE C013_PROJECT_TYPE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<C002_PHASE> C002_PHASE { get; set; }
-        public virtual C013_PROJECT_TYPE C013_PROJECT_TYPE { get; set; }
     }
 }

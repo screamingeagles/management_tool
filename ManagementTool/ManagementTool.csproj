@@ -615,6 +615,7 @@
     <Compile Include="Common\Mail_Senders.cs" />
     <Compile Include="Common\projectmodel.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PhaseController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -806,6 +807,11 @@
     <Content Include="Views\Project\Details.cshtml" />
     <Content Include="Views\Project\Edit.cshtml" />
     <Content Include="Views\Project\Index.cshtml" />
+    <Content Include="Views\Phase\Create.cshtml" />
+    <Content Include="Views\Phase\Delete.cshtml" />
+    <Content Include="Views\Phase\Details.cshtml" />
+    <Content Include="Views\Phase\Edit.cshtml" />
+    <Content Include="Views\Phase\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
