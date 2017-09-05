@@ -615,6 +615,7 @@
     <Compile Include="Common\Bhai.cs" />
     <Compile Include="Common\Mail_Senders.cs" />
     <Compile Include="Common\projectmodel.cs" />
+    <Compile Include="Common\UserIdentity.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PhaseController.cs" />

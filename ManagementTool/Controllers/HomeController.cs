@@ -25,6 +25,11 @@ namespace ManagementTool.Controllers
 
         public ActionResult Welcome()
         {
+            // only for this we are checking the session of user.
+            int _sid = 0;
+                _sid = (HttpContext.Session["SessionId"] == null) ? 0 : Convert.ToInt32(HttpContext.Session["SessionId"].ToString());
+            if (_sid == 0) { return RedirectToAction("Index", "Login", new { x = 2 }); }
+
             return View();
         }
 
@@ -108,7 +113,7 @@ namespace ManagementTool.Controllers
                 }
 
                 uid = Bhai.SaveToSession(uid, remoteip, location);
-                HttpContext.Session["SessionId"] = uid;
+                HttpContext.Session["SessionId"] = uid;                
 
                 #region forwarding to recieving link
                 string hid = (Request.Form["hdnid"] == null) ? string.Empty : Request.Form["hdnid"].ToString();

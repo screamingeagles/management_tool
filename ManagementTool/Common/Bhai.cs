@@ -88,7 +88,7 @@ namespace ManagementTool.Common
         }
 
 
-       public static string GetUserName        (int userid)                                
+       public static string GetUserName         (int userid)                                
         {
             string q = "";
 
@@ -101,7 +101,7 @@ namespace ManagementTool.Common
             return q;
         }
 
-        public static string GetUserEmail(int userid)
+        public static string GetUserEmail       (int userid)                                
         {
             string q = "";
 
@@ -113,6 +113,34 @@ namespace ManagementTool.Common
             }
 
             return q;
+        }
+
+        private static int GetUserRole          (int userid)                                
+        {
+            int role = 103;
+            try
+            {
+                using (ProjectEntities pe = new ProjectEntities())
+                {
+                    int? q = (from r in pe.EndUsers
+                              where (r.UID == userid)
+                              select r.UserType).FirstOrDefault();
+
+                    if (q.HasValue)
+                    {
+                        role = q.Value;
+                    }
+                    else
+                    {
+                        role = 103;
+                    }
+                }
+                return role;
+            }
+            catch
+            {
+                return role;
+            }
         }
 
         public static int UpdateUserLogin       (int uid, string txtpass)                   
@@ -169,6 +197,16 @@ namespace ManagementTool.Common
                 db.EndUser_LoginDetails.Add(ld);
                 sid = db.SaveChanges();
                 sid = ld.LID;
+
+                #region Setting User Identity
+                var q = (from u in db.EndUsers
+                         where u.UID == uid
+                         select new { u.UID, u.UserName, u.UserEmail, u.UserType }).FirstOrDefault();
+                UserIdentity.UserId     = q.UID;
+                UserIdentity.UserName   = q.UserName;
+                UserIdentity.UserEmail  = q.UserEmail;
+                UserIdentity.RoleId     = (q.UserType.HasValue)? q.UserType.Value : 103;
+                #endregion
             }
             return sid;
         }

@@ -12,20 +12,13 @@ using System.Collections.Generic;
 
 namespace ManagementTool.Controllers
 {
-    public class ProjectController : Controller
+    public class ProjectController : BaseController
     {
         private ProjectEntities db = new ProjectEntities();
 
         // GET: Project
         public ActionResult Index()
         {
-            int _uId = 0;
-            int _sid = 0;
-                _sid = (HttpContext.Session["SessionId"] == null) ? 0 : Convert.ToInt32(HttpContext.Session["SessionId"].ToString());
-            if (_sid == 0) { return RedirectToAction("Index", "Login", new { x = 2 }); }
-                _uId = Bhai.GetUserIdFromSession(_sid);
-
-
             var c001_PROJECT = db.C001_PROJECT.Include(c => c.C008_COMPANY).Include(c => c.C009_DIVISION).Include(c => c.C007_LOCATION).Include(c => c.C013_PROJECT_TYPE);
             return View(c001_PROJECT.ToList());
         }
@@ -76,18 +69,11 @@ namespace ManagementTool.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ProjectName,LocationId,CompanyId,DivisionId,ProjectType,StartDate,EndDate")] C001_PROJECT c001_PROJECT)
-        {
-            int _uId = 0;
-            int _sid = 0;
-                _sid = (HttpContext.Session["SessionId"] == null) ? 0 : Convert.ToInt32(HttpContext.Session["SessionId"].ToString());
-            if (_sid == 0) { return RedirectToAction("Index", "Login", new { x = 2 }); }
-                _uId = Bhai.GetUserIdFromSession(_sid);
-
-            if (ModelState.IsValid)
-            {
-                c001_PROJECT.GeneratedBy = _uId;
-                c001_PROJECT.GeneratedDate = DateTime.Now.AddHours(4);
-                c001_PROJECT.IsActive = true;
+        {            
+            if (ModelState.IsValid) {
+                c001_PROJECT.GeneratedBy    = UserIdentity.UserId;
+                c001_PROJECT.GeneratedDate  = DateTime.Now.AddHours(4);
+                c001_PROJECT.IsActive       = true;
                 db.C001_PROJECT.Add(c001_PROJECT);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -125,16 +111,9 @@ namespace ManagementTool.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ProjectId,ProjectName,LocationId,CompanyId,DivisionId,ProjectType,StartDate,EndDate")] C001_PROJECT c001_PROJECT)
-        {
-            int _uId = 0;
-            int _sid = 0;
-                _sid = (HttpContext.Session["SessionId"] == null) ? 0 : Convert.ToInt32(HttpContext.Session["SessionId"].ToString());
-            if (_sid == 0) { return RedirectToAction("Index", "Login", new { x = 2 }); }
-                _uId = Bhai.GetUserIdFromSession(_sid);
-            
-            if (ModelState.IsValid)
-            {
-                c001_PROJECT.GeneratedBy    = _uId;
+        {            
+            if (ModelState.IsValid) {
+                c001_PROJECT.GeneratedBy    = UserIdentity.UserId;
                 c001_PROJECT.GeneratedDate  = DateTime.Now.AddHours(4);
                 c001_PROJECT.IsActive       = true;
 

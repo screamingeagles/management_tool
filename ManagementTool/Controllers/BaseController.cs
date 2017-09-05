@@ -29,7 +29,7 @@ namespace ManagementTool.Controllers
             }
             else {
                 // user logged in get his authentication
-                _isValid = AuthorizedSignatory.GetUserAuthorization(_controller, _action, _sid);
+                _isValid = AuthorizedSignatory.GetUserAuthorization(_controller, _action);
             }
             
 
