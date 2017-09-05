@@ -1,0 +1,70 @@
+﻿@model IEnumerable<ManagementTool.Models.C004_BUCKET>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GenerationDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.C001_PROJECT.ProjectName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.C002_PHASE.PhaseName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.C003_SUB_PHASE.SubPhaseName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EndUser.UserName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsActive)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GenerationDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.C001_PROJECT.ProjectName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.C002_PHASE.PhaseName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.C003_SUB_PHASE.SubPhaseName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EndUser.UserName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.BucketId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.BucketId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.BucketId })
+        </td>
+    </tr>
+}
+
+</table>

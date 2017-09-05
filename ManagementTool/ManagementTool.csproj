@@ -617,6 +617,7 @@
     <Compile Include="Common\projectmodel.cs" />
     <Compile Include="Common\UserIdentity.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\BucketController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PhaseController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
@@ -822,6 +823,11 @@
     <Content Include="Views\Phase\Details.cshtml" />
     <Content Include="Views\Phase\Edit.cshtml" />
     <Content Include="Views\Phase\Index.cshtml" />
+    <Content Include="Views\Bucket\Create.cshtml" />
+    <Content Include="Views\Bucket\Delete.cshtml" />
+    <Content Include="Views\Bucket\Details.cshtml" />
+    <Content Include="Views\Bucket\Edit.cshtml" />
+    <Content Include="Views\Bucket\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
