@@ -54,5 +54,9 @@ namespace ManagementTool.Models
         public virtual DbSet<C004_BUCKET> C004_BUCKET { get; set; }
         public virtual DbSet<ROLE_DETAIL> ROLE_DETAIL { get; set; }
         public virtual DbSet<ROLE_MASTER> ROLE_MASTER { get; set; }
+        public virtual DbSet<C020_CommitmentMaster> C020_CommitmentMaster { get; set; }
+        public virtual DbSet<C021_CommimentDetails> C021_CommimentDetails { get; set; }
+        public virtual DbSet<C022_Notification_Master> C022_Notification_Master { get; set; }
+        public virtual DbSet<C023_Notification_Detail> C023_Notification_Detail { get; set; }
     }
 }

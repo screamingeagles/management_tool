@@ -165,5 +165,12 @@ namespace ManagementTool.Controllers
             }
             return result;
         }
+
+
+
+        [ChildActionOnly]
+        public ActionResult LoginPartial() {
+            return PartialView("_LoginPartial");
+        }
     }
 }

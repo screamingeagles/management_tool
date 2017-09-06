@@ -249,6 +249,51 @@
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="IsActive" Type="bit" />
         </EntityType>
+        <EntityType Name="020_CommitmentMaster">
+          <Key>
+            <PropertyRef Name="CommitmentId" />
+          </Key>
+          <Property Name="CommitmentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="CommitmentHeader" Type="nvarchar" MaxLength="550" />
+          <Property Name="GeneratedBy" Type="int" />
+          <Property Name="GeneratedDate" Type="datetime" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="021_CommimentDetails">
+          <Key>
+            <PropertyRef Name="DetailId" />
+          </Key>
+          <Property Name="DetailId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CommitmentId" Type="int" Nullable="false" />
+          <Property Name="CommimentName" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="ProjectId" Type="int" />
+          <Property Name="TaskId" Type="int" />
+          <Property Name="GeneratedBy" Type="int" Nullable="false" />
+          <Property Name="GeneratedDate" Type="datetime" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="022_Notification_Master">
+          <Key>
+            <PropertyRef Name="NotificationId" />
+          </Key>
+          <Property Name="NotificationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NotificationIcon" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Notification" Type="nvarchar" MaxLength="850" Nullable="false" />
+          <Property Name="GeneratedDate" Type="datetime" Nullable="false" />
+          <Property Name="GeneratedBy" Type="int" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="023_Notification_Detail">
+          <Key>
+            <PropertyRef Name="DetailId" />
+          </Key>
+          <Property Name="DetailId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NotificationId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="Seen" Type="bit" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="EndUser">
           <Key>
             <PropertyRef Name="UID" />
@@ -414,6 +459,18 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_SessionUser' does not ha
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Commiment__Master_Details">
+          <End Role="020_CommitmentMaster" Type="Self.020_CommitmentMaster" Multiplicity="1" />
+          <End Role="021_CommimentDetails" Type="Self.021_CommimentDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="020_CommitmentMaster">
+              <PropertyRef Name="CommitmentId" />
+            </Principal>
+            <Dependent Role="021_CommimentDetails">
+              <PropertyRef Name="CommitmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_COMPANY_PROJECT">
           <End Role="008_COMPANY" Type="Self.008_COMPANY" Multiplicity="1" />
           <End Role="001_PROJECT" Type="Self.001_PROJECT" Multiplicity="*" />
@@ -435,6 +492,18 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_SessionUser' does not ha
             </Principal>
             <Dependent Role="001_PROJECT">
               <PropertyRef Name="DivisionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Generated__Notification">
+          <End Role="EndUser" Type="Self.EndUser" Multiplicity="1" />
+          <End Role="022_Notification_Master" Type="Self.022_Notification_Master" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EndUser">
+              <PropertyRef Name="UID" />
+            </Principal>
+            <Dependent Role="022_Notification_Master">
+              <PropertyRef Name="GeneratedBy" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -507,6 +576,18 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_SessionUser' does not ha
             </Principal>
             <Dependent Role="001_PROJECT">
               <PropertyRef Name="LocationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Notification__Master_Detail">
+          <End Role="022_Notification_Master" Type="Self.022_Notification_Master" Multiplicity="1" />
+          <End Role="023_Notification_Detail" Type="Self.023_Notification_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="022_Notification_Master">
+              <PropertyRef Name="NotificationId" />
+            </Principal>
+            <Dependent Role="023_Notification_Detail">
+              <PropertyRef Name="NotificationId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -702,6 +783,30 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_SessionUser' does not ha
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_User__Commitment">
+          <End Role="EndUser" Type="Self.EndUser" Multiplicity="1" />
+          <End Role="020_CommitmentMaster" Type="Self.020_CommitmentMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EndUser">
+              <PropertyRef Name="UID" />
+            </Principal>
+            <Dependent Role="020_CommitmentMaster">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User__Notification">
+          <End Role="EndUser" Type="Self.EndUser" Multiplicity="1" />
+          <End Role="023_Notification_Detail" Type="Self.023_Notification_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EndUser">
+              <PropertyRef Name="UID" />
+            </Principal>
+            <Dependent Role="023_Notification_Detail">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FKSUB_AREA__SUB_SUB_AREA">
           <End Role="011_SUB_AREA" Type="Self.011_SUB_AREA" Multiplicity="1" />
           <End Role="012_SUB_SUB_AREA" Type="Self.012_SUB_SUB_AREA" Multiplicity="*" />
@@ -734,6 +839,10 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_SessionUser' does not ha
           <EntitySet Name="017_MEETING" EntityType="Self.017_MEETING" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="018_coOwners" EntityType="Self.018_coOwners" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="019_Attachments" EntityType="Self.019_Attachments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="020_CommitmentMaster" EntityType="Self.020_CommitmentMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="021_CommimentDetails" EntityType="Self.021_CommimentDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="022_Notification_Master" EntityType="Self.022_Notification_Master" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="023_Notification_Detail" EntityType="Self.023_Notification_Detail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EndUser" EntityType="Self.EndUser" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EndUser_Details" EntityType="Self.EndUser_Details" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EndUser_LoginDetails" EntityType="Self.EndUser_LoginDetails" Schema="dbo" store:Type="Tables" />
@@ -783,6 +892,10 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_SessionUser' does not ha
             <End Role="004_BUCKET" EntitySet="004_BUCKET" />
             <End Role="005_TASK_DATA" EntitySet="005_TASK_DATA" />
           </AssociationSet>
+          <AssociationSet Name="FK_Commiment__Master_Details" Association="Self.FK_Commiment__Master_Details">
+            <End Role="020_CommitmentMaster" EntitySet="020_CommitmentMaster" />
+            <End Role="021_CommimentDetails" EntitySet="021_CommimentDetails" />
+          </AssociationSet>
           <AssociationSet Name="FK_COMPANY_PROJECT" Association="Self.FK_COMPANY_PROJECT">
             <End Role="008_COMPANY" EntitySet="008_COMPANY" />
             <End Role="001_PROJECT" EntitySet="001_PROJECT" />
@@ -790,6 +903,10 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_SessionUser' does not ha
           <AssociationSet Name="FK_DIVISION_PROJECT" Association="Self.FK_DIVISION_PROJECT">
             <End Role="009_DIVISION" EntitySet="009_DIVISION" />
             <End Role="001_PROJECT" EntitySet="001_PROJECT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Generated__Notification" Association="Self.FK_Generated__Notification">
+            <End Role="EndUser" EntitySet="EndUser" />
+            <End Role="022_Notification_Master" EntitySet="022_Notification_Master" />
           </AssociationSet>
           <AssociationSet Name="FK_Generated__SUB_PHASE" Association="Self.FK_Generated__SUB_PHASE">
             <End Role="EndUser" EntitySet="EndUser" />
@@ -814,6 +931,10 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_SessionUser' does not ha
           <AssociationSet Name="FK_LOCATION_PROJECT" Association="Self.FK_LOCATION_PROJECT">
             <End Role="007_LOCATION" EntitySet="007_LOCATION" />
             <End Role="001_PROJECT" EntitySet="001_PROJECT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Notification__Master_Detail" Association="Self.FK_Notification__Master_Detail">
+            <End Role="022_Notification_Master" EntitySet="022_Notification_Master" />
+            <End Role="023_Notification_Detail" EntitySet="023_Notification_Detail" />
           </AssociationSet>
           <AssociationSet Name="FK_OwnerID__TASK_DATA" Association="Self.FK_OwnerID__TASK_DATA">
             <End Role="EndUser" EntitySet="EndUser" />
@@ -878,6 +999,14 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_SessionUser' does not ha
           <AssociationSet Name="FK_TASK_TYPE__TASK_DATA" Association="Self.FK_TASK_TYPE__TASK_DATA">
             <End Role="014_TASK_TYPE" EntitySet="014_TASK_TYPE" />
             <End Role="005_TASK_DATA" EntitySet="005_TASK_DATA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User__Commitment" Association="Self.FK_User__Commitment">
+            <End Role="EndUser" EntitySet="EndUser" />
+            <End Role="020_CommitmentMaster" EntitySet="020_CommitmentMaster" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User__Notification" Association="Self.FK_User__Notification">
+            <End Role="EndUser" EntitySet="EndUser" />
+            <End Role="023_Notification_Detail" EntitySet="023_Notification_Detail" />
           </AssociationSet>
           <AssociationSet Name="FKSUB_AREA__SUB_SUB_AREA" Association="Self.FKSUB_AREA__SUB_SUB_AREA">
             <End Role="011_SUB_AREA" EntitySet="011_SUB_AREA" />
@@ -1029,6 +1158,30 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_SessionUser' does not ha
           <AssociationSet Name="FK_ROLE__MASTER_DETAIL" Association="ManagementTool.FK_ROLE__MASTER_DETAIL">
             <End Role="ROLE_MASTER" EntitySet="ROLE_MASTER" />
             <End Role="ROLE_DETAIL" EntitySet="ROLE_DETAIL" />
+          </AssociationSet>
+          <EntitySet Name="C020_CommitmentMaster" EntityType="ManagementTool.C020_CommitmentMaster" />
+          <EntitySet Name="C021_CommimentDetails" EntityType="ManagementTool.C021_CommimentDetails" />
+          <EntitySet Name="C022_Notification_Master" EntityType="ManagementTool.C022_Notification_Master" />
+          <EntitySet Name="C023_Notification_Detail" EntityType="ManagementTool.C023_Notification_Detail" />
+          <AssociationSet Name="FK_Commiment__Master_Details" Association="ManagementTool.FK_Commiment__Master_Details">
+            <End Role="C020_CommitmentMaster" EntitySet="C020_CommitmentMaster" />
+            <End Role="C021_CommimentDetails" EntitySet="C021_CommimentDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User__Commitment" Association="ManagementTool.FK_User__Commitment">
+            <End Role="EndUser" EntitySet="EndUsers" />
+            <End Role="C020_CommitmentMaster" EntitySet="C020_CommitmentMaster" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Generated__Notification" Association="ManagementTool.FK_Generated__Notification">
+            <End Role="EndUser" EntitySet="EndUsers" />
+            <End Role="C022_Notification_Master" EntitySet="C022_Notification_Master" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Notification__Master_Detail" Association="ManagementTool.FK_Notification__Master_Detail">
+            <End Role="C022_Notification_Master" EntitySet="C022_Notification_Master" />
+            <End Role="C023_Notification_Detail" EntitySet="C023_Notification_Detail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User__Notification" Association="ManagementTool.FK_User__Notification">
+            <End Role="EndUser" EntitySet="EndUsers" />
+            <End Role="C023_Notification_Detail" EntitySet="C023_Notification_Detail" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="C005_TASK_DATA">
@@ -1268,6 +1421,9 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_SessionUser' does not ha
           <NavigationProperty Name="C002_PHASE" Relationship="ManagementTool.FK_Generated_PHASE" FromRole="EndUser" ToRole="C002_PHASE" />
           <NavigationProperty Name="C003_SUB_PHASE" Relationship="ManagementTool.FK_Generated__SUB_PHASE" FromRole="EndUser" ToRole="C003_SUB_PHASE" />
           <NavigationProperty Name="C004_BUCKET" Relationship="ManagementTool.FK_Generated_BUCKET" FromRole="EndUser" ToRole="C004_BUCKET" />
+          <NavigationProperty Name="C020_CommitmentMaster" Relationship="ManagementTool.FK_User__Commitment" FromRole="EndUser" ToRole="C020_CommitmentMaster" />
+          <NavigationProperty Name="C022_Notification_Master" Relationship="ManagementTool.FK_Generated__Notification" FromRole="EndUser" ToRole="C022_Notification_Master" />
+          <NavigationProperty Name="C023_Notification_Detail" Relationship="ManagementTool.FK_User__Notification" FromRole="EndUser" ToRole="C023_Notification_Detail" />
         </EntityType>
         <EntityType Name="EndUser_Details">
           <Key>
@@ -1792,6 +1948,118 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_SessionUser' does not ha
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="C020_CommitmentMaster">
+          <Key>
+            <PropertyRef Name="CommitmentId" />
+          </Key>
+          <Property Name="CommitmentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="CommitmentHeader" Type="String" MaxLength="550" FixedLength="false" Unicode="true" />
+          <Property Name="GeneratedBy" Type="Int32" />
+          <Property Name="GeneratedDate" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" />
+          <NavigationProperty Name="C021_CommimentDetails" Relationship="ManagementTool.FK_Commiment__Master_Details" FromRole="C020_CommitmentMaster" ToRole="C021_CommimentDetails" />
+          <NavigationProperty Name="EndUser" Relationship="ManagementTool.FK_User__Commitment" FromRole="C020_CommitmentMaster" ToRole="EndUser" />
+        </EntityType>
+        <EntityType Name="C021_CommimentDetails">
+          <Key>
+            <PropertyRef Name="DetailId" />
+          </Key>
+          <Property Name="DetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CommitmentId" Type="Int32" Nullable="false" />
+          <Property Name="CommimentName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ProjectId" Type="Int32" />
+          <Property Name="TaskId" Type="Int32" />
+          <Property Name="GeneratedBy" Type="Int32" Nullable="false" />
+          <Property Name="GeneratedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="C020_CommitmentMaster" Relationship="ManagementTool.FK_Commiment__Master_Details" FromRole="C021_CommimentDetails" ToRole="C020_CommitmentMaster" />
+        </EntityType>
+        <EntityType Name="C022_Notification_Master">
+          <Key>
+            <PropertyRef Name="NotificationId" />
+          </Key>
+          <Property Name="NotificationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NotificationIcon" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Notification" Type="String" Nullable="false" MaxLength="850" FixedLength="false" Unicode="true" />
+          <Property Name="GeneratedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="GeneratedBy" Type="Int32" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="EndUser" Relationship="ManagementTool.FK_Generated__Notification" FromRole="C022_Notification_Master" ToRole="EndUser" />
+          <NavigationProperty Name="C023_Notification_Detail" Relationship="ManagementTool.FK_Notification__Master_Detail" FromRole="C022_Notification_Master" ToRole="C023_Notification_Detail" />
+        </EntityType>
+        <EntityType Name="C023_Notification_Detail">
+          <Key>
+            <PropertyRef Name="DetailId" />
+          </Key>
+          <Property Name="DetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NotificationId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="Seen" Type="Boolean" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="C022_Notification_Master" Relationship="ManagementTool.FK_Notification__Master_Detail" FromRole="C023_Notification_Detail" ToRole="C022_Notification_Master" />
+          <NavigationProperty Name="EndUser" Relationship="ManagementTool.FK_User__Notification" FromRole="C023_Notification_Detail" ToRole="EndUser" />
+        </EntityType>
+        <Association Name="FK_Commiment__Master_Details">
+          <End Type="ManagementTool.C020_CommitmentMaster" Role="C020_CommitmentMaster" Multiplicity="1" />
+          <End Type="ManagementTool.C021_CommimentDetails" Role="C021_CommimentDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="C020_CommitmentMaster">
+              <PropertyRef Name="CommitmentId" />
+            </Principal>
+            <Dependent Role="C021_CommimentDetails">
+              <PropertyRef Name="CommitmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User__Commitment">
+          <End Type="ManagementTool.EndUser" Role="EndUser" Multiplicity="1" />
+          <End Type="ManagementTool.C020_CommitmentMaster" Role="C020_CommitmentMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EndUser">
+              <PropertyRef Name="UID" />
+            </Principal>
+            <Dependent Role="C020_CommitmentMaster">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Generated__Notification">
+          <End Type="ManagementTool.EndUser" Role="EndUser" Multiplicity="1" />
+          <End Type="ManagementTool.C022_Notification_Master" Role="C022_Notification_Master" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EndUser">
+              <PropertyRef Name="UID" />
+            </Principal>
+            <Dependent Role="C022_Notification_Master">
+              <PropertyRef Name="GeneratedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Notification__Master_Detail">
+          <End Type="ManagementTool.C022_Notification_Master" Role="C022_Notification_Master" Multiplicity="1" />
+          <End Type="ManagementTool.C023_Notification_Detail" Role="C023_Notification_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="C022_Notification_Master">
+              <PropertyRef Name="NotificationId" />
+            </Principal>
+            <Dependent Role="C023_Notification_Detail">
+              <PropertyRef Name="NotificationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User__Notification">
+          <End Type="ManagementTool.EndUser" Role="EndUser" Multiplicity="1" />
+          <End Type="ManagementTool.C023_Notification_Detail" Role="C023_Notification_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EndUser">
+              <PropertyRef Name="UID" />
+            </Principal>
+            <Dependent Role="C023_Notification_Detail">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2188,6 +2456,55 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_SessionUser' does not ha
               <MappingFragment StoreEntitySet="ROLE_MASTER">
                 <ScalarProperty Name="RoleName" ColumnName="RoleName" />
                 <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="C020_CommitmentMaster">
+            <EntityTypeMapping TypeName="ManagementTool.C020_CommitmentMaster">
+              <MappingFragment StoreEntitySet="020_CommitmentMaster">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="GeneratedDate" ColumnName="GeneratedDate" />
+                <ScalarProperty Name="GeneratedBy" ColumnName="GeneratedBy" />
+                <ScalarProperty Name="CommitmentHeader" ColumnName="CommitmentHeader" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="CommitmentId" ColumnName="CommitmentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="C021_CommimentDetails">
+            <EntityTypeMapping TypeName="ManagementTool.C021_CommimentDetails">
+              <MappingFragment StoreEntitySet="021_CommimentDetails">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="GeneratedDate" ColumnName="GeneratedDate" />
+                <ScalarProperty Name="GeneratedBy" ColumnName="GeneratedBy" />
+                <ScalarProperty Name="TaskId" ColumnName="TaskId" />
+                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+                <ScalarProperty Name="CommimentName" ColumnName="CommimentName" />
+                <ScalarProperty Name="CommitmentId" ColumnName="CommitmentId" />
+                <ScalarProperty Name="DetailId" ColumnName="DetailId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="C022_Notification_Master">
+            <EntityTypeMapping TypeName="ManagementTool.C022_Notification_Master">
+              <MappingFragment StoreEntitySet="022_Notification_Master">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="GeneratedBy" ColumnName="GeneratedBy" />
+                <ScalarProperty Name="GeneratedDate" ColumnName="GeneratedDate" />
+                <ScalarProperty Name="Notification" ColumnName="Notification" />
+                <ScalarProperty Name="NotificationIcon" ColumnName="NotificationIcon" />
+                <ScalarProperty Name="NotificationId" ColumnName="NotificationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="C023_Notification_Detail">
+            <EntityTypeMapping TypeName="ManagementTool.C023_Notification_Detail">
+              <MappingFragment StoreEntitySet="023_Notification_Detail">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Seen" ColumnName="Seen" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="NotificationId" ColumnName="NotificationId" />
+                <ScalarProperty Name="DetailId" ColumnName="DetailId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

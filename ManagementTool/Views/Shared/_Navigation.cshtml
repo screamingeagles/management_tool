@@ -1,5 +1,9 @@
 ﻿@{ 
     string mycontroller = HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString();
+
+    string  UserName = "";
+            UserName = (String.IsNullOrEmpty(ManagementTool.Common.UserIdentity.UserName)) ? "Not Logged In" : ManagementTool.Common.UserIdentity.UserName;
+
 }
 <nav class="navbar-default navbar-static-side" role="navigation">
     <div class="sidebar-collapse">
@@ -7,12 +11,19 @@
             <li class="nav-header">
                 <div class="dropdown profile-element">
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                        <span class="clear">
-                            <span class="block m-t-xs">
-                                <strong class="font-bold">arsalan@rethinktechs.com</strong>
+                        <center>
+                            <span>
+                                <img alt="image" class="img-circle" src="@Url.Content("~/Content/Images/profile-160x160.png")" style="max-width: 45px;">
                             </span>
-                            <span class="text-muted text-xs block">Main Menu<b class="caret"></b></span>
-                        </span>
+                        </center>
+                        <center>
+                            <span class="clear">
+                                <span class="block m-t-xs">
+                                    <strong class="font-bold">@UserName</strong>
+                                </span>
+                                <span class="text-muted text-xs block">Action Items<b class="caret"></b></span>
+                            </span>
+                        </center>
                     </a>
                     <ul class="dropdown-menu animated fadeInRight m-t-xs">
                         <li><a href="@Url.Action("Index",  "Project")" >Project    </a></li>
