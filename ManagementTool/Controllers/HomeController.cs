@@ -28,9 +28,24 @@ namespace ManagementTool.Controllers
             // only for this we are checking the session of user.
             int _sid = 0;
                 _sid = (HttpContext.Session["SessionId"] == null) ? 0 : Convert.ToInt32(HttpContext.Session["SessionId"].ToString());
-            if (_sid == 0) { return RedirectToAction("Index", "Login", new { x = 2 }); }
+            if (_sid == 0) { return RedirectToAction("Index", "Home", new { x = 1 }); }
 
             return View();
+        }
+
+        public ActionResult Logout()
+        {
+            // only for this we are checking the session of user.
+            int _sid = 0;
+                _sid = (HttpContext.Session["SessionId"] == null) ? 0 : Convert.ToInt32(HttpContext.Session["SessionId"].ToString());
+            if (_sid == 0) { return RedirectToAction("Index", "Login", new { x = 1 }); }
+
+            UserIdentity.UserId     = 0;
+            UserIdentity.RoleId     = 0;
+            UserIdentity.UserEmail  = "";
+            UserIdentity.UserName   = "";
+            HttpContext.Session.Abandon();
+            return RedirectToAction("Index","Home");
         }
 
         [HttpPost]
@@ -171,6 +186,16 @@ namespace ManagementTool.Controllers
         [ChildActionOnly]
         public ActionResult LoginPartial() {
             return PartialView("_LoginPartial");
+        }
+
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
 }
