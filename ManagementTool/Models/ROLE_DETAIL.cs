@@ -16,6 +16,8 @@ namespace ManagementTool.Models
     {
         public int RoleDetailId { get; set; }
         public int RoleId { get; set; }
+        public string Icon { get; set; }
+        public string Title { get; set; }
         public string Controller { get; set; }
         public string Action { get; set; }
         public bool Allowed { get; set; }

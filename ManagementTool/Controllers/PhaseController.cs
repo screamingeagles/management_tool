@@ -1,16 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Net;
 using System.Web;
+using System.Net;
+using System.Data;
+using System.Linq;
 using System.Web.Mvc;
+using System.Data.Entity;
+using ManagementTool.Common;
 using ManagementTool.Models;
+using System.Collections.Generic;
 
 namespace ManagementTool.Controllers
 {
-    public class PhaseController : Controller
+    public class PhaseController : BaseController
     {
         private ProjectEntities db = new ProjectEntities();
 
@@ -49,10 +50,15 @@ namespace ManagementTool.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "PhaseId,ProjectId,PhaseName,StartDate,EndDate,IsActive,GeneratedDate,GeneratedBy")] C002_PHASE c002_PHASE)
+        public ActionResult Create([Bind(Include = "ProjectId,PhaseName,StartDate,EndDate")] C002_PHASE c002_PHASE)
         {
             if (ModelState.IsValid)
             {
+
+                c002_PHASE.GeneratedBy = UserIdentity.UserId;
+                c002_PHASE.GeneratedDate = DateTime.Now.AddHours(4);
+                c002_PHASE.IsActive = true;
+
                 db.C002_PHASE.Add(c002_PHASE);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -85,10 +91,14 @@ namespace ManagementTool.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "PhaseId,ProjectId,PhaseName,StartDate,EndDate,IsActive,GeneratedDate,GeneratedBy")] C002_PHASE c002_PHASE)
+        public ActionResult Edit([Bind(Include = "PhaseId,ProjectId,PhaseName,StartDate,EndDate")] C002_PHASE c002_PHASE)
         {
             if (ModelState.IsValid)
             {
+                c002_PHASE.GeneratedBy      = UserIdentity.UserId;
+                c002_PHASE.GeneratedDate    = DateTime.Now.AddHours(4);
+                c002_PHASE.IsActive         = true;
+
                 db.Entry(c002_PHASE).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

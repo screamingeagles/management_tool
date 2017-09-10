@@ -362,6 +362,8 @@ warning 6002: The table/view 'db_management_tool.dbo.LOGIN_DETAIL' does not have
           </Key>
           <Property Name="RoleDetailId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="RoleId" Type="int" Nullable="false" />
+          <Property Name="Icon" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="Controller" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="Action" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="Allowed" Type="bit" Nullable="false" />
@@ -1153,12 +1155,7 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_SessionUser' does not ha
             <End Role="EndUser" EntitySet="EndUsers" />
             <End Role="C004_BUCKET" EntitySet="C004_BUCKET" />
           </AssociationSet>
-          <EntitySet Name="ROLE_DETAIL" EntityType="ManagementTool.ROLE_DETAIL" />
           <EntitySet Name="ROLE_MASTER" EntityType="ManagementTool.ROLE_MASTER" />
-          <AssociationSet Name="FK_ROLE__MASTER_DETAIL" Association="ManagementTool.FK_ROLE__MASTER_DETAIL">
-            <End Role="ROLE_MASTER" EntitySet="ROLE_MASTER" />
-            <End Role="ROLE_DETAIL" EntitySet="ROLE_DETAIL" />
-          </AssociationSet>
           <EntitySet Name="C020_CommitmentMaster" EntityType="ManagementTool.C020_CommitmentMaster" />
           <EntitySet Name="C021_CommimentDetails" EntityType="ManagementTool.C021_CommimentDetails" />
           <EntitySet Name="C022_Notification_Master" EntityType="ManagementTool.C022_Notification_Master" />
@@ -1182,6 +1179,11 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_SessionUser' does not ha
           <AssociationSet Name="FK_User__Notification" Association="ManagementTool.FK_User__Notification">
             <End Role="EndUser" EntitySet="EndUsers" />
             <End Role="C023_Notification_Detail" EntitySet="C023_Notification_Detail" />
+          </AssociationSet>
+          <EntitySet Name="ROLE_DETAIL" EntityType="ManagementTool.ROLE_DETAIL" />
+          <AssociationSet Name="FK_ROLE__MASTER_DETAIL" Association="ManagementTool.FK_ROLE__MASTER_DETAIL">
+            <End Role="ROLE_MASTER" EntitySet="ROLE_MASTER" />
+            <End Role="ROLE_DETAIL" EntitySet="ROLE_DETAIL" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="C005_TASK_DATA">
@@ -1914,20 +1916,6 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_SessionUser' does not ha
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="ROLE_DETAIL">
-          <Key>
-            <PropertyRef Name="RoleDetailId" />
-          </Key>
-          <Property Name="RoleDetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="RoleId" Type="Int32" Nullable="false" />
-          <Property Name="Controller" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="Action" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="Allowed" Type="Boolean" Nullable="false" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="GeneratedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="GeneratedBy" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="ROLE_MASTER" Relationship="ManagementTool.FK_ROLE__MASTER_DETAIL" FromRole="ROLE_DETAIL" ToRole="ROLE_MASTER" />
-        </EntityType>
         <EntityType Name="ROLE_MASTER">
           <Key>
             <PropertyRef Name="RoleId" />
@@ -1936,18 +1924,6 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_SessionUser' does not ha
           <Property Name="RoleName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="ROLE_DETAIL" Relationship="ManagementTool.FK_ROLE__MASTER_DETAIL" FromRole="ROLE_MASTER" ToRole="ROLE_DETAIL" />
         </EntityType>
-        <Association Name="FK_ROLE__MASTER_DETAIL">
-          <End Type="ManagementTool.ROLE_MASTER" Role="ROLE_MASTER" Multiplicity="1" />
-          <End Type="ManagementTool.ROLE_DETAIL" Role="ROLE_DETAIL" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ROLE_MASTER">
-              <PropertyRef Name="RoleId" />
-            </Principal>
-            <Dependent Role="ROLE_DETAIL">
-              <PropertyRef Name="RoleId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="C020_CommitmentMaster">
           <Key>
             <PropertyRef Name="CommitmentId" />
@@ -2057,6 +2033,34 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_SessionUser' does not ha
             </Principal>
             <Dependent Role="C023_Notification_Detail">
               <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ROLE_DETAIL">
+          <Key>
+            <PropertyRef Name="RoleDetailId" />
+          </Key>
+          <Property Name="RoleDetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleId" Type="Int32" Nullable="false" />
+          <Property Name="Icon" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Controller" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Action" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Allowed" Type="Boolean" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="GeneratedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="GeneratedBy" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ROLE_MASTER" Relationship="ManagementTool.FK_ROLE__MASTER_DETAIL" FromRole="ROLE_DETAIL" ToRole="ROLE_MASTER" />
+        </EntityType>
+        <Association Name="FK_ROLE__MASTER_DETAIL">
+          <End Type="ManagementTool.ROLE_MASTER" Role="ROLE_MASTER" Multiplicity="1" />
+          <End Type="ManagementTool.ROLE_DETAIL" Role="ROLE_DETAIL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ROLE_MASTER">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="ROLE_DETAIL">
+              <PropertyRef Name="RoleId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2437,20 +2441,6 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_SessionUser' does not ha
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ROLE_DETAIL">
-            <EntityTypeMapping TypeName="ManagementTool.ROLE_DETAIL">
-              <MappingFragment StoreEntitySet="ROLE_DETAIL">
-                <ScalarProperty Name="GeneratedBy" ColumnName="GeneratedBy" />
-                <ScalarProperty Name="GeneratedDate" ColumnName="GeneratedDate" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="Allowed" ColumnName="Allowed" />
-                <ScalarProperty Name="Action" ColumnName="Action" />
-                <ScalarProperty Name="Controller" ColumnName="Controller" />
-                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
-                <ScalarProperty Name="RoleDetailId" ColumnName="RoleDetailId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="ROLE_MASTER">
             <EntityTypeMapping TypeName="ManagementTool.ROLE_MASTER">
               <MappingFragment StoreEntitySet="ROLE_MASTER">
@@ -2505,6 +2495,22 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_SessionUser' does not ha
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="NotificationId" ColumnName="NotificationId" />
                 <ScalarProperty Name="DetailId" ColumnName="DetailId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ROLE_DETAIL">
+            <EntityTypeMapping TypeName="ManagementTool.ROLE_DETAIL">
+              <MappingFragment StoreEntitySet="ROLE_DETAIL">
+                <ScalarProperty Name="GeneratedBy" ColumnName="GeneratedBy" />
+                <ScalarProperty Name="GeneratedDate" ColumnName="GeneratedDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Allowed" ColumnName="Allowed" />
+                <ScalarProperty Name="Action" ColumnName="Action" />
+                <ScalarProperty Name="Controller" ColumnName="Controller" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Icon" ColumnName="Icon" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="RoleDetailId" ColumnName="RoleDetailId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

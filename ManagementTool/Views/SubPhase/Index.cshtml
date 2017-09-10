@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ManagementTool.Models.C004_BUCKET>
+﻿@model IEnumerable<ManagementTool.Models.C003_SUB_PHASE>
 
 @{
     int index = 1;
@@ -10,14 +10,14 @@
 <div class="row">
     <br />
     <div class="col-lg-12">
-        <button class="btn btn-sm btn-primary pull-left m-t-n-xs" type="button" onclick="window.location.href='@Url.Content("~/Bucket/Create")'"><strong>Add New Bucket</strong></button>
+        <button class="btn btn-sm btn-primary pull-left m-t-n-xs" type="button" onclick="window.location.href='@Url.Content("~/SubPhase/Create")'"><strong>Add New Sub Phase</strong></button>
     </div>
 
 
     <div class="col-lg-12">
         <div class="ibox float-e-margins">
             <div class="ibox-title">
-                <h5>Complete Bucket Listing</h5>
+                <h5>Complete Sub Phase Listing</h5>
                 <div class="ibox-tools">
                     <a class="collapse-link">
                         <i class="fa fa-chevron-up"></i>
@@ -33,8 +33,7 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Bucket Name </th>
-                                <th>Sub Phase Name </th>
+                                <th>Sub Phase Name </th>                                
                                 <th>Project Name </th>
                                 <th>Phase Name </th>
                                 <th>Generated Date </th>
@@ -48,28 +47,27 @@
                             {
                                 <tr>
                                     <td>@index</td>
-                                    <td>@item.Name</td>
+                                    <td>@item.SubPhaseName</td>
                                     <td><small>@Html.DisplayFor(modelItem => item.C001_PROJECT.ProjectName)</small></td>
                                     <td><small>@Html.DisplayFor(modelItem => item.C002_PHASE.PhaseName)</small></td>
-                                    <td><small>@Html.DisplayFor(modelItem => item.C003_SUB_PHASE.SubPhaseName)</small></td>
-                                    <td>@item.GenerationDate.ToString("MMM dd, yyyy")                        </td>
+                                    <td>@item.GeneratedDate.ToString("MMM dd, yyyy")                        </td>
                                     <td>@Html.DisplayFor(modelItem => item.EndUser.UserName)                </td>
                                     <td>
                                         @if (item.IsActive == true)
-                                        {
-                                            WriteLiteral("<i class='fa fa-check-square text-navy'></i>");
-                                        }
-                                        else
-                                        {
-                                            WriteLiteral("<i class='fa fa-square text-navy'></i>");
-                                        }
-                                    </td>
-                                    <td>
-                                        @Html.ActionLink("Edit", "Edit", new { id = item.BucketId }) |
-                                        @Html.ActionLink("Details", "Details", new { id = item.BucketId }) |
-                                        @Html.ActionLink("Delete", "Delete", new { id = item.BucketId })
-                                    </td>
-                                </tr>
+                                    {
+                                        WriteLiteral("<i class='fa fa-check-square text-navy'></i>");
+                                    }
+                                    else
+                                    {
+                                        WriteLiteral("<i class='fa fa-square text-navy'></i>");
+                                    }
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.SubPhaseId }) |
+                                    @Html.ActionLink("Details", "Details", new { id = item.SubPhaseId }) |
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.SubPhaseId })
+                                </td>
+                            </tr>
                                 index = index + 1;
                             }
                         </tbody>
@@ -80,3 +78,4 @@
         </div>
     </div>
 </div>
+

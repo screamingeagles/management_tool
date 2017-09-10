@@ -623,6 +623,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PhaseController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
+    <Compile Include="Controllers\SubPhaseController.cs" />
     <Compile Include="Controllers\web\TaskController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -842,6 +843,11 @@
     <Content Include="Views\Bucket\Details.cshtml" />
     <Content Include="Views\Bucket\Edit.cshtml" />
     <Content Include="Views\Bucket\Index.cshtml" />
+    <Content Include="Views\SubPhase\Create.cshtml" />
+    <Content Include="Views\SubPhase\Delete.cshtml" />
+    <Content Include="Views\SubPhase\Details.cshtml" />
+    <Content Include="Views\SubPhase\Edit.cshtml" />
+    <Content Include="Views\SubPhase\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
