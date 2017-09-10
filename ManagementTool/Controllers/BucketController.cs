@@ -1,16 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Net;
 using System.Web;
+using System.Net;
+using System.Data;
+using System.Linq;
 using System.Web.Mvc;
+using System.Data.Entity;
+using ManagementTool.Common;
 using ManagementTool.Models;
+using System.Collections.Generic;
+
 
 namespace ManagementTool.Controllers
 {
-    public class BucketController : Controller
+    public class BucketController : BaseController
     {
         private ProjectEntities db = new ProjectEntities();
 
@@ -41,8 +43,7 @@ namespace ManagementTool.Controllers
         {
             ViewBag.ProjectId = new SelectList(db.C001_PROJECT, "ProjectId", "ProjectName");
             ViewBag.PhaseId = new SelectList(db.C002_PHASE, "PhaseId", "PhaseName");
-            ViewBag.SubPhaseId = new SelectList(db.C003_SUB_PHASE, "SubPhaseId", "SubPhaseName");
-            ViewBag.GeneratedBy = new SelectList(db.EndUsers, "UID", "UserName");
+            ViewBag.SubPhaseId = new SelectList(db.C003_SUB_PHASE, "SubPhaseId", "SubPhaseName");            
             return View();
         }
 
@@ -51,10 +52,14 @@ namespace ManagementTool.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "BucketId,ProjectId,PhaseId,SubPhaseId,Name,IsActive,GeneratedBy,GenerationDate")] C004_BUCKET c004_BUCKET)
+        public ActionResult Create([Bind(Include = "ProjectId,PhaseId,SubPhaseId,Name")] C004_BUCKET c004_BUCKET)
         {
             if (ModelState.IsValid)
             {
+                c004_BUCKET.GeneratedBy     = UserIdentity.UserId;
+                c004_BUCKET.GenerationDate  = DateTime.Now.AddHours(4);
+                c004_BUCKET.IsActive        = true;
+
                 db.C004_BUCKET.Add(c004_BUCKET);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -62,8 +67,7 @@ namespace ManagementTool.Controllers
 
             ViewBag.ProjectId = new SelectList(db.C001_PROJECT, "ProjectId", "ProjectName", c004_BUCKET.ProjectId);
             ViewBag.PhaseId = new SelectList(db.C002_PHASE, "PhaseId", "PhaseName", c004_BUCKET.PhaseId);
-            ViewBag.SubPhaseId = new SelectList(db.C003_SUB_PHASE, "SubPhaseId", "SubPhaseName", c004_BUCKET.SubPhaseId);
-            ViewBag.GeneratedBy = new SelectList(db.EndUsers, "UID", "UserName", c004_BUCKET.GeneratedBy);
+            ViewBag.SubPhaseId = new SelectList(db.C003_SUB_PHASE, "SubPhaseId", "SubPhaseName", c004_BUCKET.SubPhaseId);            
             return View(c004_BUCKET);
         }
 
@@ -81,8 +85,7 @@ namespace ManagementTool.Controllers
             }
             ViewBag.ProjectId = new SelectList(db.C001_PROJECT, "ProjectId", "ProjectName", c004_BUCKET.ProjectId);
             ViewBag.PhaseId = new SelectList(db.C002_PHASE, "PhaseId", "PhaseName", c004_BUCKET.PhaseId);
-            ViewBag.SubPhaseId = new SelectList(db.C003_SUB_PHASE, "SubPhaseId", "SubPhaseName", c004_BUCKET.SubPhaseId);
-            ViewBag.GeneratedBy = new SelectList(db.EndUsers, "UID", "UserName", c004_BUCKET.GeneratedBy);
+            ViewBag.SubPhaseId = new SelectList(db.C003_SUB_PHASE, "SubPhaseId", "SubPhaseName", c004_BUCKET.SubPhaseId);            
             return View(c004_BUCKET);
         }
 
@@ -91,18 +94,22 @@ namespace ManagementTool.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "BucketId,ProjectId,PhaseId,SubPhaseId,Name,IsActive,GeneratedBy,GenerationDate")] C004_BUCKET c004_BUCKET)
+        public ActionResult Edit([Bind(Include = "BucketId,ProjectId,PhaseId,SubPhaseId,Name")] C004_BUCKET c004_BUCKET)
         {
             if (ModelState.IsValid)
             {
+                c004_BUCKET.GeneratedBy     = UserIdentity.UserId;
+                c004_BUCKET.GenerationDate  = DateTime.Now.AddHours(4);
+                c004_BUCKET.IsActive        = true;
+
+
                 db.Entry(c004_BUCKET).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.ProjectId = new SelectList(db.C001_PROJECT, "ProjectId", "ProjectName", c004_BUCKET.ProjectId);
-            ViewBag.PhaseId = new SelectList(db.C002_PHASE, "PhaseId", "PhaseName", c004_BUCKET.PhaseId);
-            ViewBag.SubPhaseId = new SelectList(db.C003_SUB_PHASE, "SubPhaseId", "SubPhaseName", c004_BUCKET.SubPhaseId);
-            ViewBag.GeneratedBy = new SelectList(db.EndUsers, "UID", "UserName", c004_BUCKET.GeneratedBy);
+            ViewBag.ProjectId   = new SelectList(db.C001_PROJECT    , "ProjectId"   , "ProjectName" , c004_BUCKET.ProjectId);
+            ViewBag.PhaseId     = new SelectList(db.C002_PHASE      , "PhaseId"     , "PhaseName"   , c004_BUCKET.PhaseId);
+            ViewBag.SubPhaseId  = new SelectList(db.C003_SUB_PHASE  , "SubPhaseId"  , "SubPhaseName", c004_BUCKET.SubPhaseId);
             return View(c004_BUCKET);
         }
 
