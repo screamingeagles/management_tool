@@ -12,19 +12,15 @@ namespace ManagementTool.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class ROLE_DETAIL
+    public partial class C023_Notification_Detail
     {
-        public int RoleDetailId { get; set; }
-        public int RoleId { get; set; }
-        public string Icon { get; set; }
-        public string Title { get; set; }
-        public string Controller { get; set; }
-        public string Action { get; set; }
-        public bool Allowed { get; set; }
+        public int DetailId { get; set; }
+        public int NotificationId { get; set; }
+        public int UserId { get; set; }
+        public bool Seen { get; set; }
         public bool IsActive { get; set; }
-        public System.DateTime GeneratedDate { get; set; }
-        public int GeneratedBy { get; set; }
     
-        public virtual ROLE_MASTER ROLE_MASTER { get; set; }
+        public virtual C022_Notification_Master C022_Notification_Master { get; set; }
+        public virtual EndUser EndUser { get; set; }
     }
 }

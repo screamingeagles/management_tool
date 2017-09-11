@@ -223,6 +223,7 @@
     <Content Include="Content\css\plugins\jQueryUI\jquery-ui-1.10.4.custom.min.css" />
     <Content Include="Content\css\plugins\jQueryUI\jquery-ui.css" />
     <Content Include="Content\css\plugins\morris\morris-0.4.3.min.css" />
+    <Content Include="Content\images\profile-160x160.png" />
     <Content Include="Content\patterns\1.png" />
     <Content Include="Content\patterns\2.png" />
     <Content Include="Content\patterns\3.png" />
@@ -629,12 +630,16 @@
     <Compile Include="Common\AuthorizedSignatory.cs" />
     <Compile Include="Common\Bhai.cs" />
     <Compile Include="Common\Mail_Senders.cs" />
+    <Compile Include="Common\notifications.cs" />
     <Compile Include="Common\projectmodel.cs" />
     <Compile Include="Common\UserIdentity.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\BucketController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PhaseController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
+    <Compile Include="Controllers\SubPhaseController.cs" />
+    <Compile Include="Controllers\TaskController.cs" />
     <Compile Include="Controllers\web\TaskController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -695,6 +700,18 @@
       <DependentUpon>dbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\C019_Attachments.cs">
+      <DependentUpon>dbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\C020_CommitmentMaster.cs">
+      <DependentUpon>dbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\C021_CommimentDetails.cs">
+      <DependentUpon>dbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\C022_Notification_Master.cs">
+      <DependentUpon>dbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\C023_Notification_Detail.cs">
       <DependentUpon>dbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\dbModel.Context.cs">
@@ -837,6 +854,21 @@
     <Content Include="Views\Phase\Details.cshtml" />
     <Content Include="Views\Phase\Edit.cshtml" />
     <Content Include="Views\Phase\Index.cshtml" />
+    <Content Include="Views\Bucket\Create.cshtml" />
+    <Content Include="Views\Bucket\Delete.cshtml" />
+    <Content Include="Views\Bucket\Details.cshtml" />
+    <Content Include="Views\Bucket\Edit.cshtml" />
+    <Content Include="Views\Bucket\Index.cshtml" />
+    <Content Include="Views\SubPhase\Create.cshtml" />
+    <Content Include="Views\SubPhase\Delete.cshtml" />
+    <Content Include="Views\SubPhase\Details.cshtml" />
+    <Content Include="Views\SubPhase\Edit.cshtml" />
+    <Content Include="Views\SubPhase\Index.cshtml" />
+    <Content Include="Views\Task\Create.cshtml" />
+    <Content Include="Views\Task\Delete.cshtml" />
+    <Content Include="Views\Task\Details.cshtml" />
+    <Content Include="Views\Task\Edit.cshtml" />
+    <Content Include="Views\Task\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -847,7 +879,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="obj\Debug\TempPE\" />
-    <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

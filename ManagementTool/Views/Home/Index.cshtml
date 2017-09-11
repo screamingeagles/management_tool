@@ -1,6 +1,15 @@
 ﻿
 @{
     Layout = null;
+    string WriteMessage = "";
+    var s = (Request.QueryString["x"] == null) ? "" : Request.QueryString["x"].ToString();
+    if (string.IsNullOrEmpty(s) == false) {
+        if (s.Equals("1")) {
+            WriteMessage = "<code><i class='fa fa-circle text-danger'></i> Sorry your Session Expired Please Login Again.</code>";
+        } else if (s.Equals("2")) {
+            WriteMessage = "<code><i class='fa fa-circle text-danger'></i> Sorry your User Id and Password Do Not Match.</code>";
+        }
+    }
 }
 
 <!DOCTYPE html>
@@ -33,8 +42,8 @@
                 }
 
                 document.getElementById("dv_refresh_spin").style.display = "block";
-                //tuid.setAttribute("disabled", true);
-                //tpwd.setAttribute("disabled", true);
+                document.getElementById("dv_email").style.display = "none";
+                document.getElementById("dv_password").style.display = "none";
                 return true;
             }
     </script>
@@ -49,14 +58,22 @@
             <h3>Welcome to Management Tool</h3>
             <p>Please Use you Business Login Id and Password to Login</p>
             <p>Login in. To see it in action.</p>
+            @Html.Raw(WriteMessage)
+            <div id="dv_refresh_spin" class="sk-spinner sk-spinner-wave" style="display:none;">
+                <div class="sk-rect1"></div>
+                <div class="sk-rect2"></div>
+                <div class="sk-rect3"></div>
+                <div class="sk-rect4"></div>
+                <div class="sk-rect5"></div>
+            </div>
 
          @using (Html.BeginForm("process", "Home", FormMethod.Post, new { onsubmit = "return CheckVals();", @class= "m-t", role = "form" }))
          {
             @Html.AntiForgeryToken()
-                <div class="form-group">
+                <div id="dv_email" class="form-group">
                     <input type="email" class="form-control" placeholder="Username" required="" name="userid" id="userid">
                 </div>
-                <div class="form-group">
+                <div  id="dv_password" class="form-group">
                     <input type="password" class="form-control" placeholder="Password" required="" name="txtpass" id="txtpass">
                 </div>
                 <button type="submit" class="btn btn-primary block full-width m-b">Login</button>

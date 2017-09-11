@@ -1,4 +1,4 @@
-﻿@model ManagementTool.Models.C002_PHASE
+﻿@model ManagementTool.Models.C004_BUCKET
 
 @{
     ViewBag.Title = "Edit";
@@ -10,7 +10,7 @@
     <div class="col-lg-10 col-lg-offset-1">
         <div class="ibox float-e-margins">
             <div class="ibox-title">
-                <h5>Modify or Change Phase Details</h5>
+                <h5>Modify or Change Bucket Details</h5>
                 <div class="ibox-tools">
                     <a class="collapse-link">
                         <i class="fa fa-chevron-up"></i>
@@ -22,39 +22,39 @@
             </div>
             <div class="ibox-content">
                 <div class="table-responsive">
-                    @using (Html.BeginForm("Edit", "Phase", FormMethod.Post, new { id = "frmMain" }))
+                    @using (Html.BeginForm("Edit", "Bucket", FormMethod.Post, new { id = "frmMain" }))
                     {
                         @Html.AntiForgeryToken();
-                        @Html.HiddenFor(model => model.PhaseId)
+                        @Html.HiddenFor(model => model.BucketId)
                     <!-- / Select Project -->
                         <div class="form-group">
                             <label class="col-lg-3 control-label">Select Project</label>
                             <div class="col-lg-9">
-                                @Html.DropDownList("ProjectId", null, "Select Project", htmlAttributes: new { @class = "form-control m-b" })
+                                @Html.DropDownList("ProjectId", null, "Select Project", htmlAttributes: new { @class = "form-control m-b", onchange = "FillPhase(this);" })
                             </div>
                         </div>
 
-                    <!-- / Phase Name -->
+                        <!-- / Select Phase -->
                         <div class="form-group">
-                            <label class="col-lg-3 control-label">New Phase Name</label>
+                            <label class="col-lg-3 control-label">Select Phase</label>
                             <div class="col-lg-9">
-                                @Html.EditorFor(model => model.PhaseName, new { htmlAttributes = new { @class = "form-control m-b", placeholder = "Phase Name" } })
+                                @Html.DropDownList("PhaseId", null, "Select Phase", htmlAttributes: new { @class = "form-control m-b" })
                             </div>
                         </div>
 
-                    <!-- / Start Date-->
+                   <!-- /Sub Phase Name -->
                         <div class="form-group">
-                            <label class="col-lg-3 control-label">Phase Start Date</label>
+                            <label class="col-lg-3 control-label">Select Phase</label>
                             <div class="col-lg-9">
-                                @Html.TextBoxFor(model => model.StartDate, "{0:dd-MMM-yyyy}", htmlAttributes: new { @class = "form-control m-b", placeholer = "Start Date" })
+                                @Html.DropDownList("SubPhaseId", null, "Select Sub Phase", htmlAttributes: new { @class = "form-control m-b" })
                             </div>
                         </div>
 
-                   <!-- / End Date -->
+                    <!-- /Bucket -->
                         <div class="form-group">
-                            <label class="col-lg-3 control-label">Phase End Date</label>
+                            <label class="col-lg-3 control-label">New Bucket Name</label>
                             <div class="col-lg-9">
-                                @Html.TextBoxFor(model => model.EndDate, "{0:dd-MMM-yyyy}", htmlAttributes: new { @class = "form-control m-b", placeholer = "End Date" })
+                                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control m-b", placeholder = "Bucket Name" } })
                             </div>
                         </div>
 
@@ -74,6 +74,7 @@
         </div>
     </div>
 </div>
+
 
 <script type="text/javascript">
 
@@ -95,22 +96,14 @@
 
         $("#frmMain").validate({
             rules: {
-                PhaseName: {
+                BucketName: {
                     minlength: 3,
                     maxlength: 250,
                     required: true
                 },
+                PhaseId: { required: true },
                 ProjectId: { required: true },
-                StartDate: {
-                    minlength: 6,
-                    maxlength: 15,
-                    required: true
-                },
-                EndDate: {
-                    minlength: 6,
-                    maxlength: 15,
-                    required: true
-                },
+
             },
             highlight: function (element) {
                 $(element).closest('.control-group').addClass('has-error');
@@ -125,7 +118,59 @@
         });
     });
 
+    function FillPhase(obj) {
+        var sel = obj.options[obj.selectedIndex].value;
+        if (sel == "") { return; }
+
+        var postedContent = { SelectedLocation: sel }
+        $.ajax({
+            type: "POST",
+            url: "/Bucket/GetPhaseByProject",
+            data: postedContent,
+            success: function (message) {
+                var res = message.data;
+                if (res.length > 0) {
+                    $("#PhaseId").empty()
+                    for (var i = 0; i < message.data.length; i++) {
+                        $('#PhaseId').append($('<option>', { value: message.data[i].PhaseId, text: message.data[i].PhaseName }));
+                    } // end of for loop
+                } // end of if for length
+            },
+            error: function (xerr) {
+                /* $('#txteng').val("err : " +xerr);*/
+            }
+        });
+
+    }
+
+    function FillSubPhase(obj) {
+        var sel = obj.options[obj.selectedIndex].value;
+        if (sel == "") { return; }
+
+        var postedContent = { SelectedLocation: sel }
+        $.ajax({
+            type: "POST",
+            url: "/Bucket/GetSubPhaseByPhase",
+            data: postedContent,
+            success: function (message) {
+                var res = message.data;
+                if (res.length > 0) {
+                    $("#SubPhaseId").empty()
+                    for (var i = 0; i < message.data.length; i++) {
+                        $('#SubPhaseId').append($('<option>', { value: message.data[i].SubPhaseId, text: message.data[i].SubPhaseName }));
+                    } // end of for loop
+                } // end of if for length
+            },
+            error: function (xerr) {
+                /* $('#txteng').val("err : " +xerr);*/
+            }
+        });
+
+    }
+
 
 
 
 </script>
+
+

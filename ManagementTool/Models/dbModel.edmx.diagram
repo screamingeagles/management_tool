@@ -23,11 +23,11 @@
         <EntityTypeShape EntityType="ManagementTool.EndUser" Width="1.5" PointX="3" PointY="12.25" />
         <EntityTypeShape EntityType="ManagementTool.EndUser_Details" Width="1.5" PointX="2.75" PointY="0.75" />
         <EntityTypeShape EntityType="ManagementTool.EndUser_LoginDetails" Width="1.5" PointX="4.75" PointY="0.75" />
-        <EntityTypeShape EntityType="ManagementTool.Mailer_Details" Width="1.5" PointX="5.75" PointY="4.75" />
+        <EntityTypeShape EntityType="ManagementTool.Mailer_Details" Width="1.875" PointX="9" PointY="5.375" />
         <EntityTypeShape EntityType="ManagementTool.Smart_Login" Width="1.5" PointX="6.75" PointY="0.75" />
-        <EntityTypeShape EntityType="ManagementTool.STATUS" Width="1.5" PointX="7.75" PointY="4.75" />
+        <EntityTypeShape EntityType="ManagementTool.STATUS" Width="1.5" PointX="12.125" PointY="0.875" />
         <EntityTypeShape EntityType="ManagementTool.LOGIN_DETAIL" Width="1.5" PointX="8.75" PointY="0.75" />
-        <EntityTypeShape EntityType="ManagementTool.vw_SessionUser" Width="1.5" PointX="9.75" PointY="4.75" />
+        <EntityTypeShape EntityType="ManagementTool.vw_SessionUser" Width="1.5" PointX="14.125" PointY="0.625" />
         <AssociationConnector Association="ManagementTool.FK_AREA__TASK_DATA" />
         <AssociationConnector Association="ManagementTool.FK_Generated__TASK_DATA" />
         <AssociationConnector Association="ManagementTool.FK_OwnerID__TASK_DATA" />
@@ -59,8 +59,17 @@
         <AssociationConnector Association="ManagementTool.FK_SUB_PHASE__BUCKET" />
         <AssociationConnector Association="ManagementTool.FK_BUCKET_TASK_DATA" />
         <AssociationConnector Association="ManagementTool.FK_Generated_BUCKET" />
-        <EntityTypeShape EntityType="ManagementTool.ROLE_DETAIL" Width="1.5" PointX="12.625" PointY="10" />
         <EntityTypeShape EntityType="ManagementTool.ROLE_MASTER" Width="1.5" PointX="10.375" PointY="10.5" />
+        <EntityTypeShape EntityType="ManagementTool.C020_CommitmentMaster" Width="2.125" PointX="8.25" PointY="33.125" />
+        <EntityTypeShape EntityType="ManagementTool.C021_CommimentDetails" Width="2.125" PointX="11.5" PointY="33" />
+        <EntityTypeShape EntityType="ManagementTool.C022_Notification_Master" Width="2.125" PointX="13.375" PointY="6.375" />
+        <EntityTypeShape EntityType="ManagementTool.C023_Notification_Detail" Width="2.125" PointX="13.5" PointY="14.125" />
+        <AssociationConnector Association="ManagementTool.FK_Commiment__Master_Details" />
+        <AssociationConnector Association="ManagementTool.FK_User__Commitment" />
+        <AssociationConnector Association="ManagementTool.FK_Generated__Notification" />
+        <AssociationConnector Association="ManagementTool.FK_Notification__Master_Detail" />
+        <AssociationConnector Association="ManagementTool.FK_User__Notification" />
+        <EntityTypeShape EntityType="ManagementTool.ROLE_DETAIL" Width="1.5" PointX="12.625" PointY="9.75" />
         <AssociationConnector Association="ManagementTool.FK_ROLE__MASTER_DETAIL" />
         </Diagram>
     </edmx:Diagrams>

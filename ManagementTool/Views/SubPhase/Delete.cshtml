@@ -1,18 +1,16 @@
-﻿@model ManagementTool.Models.C002_PHASE
+﻿@model ManagementTool.Models.C003_SUB_PHASE
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Delete";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<br />
 
 <div class="row">
 
     <div class="col-lg-10 col-lg-offset-1">
         <div class="ibox float-e-margins">
             <div class="ibox-title">
-                <h5>View Details For Phase : @Html.DisplayFor(model => model.PhaseName)</h5>
+                <h5>Are You Sure You Want to Delete " @Html.DisplayFor(model => model.SubPhaseName) " ??</h5>
                 <div class="ibox-tools">
                     <a class="collapse-link">
                         <i class="fa fa-chevron-up"></i>
@@ -25,35 +23,27 @@
             <div class="ibox-content">
                 <div class="table-responsive">
 
-                    <!-- / Project Name -->
+                    <!-- /Sub Phase Name -->
                     <div class="form-group">
-                        <label class="col-lg-3 control-label">New Phase Name</label>
+                        <label class="col-lg-3 control-label">New Sub Phase Name</label>
                         <div class="col-lg-9">
-                            @Html.TextBoxFor(model => model.PhaseName, htmlAttributes: new { @readonly = "readonly", @class = "form-control m-b", @style = "font-weight:normal; background-color : white;" })
+                            @Html.TextBoxFor(model => model.SubPhaseName, htmlAttributes: new { @readonly = "readonly", @class = "form-control m-b", @style = "font-weight:normal; background-color : white;" })
                         </div>
                     </div>
 
-                    <!-- / Location -->
+                    <!-- / Phase Name -->
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">Select Phase</label>
+                        <div class="col-lg-9">
+                            @Html.TextBoxFor(model => model.C002_PHASE.PhaseName, htmlAttributes: new { @readonly = "readonly", @class = "form-control m-b", @style = "font-weight:normal; background-color : white;" })
+                        </div>
+                    </div>
+
+                    <!-- / Project -->
                     <div class="form-group">
                         <label class="col-lg-3 control-label">Select Project</label>
                         <div class="col-lg-9">
                             @Html.TextBoxFor(model => model.C001_PROJECT.ProjectName, htmlAttributes: new { @readonly = "readonly", @class = "form-control m-b", @style = "font-weight:normal; background-color : white;" })
-                        </div>
-                    </div>
-
-                    <!-- / Start Date-->
-                    <div class="form-group">
-                        <label class="col-lg-3 control-label">Phase Start Date</label>
-                        <div class="col-lg-9">
-                            @Html.TextBoxFor(model => model.StartDate, "{0:dd-MMM-yyyy}", htmlAttributes: new { @readonly = "readonly", @class = "form-control m-b", @style = "font-weight:normal; background-color : white;" })
-                        </div>
-                    </div>
-
-                    <!-- / End Date -->
-                    <div class="form-group">
-                        <label class="col-lg-3 control-label">Phase End Date</label>
-                        <div class="col-lg-9">
-                            @Html.TextBoxFor(model => model.EndDate, "{0:dd-MMM-yyyy}", htmlAttributes: new { @readonly = "readonly", @class = "form-control m-b", @style = "font-weight:normal; background-color : white;" })
                         </div>
                     </div>
 
@@ -77,6 +67,15 @@
                     <!-- / Close Button -->
                     <div class="form-group">
                         <div class="col-lg-12">
+                            @using (Html.BeginForm())
+                            {
+                                @Html.AntiForgeryToken()
+                                <button class="btn btn-sm btn-primary pull-left m-t-n-xs" type="submit">
+                                    <strong>Delete</strong>
+                                </button>
+                                @Html.HiddenFor(model => model.SubPhaseId)
+                            }
+
                             @Html.ActionLink("Back to List", "Index", null, htmlAttributes: new { @class = "btn btn-sm btn-primary pull-right m-t-n-xs" })
                         </div>
                     </div>

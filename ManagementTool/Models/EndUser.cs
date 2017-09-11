@@ -23,6 +23,9 @@ namespace ManagementTool.Models
             this.C002_PHASE = new HashSet<C002_PHASE>();
             this.C003_SUB_PHASE = new HashSet<C003_SUB_PHASE>();
             this.C004_BUCKET = new HashSet<C004_BUCKET>();
+            this.C020_CommitmentMaster = new HashSet<C020_CommitmentMaster>();
+            this.C022_Notification_Master = new HashSet<C022_Notification_Master>();
+            this.C023_Notification_Detail = new HashSet<C023_Notification_Detail>();
         }
     
         public int UID { get; set; }
@@ -48,5 +51,11 @@ namespace ManagementTool.Models
         public virtual ICollection<C003_SUB_PHASE> C003_SUB_PHASE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<C004_BUCKET> C004_BUCKET { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<C020_CommitmentMaster> C020_CommitmentMaster { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<C022_Notification_Master> C022_Notification_Master { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<C023_Notification_Detail> C023_Notification_Detail { get; set; }
     }
 }

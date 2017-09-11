@@ -24,7 +24,7 @@ namespace ManagementTool.Controllers
 
             if (_sid== 0) {
                 // no session go to login
-                filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary { { "controller", "Home" }, { "action", "Index" } });
+                filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary { { "controller", "Home" }, { "action", "Index" }});
                 return;
             }
             else {
