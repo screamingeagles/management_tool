@@ -31,5 +31,6 @@ namespace ManagementTool.Models
         public virtual ICollection<C002_AREA> C002_AREA { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<C004_PROJECT> C004_PROJECT { get; set; }
+        public virtual EndUser EndUser { get; set; }
     }
 }

@@ -822,11 +822,6 @@
     <Content Include="Scripts\js\plugins\diff_match_patch\COPYING" />
     <Content Include="Scripts\js\plugins\justified-gallery\README.md" />
     <Content Include="Scripts\js\plugins\topojson\LICENSE" />
-    <Content Include="Views\Division\Create.cshtml" />
-    <Content Include="Views\Division\Delete.cshtml" />
-    <Content Include="Views\Division\Details.cshtml" />
-    <Content Include="Views\Division\Edit.cshtml" />
-    <Content Include="Views\Division\Index.cshtml" />
     <Content Include="Views\Area\Create.cshtml" />
     <Content Include="Views\Area\Delete.cshtml" />
     <Content Include="Views\Area\Details.cshtml" />
@@ -842,6 +837,11 @@
     <Content Include="Views\Project\Details.cshtml" />
     <Content Include="Views\Project\Edit.cshtml" />
     <Content Include="Views\Project\Index.cshtml" />
+    <Content Include="Views\Division\Create.cshtml" />
+    <Content Include="Views\Division\Delete.cshtml" />
+    <Content Include="Views\Division\Details.cshtml" />
+    <Content Include="Views\Division\Edit.cshtml" />
+    <Content Include="Views\Division\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

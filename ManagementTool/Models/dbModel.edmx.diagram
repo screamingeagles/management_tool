@@ -5,7 +5,6 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="e026104ae8754b6f975677a1fbbc7754" Name="Diagram1" ZoomLevel="72">
-        <EntityTypeShape EntityType="ManagementTool.C001_DIVISION" Width="1.5" PointX="3.75" PointY="4.5" />
         <EntityTypeShape EntityType="ManagementTool.C002_AREA" Width="1.5" PointX="6" PointY="15.25" />
         <EntityTypeShape EntityType="ManagementTool.C003_SUB_AREA" Width="1.5" PointX="8.25" PointY="13.25" />
         <EntityTypeShape EntityType="ManagementTool.C005_PHASE" Width="1.5" PointX="3" PointY="8.75" />
@@ -35,7 +34,6 @@
         <EntityTypeShape EntityType="ManagementTool.STATUS" Width="1.5" PointX="12.75" PointY="0.75" />
         <EntityTypeShape EntityType="ManagementTool.LOGIN_DETAIL" Width="1.5" PointX="12.75" PointY="8.75" />
         <EntityTypeShape EntityType="ManagementTool.vw_SessionUser" Width="1.5" PointX="12.75" PointY="12.75" />
-        <AssociationConnector Association="ManagementTool.FK__AREA__DIVISION" />
         <AssociationConnector Association="ManagementTool.FK__AREA__SUB_AREA" />
         <AssociationConnector Association="ManagementTool.FK__GeneratedBy__AREA" />
         <AssociationConnector Association="ManagementTool.FK__GeneratedBy__SUB_AREA" />
@@ -57,9 +55,12 @@
         <AssociationConnector Association="ManagementTool.FK_User__Notification" />
         <AssociationConnector Association="ManagementTool.FK_ROLE__MASTER_DETAIL" />
         <EntityTypeShape EntityType="ManagementTool.C004_PROJECT" Width="1.5" PointX="14.25" PointY="3.5" />
-        <AssociationConnector Association="ManagementTool.FK__DIVISION__PROJECT" />
         <AssociationConnector Association="ManagementTool.FK__AREA__PROJECT" />
         <AssociationConnector Association="ManagementTool.FK__GeneratedBy__PROJECT" />
+        <EntityTypeShape EntityType="ManagementTool.C001_DIVISION" Width="1.5" PointX="3" PointY="4.5" />
+        <AssociationConnector Association="ManagementTool.FK__AREA__DIVISION" />
+        <AssociationConnector Association="ManagementTool.FK__DIVISION__PROJECT" />
+        <AssociationConnector Association="ManagementTool.FK__GeneratedBy__DIVISION" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

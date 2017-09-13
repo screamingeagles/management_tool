@@ -26,8 +26,8 @@ namespace ManagementTool.Models
         public System.DateTime GeneratedDate { get; set; }
         public bool IsActive { get; set; }
     
-        public virtual C001_DIVISION C001_DIVISION { get; set; }
         public virtual C002_AREA C002_AREA { get; set; }
         public virtual EndUser EndUser { get; set; }
+        public virtual C001_DIVISION C001_DIVISION { get; set; }
     }
 }

@@ -1,12 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Net;
 using System.Web;
+using System.Net;
+using System.Data;
+using System.Linq;
 using System.Web.Mvc;
+using System.Data.Entity;
+using ManagementTool.Common;
 using ManagementTool.Models;
+using System.Collections.Generic;
 
 namespace ManagementTool.Controllers
 {
@@ -17,7 +18,7 @@ namespace ManagementTool.Controllers
         // GET: Division
         public ActionResult Index()
         {
-            return View(db.C001_DIVISION.ToList());
+            return View(db.C001_DIVISION.Include(c => c.EndUser).ToList());
         }
 
         // GET: Division/Details/5
@@ -38,6 +39,8 @@ namespace ManagementTool.Controllers
         // GET: Division/Create
         public ActionResult Create()
         {
+            UserIdentity.UserId = 1020;
+            UserIdentity.UserName= "Arslan";
             return View();
         }
 
@@ -46,10 +49,13 @@ namespace ManagementTool.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "DivisionId,DivisionName,GeneratedBy,GeneratedDate,IsActive")] C001_DIVISION c001_DIVISION)
+        public ActionResult Create([Bind(Include = "DivisionName")] C001_DIVISION c001_DIVISION)
         {
             if (ModelState.IsValid)
             {
+                c001_DIVISION.GeneratedBy   = UserIdentity.UserId;
+                c001_DIVISION.GeneratedDate = DateTime.Now.AddHours(4);
+                c001_DIVISION.IsActive      = true;
                 db.C001_DIVISION.Add(c001_DIVISION);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -78,11 +84,14 @@ namespace ManagementTool.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "DivisionId,DivisionName,GeneratedBy,GeneratedDate,IsActive")] C001_DIVISION c001_DIVISION)
+        public ActionResult Edit([Bind(Include = "DivisionId,DivisionName")] C001_DIVISION c001_DIVISION)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(c001_DIVISION).State = EntityState.Modified;
+                c001_DIVISION.GeneratedBy       = UserIdentity.UserId;
+                c001_DIVISION.GeneratedDate     = DateTime.Now.AddHours(4);
+                c001_DIVISION.IsActive          = true;
+                db.Entry(c001_DIVISION).State   = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
