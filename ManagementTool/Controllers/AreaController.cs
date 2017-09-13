@@ -10,107 +10,116 @@ using ManagementTool.Models;
 
 namespace ManagementTool.Controllers
 {
-    public class ProjectController : Controller
+    public class AreaController : Controller
     {
         private ProjectEntities db = new ProjectEntities();
 
-        // GET: Project
+        // GET: Area
         public ActionResult Index()
         {
-            return View(db.C004_PROJECT.ToList());
+            var c002_AREA = db.C002_AREA.Include(c => c.C001_DIVISION).Include(c => c.EndUser);
+            return View(c002_AREA.ToList());
         }
 
-        // GET: Project/Details/5
+        // GET: Area/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            C004_PROJECT c004_PROJECT = db.C004_PROJECT.Find(id);
-            if (c004_PROJECT == null)
+            C002_AREA c002_AREA = db.C002_AREA.Find(id);
+            if (c002_AREA == null)
             {
                 return HttpNotFound();
             }
-            return View(c004_PROJECT);
+            return View(c002_AREA);
         }
 
-        // GET: Project/Create
+        // GET: Area/Create
         public ActionResult Create()
         {
+            ViewBag.DivisionId = new SelectList(db.C001_DIVISION, "DivisionId", "DivisionName");
+            ViewBag.GeneratedBy = new SelectList(db.EndUsers, "UID", "UserName");
             return View();
         }
 
-        // POST: Project/Create
+        // POST: Area/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ProjectId,DivisionId,AreaId,SubAreaId,ProjectName,ProjectType,StartDate,EndDate,GeneratedBy,GeneratedDate,IsActive")] C004_PROJECT c004_PROJECT)
+        public ActionResult Create([Bind(Include = "AreaId,DivisionId,AreaName,GeneratedBy,GeneratedDate,isActive")] C002_AREA c002_AREA)
         {
             if (ModelState.IsValid)
             {
-                db.C004_PROJECT.Add(c004_PROJECT);
+                db.C002_AREA.Add(c002_AREA);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(c004_PROJECT);
+            ViewBag.DivisionId = new SelectList(db.C001_DIVISION, "DivisionId", "DivisionName", c002_AREA.DivisionId);
+            ViewBag.GeneratedBy = new SelectList(db.EndUsers, "UID", "UserName", c002_AREA.GeneratedBy);
+            return View(c002_AREA);
         }
 
-        // GET: Project/Edit/5
+        // GET: Area/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            C004_PROJECT c004_PROJECT = db.C004_PROJECT.Find(id);
-            if (c004_PROJECT == null)
+            C002_AREA c002_AREA = db.C002_AREA.Find(id);
+            if (c002_AREA == null)
             {
                 return HttpNotFound();
             }
-            return View(c004_PROJECT);
+            ViewBag.DivisionId = new SelectList(db.C001_DIVISION, "DivisionId", "DivisionName", c002_AREA.DivisionId);
+            ViewBag.GeneratedBy = new SelectList(db.EndUsers, "UID", "UserName", c002_AREA.GeneratedBy);
+            return View(c002_AREA);
         }
 
-        // POST: Project/Edit/5
+        // POST: Area/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ProjectId,DivisionId,AreaId,SubAreaId,ProjectName,ProjectType,StartDate,EndDate,GeneratedBy,GeneratedDate,IsActive")] C004_PROJECT c004_PROJECT)
+        public ActionResult Edit([Bind(Include = "AreaId,DivisionId,AreaName,GeneratedBy,GeneratedDate,isActive")] C002_AREA c002_AREA)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(c004_PROJECT).State = EntityState.Modified;
+                db.Entry(c002_AREA).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(c004_PROJECT);
+            ViewBag.DivisionId = new SelectList(db.C001_DIVISION, "DivisionId", "DivisionName", c002_AREA.DivisionId);
+            ViewBag.GeneratedBy = new SelectList(db.EndUsers, "UID", "UserName", c002_AREA.GeneratedBy);
+            return View(c002_AREA);
         }
 
-        // GET: Project/Delete/5
+        // GET: Area/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            C004_PROJECT c004_PROJECT = db.C004_PROJECT.Find(id);
-            if (c004_PROJECT == null)
+            C002_AREA c002_AREA = db.C002_AREA.Find(id);
+            if (c002_AREA == null)
             {
                 return HttpNotFound();
             }
-            return View(c004_PROJECT);
+            return View(c002_AREA);
         }
 
-        // POST: Project/Delete/5
+        // POST: Area/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            C004_PROJECT c004_PROJECT = db.C004_PROJECT.Find(id);
-            db.C004_PROJECT.Remove(c004_PROJECT);
+            C002_AREA c002_AREA = db.C002_AREA.Find(id);
+            db.C002_AREA.Remove(c002_AREA);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

@@ -12,15 +12,12 @@ namespace ManagementTool.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class C018_coOwners
+    public partial class C010_LOCATION
     {
-        public int CoOwnerId { get; set; }
-        public int TaskId { get; set; }
-        public int UserId { get; set; }
-        public string OwnerContribution { get; set; }
-        public System.DateTime CreatedDate { get; set; }
-        public int CreatedBy { get; set; }
-    
-        public virtual C008_TASK_DATA C008_TASK_DATA { get; set; }
+        public int LocationId { get; set; }
+        public string LocationName { get; set; }
+        public Nullable<int> CreatedBy { get; set; }
+        public System.DateTime CreatedDatetime { get; set; }
+        public bool IsActive { get; set; }
     }
 }

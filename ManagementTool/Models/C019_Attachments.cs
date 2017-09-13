@@ -24,6 +24,6 @@ namespace ManagementTool.Models
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<bool> IsActive { get; set; }
     
-        public virtual C005_TASK_DATA C005_TASK_DATA { get; set; }
+        public virtual C008_TASK_DATA C008_TASK_DATA { get; set; }
     }
 }

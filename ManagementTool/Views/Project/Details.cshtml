@@ -1,111 +1,99 @@
-﻿@model ManagementTool.Models.C001_PROJECT
+﻿@model ManagementTool.Models.C004_PROJECT
 
 @{
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<br />
 
-<div class="row">
+<h2>Details</h2>
 
-    <div class="col-lg-10 col-lg-offset-1">
-        <div class="ibox float-e-margins">
-            <div class="ibox-title">
-                <h5>View Details For Project : @Html.DisplayFor(model => model.ProjectName)</h5>
-                <div class="ibox-tools">
-                    <a class="collapse-link">
-                        <i class="fa fa-chevron-up"></i>
-                    </a>
-                    <a class="close-link">
-                        <i class="fa fa-times"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="ibox-content">
-                <div class="table-responsive">
+<div>
+    <h4>C004_PROJECT</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DivisionId)
+        </dt>
 
-                    <!-- / Project Name -->
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">New Project Name</label>
-                            <div class="col-lg-9">
-                                @Html.TextBoxFor(model => model.ProjectName, htmlAttributes: new { @readonly = "readonly", @class = "form-control m-b", @style = "font-weight:normal; background-color : white;" })                                
-                            </div>
-                        </div>
+        <dd>
+            @Html.DisplayFor(model => model.DivisionId)
+        </dd>
 
-                    <!-- / Location -->
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">Select Location</label>
-                            <div class="col-lg-9">
-                                @Html.TextBoxFor(model => model.C007_LOCATION.LocationName, htmlAttributes: new { @readonly = "readonly", @class = "form-control m-b", @style = "font-weight:normal; background-color : white;" })
-                            </div>
-                        </div>
+        <dt>
+            @Html.DisplayNameFor(model => model.AreaId)
+        </dt>
 
-                    <!-- / Company -->
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">Select Company</label>
-                            <div class="col-lg-9">
-                                @Html.TextBoxFor(model => model.C008_COMPANY.CompanyName, htmlAttributes: new { @readonly = "readonly", @class = "form-control m-b", @style = "font-weight:normal; background-color : white;" })
-                            </div>
-                        </div>
+        <dd>
+            @Html.DisplayFor(model => model.AreaId)
+        </dd>
 
-                    <!-- / Division -->
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">Select Division</label>
-                            <div class="col-lg-9">
-                                @Html.TextBoxFor(model => model.C009_DIVISION.DivisionName, htmlAttributes: new { @readonly = "readonly", @class = "form-control m-b", @style = "font-weight:normal; background-color : white;" })
-                            </div>
-                        </div>
+        <dt>
+            @Html.DisplayNameFor(model => model.SubAreaId)
+        </dt>
 
-                    <!-- / Start Date-->
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">Project Start Date</label>
-                            <div class="col-lg-9">
-                                @Html.TextBoxFor(model => model.StartDate, "{0:dd-MMM-yyyy}", htmlAttributes: new { @readonly = "readonly", @class = "form-control m-b", @style = "font-weight:normal; background-color : white;" })
-                            </div>
-                        </div>
+        <dd>
+            @Html.DisplayFor(model => model.SubAreaId)
+        </dd>
 
-                   <!-- / End Date -->
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">Project End Date</label>
-                            <div class="col-lg-9">
-                                @Html.TextBoxFor(model => model.EndDate, "{0:dd-MMM-yyyy}", htmlAttributes: new { @readonly = "readonly", @class = "form-control m-b", @style = "font-weight:normal; background-color : white;" })
-                            </div>
-                        </div>
+        <dt>
+            @Html.DisplayNameFor(model => model.ProjectName)
+        </dt>
 
-                    <!-- / Project Type -->
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">Select Project Type</label>
-                            <div class="col-lg-9">
-                                @Html.TextBoxFor(model => model.C013_PROJECT_TYPE.ProjectType, htmlAttributes: new { @readonly = "readonly", @class = "form-control m-b", @style = "font-weight:normal; background-color : white;" })
-                            </div>
-                        </div>
+        <dd>
+            @Html.DisplayFor(model => model.ProjectName)
+        </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.ProjectType)
+        </dt>
 
-                    <!-- / Generated By -->
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">Record Generated By </label>
-                            <div class="col-lg-9">
-                                @Html.TextBoxFor(model => model.EndUser.UserName, htmlAttributes: new { @readonly = "readonly", @class = "form-control m-b", @style = "font-weight:normal; background-color : white;" })
-                            </div>
-                        </div>
+        <dd>
+            @Html.DisplayFor(model => model.ProjectType)
+        </dd>
 
-                    <!-- / Generated Date -->
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">Record Generated Date</label>
-                            <div class="col-lg-9">
-                                @Html.TextBoxFor(model => model.GeneratedDate, "{0:dd-MMM-yyyy HH:mm}", htmlAttributes: new { @readonly = "readonly", @class = "form-control m-b", @style = "font-weight:normal; background-color : white;" })
-                            </div>
-                        </div>
+        <dt>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </dt>
 
-                    <!-- / Close Button -->
-                        <div class="form-group">
-                            <div class="col-lg-12">
-                                @Html.ActionLink("Back to List", "Index", null, htmlAttributes: new { @class = "btn btn-sm btn-primary pull-right m-t-n-xs" })
-                            </div>
-                        </div>
-                    
-                </div>
-            </div>
-        </div>
-    </div>
+        <dd>
+            @Html.DisplayFor(model => model.StartDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EndDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EndDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GeneratedBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GeneratedBy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GeneratedDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GeneratedDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsActive)
+        </dd>
+
+    </dl>
 </div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ProjectId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

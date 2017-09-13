@@ -10,107 +10,116 @@ using ManagementTool.Models;
 
 namespace ManagementTool.Controllers
 {
-    public class ProjectController : Controller
+    public class SubAreaController : Controller
     {
         private ProjectEntities db = new ProjectEntities();
 
-        // GET: Project
+        // GET: SubArea
         public ActionResult Index()
         {
-            return View(db.C004_PROJECT.ToList());
+            var c003_SUB_AREA = db.C003_SUB_AREA.Include(c => c.C002_AREA).Include(c => c.EndUser);
+            return View(c003_SUB_AREA.ToList());
         }
 
-        // GET: Project/Details/5
+        // GET: SubArea/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            C004_PROJECT c004_PROJECT = db.C004_PROJECT.Find(id);
-            if (c004_PROJECT == null)
+            C003_SUB_AREA c003_SUB_AREA = db.C003_SUB_AREA.Find(id);
+            if (c003_SUB_AREA == null)
             {
                 return HttpNotFound();
             }
-            return View(c004_PROJECT);
+            return View(c003_SUB_AREA);
         }
 
-        // GET: Project/Create
+        // GET: SubArea/Create
         public ActionResult Create()
         {
+            ViewBag.AreaId = new SelectList(db.C002_AREA, "AreaId", "AreaName");
+            ViewBag.GeneratedBy = new SelectList(db.EndUsers, "UID", "UserName");
             return View();
         }
 
-        // POST: Project/Create
+        // POST: SubArea/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ProjectId,DivisionId,AreaId,SubAreaId,ProjectName,ProjectType,StartDate,EndDate,GeneratedBy,GeneratedDate,IsActive")] C004_PROJECT c004_PROJECT)
+        public ActionResult Create([Bind(Include = "SubAreaId,AreaId,SubAreaName,GeneratedBy,GeneratedDate,AreaActive")] C003_SUB_AREA c003_SUB_AREA)
         {
             if (ModelState.IsValid)
             {
-                db.C004_PROJECT.Add(c004_PROJECT);
+                db.C003_SUB_AREA.Add(c003_SUB_AREA);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(c004_PROJECT);
+            ViewBag.AreaId = new SelectList(db.C002_AREA, "AreaId", "AreaName", c003_SUB_AREA.AreaId);
+            ViewBag.GeneratedBy = new SelectList(db.EndUsers, "UID", "UserName", c003_SUB_AREA.GeneratedBy);
+            return View(c003_SUB_AREA);
         }
 
-        // GET: Project/Edit/5
+        // GET: SubArea/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            C004_PROJECT c004_PROJECT = db.C004_PROJECT.Find(id);
-            if (c004_PROJECT == null)
+            C003_SUB_AREA c003_SUB_AREA = db.C003_SUB_AREA.Find(id);
+            if (c003_SUB_AREA == null)
             {
                 return HttpNotFound();
             }
-            return View(c004_PROJECT);
+            ViewBag.AreaId = new SelectList(db.C002_AREA, "AreaId", "AreaName", c003_SUB_AREA.AreaId);
+            ViewBag.GeneratedBy = new SelectList(db.EndUsers, "UID", "UserName", c003_SUB_AREA.GeneratedBy);
+            return View(c003_SUB_AREA);
         }
 
-        // POST: Project/Edit/5
+        // POST: SubArea/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ProjectId,DivisionId,AreaId,SubAreaId,ProjectName,ProjectType,StartDate,EndDate,GeneratedBy,GeneratedDate,IsActive")] C004_PROJECT c004_PROJECT)
+        public ActionResult Edit([Bind(Include = "SubAreaId,AreaId,SubAreaName,GeneratedBy,GeneratedDate,AreaActive")] C003_SUB_AREA c003_SUB_AREA)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(c004_PROJECT).State = EntityState.Modified;
+                db.Entry(c003_SUB_AREA).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(c004_PROJECT);
+            ViewBag.AreaId = new SelectList(db.C002_AREA, "AreaId", "AreaName", c003_SUB_AREA.AreaId);
+            ViewBag.GeneratedBy = new SelectList(db.EndUsers, "UID", "UserName", c003_SUB_AREA.GeneratedBy);
+            return View(c003_SUB_AREA);
         }
 
-        // GET: Project/Delete/5
+        // GET: SubArea/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            C004_PROJECT c004_PROJECT = db.C004_PROJECT.Find(id);
-            if (c004_PROJECT == null)
+            C003_SUB_AREA c003_SUB_AREA = db.C003_SUB_AREA.Find(id);
+            if (c003_SUB_AREA == null)
             {
                 return HttpNotFound();
             }
-            return View(c004_PROJECT);
+            return View(c003_SUB_AREA);
         }
 
-        // POST: Project/Delete/5
+        // POST: SubArea/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            C004_PROJECT c004_PROJECT = db.C004_PROJECT.Find(id);
-            db.C004_PROJECT.Remove(c004_PROJECT);
+            C003_SUB_AREA c003_SUB_AREA = db.C003_SUB_AREA.Find(id);
+            db.C003_SUB_AREA.Remove(c003_SUB_AREA);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

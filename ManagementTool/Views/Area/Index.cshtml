@@ -1,0 +1,58 @@
+﻿@model IEnumerable<ManagementTool.Models.C002_AREA>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.AreaName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GeneratedDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.isActive)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.C001_DIVISION.DivisionName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EndUser.UserName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.AreaName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GeneratedDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.isActive)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.C001_DIVISION.DivisionName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EndUser.UserName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.AreaId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.AreaId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.AreaId })
+        </td>
+    </tr>
+}
+
+</table>

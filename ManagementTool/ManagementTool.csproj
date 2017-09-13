@@ -618,52 +618,45 @@
     <Compile Include="Common\notifications.cs" />
     <Compile Include="Common\projectmodel.cs" />
     <Compile Include="Common\UserIdentity.cs" />
+    <Compile Include="Controllers\AreaController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
-    <Compile Include="Controllers\BucketController.cs" />
+    <Compile Include="Controllers\DivisionController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\PhaseController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
-    <Compile Include="Controllers\SubPhaseController.cs" />
-    <Compile Include="Controllers\TaskController.cs" />
+    <Compile Include="Controllers\SubAreaController.cs" />
     <Compile Include="Controllers\web\TaskController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\HMTLHelperExtensions.cs" />
-    <Compile Include="Models\C001_PROJECT.cs">
+    <Compile Include="Models\C001_DIVISION.cs">
       <DependentUpon>dbModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\C002_PHASE.cs">
+    <Compile Include="Models\C002_AREA.cs">
       <DependentUpon>dbModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\C003_SUB_PHASE.cs">
+    <Compile Include="Models\C003_SUB_AREA.cs">
       <DependentUpon>dbModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\C004_BUCKET.cs">
+    <Compile Include="Models\C004_PROJECT.cs">
       <DependentUpon>dbModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\C005_TASK_DATA.cs">
+    <Compile Include="Models\C005_PHASE.cs">
       <DependentUpon>dbModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\C006_SUB_TASKS.cs">
+    <Compile Include="Models\C006_SubPhase.cs">
       <DependentUpon>dbModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\C007_LOCATION.cs">
+    <Compile Include="Models\C007_BUCKET.cs">
       <DependentUpon>dbModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\C008_COMPANY.cs">
+    <Compile Include="Models\C008_TASK_DATA.cs">
       <DependentUpon>dbModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\C009_DIVISION.cs">
+    <Compile Include="Models\C010_LOCATION.cs">
       <DependentUpon>dbModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\C010_AREA.cs">
-      <DependentUpon>dbModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\C011_SUB_AREA.cs">
-      <DependentUpon>dbModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\C012_SUB_SUB_AREA.cs">
+    <Compile Include="Models\C011_COMPANY.cs">
       <DependentUpon>dbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\C013_PROJECT_TYPE.cs">
@@ -829,31 +822,26 @@
     <Content Include="Scripts\js\plugins\diff_match_patch\COPYING" />
     <Content Include="Scripts\js\plugins\justified-gallery\README.md" />
     <Content Include="Scripts\js\plugins\topojson\LICENSE" />
+    <Content Include="Views\Division\Create.cshtml" />
+    <Content Include="Views\Division\Delete.cshtml" />
+    <Content Include="Views\Division\Details.cshtml" />
+    <Content Include="Views\Division\Edit.cshtml" />
+    <Content Include="Views\Division\Index.cshtml" />
+    <Content Include="Views\Area\Create.cshtml" />
+    <Content Include="Views\Area\Delete.cshtml" />
+    <Content Include="Views\Area\Details.cshtml" />
+    <Content Include="Views\Area\Edit.cshtml" />
+    <Content Include="Views\Area\Index.cshtml" />
+    <Content Include="Views\SubArea\Create.cshtml" />
+    <Content Include="Views\SubArea\Delete.cshtml" />
+    <Content Include="Views\SubArea\Details.cshtml" />
+    <Content Include="Views\SubArea\Edit.cshtml" />
+    <Content Include="Views\SubArea\Index.cshtml" />
     <Content Include="Views\Project\Create.cshtml" />
     <Content Include="Views\Project\Delete.cshtml" />
     <Content Include="Views\Project\Details.cshtml" />
     <Content Include="Views\Project\Edit.cshtml" />
     <Content Include="Views\Project\Index.cshtml" />
-    <Content Include="Views\Phase\Create.cshtml" />
-    <Content Include="Views\Phase\Delete.cshtml" />
-    <Content Include="Views\Phase\Details.cshtml" />
-    <Content Include="Views\Phase\Edit.cshtml" />
-    <Content Include="Views\Phase\Index.cshtml" />
-    <Content Include="Views\Bucket\Create.cshtml" />
-    <Content Include="Views\Bucket\Delete.cshtml" />
-    <Content Include="Views\Bucket\Details.cshtml" />
-    <Content Include="Views\Bucket\Edit.cshtml" />
-    <Content Include="Views\Bucket\Index.cshtml" />
-    <Content Include="Views\SubPhase\Create.cshtml" />
-    <Content Include="Views\SubPhase\Delete.cshtml" />
-    <Content Include="Views\SubPhase\Details.cshtml" />
-    <Content Include="Views\SubPhase\Edit.cshtml" />
-    <Content Include="Views\SubPhase\Index.cshtml" />
-    <Content Include="Views\Task\Create.cshtml" />
-    <Content Include="Views\Task\Delete.cshtml" />
-    <Content Include="Views\Task\Details.cshtml" />
-    <Content Include="Views\Task\Edit.cshtml" />
-    <Content Include="Views\Task\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

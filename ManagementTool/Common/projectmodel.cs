@@ -43,7 +43,7 @@ namespace ManagementTool.Common
                 {
                     lst = new List<SelectListItem>();
                     #region  // :- L o c a t i o n  :. 
-                    var query = (from l in _db.C007_LOCATION
+                    var query = (from l in _db.C010_LOCATION
                                  orderby l.LocationName
                                  where (l.IsActive == true)
                                  select new { l.LocationId, l.LocationName }).ToList();
@@ -61,7 +61,7 @@ namespace ManagementTool.Common
                     lst = null;
                     lst = new List<SelectListItem>();
                     #region  // :- c o m p a n y  :.
-                    var queryc = (from c in _db.C008_COMPANY
+                    var queryc = (from c in _db.C011_COMPANY
                                   orderby c.CompanyName
                                   where (c.IsActive == true)
                                   select new { c.CompanyId, c.CompanyName }).ToList();
@@ -79,7 +79,7 @@ namespace ManagementTool.Common
                     lst = null;
                     lst = new List<SelectListItem>();
                     #region  // :- D i v i s i o n :.
-                    var queryd = (from c in _db.C009_DIVISION
+                    var queryd = (from c in _db.C001_DIVISION
                                   orderby c.DivisionName
                                   where (c.IsActive == true)
                                   select new { c.DivisionId, c.DivisionName }).ToList();

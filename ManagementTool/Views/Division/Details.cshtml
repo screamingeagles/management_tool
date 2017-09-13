@@ -1,0 +1,51 @@
+﻿@model ManagementTool.Models.C001_DIVISION
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>C001_DIVISION</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DivisionName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DivisionName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GeneratedBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GeneratedBy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GeneratedDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GeneratedDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsActive)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.DivisionId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
