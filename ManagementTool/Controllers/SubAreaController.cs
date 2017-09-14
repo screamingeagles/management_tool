@@ -11,7 +11,7 @@ using System.Collections.Generic;
 
 namespace ManagementTool.Controllers
 {
-    public class SubAreaController : Controller
+    public class SubAreaController : BaseController
     {
         private ProjectEntities db = new ProjectEntities();
 
@@ -39,9 +39,7 @@ namespace ManagementTool.Controllers
 
         // GET: SubArea/Create
         public ActionResult Create()
-        {
-            UserIdentity.UserId = 1020;
-            UserIdentity.UserName = "Arslan";
+        {            
             ViewBag.AreaId = new SelectList(db.C002_AREA, "AreaId", "AreaName");
             return View();
         }
@@ -51,17 +49,19 @@ namespace ManagementTool.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "SubAreaId,AreaId,SubAreaName,GeneratedBy,GeneratedDate,AreaActive")] C003_SUB_AREA c003_SUB_AREA)
+        public ActionResult Create([Bind(Include = "AreaId,SubAreaName")] C003_SUB_AREA c003_SUB_AREA)
         {
             if (ModelState.IsValid)
             {
+                c003_SUB_AREA.GeneratedBy   = UserIdentity.UserId;
+                c003_SUB_AREA.GeneratedDate = DateTime.Now.AddHours(4);
+                c003_SUB_AREA.AreaActive    = true;
                 db.C003_SUB_AREA.Add(c003_SUB_AREA);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
             ViewBag.AreaId = new SelectList(db.C002_AREA, "AreaId", "AreaName", c003_SUB_AREA.AreaId);
-            ViewBag.GeneratedBy = new SelectList(db.EndUsers, "UID", "UserName", c003_SUB_AREA.GeneratedBy);
             return View(c003_SUB_AREA);
         }
 
@@ -78,7 +78,6 @@ namespace ManagementTool.Controllers
                 return HttpNotFound();
             }
             ViewBag.AreaId = new SelectList(db.C002_AREA, "AreaId", "AreaName", c003_SUB_AREA.AreaId);
-            ViewBag.GeneratedBy = new SelectList(db.EndUsers, "UID", "UserName", c003_SUB_AREA.GeneratedBy);
             return View(c003_SUB_AREA);
         }
 
@@ -87,16 +86,19 @@ namespace ManagementTool.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "SubAreaId,AreaId,SubAreaName,GeneratedBy,GeneratedDate,AreaActive")] C003_SUB_AREA c003_SUB_AREA)
+        public ActionResult Edit([Bind(Include = "SubAreaId,AreaId,SubAreaName")] C003_SUB_AREA c003_SUB_AREA)
         {
             if (ModelState.IsValid)
             {
+                c003_SUB_AREA.GeneratedBy   = UserIdentity.UserId;
+                c003_SUB_AREA.GeneratedDate = DateTime.Now.AddHours(4);
+                c003_SUB_AREA.AreaActive    = true;
+
                 db.Entry(c003_SUB_AREA).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
             ViewBag.AreaId = new SelectList(db.C002_AREA, "AreaId", "AreaName", c003_SUB_AREA.AreaId);
-            ViewBag.GeneratedBy = new SelectList(db.EndUsers, "UID", "UserName", c003_SUB_AREA.GeneratedBy);
             return View(c003_SUB_AREA);
         }
 

@@ -1,12 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Net;
 using System.Web;
+using System.Net;
+using System.Data;
+using System.Linq;
 using System.Web.Mvc;
+using System.Data.Entity;
+using ManagementTool.Common;
 using ManagementTool.Models;
+using System.Collections.Generic;
+
 
 namespace ManagementTool.Controllers
 {
@@ -38,6 +40,8 @@ namespace ManagementTool.Controllers
         // GET: Project/Create
         public ActionResult Create()
         {
+            //UserIdentity.UserId = 1020;
+            //UserIdentity.UserName = "Arslan";
             return View();
         }
 
