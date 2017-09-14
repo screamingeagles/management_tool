@@ -11,7 +11,7 @@ using System.Collections.Generic;
 
 namespace ManagementTool.Controllers
 {
-    public class DivisionController : Controller
+    public class DivisionController : BaseController
     {
         private ProjectEntities db = new ProjectEntities();
 
@@ -39,8 +39,6 @@ namespace ManagementTool.Controllers
         // GET: Division/Create
         public ActionResult Create()
         {
-            UserIdentity.UserId = 1020;
-            UserIdentity.UserName= "Arslan";
             return View();
         }
 

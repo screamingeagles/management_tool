@@ -1,23 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Net;
 using System.Web;
+using System.Net;
+using System.Data;
+using System.Linq;
 using System.Web.Mvc;
+using System.Data.Entity;
+using ManagementTool.Common;
 using ManagementTool.Models;
+using System.Collections.Generic;
 
 namespace ManagementTool.Controllers
 {
-    public class AreaController : Controller
+    public class AreaController : BaseController
     {
         private ProjectEntities db = new ProjectEntities();
 
         // GET: Area
         public ActionResult Index()
         {
-            var c002_AREA = db.C002_AREA.Include(c => c.C001_DIVISION).Include(c => c.EndUser);
+            var c002_AREA = db.C002_AREA.Include(c => c.C001_DIVISION).Include(c => c.EndUser).OrderBy(c => c.C001_DIVISION.DivisionName).ThenBy(c => c.AreaName);
             return View(c002_AREA.ToList());
         }
 
@@ -39,8 +40,7 @@ namespace ManagementTool.Controllers
         // GET: Area/Create
         public ActionResult Create()
         {
-            ViewBag.DivisionId = new SelectList(db.C001_DIVISION, "DivisionId", "DivisionName");
-            ViewBag.GeneratedBy = new SelectList(db.EndUsers, "UID", "UserName");
+            ViewBag.DivisionId = new SelectList(db.C001_DIVISION, "DivisionId", "DivisionName");            
             return View();
         }
 
@@ -49,17 +49,20 @@ namespace ManagementTool.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "AreaId,DivisionId,AreaName,GeneratedBy,GeneratedDate,isActive")] C002_AREA c002_AREA)
+        public ActionResult Create([Bind(Include = "DivisionId,AreaName")] C002_AREA c002_AREA)
         {
             if (ModelState.IsValid)
             {
+                c002_AREA.GeneratedBy   = UserIdentity.UserId;
+                c002_AREA.GeneratedDate = DateTime.Now.AddHours(4);
+                c002_AREA.isActive      = true;
+
                 db.C002_AREA.Add(c002_AREA);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
             ViewBag.DivisionId = new SelectList(db.C001_DIVISION, "DivisionId", "DivisionName", c002_AREA.DivisionId);
-            ViewBag.GeneratedBy = new SelectList(db.EndUsers, "UID", "UserName", c002_AREA.GeneratedBy);
             return View(c002_AREA);
         }
 
@@ -76,7 +79,6 @@ namespace ManagementTool.Controllers
                 return HttpNotFound();
             }
             ViewBag.DivisionId = new SelectList(db.C001_DIVISION, "DivisionId", "DivisionName", c002_AREA.DivisionId);
-            ViewBag.GeneratedBy = new SelectList(db.EndUsers, "UID", "UserName", c002_AREA.GeneratedBy);
             return View(c002_AREA);
         }
 
@@ -85,16 +87,19 @@ namespace ManagementTool.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "AreaId,DivisionId,AreaName,GeneratedBy,GeneratedDate,isActive")] C002_AREA c002_AREA)
+        public ActionResult Edit([Bind(Include = "AreaId,DivisionId,AreaName")] C002_AREA c002_AREA)
         {
             if (ModelState.IsValid)
             {
+                c002_AREA.GeneratedBy   = UserIdentity.UserId;
+                c002_AREA.GeneratedDate = DateTime.Now.AddHours(4);
+                c002_AREA.isActive      = true;
+
                 db.Entry(c002_AREA).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
             ViewBag.DivisionId = new SelectList(db.C001_DIVISION, "DivisionId", "DivisionName", c002_AREA.DivisionId);
-            ViewBag.GeneratedBy = new SelectList(db.EndUsers, "UID", "UserName", c002_AREA.GeneratedBy);
             return View(c002_AREA);
         }
 
