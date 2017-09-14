@@ -1,217 +1,110 @@
-﻿@model ManagementTool.Models.C001_PROJECT
+﻿@model ManagementTool.Models.C004_PROJECT
 
 @{
-    ViewBag.Title = "Add New";
+    ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<h2>Create</h2>
 
-
-<br />
-
-<div class="row">
-
-    <div class="col-lg-10 col-lg-offset-1">
-        <div class="ibox float-e-margins">
-            <div class="ibox-title">
-                <h5>Add new Project</h5>
-                <div class="ibox-tools">
-                    <a class="collapse-link">
-                        <i class="fa fa-chevron-up"></i>
-                    </a>
-                    <a class="close-link">
-                        <i class="fa fa-times"></i>
-                    </a>
-                </div>
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>C004_PROJECT</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.DivisionId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DivisionId, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.DivisionId, "", new { @class = "text-danger" })
             </div>
-            <div class="ibox-content">
-                <div class="table-responsive">
-                    @using (Html.BeginForm("Create", "Project", FormMethod.Post, new { id = "frmMain" }))
-                    {
-                        @Html.AntiForgeryToken();
+        </div>
 
-                    <!-- / Project Name -->
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">New Project Name</label>
-                            <div class="col-lg-9">
-                                <input id="ProjectName" name="ProjectName" type="text" placeholder="Project Name" class="form-control m-b">
-                            </div>
-                        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.AreaId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.AreaId, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.AreaId, "", new { @class = "text-danger" })
+            </div>
+        </div>
 
-                    <!-- / Location -->
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">Select Location</label>
-                            <div class="col-lg-9">
-                                @Html.DropDownList("LocationId", null, "Select Location", htmlAttributes: new { @class = "form-control m-b", onchange= "FillCompany(this);" })
-                            </div>
-                        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.SubAreaId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.SubAreaId, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.SubAreaId, "", new { @class = "text-danger" })
+            </div>
+        </div>
 
-                    <!-- / Company -->
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">Select Company</label>
-                            <div class="col-lg-9">
-                                @Html.DropDownList("CompanyId", null, "Select Company" , htmlAttributes: new { @class = "form-control m-b" })
-                            </div>
-                        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.ProjectName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ProjectName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ProjectName, "", new { @class = "text-danger" })
+            </div>
+        </div>
 
-                    <!-- / Division -->
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">Select Division</label>
-                            <div class="col-lg-9">
-                                @Html.DropDownList("DivisionId", null, "Select Division", htmlAttributes: new { @class = "form-control m-b" })
-                            </div>
-                        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.ProjectType, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ProjectType, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ProjectType, "", new { @class = "text-danger" })
+            </div>
+        </div>
 
-                    <!-- / Start Date-->
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">Project Start Date</label>
-                            <div class="col-lg-9">
-                                <input id="StartDate" name="StartDate" type="text" placeholder="Start Date" class="form-control m-b">
-                            </div>
-                        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.StartDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
 
-                   <!-- / End Date -->
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">Project End Date</label>
-                            <div class="col-lg-9">
-                                <input id="EndDate" name="EndDate" type="text" placeholder="End Date" class="form-control m-b">
-                            </div>
-                        </div>
-                        
-                    <!-- / Project Type -->
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">Select Project Type</label>
-                            <div class="col-lg-9">
-                                @Html.DropDownList("ProjectType", null,"Select Project Type", htmlAttributes: new { @class = "form-control m-b" })
-                            </div>
-                        </div>
-                        
-                    <!-- / Save Button -->
-                        <div class="form-group">
-                            <div class="col-lg-12">
-                                <button class="btn btn-sm btn-primary pull-left m-t-n-xs" type="submit">
-                                    <strong>Save</strong>
-                                </button>
+        <div class="form-group">
+            @Html.LabelFor(model => model.EndDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
 
-                                @Html.ActionLink("Back to List", "Index",null, htmlAttributes: new { @class = "btn btn-sm btn-primary pull-right m-t-n-xs" })
-                            </div>
-                        </div>
-                    }
+        <div class="form-group">
+            @Html.LabelFor(model => model.GeneratedBy, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.GeneratedBy, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.GeneratedBy, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.GeneratedDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.GeneratedDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.GeneratedDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.IsActive)
+                    @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
     </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
 </div>
-
-
-<script type="text/javascript">
-
-    $(document).ready(
-    function () {
-            $('#StartDate').datepicker({
-                changeMonth: true,
-                changeYear: true,
-                minDate: "-15w",
-                dateFormat: "dd-M-yy" /*format: 'dd-M-yyyy'*/
-            });
-
-            $('#EndDate').datepicker({
-                changeMonth: true,
-                changeYear: true,
-                numberOfMonths: 1,
-                dateFormat: "dd-M-yy"
-            });
-
-            $("#frmMain").validate({
-            rules: {
-                ProjectName : {
-                    minlength: 3,
-                    maxlength: 250,
-                    required: true
-                },
-                LocationId  : { required: true },
-                CompanyId   : { required: true  },
-                DivisionId  : { required: true },
-                ProjectType : { required: true },
-                StartDate   : {
-                    minlength: 6,
-                    maxlength: 15,
-                    required: true
-                },
-                EndDate     : {
-                    minlength: 6,
-                    maxlength: 15,
-                    required: true
-                },
-            },
-            highlight       : function (element) {
-                $(element).closest('.control-group').addClass('has-error');
-            },
-            unhighlight     : function (element) {
-                $(element).closest('.control-group').removeClass('has-error');
-            },
-            submitHandler   : function (form) { // for demo
-                form.submit();
-                return false;
-            }
-        });
-        });
-
-
-    function FillCompany    (obj) {
-        var sel = obj.options[obj.selectedIndex].value;
-        if (sel == "") { return; }
-
-        var postedContent = { SelectedLocation: sel }
-        $.ajax({
-            type: "POST",
-            url: "/Project/GetCompaniesbyLocation",
-            data: postedContent,
-            success: function (message) {
-                var res = message.data;
-                if (res.length > 0) {
-                    $("#CompanyId").empty()
-                    for (var i = 0; i < message.data.length; i++) {
-                        $('#CompanyId').append($('<option>', { value: message.data[i].CompanyId, text: message.data[i].CompanyName }));
-                    } // end of for loop
-                } // end of if for length
-            },
-            error: function (xerr) {
-                /* $('#txteng').val("err : " +xerr);*/
-            }
-        });
-
-    }
-
-    function Confirm        () {
-        return confirm('Are you sure you want delete');
-    }
-
-    function GetFileName    ()           {
-        var fullPath = document.getElementById('attachment').value;
-        if (fullPath) {
-            var startIndex = (fullPath.indexOf('\\') >= 0 ? fullPath.lastIndexOf('\\') : fullPath.lastIndexOf('/'));
-            var filename = fullPath.substring(startIndex);
-            if (filename.indexOf('\\') === 0 || filename.indexOf('/') === 0) {
-                filename = filename.substring(1);
-            }
-            document.getElementById('idFileAdd').innerHTML = filename;
-
-        }
-    }
-
-    function getDate        (element)    {
-        var date;
-        try {
-            date = $.datepicker.parseDate("dd-M-yyyy", element.value);
-            //date = $.datepicker.parseDate(dateFormat, element.value);
-
-        } catch (error) {
-            //alert(error.message);
-            date = null;
-        }
-        return date;
-    }
-</script>
-
-

@@ -9,112 +9,115 @@ using ManagementTool.Common;
 using ManagementTool.Models;
 using System.Collections.Generic;
 
-
 namespace ManagementTool.Controllers
 {
-    public class ProjectController : Controller
+    public class DivisionController : BaseController
     {
         private ProjectEntities db = new ProjectEntities();
 
-        // GET: Project
+        // GET: Division
         public ActionResult Index()
         {
-            return View(db.C004_PROJECT.ToList());
+            return View(db.C001_DIVISION.Include(c => c.EndUser).ToList());
         }
 
-        // GET: Project/Details/5
+        // GET: Division/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            C004_PROJECT c004_PROJECT = db.C004_PROJECT.Find(id);
-            if (c004_PROJECT == null)
+            C001_DIVISION c001_DIVISION = db.C001_DIVISION.Find(id);
+            if (c001_DIVISION == null)
             {
                 return HttpNotFound();
             }
-            return View(c004_PROJECT);
+            return View(c001_DIVISION);
         }
 
-        // GET: Project/Create
+        // GET: Division/Create
         public ActionResult Create()
         {
-            //UserIdentity.UserId = 1020;
-            //UserIdentity.UserName = "Arslan";
             return View();
         }
 
-        // POST: Project/Create
+        // POST: Division/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ProjectId,DivisionId,AreaId,SubAreaId,ProjectName,ProjectType,StartDate,EndDate,GeneratedBy,GeneratedDate,IsActive")] C004_PROJECT c004_PROJECT)
+        public ActionResult Create([Bind(Include = "DivisionName")] C001_DIVISION c001_DIVISION)
         {
             if (ModelState.IsValid)
             {
-                db.C004_PROJECT.Add(c004_PROJECT);
+                c001_DIVISION.GeneratedBy   = UserIdentity.UserId;
+                c001_DIVISION.GeneratedDate = DateTime.Now.AddHours(4);
+                c001_DIVISION.IsActive      = true;
+                db.C001_DIVISION.Add(c001_DIVISION);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(c004_PROJECT);
+            return View(c001_DIVISION);
         }
 
-        // GET: Project/Edit/5
+        // GET: Division/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            C004_PROJECT c004_PROJECT = db.C004_PROJECT.Find(id);
-            if (c004_PROJECT == null)
+            C001_DIVISION c001_DIVISION = db.C001_DIVISION.Find(id);
+            if (c001_DIVISION == null)
             {
                 return HttpNotFound();
             }
-            return View(c004_PROJECT);
+            return View(c001_DIVISION);
         }
 
-        // POST: Project/Edit/5
+        // POST: Division/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ProjectId,DivisionId,AreaId,SubAreaId,ProjectName,ProjectType,StartDate,EndDate,GeneratedBy,GeneratedDate,IsActive")] C004_PROJECT c004_PROJECT)
+        public ActionResult Edit([Bind(Include = "DivisionId,DivisionName")] C001_DIVISION c001_DIVISION)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(c004_PROJECT).State = EntityState.Modified;
+                c001_DIVISION.GeneratedBy       = UserIdentity.UserId;
+                c001_DIVISION.GeneratedDate     = DateTime.Now.AddHours(4);
+                c001_DIVISION.IsActive          = true;
+                db.Entry(c001_DIVISION).State   = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(c004_PROJECT);
+            return View(c001_DIVISION);
         }
 
-        // GET: Project/Delete/5
+        // GET: Division/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            C004_PROJECT c004_PROJECT = db.C004_PROJECT.Find(id);
-            if (c004_PROJECT == null)
+            C001_DIVISION c001_DIVISION = db.C001_DIVISION.Find(id);
+            if (c001_DIVISION == null)
             {
                 return HttpNotFound();
             }
-            return View(c004_PROJECT);
+            return View(c001_DIVISION);
         }
 
-        // POST: Project/Delete/5
+        // POST: Division/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            C004_PROJECT c004_PROJECT = db.C004_PROJECT.Find(id);
-            db.C004_PROJECT.Remove(c004_PROJECT);
+            C001_DIVISION c001_DIVISION = db.C001_DIVISION.Find(id);
+            db.C001_DIVISION.Remove(c001_DIVISION);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

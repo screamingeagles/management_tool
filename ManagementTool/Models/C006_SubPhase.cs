@@ -12,15 +12,15 @@ namespace ManagementTool.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class C018_coOwners
+    public partial class C006_SubPhase
     {
-        public int CoOwnerId { get; set; }
-        public int TaskId { get; set; }
-        public int UserId { get; set; }
-        public string OwnerContribution { get; set; }
-        public System.DateTime CreatedDate { get; set; }
-        public int CreatedBy { get; set; }
+        public int SubPhaseId { get; set; }
+        public int PhaseId { get; set; }
+        public string SubPhaseName { get; set; }
+        public int GeneratedBy { get; set; }
+        public System.DateTime GeneratedDate { get; set; }
     
-        public virtual C008_TASK_DATA C008_TASK_DATA { get; set; }
+        public virtual C005_PHASE C005_PHASE { get; set; }
+        public virtual EndUser EndUser { get; set; }
     }
 }

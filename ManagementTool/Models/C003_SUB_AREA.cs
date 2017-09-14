@@ -12,15 +12,16 @@ namespace ManagementTool.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class C018_coOwners
+    public partial class C003_SUB_AREA
     {
-        public int CoOwnerId { get; set; }
-        public int TaskId { get; set; }
-        public int UserId { get; set; }
-        public string OwnerContribution { get; set; }
-        public System.DateTime CreatedDate { get; set; }
-        public int CreatedBy { get; set; }
+        public int SubAreaId { get; set; }
+        public int AreaId { get; set; }
+        public string SubAreaName { get; set; }
+        public int GeneratedBy { get; set; }
+        public System.DateTime GeneratedDate { get; set; }
+        public bool AreaActive { get; set; }
     
-        public virtual C008_TASK_DATA C008_TASK_DATA { get; set; }
+        public virtual C002_AREA C002_AREA { get; set; }
+        public virtual EndUser EndUser { get; set; }
     }
 }

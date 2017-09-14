@@ -12,19 +12,22 @@ namespace ManagementTool.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class C015_STATUS
+    public partial class C007_BUCKET
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public C015_STATUS()
+        public C007_BUCKET()
         {
             this.C008_TASK_DATA = new HashSet<C008_TASK_DATA>();
         }
     
-        public int StatusId { get; set; }
-        public string TaskStatus { get; set; }
-        public bool TaskActive { get; set; }
-        public int TaskCreatedBy { get; set; }
-        public System.DateTime TaskCreatedDate { get; set; }
+        public int BucketId { get; set; }
+        public int ProjectId { get; set; }
+        public int PhaseId { get; set; }
+        public int SubPhaseId { get; set; }
+        public string Name { get; set; }
+        public bool IsActive { get; set; }
+        public int GeneratedBy { get; set; }
+        public System.DateTime GenerationDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<C008_TASK_DATA> C008_TASK_DATA { get; set; }

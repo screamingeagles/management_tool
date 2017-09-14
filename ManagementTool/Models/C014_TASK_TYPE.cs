@@ -17,7 +17,7 @@ namespace ManagementTool.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public C014_TASK_TYPE()
         {
-            this.C005_TASK_DATA = new HashSet<C005_TASK_DATA>();
+            this.C008_TASK_DATA = new HashSet<C008_TASK_DATA>();
         }
     
         public int TypeId { get; set; }
@@ -27,6 +27,6 @@ namespace ManagementTool.Models
         public bool IsActive { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<C005_TASK_DATA> C005_TASK_DATA { get; set; }
+        public virtual ICollection<C008_TASK_DATA> C008_TASK_DATA { get; set; }
     }
 }

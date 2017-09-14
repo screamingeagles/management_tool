@@ -25,14 +25,14 @@ namespace ManagementTool.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<C005_TASK_DATA> C005_TASK_DATA { get; set; }
-        public virtual DbSet<C006_SUB_TASKS> C006_SUB_TASKS { get; set; }
-        public virtual DbSet<C007_LOCATION> C007_LOCATION { get; set; }
-        public virtual DbSet<C008_COMPANY> C008_COMPANY { get; set; }
-        public virtual DbSet<C009_DIVISION> C009_DIVISION { get; set; }
-        public virtual DbSet<C010_AREA> C010_AREA { get; set; }
-        public virtual DbSet<C011_SUB_AREA> C011_SUB_AREA { get; set; }
-        public virtual DbSet<C012_SUB_SUB_AREA> C012_SUB_SUB_AREA { get; set; }
+        public virtual DbSet<C002_AREA> C002_AREA { get; set; }
+        public virtual DbSet<C003_SUB_AREA> C003_SUB_AREA { get; set; }
+        public virtual DbSet<C005_PHASE> C005_PHASE { get; set; }
+        public virtual DbSet<C006_SubPhase> C006_SubPhase { get; set; }
+        public virtual DbSet<C007_BUCKET> C007_BUCKET { get; set; }
+        public virtual DbSet<C008_TASK_DATA> C008_TASK_DATA { get; set; }
+        public virtual DbSet<C010_LOCATION> C010_LOCATION { get; set; }
+        public virtual DbSet<C011_COMPANY> C011_COMPANY { get; set; }
         public virtual DbSet<C013_PROJECT_TYPE> C013_PROJECT_TYPE { get; set; }
         public virtual DbSet<C014_TASK_TYPE> C014_TASK_TYPE { get; set; }
         public virtual DbSet<C015_STATUS> C015_STATUS { get; set; }
@@ -40,23 +40,21 @@ namespace ManagementTool.Models
         public virtual DbSet<C017_MEETING> C017_MEETING { get; set; }
         public virtual DbSet<C018_coOwners> C018_coOwners { get; set; }
         public virtual DbSet<C019_Attachments> C019_Attachments { get; set; }
-        public virtual DbSet<EndUser> EndUsers { get; set; }
-        public virtual DbSet<EndUser_Details> EndUser_Details { get; set; }
-        public virtual DbSet<EndUser_LoginDetails> EndUser_LoginDetails { get; set; }
-        public virtual DbSet<Mailer_Details> Mailer_Details { get; set; }
-        public virtual DbSet<Smart_Login> Smart_Login { get; set; }
-        public virtual DbSet<STATUS> STATUS { get; set; }
-        public virtual DbSet<LOGIN_DETAIL> LOGIN_DETAIL { get; set; }
-        public virtual DbSet<vw_SessionUser> vw_SessionUser { get; set; }
-        public virtual DbSet<C001_PROJECT> C001_PROJECT { get; set; }
-        public virtual DbSet<C002_PHASE> C002_PHASE { get; set; }
-        public virtual DbSet<C003_SUB_PHASE> C003_SUB_PHASE { get; set; }
-        public virtual DbSet<C004_BUCKET> C004_BUCKET { get; set; }
-        public virtual DbSet<ROLE_MASTER> ROLE_MASTER { get; set; }
         public virtual DbSet<C020_CommitmentMaster> C020_CommitmentMaster { get; set; }
         public virtual DbSet<C021_CommimentDetails> C021_CommimentDetails { get; set; }
         public virtual DbSet<C022_Notification_Master> C022_Notification_Master { get; set; }
         public virtual DbSet<C023_Notification_Detail> C023_Notification_Detail { get; set; }
+        public virtual DbSet<EndUser> EndUsers { get; set; }
+        public virtual DbSet<EndUser_Details> EndUser_Details { get; set; }
+        public virtual DbSet<EndUser_LoginDetails> EndUser_LoginDetails { get; set; }
+        public virtual DbSet<Mailer_Details> Mailer_Details { get; set; }
         public virtual DbSet<ROLE_DETAIL> ROLE_DETAIL { get; set; }
+        public virtual DbSet<ROLE_MASTER> ROLE_MASTER { get; set; }
+        public virtual DbSet<Smart_Login> Smart_Login { get; set; }
+        public virtual DbSet<STATUS> STATUS { get; set; }
+        public virtual DbSet<LOGIN_DETAIL> LOGIN_DETAIL { get; set; }
+        public virtual DbSet<vw_SessionUser> vw_SessionUser { get; set; }
+        public virtual DbSet<C004_PROJECT> C004_PROJECT { get; set; }
+        public virtual DbSet<C001_DIVISION> C001_DIVISION { get; set; }
     }
 }

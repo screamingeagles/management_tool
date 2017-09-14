@@ -12,21 +12,25 @@ namespace ManagementTool.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class C015_STATUS
+    public partial class C005_PHASE
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public C015_STATUS()
+        public C005_PHASE()
         {
-            this.C008_TASK_DATA = new HashSet<C008_TASK_DATA>();
+            this.C006_SubPhase = new HashSet<C006_SubPhase>();
         }
     
-        public int StatusId { get; set; }
-        public string TaskStatus { get; set; }
-        public bool TaskActive { get; set; }
-        public int TaskCreatedBy { get; set; }
-        public System.DateTime TaskCreatedDate { get; set; }
+        public int PhaseId { get; set; }
+        public int ProjectId { get; set; }
+        public string PhaseName { get; set; }
+        public System.DateTime StartDate { get; set; }
+        public System.DateTime EndDate { get; set; }
+        public bool IsActive { get; set; }
+        public System.DateTime GeneratedDate { get; set; }
+        public int GeneratedBy { get; set; }
     
+        public virtual EndUser EndUser { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<C008_TASK_DATA> C008_TASK_DATA { get; set; }
+        public virtual ICollection<C006_SubPhase> C006_SubPhase { get; set; }
     }
 }
