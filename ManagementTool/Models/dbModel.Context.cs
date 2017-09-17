@@ -54,7 +54,7 @@ namespace ManagementTool.Models
         public virtual DbSet<STATUS> STATUS { get; set; }
         public virtual DbSet<LOGIN_DETAIL> LOGIN_DETAIL { get; set; }
         public virtual DbSet<vw_SessionUser> vw_SessionUser { get; set; }
-        public virtual DbSet<C004_PROJECT> C004_PROJECT { get; set; }
         public virtual DbSet<C001_DIVISION> C001_DIVISION { get; set; }
+        public virtual DbSet<C004_PROJECT> C004_PROJECT { get; set; }
     }
 }

@@ -14,10 +14,19 @@ namespace ManagementTool.Models
     
     public partial class C013_PROJECT_TYPE
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public C013_PROJECT_TYPE()
+        {
+            this.C004_PROJECT = new HashSet<C004_PROJECT>();
+        }
+    
         public int ProjectTypeId { get; set; }
         public string ProjectType { get; set; }
         public bool IsActive { get; set; }
         public int GenerationBy { get; set; }
         public System.DateTime GenerationDate { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<C004_PROJECT> C004_PROJECT { get; set; }
     }
 }
