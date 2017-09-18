@@ -14,6 +14,12 @@ namespace ManagementTool.Models
     
     public partial class C004_PROJECT
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public C004_PROJECT()
+        {
+            this.C005_PHASE = new HashSet<C005_PHASE>();
+        }
+    
         public int ProjectId { get; set; }
         public int DivisionId { get; set; }
         public int AreaId { get; set; }
@@ -30,5 +36,7 @@ namespace ManagementTool.Models
         public virtual C002_AREA C002_AREA { get; set; }
         public virtual EndUser EndUser { get; set; }
         public virtual C013_PROJECT_TYPE C013_PROJECT_TYPE { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<C005_PHASE> C005_PHASE { get; set; }
     }
 }

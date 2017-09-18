@@ -4,10 +4,9 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="e026104ae8754b6f975677a1fbbc7754" Name="Diagram1" ZoomLevel="25">
+      <Diagram DiagramId="e026104ae8754b6f975677a1fbbc7754" Name="Diagram1" ZoomLevel="93">
         <EntityTypeShape EntityType="ManagementTool.C002_AREA" Width="1.5" PointX="6" PointY="15.25" />
         <EntityTypeShape EntityType="ManagementTool.C003_SUB_AREA" Width="1.5" PointX="9.5" PointY="12.25" />
-        <EntityTypeShape EntityType="ManagementTool.C005_PHASE" Width="1.5" PointX="3" PointY="8.75" />
         <EntityTypeShape EntityType="ManagementTool.C006_SubPhase" Width="1.5" PointX="5.25" PointY="11.125" />
         <EntityTypeShape EntityType="ManagementTool.C007_BUCKET" Width="1.5" PointX="0.75" PointY="7.25" />
         <EntityTypeShape EntityType="ManagementTool.C008_TASK_DATA" Width="1.5" PointX="3" PointY="12.5" />
@@ -37,8 +36,6 @@
         <AssociationConnector Association="ManagementTool.FK__AREA__SUB_AREA" />
         <AssociationConnector Association="ManagementTool.FK__GeneratedBy__AREA" />
         <AssociationConnector Association="ManagementTool.FK__GeneratedBy__SUB_AREA" />
-        <AssociationConnector Association="ManagementTool.FK__GeneratedBy__PHASE" />
-        <AssociationConnector Association="ManagementTool.FK__PHASE__SubPhase" />
         <AssociationConnector Association="ManagementTool.FK_GeneratedBy__SubPhase" />
         <AssociationConnector Association="ManagementTool.FK_BUCKET_TASK_DATA" />
         <AssociationConnector Association="ManagementTool.FK_Generated__TASK_DATA" />
@@ -62,6 +59,10 @@
         <AssociationConnector Association="ManagementTool.FK__AREA__PROJECT" />
         <AssociationConnector Association="ManagementTool.FK__GeneratedBy__PROJECT" />
         <AssociationConnector Association="ManagementTool.FK__ProjectType__PROJECT" />
+        <EntityTypeShape EntityType="ManagementTool.C005_PHASE" Width="1.5" PointX="15.125" PointY="9.5" />
+        <AssociationConnector Association="ManagementTool.FK__PROJECT__PHASE" />
+        <AssociationConnector Association="ManagementTool.FK__GeneratedBy__PHASE" />
+        <AssociationConnector Association="ManagementTool.FK__PHASE__SubPhase" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

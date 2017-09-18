@@ -20,7 +20,7 @@ namespace ManagementTool.Models
         public int GeneratedBy { get; set; }
         public System.DateTime GeneratedDate { get; set; }
     
-        public virtual C005_PHASE C005_PHASE { get; set; }
         public virtual EndUser EndUser { get; set; }
+        public virtual C005_PHASE C005_PHASE { get; set; }
     }
 }

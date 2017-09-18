@@ -11,7 +11,7 @@ using System.Collections.Generic;
 
 namespace ManagementTool.Controllers
 {
-    public class ProjectController : Controller
+    public class ProjectController : BaseController
     {
         private ProjectEntities db = new ProjectEntities();
 
@@ -67,8 +67,8 @@ namespace ManagementTool.Controllers
         // GET: Project/Create
         public ActionResult Create()
         {
-            UserIdentity.UserId = 1020;
-            UserIdentity.UserName = "Arsalan (RTT)";
+            //UserIdentity.UserId = 1020;
+            //UserIdentity.UserName = "Arsalan (RTT)";
 
             ViewBag.AreaId          = new SelectList(db.C002_AREA            , "AreaId", "AreaName");
             ViewBag.SubAreaId       = new SelectList(db.C003_SUB_AREA.Take(5), "SubAreaId", "SubAreaName");

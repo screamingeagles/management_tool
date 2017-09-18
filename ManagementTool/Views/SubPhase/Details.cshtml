@@ -1,0 +1,51 @@
+﻿@model ManagementTool.Models.C006_SubPhase
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>C006_SubPhase</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.SubPhaseName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SubPhaseName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GeneratedDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GeneratedDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.C005_PHASE.PhaseName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.C005_PHASE.PhaseName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EndUser.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EndUser.UserName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.SubPhaseId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
