@@ -4,34 +4,34 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="e026104ae8754b6f975677a1fbbc7754" Name="Diagram1" ZoomLevel="93">
+      <Diagram DiagramId="e026104ae8754b6f975677a1fbbc7754" Name="Diagram1" ZoomLevel="69">
         <EntityTypeShape EntityType="ManagementTool.C002_AREA" Width="1.5" PointX="6" PointY="15.25" />
         <EntityTypeShape EntityType="ManagementTool.C003_SUB_AREA" Width="1.5" PointX="9.5" PointY="12.25" />
         <EntityTypeShape EntityType="ManagementTool.C006_SubPhase" Width="1.5" PointX="5.25" PointY="11.125" />
-        <EntityTypeShape EntityType="ManagementTool.C008_TASK_DATA" Width="1.5" PointX="3" PointY="12.5" />
-        <EntityTypeShape EntityType="ManagementTool.C010_LOCATION" Width="1.5" PointX="3.5" PointY="1.125" />
+        <EntityTypeShape EntityType="ManagementTool.C008_TASK_DATA" Width="1.875" PointX="3" PointY="12.5" />
+        <EntityTypeShape EntityType="ManagementTool.C010_LOCATION" Width="1.75" PointX="2.875" PointY="0.5" />
         <EntityTypeShape EntityType="ManagementTool.C011_COMPANY" Width="1.5" PointX="10.625" PointY="15.25" />
-        <EntityTypeShape EntityType="ManagementTool.C013_PROJECT_TYPE" Width="1.625" PointX="0.5" PointY="0.5" />
-        <EntityTypeShape EntityType="ManagementTool.C014_TASK_TYPE" Width="1.5" PointX="0.75" PointY="16.75" />
+        <EntityTypeShape EntityType="ManagementTool.C013_PROJECT_TYPE" Width="1.875" PointX="0.5" PointY="0.5" />
+        <EntityTypeShape EntityType="ManagementTool.C014_TASK_TYPE" Width="1.875" PointX="0.5" PointY="16.75" />
         <EntityTypeShape EntityType="ManagementTool.C015_STATUS" Width="1.5" PointX="0.75" PointY="19.75" />
         <EntityTypeShape EntityType="ManagementTool.C016_CYCLED" Width="1.5" PointX="5.25" PointY="19.125" />
-        <EntityTypeShape EntityType="ManagementTool.C017_MEETING" Width="1.5" PointX="12.75" PointY="13.5" />
+        <EntityTypeShape EntityType="ManagementTool.C017_MEETING" Width="1.875" PointX="15" PointY="3.875" />
         <EntityTypeShape EntityType="ManagementTool.C018_coOwners" Width="1.5" PointX="5.25" PointY="8" />
-        <EntityTypeShape EntityType="ManagementTool.C019_Attachments" Width="1.5" PointX="5.25" PointY="26.25" />
-        <EntityTypeShape EntityType="ManagementTool.C020_CommitmentMaster" Width="1.5" PointX="3" PointY="22.375" />
-        <EntityTypeShape EntityType="ManagementTool.C021_CommimentDetails" Width="1.5" PointX="5.25" PointY="22.25" />
-        <EntityTypeShape EntityType="ManagementTool.C022_Notification_Master" Width="1.5" PointX="3" PointY="29.25" />
-        <EntityTypeShape EntityType="ManagementTool.C023_Notification_Detail" Width="1.5" PointX="8.25" PointY="20.375" />
+        <EntityTypeShape EntityType="ManagementTool.C019_Attachments" Width="2.125" PointX="6.125" PointY="25.875" />
+        <EntityTypeShape EntityType="ManagementTool.C020_CommitmentMaster" Width="1.875" PointX="2.875" PointY="22.375" />
+        <EntityTypeShape EntityType="ManagementTool.C021_CommimentDetails" Width="2" PointX="5.25" PointY="22.25" />
+        <EntityTypeShape EntityType="ManagementTool.C022_Notification_Master" Width="2.375" PointX="3" PointY="29.25" />
+        <EntityTypeShape EntityType="ManagementTool.C023_Notification_Detail" Width="2.125" PointX="8.25" PointY="20.375" />
         <EntityTypeShape EntityType="ManagementTool.EndUser" Width="1.5" PointX="0.75" PointY="11.25" />
-        <EntityTypeShape EntityType="ManagementTool.EndUser_Details" Width="1.5" PointX="0.75" PointY="4.75" />
+        <EntityTypeShape EntityType="ManagementTool.EndUser_Details" Width="1.75" PointX="5.375" PointY="2.625" />
         <EntityTypeShape EntityType="ManagementTool.EndUser_LoginDetails" Width="1.5" PointX="10.75" PointY="0.75" />
         <EntityTypeShape EntityType="ManagementTool.Mailer_Details" Width="1.5" PointX="10.875" PointY="9.625" />
-        <EntityTypeShape EntityType="ManagementTool.ROLE_DETAIL" Width="1.5" PointX="8" PointY="1" />
-        <EntityTypeShape EntityType="ManagementTool.ROLE_MASTER" Width="1.5" PointX="5.75" PointY="1.75" />
-        <EntityTypeShape EntityType="ManagementTool.Smart_Login" Width="1.5" PointX="12.75" PointY="3.375" />
+        <EntityTypeShape EntityType="ManagementTool.ROLE_DETAIL" Width="1.5" PointX="7.875" PointY="0.625" />
+        <EntityTypeShape EntityType="ManagementTool.ROLE_MASTER" Width="1.5" PointX="5.375" PointY="0.5" />
+        <EntityTypeShape EntityType="ManagementTool.Smart_Login" Width="1.5" PointX="15" PointY="0.75" />
         <EntityTypeShape EntityType="ManagementTool.STATUS" Width="1.5" PointX="12.75" PointY="0.75" />
-        <EntityTypeShape EntityType="ManagementTool.LOGIN_DETAIL" Width="1.5" PointX="12.625" PointY="6.5" />
-        <EntityTypeShape EntityType="ManagementTool.vw_SessionUser" Width="1.5" PointX="12.75" PointY="9.5" />
+        <EntityTypeShape EntityType="ManagementTool.LOGIN_DETAIL" Width="1.5" PointX="17.375" PointY="0.875" />
+        <EntityTypeShape EntityType="ManagementTool.vw_SessionUser" Width="1.875" PointX="17.375" PointY="3.875" />
         <AssociationConnector Association="ManagementTool.FK__AREA__SUB_AREA" />
         <AssociationConnector Association="ManagementTool.FK__GeneratedBy__AREA" />
         <AssociationConnector Association="ManagementTool.FK__GeneratedBy__SUB_AREA" />

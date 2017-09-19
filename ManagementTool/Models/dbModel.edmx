@@ -756,6 +756,7 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_SessionUser' does not ha
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="SP_BUCKET_LIST" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="ManagementToolStoreContainer">
           <EntitySet Name="001_DIVISION" EntityType="Self.001_DIVISION" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="002_AREA" EntityType="Self.002_AREA" Schema="dbo" store:Type="Tables" />
@@ -1092,6 +1093,7 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_SessionUser' does not ha
             <End Role="C007_BUCKET" EntitySet="C007_BUCKET" />
             <End Role="C008_TASK_DATA" EntitySet="C008_TASK_DATA" />
           </AssociationSet>
+          <FunctionImport Name="SP_BUCKET_LIST" ReturnType="Collection(ManagementTool.SP_BUCKET_LIST_Result)" />
         </EntityContainer>
         <EntityType Name="C002_AREA">
           <Key>
@@ -1900,6 +1902,20 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_SessionUser' does not ha
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="SP_BUCKET_LIST_Result">
+          <Property Type="Int32" Name="BucketId" Nullable="false" />
+          <Property Type="Int32" Name="ProjectId" Nullable="false" />
+          <Property Type="String" Name="ProjectName" Nullable="false" MaxLength="250" />
+          <Property Type="Int32" Name="PhaseId" Nullable="false" />
+          <Property Type="String" Name="PhaseName" Nullable="false" MaxLength="550" />
+          <Property Type="Int32" Name="SubPhaseId" Nullable="false" />
+          <Property Type="String" Name="SubPhaseName" Nullable="false" MaxLength="550" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="250" />
+          <Property Type="Boolean" Name="IsActive" Nullable="false" />
+          <Property Type="Int32" Name="GeneratedBy" Nullable="false" />
+          <Property Type="String" Name="UserName" Nullable="false" MaxLength="250" />
+          <Property Type="DateTime" Name="GenerationDate" Nullable="false" Precision="23" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2319,6 +2335,24 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_SessionUser' does not ha
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SP_BUCKET_LIST" FunctionName="ManagementTool.Store.SP_BUCKET_LIST">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ManagementTool.SP_BUCKET_LIST_Result">
+                <ScalarProperty Name="BucketId" ColumnName="BucketId" />
+                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+                <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+                <ScalarProperty Name="PhaseId" ColumnName="PhaseId" />
+                <ScalarProperty Name="PhaseName" ColumnName="PhaseName" />
+                <ScalarProperty Name="SubPhaseId" ColumnName="SubPhaseId" />
+                <ScalarProperty Name="SubPhaseName" ColumnName="SubPhaseName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="GeneratedBy" ColumnName="GeneratedBy" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="GenerationDate" ColumnName="GenerationDate" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

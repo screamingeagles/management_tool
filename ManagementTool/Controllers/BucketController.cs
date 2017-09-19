@@ -1,12 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Net;
 using System.Web;
+using System.Net;
+using System.Data;
+using System.Linq;
 using System.Web.Mvc;
+using System.Data.Entity;
+using ManagementTool.Common;
 using ManagementTool.Models;
+using System.Collections.Generic;
 
 namespace ManagementTool.Controllers
 {
@@ -17,8 +18,8 @@ namespace ManagementTool.Controllers
         // GET: Bucket
         public ActionResult Index()
         {
-            var c007_BUCKET = db.C007_BUCKET.Include(c => c.C004_PROJECT).Include(c => c.C005_PHASE).Include(c => c.EndUser);
-            return View(c007_BUCKET.ToList());
+            var q = db.Database.SqlQuery<SP_BUCKET_LIST_Result>("SP_BUCKET_LIST").ToList();
+            return View(q);
         }
 
         // GET: Bucket/Details/5
@@ -33,14 +34,16 @@ namespace ManagementTool.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.SubPhaseName = Bhai.getSubPhase(c007_BUCKET.SubPhaseId);
             return View(c007_BUCKET);
         }
 
         // GET: Bucket/Create
         public ActionResult Create()
         {
-            ViewBag.ProjectId = new SelectList(db.C004_PROJECT, "ProjectId", "ProjectName");
-            ViewBag.PhaseId = new SelectList(db.C005_PHASE, "PhaseId", "PhaseName");
+            ViewBag.ProjectId   = new SelectList(db.C004_PROJECT     , "ProjectId"   , "ProjectName");
+            ViewBag.PhaseId     = new SelectList(db.C005_PHASE       , "PhaseId"     , "PhaseName");
+            ViewBag.SubPhaseId  = new SelectList(db.C006_SubPhase    , "SubPhaseId"  , "SubPhaseName");
             return View();
         }
 
@@ -53,13 +56,18 @@ namespace ManagementTool.Controllers
         {
             if (ModelState.IsValid)
             {
+                c007_BUCKET.GeneratedBy     = UserIdentity.UserId;
+                c007_BUCKET.GenerationDate  = DateTime.Now.AddHours(4);
+                c007_BUCKET.IsActive        = true;
+
                 db.C007_BUCKET.Add(c007_BUCKET);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.ProjectId = new SelectList(db.C004_PROJECT, "ProjectId", "ProjectName", c007_BUCKET.ProjectId);
-            ViewBag.PhaseId = new SelectList(db.C005_PHASE, "PhaseId", "PhaseName", c007_BUCKET.PhaseId);
+            ViewBag.ProjectId       = new SelectList(db.C004_PROJECT    , "ProjectId"   , "ProjectName" , c007_BUCKET.ProjectId);
+            ViewBag.PhaseId         = new SelectList(db.C005_PHASE      , "PhaseId"     , "PhaseName"   , c007_BUCKET.PhaseId);
+            ViewBag.SubPhaseId      = new SelectList(db.C006_SubPhase   , "SubPhaseId"  , "SubPhaseName", c007_BUCKET.SubPhaseId);
             return View(c007_BUCKET);
         }
 
@@ -71,12 +79,13 @@ namespace ManagementTool.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             C007_BUCKET c007_BUCKET = db.C007_BUCKET.Find(id);
-            if (c007_BUCKET == null)
-            {
+            if (c007_BUCKET == null) {
                 return HttpNotFound();
             }
-            ViewBag.ProjectId = new SelectList(db.C004_PROJECT, "ProjectId", "ProjectName", c007_BUCKET.ProjectId);
-            ViewBag.PhaseId = new SelectList(db.C005_PHASE, "PhaseId", "PhaseName", c007_BUCKET.PhaseId);
+
+            ViewBag.ProjectId   = new SelectList(db.C004_PROJECT    , "ProjectId"   , "ProjectName" , c007_BUCKET.ProjectId);
+            ViewBag.PhaseId     = new SelectList(db.C005_PHASE      , "PhaseId"     , "PhaseName"   , c007_BUCKET.PhaseId);
+            ViewBag.SubPhaseId  = new SelectList(db.C006_SubPhase   , "SubPhaseId"  , "SubPhaseName", c007_BUCKET.SubPhaseId);
             return View(c007_BUCKET);
         }
 
@@ -93,8 +102,9 @@ namespace ManagementTool.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.ProjectId = new SelectList(db.C004_PROJECT, "ProjectId", "ProjectName", c007_BUCKET.ProjectId);
-            ViewBag.PhaseId = new SelectList(db.C005_PHASE, "PhaseId", "PhaseName", c007_BUCKET.PhaseId);
+            ViewBag.ProjectId   = new SelectList(db.C004_PROJECT    , "ProjectId"   , "ProjectName"     , c007_BUCKET.ProjectId);
+            ViewBag.PhaseId     = new SelectList(db.C005_PHASE      , "PhaseId"     , "PhaseName"       , c007_BUCKET.PhaseId);
+            ViewBag.SubPhaseId  = new SelectList(db.C006_SubPhase   , "SubPhaseId"  , "SubPhaseName"    , c007_BUCKET.SubPhaseId);
             return View(c007_BUCKET);
         }
 
@@ -110,6 +120,7 @@ namespace ManagementTool.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.SubPhaseName = Bhai.getSubPhase(c007_BUCKET.SubPhaseId);
             return View(c007_BUCKET);
         }
 

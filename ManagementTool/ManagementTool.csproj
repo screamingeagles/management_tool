@@ -734,6 +734,9 @@
     <Compile Include="Models\Smart_Login.cs">
       <DependentUpon>dbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SP_BUCKET_LIST_Result.cs">
+      <DependentUpon>dbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\STATUS.cs">
       <DependentUpon>dbModel.tt</DependentUpon>
     </Compile>

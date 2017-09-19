@@ -12,6 +12,8 @@ namespace ManagementTool.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class ProjectEntities : DbContext
     {
@@ -56,5 +58,10 @@ namespace ManagementTool.Models
         public virtual DbSet<C004_PROJECT> C004_PROJECT { get; set; }
         public virtual DbSet<C005_PHASE> C005_PHASE { get; set; }
         public virtual DbSet<C007_BUCKET> C007_BUCKET { get; set; }
+    
+        public virtual ObjectResult<SP_BUCKET_LIST_Result> SP_BUCKET_LIST()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_BUCKET_LIST_Result>("SP_BUCKET_LIST");
+        }
     }
 }

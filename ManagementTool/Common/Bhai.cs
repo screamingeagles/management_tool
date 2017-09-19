@@ -288,7 +288,19 @@ namespace ManagementTool.Common
 
         }
 
+        public static string getSubPhase        (int SubPhaseId)                            
+        {
 
+            if (SubPhaseId == 0) { return "N/A"; }
+            using (ProjectEntities db = new ProjectEntities())
+            {
+                var q = (from e in db.C006_SubPhase
+                         where (e.SubPhaseId == SubPhaseId)
+                         select e.SubPhaseName).FirstOrDefault();
+                return q.ToString();
+            }
+
+        }
 
 
         public static List<SelectListItem>      GetTechnicianList   (int id)                {

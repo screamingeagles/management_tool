@@ -11,7 +11,7 @@ using System.Collections.Generic;
 
 namespace ManagementTool.Controllers
 {
-    public class SubAreaController : BaseController
+    public class SubAreaController : Controller
     {
         private ProjectEntities db = new ProjectEntities();
 

@@ -25,6 +25,10 @@ namespace ManagementTool.Controllers
 
         public ActionResult Welcome()
         {
+
+            UserIdentity.UserId = 1020;
+            UserIdentity.UserName = "Arsalan Ahmed";
+
             // only for this we are checking the session of user.
             int _sid = 0;
                 _sid = (HttpContext.Session["SessionId"] == null) ? 0 : Convert.ToInt32(HttpContext.Session["SessionId"].ToString());
