@@ -18,6 +18,7 @@ namespace ManagementTool.Models
         public C004_PROJECT()
         {
             this.C005_PHASE = new HashSet<C005_PHASE>();
+            this.C007_BUCKET = new HashSet<C007_BUCKET>();
         }
     
         public int ProjectId { get; set; }
@@ -38,5 +39,7 @@ namespace ManagementTool.Models
         public virtual C013_PROJECT_TYPE C013_PROJECT_TYPE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<C005_PHASE> C005_PHASE { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<C007_BUCKET> C007_BUCKET { get; set; }
     }
 }

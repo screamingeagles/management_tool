@@ -8,7 +8,6 @@
         <EntityTypeShape EntityType="ManagementTool.C002_AREA" Width="1.5" PointX="6" PointY="15.25" />
         <EntityTypeShape EntityType="ManagementTool.C003_SUB_AREA" Width="1.5" PointX="9.5" PointY="12.25" />
         <EntityTypeShape EntityType="ManagementTool.C006_SubPhase" Width="1.5" PointX="5.25" PointY="11.125" />
-        <EntityTypeShape EntityType="ManagementTool.C007_BUCKET" Width="1.5" PointX="0.75" PointY="7.25" />
         <EntityTypeShape EntityType="ManagementTool.C008_TASK_DATA" Width="1.5" PointX="3" PointY="12.5" />
         <EntityTypeShape EntityType="ManagementTool.C010_LOCATION" Width="1.5" PointX="3.5" PointY="1.125" />
         <EntityTypeShape EntityType="ManagementTool.C011_COMPANY" Width="1.5" PointX="10.625" PointY="15.25" />
@@ -37,7 +36,6 @@
         <AssociationConnector Association="ManagementTool.FK__GeneratedBy__AREA" />
         <AssociationConnector Association="ManagementTool.FK__GeneratedBy__SUB_AREA" />
         <AssociationConnector Association="ManagementTool.FK_GeneratedBy__SubPhase" />
-        <AssociationConnector Association="ManagementTool.FK_BUCKET_TASK_DATA" />
         <AssociationConnector Association="ManagementTool.FK_Generated__TASK_DATA" />
         <AssociationConnector Association="ManagementTool.FK_OwnerID__TASK_DATA" />
         <AssociationConnector Association="ManagementTool.FK_STATUS__TASK_DATA" />
@@ -63,6 +61,11 @@
         <AssociationConnector Association="ManagementTool.FK__PROJECT__PHASE" />
         <AssociationConnector Association="ManagementTool.FK__GeneratedBy__PHASE" />
         <AssociationConnector Association="ManagementTool.FK__PHASE__SubPhase" />
+        <EntityTypeShape EntityType="ManagementTool.C007_BUCKET" Width="1.5" PointX="17.375" PointY="9.5" />
+        <AssociationConnector Association="ManagementTool.FK__PROJECT__BUCKET" />
+        <AssociationConnector Association="ManagementTool.FK__PHASE__BUCKET" />
+        <AssociationConnector Association="ManagementTool.FK__GeneratedBy__BUCKET" />
+        <AssociationConnector Association="ManagementTool.FK_BUCKET_TASK_DATA" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

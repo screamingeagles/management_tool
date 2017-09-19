@@ -620,6 +620,7 @@
     <Compile Include="Common\UserIdentity.cs" />
     <Compile Include="Controllers\AreaController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\BucketController.cs" />
     <Compile Include="Controllers\DivisionController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PhaseController.cs" />
@@ -854,6 +855,11 @@
     <Content Include="Views\SubPhase\Details.cshtml" />
     <Content Include="Views\SubPhase\Edit.cshtml" />
     <Content Include="Views\SubPhase\Index.cshtml" />
+    <Content Include="Views\Bucket\Create.cshtml" />
+    <Content Include="Views\Bucket\Delete.cshtml" />
+    <Content Include="Views\Bucket\Details.cshtml" />
+    <Content Include="Views\Bucket\Edit.cshtml" />
+    <Content Include="Views\Bucket\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

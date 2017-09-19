@@ -41,8 +41,11 @@ namespace ManagementTool.Controllers
         // GET: SubPhase/Create
         public ActionResult Create()
         {
-            ViewBag.PhaseId = new SelectList(db.C005_PHASE, "PhaseId", "PhaseName");
-            ViewBag.GeneratedBy = new SelectList(db.EndUsers, "UID", "UserName");
+
+            UserIdentity.UserId     = 1020;
+            UserIdentity.UserName   = "Arsalan Ahmed";
+
+            ViewBag.PhaseId = new SelectList(db.C005_PHASE.Where(p => p.IsActive == true), "PhaseId", "PhaseName");
             return View();
         }
 
@@ -51,17 +54,19 @@ namespace ManagementTool.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "SubPhaseId,PhaseId,SubPhaseName,GeneratedBy,GeneratedDate")] C006_SubPhase c006_SubPhase)
+        public ActionResult Create([Bind(Include = "PhaseId,SubPhaseName")] C006_SubPhase c006_SubPhase)
         {
             if (ModelState.IsValid)
             {
+                c006_SubPhase.GeneratedBy = UserIdentity.UserId;
+                c006_SubPhase.GeneratedDate = DateTime.Now.AddHours(4);                
+
                 db.C006_SubPhase.Add(c006_SubPhase);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.PhaseId = new SelectList(db.C005_PHASE, "PhaseId", "PhaseName", c006_SubPhase.PhaseId);
-            ViewBag.GeneratedBy = new SelectList(db.EndUsers, "UID", "UserName", c006_SubPhase.GeneratedBy);
+            ViewBag.PhaseId = new SelectList(db.C005_PHASE.Where(p => p.IsActive == true), "PhaseId", "PhaseName", c006_SubPhase.PhaseId);
             return View(c006_SubPhase);
         }
 
@@ -77,8 +82,7 @@ namespace ManagementTool.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.PhaseId = new SelectList(db.C005_PHASE, "PhaseId", "PhaseName", c006_SubPhase.PhaseId);
-            ViewBag.GeneratedBy = new SelectList(db.EndUsers, "UID", "UserName", c006_SubPhase.GeneratedBy);
+            ViewBag.PhaseId = new SelectList(db.C005_PHASE.Where(p => p.IsActive == true), "PhaseId", "PhaseName", c006_SubPhase.PhaseId);
             return View(c006_SubPhase);
         }
 
@@ -87,16 +91,18 @@ namespace ManagementTool.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "SubPhaseId,PhaseId,SubPhaseName,GeneratedBy,GeneratedDate")] C006_SubPhase c006_SubPhase)
+        public ActionResult Edit([Bind(Include = "SubPhaseId,PhaseId,SubPhaseName")] C006_SubPhase c006_SubPhase)
         {
             if (ModelState.IsValid)
             {
+                c006_SubPhase.GeneratedBy   = UserIdentity.UserId;
+                c006_SubPhase.GeneratedDate = DateTime.Now.AddHours(4);
+
                 db.Entry(c006_SubPhase).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.PhaseId = new SelectList(db.C005_PHASE, "PhaseId", "PhaseName", c006_SubPhase.PhaseId);
-            ViewBag.GeneratedBy = new SelectList(db.EndUsers, "UID", "UserName", c006_SubPhase.GeneratedBy);
+            ViewBag.PhaseId = new SelectList(db.C005_PHASE.Where(p => p.IsActive == true), "PhaseId", "PhaseName", c006_SubPhase.PhaseId);
             return View(c006_SubPhase);
         }
 
