@@ -15,6 +15,19 @@ namespace ManagementTool.Controllers
     {
         private ProjectEntities db = new ProjectEntities();
 
+        
+        public JsonResult GetBucketNames(string query) {
+            string[] names = null;
+            if (String.IsNullOrEmpty(query) == false) {                
+                names = (from i in db.C007_BUCKET
+                         where i.Name.StartsWith(query)
+                            select i.Name).Distinct().ToArray();            
+            }
+            return Json(names, JsonRequestBehavior.AllowGet);
+        }
+
+
+
         // GET: Bucket
         public ActionResult Index()
         {

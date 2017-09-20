@@ -50,11 +50,22 @@
                         <div class="form-group">
                             <label class="col-lg-3 control-label">Select Phase </label>
                             <div class="col-lg-9">
-                                @Html.DropDownList("PhaseId", null, "Select Phase", htmlAttributes: new { @class = "form-control m-b" })
+                                @Html.DropDownList("PhaseId", null, "Select Phase", htmlAttributes: new { @class = "form-control m-b", onchange = "FillPhaseDetails(this);" })
                             </div>
                         </div>
 
-                        <!-- / Sub Phase Name -->
+                            <!-- / Phase  Details -->
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Phase Duration</label>
+                            <div class="col-lg-4">
+                                <input type="text" class="form-control m-b" id="PhStartDate" name="PhStartDate" readonly="readonly" />
+                            </div>
+                            <div class="col-lg-5">
+                                <input type="text" class="form-control m-b" id="PhEndDate" name="PhEndDate" readonly="readonly" />
+                            </div>
+                        </div>
+
+                        <!-- / Sub Phase  -->
                         <div class="form-group">
                             <label class="col-lg-3 control-label">Select Sub Phase </label>
                             <div class="col-lg-9">
@@ -67,7 +78,7 @@
                         <div class="form-group">
                             <label class="col-lg-3 control-label">New Bucket Name</label>
                             <div class="col-lg-9">
-                                @Html.TextBoxFor(model => model.Name, htmlAttributes: new { @class = "form-control m-b" })
+                                @Html.TextBoxFor(model => model.Name, htmlAttributes: new { @class = "typeahead_1 form-control m-b" })
                             </div>
                         </div>
 
@@ -93,6 +104,30 @@
 
     $(document).ready(
     function () {
+        
+        $("#Name").typeahead({
+            source: function (query, process) {
+                var names = [];
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("GetBucketNames", "Bucket")",
+                    data: { query: query },                    
+                    success: function (data) {
+                        $.each(data, function (i, bname) {
+                            /* alert(bname); */
+                            names.push(bname);
+                        });
+                        process(names);
+                    },
+                    error: function (xerr) {
+                        /* $('#txteng').val("err : " +xerr);*/
+                    }
+                });
+            }
+        });
+
+        
+
         $("#frmMain").validate({
             rules: {
                 Name: {
@@ -140,6 +175,56 @@
             }
         });
 
+    }
+
+
+    function FillPhaseDetails(obj) {
+        var sel     = obj.options[obj.selectedIndex].value;
+        var selText = obj.options[obj.selectedIndex].text;
+        if (sel == "") { return; }
+
+        var postedContent = { PhaseId: sel }
+        $.ajax({
+            type: "POST",
+            url: "/SubPhase/GetSubPhase",
+            data: postedContent,
+            success: function (message) {
+
+                var res = message.data;
+                $("#SubPhaseId").empty()
+
+                if (res.length > 0) {
+                    for (var i = 0; i < message.data.length; i++) {
+                        $('#SubPhaseId').append($('<option>', { value: message.data[i].SubPhaseId, text: message.data[i].SubPhaseName }));
+                    } // end of for loop
+                } // end of if for length
+                else {
+                    $('#SubPhaseId').append($('<option>', { value: '', text: "No Sub Phase For " + selText }));
+                }
+            },
+            error: function (xerr) {
+                /* $('#txteng').val("err : " +xerr);*/
+            }
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "/Phase/GetPhaseDates",
+            data: postedContent,
+            success: function (message) {
+
+                var res = message.data;
+                $("#PhStartDate").empty()
+                $("#PhEndDate").empty()
+
+
+                $("#PhStartDate").val(parseJsonDate(res.StartDate));
+                $("#PhEndDate").val(parseJsonDate(res.EndDate));
+            },
+            error: function (xerr) {
+                /* $('#txteng').val("err : " +xerr);*/
+            }
+        });
     }
 
 

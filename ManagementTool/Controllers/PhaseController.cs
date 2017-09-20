@@ -27,6 +27,17 @@ namespace ManagementTool.Controllers
             }
         }
 
+        [HttpPost]
+        public JsonResult GetPhaseDates(int PhaseId)
+        {
+            using (ProjectEntities db = new ProjectEntities())
+            {
+                var q = (from c in db.C005_PHASE
+                         where (c.IsActive.Equals(true)) && (c.PhaseId == PhaseId)
+                         select new { c.StartDate, c.EndDate }).FirstOrDefault();
+                return Json(new { data = q });
+            }
+        }
 
         // GET: Phase
         public ActionResult Index()

@@ -16,6 +16,20 @@ namespace ManagementTool.Controllers
     {
         private ProjectEntities db = new ProjectEntities();
 
+        [HttpPost]
+        public JsonResult GetSubPhase(int PhaseId)
+        {
+            using (ProjectEntities db = new ProjectEntities())
+            {
+                var q = (from c in db.C006_SubPhase
+                         where (c.PhaseId == PhaseId)
+                         select new { c.SubPhaseId, c.SubPhaseName}).ToList();
+                return Json(new { data = q });
+            }
+        }
+
+
+
         // GET: SubPhase
         public ActionResult Index()
         {
