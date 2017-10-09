@@ -1,4 +1,4 @@
-﻿@model ManagementTool.Models.C003_SUB_AREA
+﻿@model ManagementTool.Models.C006_SubPhase
 
 @{
     ViewBag.Title = "Create";
@@ -11,7 +11,7 @@
     <div class="col-lg-10 col-lg-offset-1">
         <div class="ibox float-e-margins">
             <div class="ibox-title">
-                <h5>Add New Sub Area Name</h5>
+                <h5>Add New Sub Phase</h5>
                 <div class="ibox-tools">
                     <a class="collapse-link">
                         <i class="fa fa-chevron-up"></i>
@@ -23,28 +23,28 @@
             </div>
             <div class="ibox-content">
                 <div class="table-responsive">
-                    @using (Html.BeginForm("Create", "SubArea", FormMethod.Post, new { id = "frmMain" }))
+                    @using (Html.BeginForm("Create", "SubPhase", FormMethod.Post, new { id = "frmMain" }))
                     {
                         @Html.AntiForgeryToken();
 
-                        <!-- / Division Name -->
+                        <!-- / Phase Name -->
                         <div class="form-group">
-                            <label class="col-lg-3 control-label">Select Area </label>
+                            <label class="col-lg-3 control-label">Select Phase </label>
                             <div class="col-lg-9">
-                                @Html.DropDownList("AreaId", null, "Select Area", htmlAttributes: new { @class = "form-control m-b" })
+                                @Html.DropDownList("PhaseId", null, "Select Phase", htmlAttributes: new { @class = "form-control m-b" })
                             </div>
                         </div>
 
-                        
-                        <!-- / Sub Area Name -->
+
+                        <!-- / Sub Phase Name -->
                         <div class="form-group">
-                            <label class="col-lg-3 control-label">New Area Name</label>
+                            <label class="col-lg-3 control-label">New Sub Phase Name</label>
                             <div class="col-lg-9">
-                                @Html.TextBoxFor(model => model.SubAreaName, htmlAttributes: new { @class = "form-control m-b" })
+                                @Html.TextBoxFor(model => model.SubPhaseName, htmlAttributes: new { @class = "form-control m-b" })
                             </div>
                         </div>
 
-                        
+
                         <!-- / Save Button -->
                         <div class="form-group">
                             <div class="col-lg-12">
@@ -66,12 +66,12 @@
     function () {
         $("#frmMain").validate({
             rules: {
-                SubAreaName: {
+                SubPhaseName: {
                     minlength: 3,
                     maxlength: 250,
                     required: true
                 },
-                AreaId: { required: true },
+                PhaseId: { required: true },
             },
             highlight: function (element) {
                 $(element).closest('.control-group').addClass('has-error');

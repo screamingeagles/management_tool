@@ -48,7 +48,7 @@
           <Property Name="ProjectName" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="ProjectType" Type="int" Nullable="false" />
           <Property Name="StartDate" Type="datetime" Nullable="false" />
-          <Property Name="EndDate" Type="datetime" />
+          <Property Name="EndDate" Type="datetime" Nullable="false" />
           <Property Name="GeneratedBy" Type="int" Nullable="false" />
           <Property Name="GeneratedDate" Type="datetime" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
@@ -456,6 +456,18 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_SessionUser' does not ha
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__GeneratedBy__BUCKET">
+          <End Role="EndUser" Type="Self.EndUser" Multiplicity="1" />
+          <End Role="007_BUCKET" Type="Self.007_BUCKET" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EndUser">
+              <PropertyRef Name="UID" />
+            </Principal>
+            <Dependent Role="007_BUCKET">
+              <PropertyRef Name="GeneratedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__GeneratedBy__DIVISION">
           <End Role="EndUser" Type="Self.EndUser" Multiplicity="1" />
           <End Role="001_DIVISION" Type="Self.001_DIVISION" Multiplicity="*" />
@@ -504,6 +516,18 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_SessionUser' does not ha
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__PHASE__BUCKET">
+          <End Role="005_PHASE" Type="Self.005_PHASE" Multiplicity="1" />
+          <End Role="007_BUCKET" Type="Self.007_BUCKET" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="005_PHASE">
+              <PropertyRef Name="PhaseId" />
+            </Principal>
+            <Dependent Role="007_BUCKET">
+              <PropertyRef Name="PhaseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__PHASE__SubPhase">
           <End Role="005_PHASE" Type="Self.005_PHASE" Multiplicity="1" />
           <End Role="006_SubPhase" Type="Self.006_SubPhase" Multiplicity="*" />
@@ -513,6 +537,42 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_SessionUser' does not ha
             </Principal>
             <Dependent Role="006_SubPhase">
               <PropertyRef Name="PhaseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PROJECT__BUCKET">
+          <End Role="004_PROJECT" Type="Self.004_PROJECT" Multiplicity="1" />
+          <End Role="007_BUCKET" Type="Self.007_BUCKET" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="004_PROJECT">
+              <PropertyRef Name="ProjectId" />
+            </Principal>
+            <Dependent Role="007_BUCKET">
+              <PropertyRef Name="ProjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PROJECT__PHASE">
+          <End Role="004_PROJECT" Type="Self.004_PROJECT" Multiplicity="1" />
+          <End Role="005_PHASE" Type="Self.005_PHASE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="004_PROJECT">
+              <PropertyRef Name="ProjectId" />
+            </Principal>
+            <Dependent Role="005_PHASE">
+              <PropertyRef Name="ProjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ProjectType__PROJECT">
+          <End Role="013_PROJECT_TYPE" Type="Self.013_PROJECT_TYPE" Multiplicity="1" />
+          <End Role="004_PROJECT" Type="Self.004_PROJECT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="013_PROJECT_TYPE">
+              <PropertyRef Name="ProjectTypeId" />
+            </Principal>
+            <Dependent Role="004_PROJECT">
+              <PropertyRef Name="ProjectType" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -696,6 +756,7 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_SessionUser' does not ha
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="SP_BUCKET_LIST" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="ManagementToolStoreContainer">
           <EntitySet Name="001_DIVISION" EntityType="Self.001_DIVISION" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="002_AREA" EntityType="Self.002_AREA" Schema="dbo" store:Type="Tables" />
@@ -775,6 +836,10 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_SessionUser' does not ha
             <End Role="EndUser" EntitySet="EndUser" />
             <End Role="002_AREA" EntitySet="002_AREA" />
           </AssociationSet>
+          <AssociationSet Name="FK__GeneratedBy__BUCKET" Association="Self.FK__GeneratedBy__BUCKET">
+            <End Role="EndUser" EntitySet="EndUser" />
+            <End Role="007_BUCKET" EntitySet="007_BUCKET" />
+          </AssociationSet>
           <AssociationSet Name="FK__GeneratedBy__DIVISION" Association="Self.FK__GeneratedBy__DIVISION">
             <End Role="EndUser" EntitySet="EndUser" />
             <End Role="001_DIVISION" EntitySet="001_DIVISION" />
@@ -791,9 +856,25 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_SessionUser' does not ha
             <End Role="EndUser" EntitySet="EndUser" />
             <End Role="003_SUB_AREA" EntitySet="003_SUB_AREA" />
           </AssociationSet>
+          <AssociationSet Name="FK__PHASE__BUCKET" Association="Self.FK__PHASE__BUCKET">
+            <End Role="005_PHASE" EntitySet="005_PHASE" />
+            <End Role="007_BUCKET" EntitySet="007_BUCKET" />
+          </AssociationSet>
           <AssociationSet Name="FK__PHASE__SubPhase" Association="Self.FK__PHASE__SubPhase">
             <End Role="005_PHASE" EntitySet="005_PHASE" />
             <End Role="006_SubPhase" EntitySet="006_SubPhase" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PROJECT__BUCKET" Association="Self.FK__PROJECT__BUCKET">
+            <End Role="004_PROJECT" EntitySet="004_PROJECT" />
+            <End Role="007_BUCKET" EntitySet="007_BUCKET" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PROJECT__PHASE" Association="Self.FK__PROJECT__PHASE">
+            <End Role="004_PROJECT" EntitySet="004_PROJECT" />
+            <End Role="005_PHASE" EntitySet="005_PHASE" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ProjectType__PROJECT" Association="Self.FK__ProjectType__PROJECT">
+            <End Role="013_PROJECT_TYPE" EntitySet="013_PROJECT_TYPE" />
+            <End Role="004_PROJECT" EntitySet="004_PROJECT" />
           </AssociationSet>
           <AssociationSet Name="FK_BUCKET_TASK_DATA" Association="Self.FK_BUCKET_TASK_DATA">
             <End Role="007_BUCKET" EntitySet="007_BUCKET" />
@@ -863,9 +944,7 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_SessionUser' does not ha
         <EntityContainer Name="ProjectEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="C002_AREA" EntityType="ManagementTool.C002_AREA" />
           <EntitySet Name="C003_SUB_AREA" EntityType="ManagementTool.C003_SUB_AREA" />
-          <EntitySet Name="C005_PHASE" EntityType="ManagementTool.C005_PHASE" />
           <EntitySet Name="C006_SubPhase" EntityType="ManagementTool.C006_SubPhase" />
-          <EntitySet Name="C007_BUCKET" EntityType="ManagementTool.C007_BUCKET" />
           <EntitySet Name="C008_TASK_DATA" EntityType="ManagementTool.C008_TASK_DATA" />
           <EntitySet Name="C010_LOCATION" EntityType="ManagementTool.C010_LOCATION" />
           <EntitySet Name="C011_COMPANY" EntityType="ManagementTool.C011_COMPANY" />
@@ -902,21 +981,9 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_SessionUser' does not ha
             <End Role="EndUser" EntitySet="EndUsers" />
             <End Role="C003_SUB_AREA" EntitySet="C003_SUB_AREA" />
           </AssociationSet>
-          <AssociationSet Name="FK__GeneratedBy__PHASE" Association="ManagementTool.FK__GeneratedBy__PHASE">
-            <End Role="EndUser" EntitySet="EndUsers" />
-            <End Role="C005_PHASE" EntitySet="C005_PHASE" />
-          </AssociationSet>
-          <AssociationSet Name="FK__PHASE__SubPhase" Association="ManagementTool.FK__PHASE__SubPhase">
-            <End Role="C005_PHASE" EntitySet="C005_PHASE" />
-            <End Role="C006_SubPhase" EntitySet="C006_SubPhase" />
-          </AssociationSet>
           <AssociationSet Name="FK_GeneratedBy__SubPhase" Association="ManagementTool.FK_GeneratedBy__SubPhase">
             <End Role="EndUser" EntitySet="EndUsers" />
             <End Role="C006_SubPhase" EntitySet="C006_SubPhase" />
-          </AssociationSet>
-          <AssociationSet Name="FK_BUCKET_TASK_DATA" Association="ManagementTool.FK_BUCKET_TASK_DATA">
-            <End Role="C007_BUCKET" EntitySet="C007_BUCKET" />
-            <End Role="C008_TASK_DATA" EntitySet="C008_TASK_DATA" />
           </AssociationSet>
           <AssociationSet Name="FK_Generated__TASK_DATA" Association="ManagementTool.FK_Generated__TASK_DATA">
             <End Role="EndUser" EntitySet="EndUsers" />
@@ -970,7 +1037,20 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_SessionUser' does not ha
             <End Role="ROLE_MASTER" EntitySet="ROLE_MASTER" />
             <End Role="ROLE_DETAIL" EntitySet="ROLE_DETAIL" />
           </AssociationSet>
+          <EntitySet Name="C001_DIVISION" EntityType="ManagementTool.C001_DIVISION" />
+          <AssociationSet Name="FK__AREA__DIVISION" Association="ManagementTool.FK__AREA__DIVISION">
+            <End Role="C001_DIVISION" EntitySet="C001_DIVISION" />
+            <End Role="C002_AREA" EntitySet="C002_AREA" />
+          </AssociationSet>
+          <AssociationSet Name="FK__GeneratedBy__DIVISION" Association="ManagementTool.FK__GeneratedBy__DIVISION">
+            <End Role="EndUser" EntitySet="EndUsers" />
+            <End Role="C001_DIVISION" EntitySet="C001_DIVISION" />
+          </AssociationSet>
           <EntitySet Name="C004_PROJECT" EntityType="ManagementTool.C004_PROJECT" />
+          <AssociationSet Name="FK__DIVISION__PROJECT" Association="ManagementTool.FK__DIVISION__PROJECT">
+            <End Role="C001_DIVISION" EntitySet="C001_DIVISION" />
+            <End Role="C004_PROJECT" EntitySet="C004_PROJECT" />
+          </AssociationSet>
           <AssociationSet Name="FK__AREA__PROJECT" Association="ManagementTool.FK__AREA__PROJECT">
             <End Role="C002_AREA" EntitySet="C002_AREA" />
             <End Role="C004_PROJECT" EntitySet="C004_PROJECT" />
@@ -979,19 +1059,41 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_SessionUser' does not ha
             <End Role="EndUser" EntitySet="EndUsers" />
             <End Role="C004_PROJECT" EntitySet="C004_PROJECT" />
           </AssociationSet>
-          <EntitySet Name="C001_DIVISION" EntityType="ManagementTool.C001_DIVISION" />
-          <AssociationSet Name="FK__AREA__DIVISION" Association="ManagementTool.FK__AREA__DIVISION">
-            <End Role="C001_DIVISION" EntitySet="C001_DIVISION" />
-            <End Role="C002_AREA" EntitySet="C002_AREA" />
-          </AssociationSet>
-          <AssociationSet Name="FK__DIVISION__PROJECT" Association="ManagementTool.FK__DIVISION__PROJECT">
-            <End Role="C001_DIVISION" EntitySet="C001_DIVISION" />
+          <AssociationSet Name="FK__ProjectType__PROJECT" Association="ManagementTool.FK__ProjectType__PROJECT">
+            <End Role="C013_PROJECT_TYPE" EntitySet="C013_PROJECT_TYPE" />
             <End Role="C004_PROJECT" EntitySet="C004_PROJECT" />
           </AssociationSet>
-          <AssociationSet Name="FK__GeneratedBy__DIVISION" Association="ManagementTool.FK__GeneratedBy__DIVISION">
-            <End Role="EndUser" EntitySet="EndUsers" />
-            <End Role="C001_DIVISION" EntitySet="C001_DIVISION" />
+          <EntitySet Name="C005_PHASE" EntityType="ManagementTool.C005_PHASE" />
+          <AssociationSet Name="FK__PROJECT__PHASE" Association="ManagementTool.FK__PROJECT__PHASE">
+            <End Role="C004_PROJECT" EntitySet="C004_PROJECT" />
+            <End Role="C005_PHASE" EntitySet="C005_PHASE" />
           </AssociationSet>
+          <AssociationSet Name="FK__GeneratedBy__PHASE" Association="ManagementTool.FK__GeneratedBy__PHASE">
+            <End Role="EndUser" EntitySet="EndUsers" />
+            <End Role="C005_PHASE" EntitySet="C005_PHASE" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PHASE__SubPhase" Association="ManagementTool.FK__PHASE__SubPhase">
+            <End Role="C005_PHASE" EntitySet="C005_PHASE" />
+            <End Role="C006_SubPhase" EntitySet="C006_SubPhase" />
+          </AssociationSet>
+          <EntitySet Name="C007_BUCKET" EntityType="ManagementTool.C007_BUCKET" />
+          <AssociationSet Name="FK__PROJECT__BUCKET" Association="ManagementTool.FK__PROJECT__BUCKET">
+            <End Role="C004_PROJECT" EntitySet="C004_PROJECT" />
+            <End Role="C007_BUCKET" EntitySet="C007_BUCKET" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PHASE__BUCKET" Association="ManagementTool.FK__PHASE__BUCKET">
+            <End Role="C005_PHASE" EntitySet="C005_PHASE" />
+            <End Role="C007_BUCKET" EntitySet="C007_BUCKET" />
+          </AssociationSet>
+          <AssociationSet Name="FK__GeneratedBy__BUCKET" Association="ManagementTool.FK__GeneratedBy__BUCKET">
+            <End Role="EndUser" EntitySet="EndUsers" />
+            <End Role="C007_BUCKET" EntitySet="C007_BUCKET" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BUCKET_TASK_DATA" Association="ManagementTool.FK_BUCKET_TASK_DATA">
+            <End Role="C007_BUCKET" EntitySet="C007_BUCKET" />
+            <End Role="C008_TASK_DATA" EntitySet="C008_TASK_DATA" />
+          </AssociationSet>
+          <FunctionImport Name="SP_BUCKET_LIST" ReturnType="Collection(ManagementTool.SP_BUCKET_LIST_Result)" />
         </EntityContainer>
         <EntityType Name="C002_AREA">
           <Key>
@@ -1005,8 +1107,8 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_SessionUser' does not ha
           <Property Name="isActive" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="C003_SUB_AREA" Relationship="ManagementTool.FK__AREA__SUB_AREA" FromRole="C002_AREA" ToRole="C003_SUB_AREA" />
           <NavigationProperty Name="EndUser" Relationship="ManagementTool.FK__GeneratedBy__AREA" FromRole="C002_AREA" ToRole="EndUser" />
-          <NavigationProperty Name="C004_PROJECT" Relationship="ManagementTool.FK__AREA__PROJECT" FromRole="C002_AREA" ToRole="C004_PROJECT" />
           <NavigationProperty Name="C001_DIVISION" Relationship="ManagementTool.FK__AREA__DIVISION" FromRole="C002_AREA" ToRole="C001_DIVISION" />
+          <NavigationProperty Name="C004_PROJECT" Relationship="ManagementTool.FK__AREA__PROJECT" FromRole="C002_AREA" ToRole="C004_PROJECT" />
         </EntityType>
         <EntityType Name="C003_SUB_AREA">
           <Key>
@@ -1021,21 +1123,6 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_SessionUser' does not ha
           <NavigationProperty Name="C002_AREA" Relationship="ManagementTool.FK__AREA__SUB_AREA" FromRole="C003_SUB_AREA" ToRole="C002_AREA" />
           <NavigationProperty Name="EndUser" Relationship="ManagementTool.FK__GeneratedBy__SUB_AREA" FromRole="C003_SUB_AREA" ToRole="EndUser" />
         </EntityType>
-        <EntityType Name="C005_PHASE">
-          <Key>
-            <PropertyRef Name="PhaseId" />
-          </Key>
-          <Property Name="PhaseId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ProjectId" Type="Int32" Nullable="false" />
-          <Property Name="PhaseName" Type="String" Nullable="false" MaxLength="550" FixedLength="false" Unicode="true" />
-          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="GeneratedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="GeneratedBy" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="EndUser" Relationship="ManagementTool.FK__GeneratedBy__PHASE" FromRole="C005_PHASE" ToRole="EndUser" />
-          <NavigationProperty Name="C006_SubPhase" Relationship="ManagementTool.FK__PHASE__SubPhase" FromRole="C005_PHASE" ToRole="C006_SubPhase" />
-        </EntityType>
         <EntityType Name="C006_SubPhase">
           <Key>
             <PropertyRef Name="SubPhaseId" />
@@ -1045,22 +1132,8 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_SessionUser' does not ha
           <Property Name="SubPhaseName" Type="String" Nullable="false" MaxLength="550" FixedLength="false" Unicode="true" />
           <Property Name="GeneratedBy" Type="Int32" Nullable="false" />
           <Property Name="GeneratedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="C005_PHASE" Relationship="ManagementTool.FK__PHASE__SubPhase" FromRole="C006_SubPhase" ToRole="C005_PHASE" />
           <NavigationProperty Name="EndUser" Relationship="ManagementTool.FK_GeneratedBy__SubPhase" FromRole="C006_SubPhase" ToRole="EndUser" />
-        </EntityType>
-        <EntityType Name="C007_BUCKET">
-          <Key>
-            <PropertyRef Name="BucketId" />
-          </Key>
-          <Property Name="BucketId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ProjectId" Type="Int32" Nullable="false" />
-          <Property Name="PhaseId" Type="Int32" Nullable="false" />
-          <Property Name="SubPhaseId" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="GeneratedBy" Type="Int32" Nullable="false" />
-          <Property Name="GenerationDate" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="C008_TASK_DATA" Relationship="ManagementTool.FK_BUCKET_TASK_DATA" FromRole="C007_BUCKET" ToRole="C008_TASK_DATA" />
+          <NavigationProperty Name="C005_PHASE" Relationship="ManagementTool.FK__PHASE__SubPhase" FromRole="C006_SubPhase" ToRole="C005_PHASE" />
         </EntityType>
         <EntityType Name="C008_TASK_DATA">
           <Key>
@@ -1084,7 +1157,6 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_SessionUser' does not ha
           <Property Name="TypeId" Type="Int32" Nullable="false" />
           <Property Name="StatusId" Type="Int32" Nullable="false" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="C007_BUCKET" Relationship="ManagementTool.FK_BUCKET_TASK_DATA" FromRole="C008_TASK_DATA" ToRole="C007_BUCKET" />
           <NavigationProperty Name="EndUser" Relationship="ManagementTool.FK_Generated__TASK_DATA" FromRole="C008_TASK_DATA" ToRole="EndUser" />
           <NavigationProperty Name="EndUser1" Relationship="ManagementTool.FK_OwnerID__TASK_DATA" FromRole="C008_TASK_DATA" ToRole="EndUser" />
           <NavigationProperty Name="C015_STATUS" Relationship="ManagementTool.FK_STATUS__TASK_DATA" FromRole="C008_TASK_DATA" ToRole="C015_STATUS" />
@@ -1092,6 +1164,7 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_SessionUser' does not ha
           <NavigationProperty Name="C018_coOwners" Relationship="ManagementTool.FK_TASK_DATA_coOwners" FromRole="C008_TASK_DATA" ToRole="C018_coOwners" />
           <NavigationProperty Name="C016_CYCLED" Relationship="ManagementTool.FK_TASK_DATA_CYCLED" FromRole="C008_TASK_DATA" ToRole="C016_CYCLED" />
           <NavigationProperty Name="C014_TASK_TYPE" Relationship="ManagementTool.FK_TASK_TYPE__TASK_DATA" FromRole="C008_TASK_DATA" ToRole="C014_TASK_TYPE" />
+          <NavigationProperty Name="C007_BUCKET" Relationship="ManagementTool.FK_BUCKET_TASK_DATA" FromRole="C008_TASK_DATA" ToRole="C007_BUCKET" />
         </EntityType>
         <EntityType Name="C010_LOCATION">
           <Key>
@@ -1123,6 +1196,7 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_SessionUser' does not ha
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="GenerationBy" Type="Int32" Nullable="false" />
           <Property Name="GenerationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="C004_PROJECT" Relationship="ManagementTool.FK__ProjectType__PROJECT" FromRole="C013_PROJECT_TYPE" ToRole="C004_PROJECT" />
         </EntityType>
         <EntityType Name="C014_TASK_TYPE">
           <Key>
@@ -1274,15 +1348,16 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_SessionUser' does not ha
           <Property Name="Company" Type="Int32" />
           <NavigationProperty Name="C002_AREA" Relationship="ManagementTool.FK__GeneratedBy__AREA" FromRole="EndUser" ToRole="C002_AREA" />
           <NavigationProperty Name="C003_SUB_AREA" Relationship="ManagementTool.FK__GeneratedBy__SUB_AREA" FromRole="EndUser" ToRole="C003_SUB_AREA" />
-          <NavigationProperty Name="C005_PHASE" Relationship="ManagementTool.FK__GeneratedBy__PHASE" FromRole="EndUser" ToRole="C005_PHASE" />
           <NavigationProperty Name="C006_SubPhase" Relationship="ManagementTool.FK_GeneratedBy__SubPhase" FromRole="EndUser" ToRole="C006_SubPhase" />
           <NavigationProperty Name="C008_TASK_DATA" Relationship="ManagementTool.FK_Generated__TASK_DATA" FromRole="EndUser" ToRole="C008_TASK_DATA" />
           <NavigationProperty Name="C008_TASK_DATA1" Relationship="ManagementTool.FK_OwnerID__TASK_DATA" FromRole="EndUser" ToRole="C008_TASK_DATA" />
           <NavigationProperty Name="C020_CommitmentMaster" Relationship="ManagementTool.FK_User__Commitment" FromRole="EndUser" ToRole="C020_CommitmentMaster" />
           <NavigationProperty Name="C022_Notification_Master" Relationship="ManagementTool.FK_Generated__Notification" FromRole="EndUser" ToRole="C022_Notification_Master" />
           <NavigationProperty Name="C023_Notification_Detail" Relationship="ManagementTool.FK_User__Notification" FromRole="EndUser" ToRole="C023_Notification_Detail" />
-          <NavigationProperty Name="C004_PROJECT" Relationship="ManagementTool.FK__GeneratedBy__PROJECT" FromRole="EndUser" ToRole="C004_PROJECT" />
           <NavigationProperty Name="C001_DIVISION" Relationship="ManagementTool.FK__GeneratedBy__DIVISION" FromRole="EndUser" ToRole="C001_DIVISION" />
+          <NavigationProperty Name="C004_PROJECT" Relationship="ManagementTool.FK__GeneratedBy__PROJECT" FromRole="EndUser" ToRole="C004_PROJECT" />
+          <NavigationProperty Name="C005_PHASE" Relationship="ManagementTool.FK__GeneratedBy__PHASE" FromRole="EndUser" ToRole="C005_PHASE" />
+          <NavigationProperty Name="C007_BUCKET" Relationship="ManagementTool.FK__GeneratedBy__BUCKET" FromRole="EndUser" ToRole="C007_BUCKET" />
         </EntityType>
         <EntityType Name="EndUser_Details">
           <Key>
@@ -1434,30 +1509,6 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_SessionUser' does not ha
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__GeneratedBy__PHASE">
-          <End Type="ManagementTool.EndUser" Role="EndUser" Multiplicity="1" />
-          <End Type="ManagementTool.C005_PHASE" Role="C005_PHASE" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="EndUser">
-              <PropertyRef Name="UID" />
-            </Principal>
-            <Dependent Role="C005_PHASE">
-              <PropertyRef Name="GeneratedBy" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__PHASE__SubPhase">
-          <End Type="ManagementTool.C005_PHASE" Role="C005_PHASE" Multiplicity="1" />
-          <End Type="ManagementTool.C006_SubPhase" Role="C006_SubPhase" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="C005_PHASE">
-              <PropertyRef Name="PhaseId" />
-            </Principal>
-            <Dependent Role="C006_SubPhase">
-              <PropertyRef Name="PhaseId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_GeneratedBy__SubPhase">
           <End Type="ManagementTool.EndUser" Role="EndUser" Multiplicity="1" />
           <End Type="ManagementTool.C006_SubPhase" Role="C006_SubPhase" Multiplicity="*" />
@@ -1467,18 +1518,6 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_SessionUser' does not ha
             </Principal>
             <Dependent Role="C006_SubPhase">
               <PropertyRef Name="GeneratedBy" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_BUCKET_TASK_DATA">
-          <End Type="ManagementTool.C007_BUCKET" Role="C007_BUCKET" Multiplicity="1" />
-          <End Type="ManagementTool.C008_TASK_DATA" Role="C008_TASK_DATA" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="C007_BUCKET">
-              <PropertyRef Name="BucketId" />
-            </Principal>
-            <Dependent Role="C008_TASK_DATA">
-              <PropertyRef Name="BucketId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1638,6 +1677,43 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_SessionUser' does not ha
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="C001_DIVISION">
+          <Key>
+            <PropertyRef Name="DivisionId" />
+          </Key>
+          <Property Name="DivisionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DivisionName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="GeneratedBy" Type="Int32" Nullable="false" />
+          <Property Name="GeneratedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="C002_AREA" Relationship="ManagementTool.FK__AREA__DIVISION" FromRole="C001_DIVISION" ToRole="C002_AREA" />
+          <NavigationProperty Name="EndUser" Relationship="ManagementTool.FK__GeneratedBy__DIVISION" FromRole="C001_DIVISION" ToRole="EndUser" />
+          <NavigationProperty Name="C004_PROJECT" Relationship="ManagementTool.FK__DIVISION__PROJECT" FromRole="C001_DIVISION" ToRole="C004_PROJECT" />
+        </EntityType>
+        <Association Name="FK__AREA__DIVISION">
+          <End Type="ManagementTool.C001_DIVISION" Role="C001_DIVISION" Multiplicity="1" />
+          <End Type="ManagementTool.C002_AREA" Role="C002_AREA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="C001_DIVISION">
+              <PropertyRef Name="DivisionId" />
+            </Principal>
+            <Dependent Role="C002_AREA">
+              <PropertyRef Name="DivisionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__GeneratedBy__DIVISION">
+          <End Type="ManagementTool.EndUser" Role="EndUser" Multiplicity="1" />
+          <End Type="ManagementTool.C001_DIVISION" Role="C001_DIVISION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EndUser">
+              <PropertyRef Name="UID" />
+            </Principal>
+            <Dependent Role="C001_DIVISION">
+              <PropertyRef Name="GeneratedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityType Name="C004_PROJECT">
           <Key>
             <PropertyRef Name="ProjectId" />
@@ -1649,14 +1725,29 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_SessionUser' does not ha
           <Property Name="ProjectName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="ProjectType" Type="Int32" Nullable="false" />
           <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="EndDate" Type="DateTime" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="GeneratedBy" Type="Int32" Nullable="false" />
           <Property Name="GeneratedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="C001_DIVISION" Relationship="ManagementTool.FK__DIVISION__PROJECT" FromRole="C004_PROJECT" ToRole="C001_DIVISION" />
           <NavigationProperty Name="C002_AREA" Relationship="ManagementTool.FK__AREA__PROJECT" FromRole="C004_PROJECT" ToRole="C002_AREA" />
           <NavigationProperty Name="EndUser" Relationship="ManagementTool.FK__GeneratedBy__PROJECT" FromRole="C004_PROJECT" ToRole="EndUser" />
-          <NavigationProperty Name="C001_DIVISION" Relationship="ManagementTool.FK__DIVISION__PROJECT" FromRole="C004_PROJECT" ToRole="C001_DIVISION" />
+          <NavigationProperty Name="C013_PROJECT_TYPE" Relationship="ManagementTool.FK__ProjectType__PROJECT" FromRole="C004_PROJECT" ToRole="C013_PROJECT_TYPE" />
+          <NavigationProperty Name="C005_PHASE" Relationship="ManagementTool.FK__PROJECT__PHASE" FromRole="C004_PROJECT" ToRole="C005_PHASE" />
+          <NavigationProperty Name="C007_BUCKET" Relationship="ManagementTool.FK__PROJECT__BUCKET" FromRole="C004_PROJECT" ToRole="C007_BUCKET" />
         </EntityType>
+        <Association Name="FK__DIVISION__PROJECT">
+          <End Type="ManagementTool.C001_DIVISION" Role="C001_DIVISION" Multiplicity="1" />
+          <End Type="ManagementTool.C004_PROJECT" Role="C004_PROJECT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="C001_DIVISION">
+              <PropertyRef Name="DivisionId" />
+            </Principal>
+            <Dependent Role="C004_PROJECT">
+              <PropertyRef Name="DivisionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__AREA__PROJECT">
           <End Type="ManagementTool.C002_AREA" Role="C002_AREA" Multiplicity="1" />
           <End Type="ManagementTool.C004_PROJECT" Role="C004_PROJECT" Multiplicity="*" />
@@ -1681,55 +1772,150 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_SessionUser' does not ha
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="C001_DIVISION">
-          <Key>
-            <PropertyRef Name="DivisionId" />
-          </Key>
-          <Property Name="DivisionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DivisionName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="GeneratedBy" Type="Int32" Nullable="false" />
-          <Property Name="GeneratedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="C002_AREA" Relationship="ManagementTool.FK__AREA__DIVISION" FromRole="C001_DIVISION" ToRole="C002_AREA" />
-          <NavigationProperty Name="C004_PROJECT" Relationship="ManagementTool.FK__DIVISION__PROJECT" FromRole="C001_DIVISION" ToRole="C004_PROJECT" />
-          <NavigationProperty Name="EndUser" Relationship="ManagementTool.FK__GeneratedBy__DIVISION" FromRole="C001_DIVISION" ToRole="EndUser" />
-        </EntityType>
-        <Association Name="FK__AREA__DIVISION">
-          <End Type="ManagementTool.C001_DIVISION" Role="C001_DIVISION" Multiplicity="1" />
-          <End Type="ManagementTool.C002_AREA" Role="C002_AREA" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="C001_DIVISION">
-              <PropertyRef Name="DivisionId" />
-            </Principal>
-            <Dependent Role="C002_AREA">
-              <PropertyRef Name="DivisionId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__DIVISION__PROJECT">
-          <End Type="ManagementTool.C001_DIVISION" Role="C001_DIVISION" Multiplicity="1" />
+        <Association Name="FK__ProjectType__PROJECT">
+          <End Type="ManagementTool.C013_PROJECT_TYPE" Role="C013_PROJECT_TYPE" Multiplicity="1" />
           <End Type="ManagementTool.C004_PROJECT" Role="C004_PROJECT" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="C001_DIVISION">
-              <PropertyRef Name="DivisionId" />
+            <Principal Role="C013_PROJECT_TYPE">
+              <PropertyRef Name="ProjectTypeId" />
             </Principal>
             <Dependent Role="C004_PROJECT">
-              <PropertyRef Name="DivisionId" />
+              <PropertyRef Name="ProjectType" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__GeneratedBy__DIVISION">
+        <EntityType Name="C005_PHASE">
+          <Key>
+            <PropertyRef Name="PhaseId" />
+          </Key>
+          <Property Name="PhaseId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProjectId" Type="Int32" Nullable="false" />
+          <Property Name="PhaseName" Type="String" Nullable="false" MaxLength="550" FixedLength="false" Unicode="true" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="GeneratedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="GeneratedBy" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="C004_PROJECT" Relationship="ManagementTool.FK__PROJECT__PHASE" FromRole="C005_PHASE" ToRole="C004_PROJECT" />
+          <NavigationProperty Name="EndUser" Relationship="ManagementTool.FK__GeneratedBy__PHASE" FromRole="C005_PHASE" ToRole="EndUser" />
+          <NavigationProperty Name="C006_SubPhase" Relationship="ManagementTool.FK__PHASE__SubPhase" FromRole="C005_PHASE" ToRole="C006_SubPhase" />
+          <NavigationProperty Name="C007_BUCKET" Relationship="ManagementTool.FK__PHASE__BUCKET" FromRole="C005_PHASE" ToRole="C007_BUCKET" />
+        </EntityType>
+        <Association Name="FK__PROJECT__PHASE">
+          <End Type="ManagementTool.C004_PROJECT" Role="C004_PROJECT" Multiplicity="1" />
+          <End Type="ManagementTool.C005_PHASE" Role="C005_PHASE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="C004_PROJECT">
+              <PropertyRef Name="ProjectId" />
+            </Principal>
+            <Dependent Role="C005_PHASE">
+              <PropertyRef Name="ProjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__GeneratedBy__PHASE">
           <End Type="ManagementTool.EndUser" Role="EndUser" Multiplicity="1" />
-          <End Type="ManagementTool.C001_DIVISION" Role="C001_DIVISION" Multiplicity="*" />
+          <End Type="ManagementTool.C005_PHASE" Role="C005_PHASE" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="EndUser">
               <PropertyRef Name="UID" />
             </Principal>
-            <Dependent Role="C001_DIVISION">
+            <Dependent Role="C005_PHASE">
               <PropertyRef Name="GeneratedBy" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__PHASE__SubPhase">
+          <End Type="ManagementTool.C005_PHASE" Role="C005_PHASE" Multiplicity="1" />
+          <End Type="ManagementTool.C006_SubPhase" Role="C006_SubPhase" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="C005_PHASE">
+              <PropertyRef Name="PhaseId" />
+            </Principal>
+            <Dependent Role="C006_SubPhase">
+              <PropertyRef Name="PhaseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="C007_BUCKET">
+          <Key>
+            <PropertyRef Name="BucketId" />
+          </Key>
+          <Property Name="BucketId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProjectId" Type="Int32" Nullable="false" />
+          <Property Name="PhaseId" Type="Int32" Nullable="false" />
+          <Property Name="SubPhaseId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="GeneratedBy" Type="Int32" Nullable="false" />
+          <Property Name="GenerationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="C004_PROJECT" Relationship="ManagementTool.FK__PROJECT__BUCKET" FromRole="C007_BUCKET" ToRole="C004_PROJECT" />
+          <NavigationProperty Name="C005_PHASE" Relationship="ManagementTool.FK__PHASE__BUCKET" FromRole="C007_BUCKET" ToRole="C005_PHASE" />
+          <NavigationProperty Name="EndUser" Relationship="ManagementTool.FK__GeneratedBy__BUCKET" FromRole="C007_BUCKET" ToRole="EndUser" />
+          <NavigationProperty Name="C008_TASK_DATA" Relationship="ManagementTool.FK_BUCKET_TASK_DATA" FromRole="C007_BUCKET" ToRole="C008_TASK_DATA" />
+        </EntityType>
+        <Association Name="FK__PROJECT__BUCKET">
+          <End Type="ManagementTool.C004_PROJECT" Role="C004_PROJECT" Multiplicity="1" />
+          <End Type="ManagementTool.C007_BUCKET" Role="C007_BUCKET" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="C004_PROJECT">
+              <PropertyRef Name="ProjectId" />
+            </Principal>
+            <Dependent Role="C007_BUCKET">
+              <PropertyRef Name="ProjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PHASE__BUCKET">
+          <End Type="ManagementTool.C005_PHASE" Role="C005_PHASE" Multiplicity="1" />
+          <End Type="ManagementTool.C007_BUCKET" Role="C007_BUCKET" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="C005_PHASE">
+              <PropertyRef Name="PhaseId" />
+            </Principal>
+            <Dependent Role="C007_BUCKET">
+              <PropertyRef Name="PhaseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__GeneratedBy__BUCKET">
+          <End Type="ManagementTool.EndUser" Role="EndUser" Multiplicity="1" />
+          <End Type="ManagementTool.C007_BUCKET" Role="C007_BUCKET" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EndUser">
+              <PropertyRef Name="UID" />
+            </Principal>
+            <Dependent Role="C007_BUCKET">
+              <PropertyRef Name="GeneratedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BUCKET_TASK_DATA">
+          <End Type="ManagementTool.C007_BUCKET" Role="C007_BUCKET" Multiplicity="1" />
+          <End Type="ManagementTool.C008_TASK_DATA" Role="C008_TASK_DATA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="C007_BUCKET">
+              <PropertyRef Name="BucketId" />
+            </Principal>
+            <Dependent Role="C008_TASK_DATA">
+              <PropertyRef Name="BucketId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="SP_BUCKET_LIST_Result">
+          <Property Type="Int32" Name="BucketId" Nullable="false" />
+          <Property Type="Int32" Name="ProjectId" Nullable="false" />
+          <Property Type="String" Name="ProjectName" Nullable="false" MaxLength="250" />
+          <Property Type="Int32" Name="PhaseId" Nullable="false" />
+          <Property Type="String" Name="PhaseName" Nullable="false" MaxLength="550" />
+          <Property Type="Int32" Name="SubPhaseId" Nullable="false" />
+          <Property Type="String" Name="SubPhaseName" Nullable="false" MaxLength="550" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="250" />
+          <Property Type="Boolean" Name="IsActive" Nullable="false" />
+          <Property Type="Int32" Name="GeneratedBy" Nullable="false" />
+          <Property Type="String" Name="UserName" Nullable="false" MaxLength="250" />
+          <Property Type="DateTime" Name="GenerationDate" Nullable="false" Precision="23" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1760,20 +1946,6 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_SessionUser' does not ha
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="C005_PHASE">
-            <EntityTypeMapping TypeName="ManagementTool.C005_PHASE">
-              <MappingFragment StoreEntitySet="005_PHASE">
-                <ScalarProperty Name="GeneratedBy" ColumnName="GeneratedBy" />
-                <ScalarProperty Name="GeneratedDate" ColumnName="GeneratedDate" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
-                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
-                <ScalarProperty Name="PhaseName" ColumnName="PhaseName" />
-                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
-                <ScalarProperty Name="PhaseId" ColumnName="PhaseId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="C006_SubPhase">
             <EntityTypeMapping TypeName="ManagementTool.C006_SubPhase">
               <MappingFragment StoreEntitySet="006_SubPhase">
@@ -1782,20 +1954,6 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_SessionUser' does not ha
                 <ScalarProperty Name="SubPhaseName" ColumnName="SubPhaseName" />
                 <ScalarProperty Name="PhaseId" ColumnName="PhaseId" />
                 <ScalarProperty Name="SubPhaseId" ColumnName="SubPhaseId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="C007_BUCKET">
-            <EntityTypeMapping TypeName="ManagementTool.C007_BUCKET">
-              <MappingFragment StoreEntitySet="007_BUCKET">
-                <ScalarProperty Name="GenerationDate" ColumnName="GenerationDate" />
-                <ScalarProperty Name="GeneratedBy" ColumnName="GeneratedBy" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="SubPhaseId" ColumnName="SubPhaseId" />
-                <ScalarProperty Name="PhaseId" ColumnName="PhaseId" />
-                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
-                <ScalarProperty Name="BucketId" ColumnName="BucketId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2121,6 +2279,17 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_SessionUser' does not ha
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="C001_DIVISION">
+            <EntityTypeMapping TypeName="ManagementTool.C001_DIVISION">
+              <MappingFragment StoreEntitySet="001_DIVISION">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="GeneratedDate" ColumnName="GeneratedDate" />
+                <ScalarProperty Name="GeneratedBy" ColumnName="GeneratedBy" />
+                <ScalarProperty Name="DivisionName" ColumnName="DivisionName" />
+                <ScalarProperty Name="DivisionId" ColumnName="DivisionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="C004_PROJECT">
             <EntityTypeMapping TypeName="ManagementTool.C004_PROJECT">
               <MappingFragment StoreEntitySet="004_PROJECT">
@@ -2138,17 +2307,52 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_SessionUser' does not ha
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="C001_DIVISION">
-            <EntityTypeMapping TypeName="ManagementTool.C001_DIVISION">
-              <MappingFragment StoreEntitySet="001_DIVISION">
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="GeneratedDate" ColumnName="GeneratedDate" />
+          <EntitySetMapping Name="C005_PHASE">
+            <EntityTypeMapping TypeName="ManagementTool.C005_PHASE">
+              <MappingFragment StoreEntitySet="005_PHASE">
                 <ScalarProperty Name="GeneratedBy" ColumnName="GeneratedBy" />
-                <ScalarProperty Name="DivisionName" ColumnName="DivisionName" />
-                <ScalarProperty Name="DivisionId" ColumnName="DivisionId" />
+                <ScalarProperty Name="GeneratedDate" ColumnName="GeneratedDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="PhaseName" ColumnName="PhaseName" />
+                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+                <ScalarProperty Name="PhaseId" ColumnName="PhaseId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="C007_BUCKET">
+            <EntityTypeMapping TypeName="ManagementTool.C007_BUCKET">
+              <MappingFragment StoreEntitySet="007_BUCKET">
+                <ScalarProperty Name="GenerationDate" ColumnName="GenerationDate" />
+                <ScalarProperty Name="GeneratedBy" ColumnName="GeneratedBy" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="SubPhaseId" ColumnName="SubPhaseId" />
+                <ScalarProperty Name="PhaseId" ColumnName="PhaseId" />
+                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+                <ScalarProperty Name="BucketId" ColumnName="BucketId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SP_BUCKET_LIST" FunctionName="ManagementTool.Store.SP_BUCKET_LIST">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ManagementTool.SP_BUCKET_LIST_Result">
+                <ScalarProperty Name="BucketId" ColumnName="BucketId" />
+                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+                <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+                <ScalarProperty Name="PhaseId" ColumnName="PhaseId" />
+                <ScalarProperty Name="PhaseName" ColumnName="PhaseName" />
+                <ScalarProperty Name="SubPhaseId" ColumnName="SubPhaseId" />
+                <ScalarProperty Name="SubPhaseName" ColumnName="SubPhaseName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="GeneratedBy" ColumnName="GeneratedBy" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="GenerationDate" ColumnName="GenerationDate" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

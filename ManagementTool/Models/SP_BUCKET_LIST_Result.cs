@@ -10,17 +10,20 @@
 namespace ManagementTool.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class C006_SubPhase
+    public partial class SP_BUCKET_LIST_Result
     {
-        public int SubPhaseId { get; set; }
+        public int BucketId { get; set; }
+        public int ProjectId { get; set; }
+        public string ProjectName { get; set; }
         public int PhaseId { get; set; }
+        public string PhaseName { get; set; }
+        public int SubPhaseId { get; set; }
         public string SubPhaseName { get; set; }
+        public string Name { get; set; }
+        public bool IsActive { get; set; }
         public int GeneratedBy { get; set; }
-        public System.DateTime GeneratedDate { get; set; }
-    
-        public virtual EndUser EndUser { get; set; }
-        public virtual C005_PHASE C005_PHASE { get; set; }
+        public string UserName { get; set; }
+        public System.DateTime GenerationDate { get; set; }
     }
 }

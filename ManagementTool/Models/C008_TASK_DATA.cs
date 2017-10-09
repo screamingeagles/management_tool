@@ -41,7 +41,6 @@ namespace ManagementTool.Models
         public int StatusId { get; set; }
         public bool IsActive { get; set; }
     
-        public virtual C007_BUCKET C007_BUCKET { get; set; }
         public virtual EndUser EndUser { get; set; }
         public virtual EndUser EndUser1 { get; set; }
         public virtual C015_STATUS C015_STATUS { get; set; }
@@ -52,5 +51,6 @@ namespace ManagementTool.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<C016_CYCLED> C016_CYCLED { get; set; }
         public virtual C014_TASK_TYPE C014_TASK_TYPE { get; set; }
+        public virtual C007_BUCKET C007_BUCKET { get; set; }
     }
 }

@@ -32,8 +32,13 @@ namespace ManagementTool
             bundles.Add(new ScriptBundle("~/plugins/metsiMenu").Include(
                       "~/Scripts/plugins/metisMenu/metisMenu.min.js"));
 
+            // pace
             bundles.Add(new ScriptBundle("~/plugins/pace").Include(
                       "~/Scripts/plugins/pace/pace.min.js"));
+
+            // Typehead for *Auto Complete
+            bundles.Add(new ScriptBundle("~/plugins/typehead").Include(
+                      "~/Scripts/plugins/typehead/bootstrap3-typeahead.min.js"));
 
             // CSS style (bootstrap/inspinia)
             bundles.Add(new StyleBundle("~/Content/css").Include(

@@ -1,9 +1,11 @@
-﻿@model ManagementTool.Models.C004_PROJECT
+﻿@model ManagementTool.Models.C005_PHASE
 
 @{
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+
 
 <br />
 
@@ -12,7 +14,7 @@
     <div class="col-lg-10 col-lg-offset-1">
         <div class="ibox float-e-margins">
             <div class="ibox-title">
-                <h5>Add New Project</h5>
+                <h5>Add New Phase</h5>
                 <div class="ibox-tools">
                     <a class="collapse-link">
                         <i class="fa fa-chevron-up"></i>
@@ -24,43 +26,39 @@
             </div>
             <div class="ibox-content">
                 <div class="table-responsive">
-                    @using (Html.BeginForm("Create", "Project", FormMethod.Post, new { id = "frmMain" }))
+                    @using (Html.BeginForm("Create", "Phase", FormMethod.Post, new { id = "frmMain" }))
                     {
                         @Html.AntiForgeryToken();
 
-                        <!-- / Division Name -->
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">Select Divison</label>
-                            <div class="col-lg-9">
-                                @Html.DropDownList("DivisionId", null, "Select Division", htmlAttributes: new { @class = "form-control m-b", onchange = "FillArea(this);" })
-                            </div>
-                        </div>
-
-                        <!-- / Area Name -->
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">Select Area</label>
-                            <div class="col-lg-9">
-                                @Html.DropDownList("AreaId", null, "Select Area", htmlAttributes: new { @class = "form-control m-b", onchange = "FillSubArea(this);" })
-                            </div>
-                        </div>
-
-                        <!-- / Sub Area Name -->
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">Select Sub Area</label>
-                            <div class="col-lg-9">
-                                @Html.DropDownList("SubAreaId", null, "Select Sub Area", htmlAttributes: new { @class = "form-control m-b" })
-                            </div>
-                        </div>
-
                         <!-- / Project Name -->
                         <div class="form-group">
-                            <label class="col-lg-3 control-label">New Project Name</label>
+                            <label class="col-lg-3 control-label">Select Project</label>
                             <div class="col-lg-9">
-                                @Html.TextBoxFor(model => model.ProjectName, htmlAttributes: new { @class = "form-control m-b" })
+                                @Html.DropDownList("ProjectId", null, "Select Project", htmlAttributes: new { @class = "form-control m-b", onchange = "FillProjectDetails(this);" })
                             </div>
                         </div>
 
-                        <!-- / Start Date -->
+                        <!-- / Project Details -->
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Project Duration</label>
+                            <div class="col-lg-4">
+                                <input type="text"  class="form-control m-b" id="PStartDate" name="PStartDate" readonly="readonly" />                                
+                            </div>
+                            <div class="col-lg-5">
+                                <input type="text"  class="form-control m-b" id="PEndDate" name="PEndDate" readonly="readonly" />
+                            </div>
+                        </div>
+
+
+                        <!-- / Phase Name -->
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">New Phase Name</label>
+                            <div class="col-lg-9">
+                                @Html.TextBoxFor(model => model.PhaseName, htmlAttributes: new { @class = "form-control m-b" })
+                            </div>
+                        </div>
+
+                         <!-- / Start Date -->
                         <div class="form-group">
                             <label class="col-lg-3 control-label">Start Date</label>
                             <div class="col-lg-9">
@@ -76,15 +74,7 @@
                             </div>
                         </div>
 
-                        <!-- / Select Project Type-->
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">Select Project Type</label>
-                            <div class="col-lg-9">
-                                @Html.DropDownList("ProjectType", null, "Select Project Type", htmlAttributes: new { @class = "form-control m-b" })
-                            </div>
-                        </div>
-
-                        <!-- / Save Button -->
+                    <!-- / Save Button -->
                         <div class="form-group">
                             <div class="col-lg-12">
                                 <button class="btn btn-sm btn-primary pull-left m-t-n-xs" type="submit">
@@ -94,23 +84,18 @@
                                 @Html.ActionLink("Back to List", "Index", null, htmlAttributes: new { @class = "btn btn-sm btn-primary pull-right m-t-n-xs" })
                             </div>
                         </div>
-
-
                     }
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-
 <script type="text/javascript">
     $(document).ready(
     function () {
         $('#StartDate').datepicker({
             changeMonth: true,
             changeYear: true,
-            minDate: "-15w",
             dateFormat: "dd-M-yy" /*format: 'dd-M-yyyy'*/
         });
 
@@ -123,14 +108,12 @@
 
         $("#frmMain").validate({
             rules: {
-                ProjectName     : {
+                ProjectId: { required: true },
+                PhaseName: {
                     minlength: 3,
                     maxlength: 250,
                     required: true
                 },
-                DivisionId      : { required: true },
-                AreaId          : { required: true },
-                ProjectType     : { required: true },
                 StartDate       : { required: true, date: true },
                 EndDate         : { required: true, date: true },
             },
@@ -148,23 +131,30 @@
     });
 
 
-    function FillArea       (obj) {
+    function FillProjectDetails(obj) {
         var sel = obj.options[obj.selectedIndex].value;
         if (sel == "") { return; }
 
-        var postedContent = { SelectedDivision: sel }
+        var postedContent = { SelectedProject : sel }
         $.ajax({
             type: "POST",
-            url: "/Project/GetAreaByDivision",
+            url: "/Phase/GetProjectDates",
             data: postedContent,
             success: function (message) {
                 var res = message.data;
-                $("#AreaId").empty()
-                if (res.length > 0) {
-                    for (var i = 0; i < message.data.length; i++) {
-                        $('#AreaId').append($('<option>', { value: message.data[i].AreaId, text: message.data[i].AreaName }));
-                    } // end of for loop
-                } // end of if for length
+
+                $("#PStartDate").empty()
+                $("#PEndDate").empty()
+                
+                
+                $("#PStartDate").val(parseJsonDate(res.StartDate));
+                $("#PEndDate").val(parseJsonDate(res.EndDate));
+
+
+                $('#StartDate').datepicker('destroy');
+                $('#EndDate').datepicker('destroy');
+
+                activateDatePickers();
             },
             error: function (xerr) {
                 /* $('#txteng').val("err : " +xerr);*/
@@ -173,32 +163,34 @@
 
     }
 
-    function FillSubArea    (obj) {
-        var sel     = obj.options[obj.selectedIndex].value;
-        var selText = obj.options[obj.selectedIndex].text
-        if (sel == "") { return; }
 
-        var postedContent = { SelectedArea: sel }
-        $.ajax({
-            type: "POST",
-            url: "/Project/GetSubAreaByArea",
-            data: postedContent,
-            success: function (message) {
-                var res = message.data;
-                $("#SubAreaId").empty()
-                if (res.length > 0) {
-                    for (var i = 0; i < message.data.length; i++) {
-                        $('#SubAreaId').append($('<option>', { value: message.data[i].SubAreaId, text: message.data[i].SubAreaName }));
-                    } // end of for loop
-                } // end of if for length
-                else {
-                    $('#SubAreaId').append($('<option>', { value: '', text: "No Sub Area For " + selText }));
-                }
-            },
-            error: function (xerr) {
-                /* $('#txteng').val("err : " +xerr);*/
-            }
+    function activateDatePickers() {
+        $("#StartDate").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            minDate: new Date($('#PStartDate').val()),
+            maxDate: new Date($('#PEndDate').val()),
+            dateFormat: "dd-M-yy" /*format: 'dd-M-yyyy'*/
         });
 
+        $("#EndDate").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            minDate: new Date($('#PStartDate').val()),
+            maxDate: new Date($('#PEndDate').val()),
+            dateFormat: "dd-M-yy" /*format: 'dd-M-yyyy'*/
+        });
+    }
+
+    function parseJsonDate(jsonDateString) {
+        var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+        jsonDateString = jsonDateString.replace('/Date(', '');
+        jsonDateString = jsonDateString.replace(')/', '');
+        var date = new Date(parseInt(jsonDateString));
+        var day = date.getDate();
+        var monthIndex = date.getMonth();
+        var year = date.getFullYear();
+        return day + "-" + monthNames[monthIndex] + "-" + year;
     }
 </script>

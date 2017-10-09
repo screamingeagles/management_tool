@@ -115,6 +115,8 @@ namespace ManagementTool.Common
             return q;
         }
 
+
+
         private static int GetUserRole          (int userid)                                
         {
             int role = 103;
@@ -169,7 +171,7 @@ namespace ManagementTool.Common
                 e.UserEmail = userid;
                 e.UserPassword = password;
                 e.IsValidLogin = true;
-                e.UserType = 0;
+                e.UserType = 103;
                 e.UserCreated = DateTime.Now;
                 e.LastLogin = DateTime.Now;
                 e.IsActive = true;
@@ -211,7 +213,6 @@ namespace ManagementTool.Common
             return sid;
         }
 
-
         public static int GetUserIdFromSession  (int Sessionid)                             
         {
             int ret = 0;
@@ -244,7 +245,6 @@ namespace ManagementTool.Common
             return r;
         }
 
- 
         public static bool IsNumeric            (string s)                                  
         {
             foreach (char c in s)
@@ -257,8 +257,51 @@ namespace ManagementTool.Common
 
             return true;
         }
-        
- 
+
+
+
+
+        public static string getSubArea         (int SubAreaId)                             {            
+
+            if (SubAreaId == 0) { return "N/A"; }
+            using (ProjectEntities db = new ProjectEntities())
+            {
+                var q = (from e in db.C003_SUB_AREA
+                         where (e.SubAreaId == SubAreaId)
+                         select e.SubAreaName).FirstOrDefault();
+                return q.ToString();
+            }
+            
+        }
+
+        public static string getProjectType     (int ProjectTypeId)                         
+        {
+
+            if (ProjectTypeId  == 0) { return "N/A"; }
+            using (ProjectEntities db = new ProjectEntities())
+            {
+                var q = (from e in db.C013_PROJECT_TYPE
+                         where (e.ProjectTypeId == ProjectTypeId)
+                         select e.ProjectType).FirstOrDefault();
+                return q.ToString();
+            }
+
+        }
+
+        public static string getSubPhase        (int SubPhaseId)                            
+        {
+
+            if (SubPhaseId == 0) { return "N/A"; }
+            using (ProjectEntities db = new ProjectEntities())
+            {
+                var q = (from e in db.C006_SubPhase
+                         where (e.SubPhaseId == SubPhaseId)
+                         select e.SubPhaseName).FirstOrDefault();
+                return q.ToString();
+            }
+
+        }
+
 
         public static List<SelectListItem>      GetTechnicianList   (int id)                {
 
@@ -295,7 +338,6 @@ namespace ManagementTool.Common
             return tech;
         }
 
-  
         public static DataTable GetDataTable    (string tablename, string sSQL)             
         {
             DataTable dt = new DataTable(tablename);
