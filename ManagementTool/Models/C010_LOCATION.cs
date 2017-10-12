@@ -14,10 +14,19 @@ namespace ManagementTool.Models
     
     public partial class C010_LOCATION
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public C010_LOCATION()
+        {
+            this.C008_TASK_DATA = new HashSet<C008_TASK_DATA>();
+        }
+    
         public int LocationId { get; set; }
         public string LocationName { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public System.DateTime CreatedDatetime { get; set; }
         public bool IsActive { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<C008_TASK_DATA> C008_TASK_DATA { get; set; }
     }
 }

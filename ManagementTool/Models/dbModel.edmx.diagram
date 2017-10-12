@@ -8,7 +8,6 @@
         <EntityTypeShape EntityType="ManagementTool.C002_AREA" Width="1.5" PointX="6" PointY="15.25" />
         <EntityTypeShape EntityType="ManagementTool.C003_SUB_AREA" Width="1.5" PointX="9.5" PointY="12.25" />
         <EntityTypeShape EntityType="ManagementTool.C006_SubPhase" Width="1.5" PointX="5.25" PointY="11.125" />
-        <EntityTypeShape EntityType="ManagementTool.C008_TASK_DATA" Width="1.875" PointX="3" PointY="12.5" />
         <EntityTypeShape EntityType="ManagementTool.C010_LOCATION" Width="1.75" PointX="2.875" PointY="0.5" />
         <EntityTypeShape EntityType="ManagementTool.C011_COMPANY" Width="1.5" PointX="10.625" PointY="15.25" />
         <EntityTypeShape EntityType="ManagementTool.C013_PROJECT_TYPE" Width="1.875" PointX="0.5" PointY="0.5" />
@@ -36,13 +35,6 @@
         <AssociationConnector Association="ManagementTool.FK__GeneratedBy__AREA" />
         <AssociationConnector Association="ManagementTool.FK__GeneratedBy__SUB_AREA" />
         <AssociationConnector Association="ManagementTool.FK_GeneratedBy__SubPhase" />
-        <AssociationConnector Association="ManagementTool.FK_Generated__TASK_DATA" />
-        <AssociationConnector Association="ManagementTool.FK_OwnerID__TASK_DATA" />
-        <AssociationConnector Association="ManagementTool.FK_STATUS__TASK_DATA" />
-        <AssociationConnector Association="ManagementTool.FK_TASK_DATA_Attachments" />
-        <AssociationConnector Association="ManagementTool.FK_TASK_DATA_coOwners" />
-        <AssociationConnector Association="ManagementTool.FK_TASK_DATA_CYCLED" />
-        <AssociationConnector Association="ManagementTool.FK_TASK_TYPE__TASK_DATA" />
         <AssociationConnector Association="ManagementTool.FK_Commiment__Master_Details" />
         <AssociationConnector Association="ManagementTool.FK_User__Commitment" />
         <AssociationConnector Association="ManagementTool.FK_Generated__Notification" />
@@ -65,8 +57,19 @@
         <AssociationConnector Association="ManagementTool.FK__PROJECT__BUCKET" />
         <AssociationConnector Association="ManagementTool.FK__PHASE__BUCKET" />
         <AssociationConnector Association="ManagementTool.FK__GeneratedBy__BUCKET" />
+        <EntityTypeShape EntityType="ManagementTool.C008_TASK_DATA" Width="1.875" PointX="21.125" PointY="9.375" />
         <AssociationConnector Association="ManagementTool.FK_BUCKET_TASK_DATA" />
-      </Diagram>
+        <AssociationConnector Association="ManagementTool.FK__COMPANY__TASK_DATA" />
+        <AssociationConnector Association="ManagementTool.FK__LOCATION__TASK_DATA" />
+        <AssociationConnector Association="ManagementTool.FK_Generated__TASK_DATA" />
+        <AssociationConnector Association="ManagementTool.FK_OwnerID__TASK_DATA" />
+        <AssociationConnector Association="ManagementTool.FK_STATUS__TASK_DATA" />
+        <AssociationConnector Association="ManagementTool.FK_TASK_DATA_Attachments" />
+        <AssociationConnector Association="ManagementTool.FK_TASK_DATA_coOwners" />
+        <AssociationConnector Association="ManagementTool.FK_TASK_DATA_CYCLED" />
+        <AssociationConnector Association="ManagementTool.FK_TASK_TYPE__TASK_DATA" />
+        <EntityTypeShape EntityType="ManagementTool.vw_Task_Details" Width="1.875" PointX="13.375" PointY="13.75" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

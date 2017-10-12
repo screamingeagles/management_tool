@@ -1,0 +1,58 @@
+﻿@model IEnumerable<ManagementTool.Models.C020_CommitmentMaster>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CommitmentHeader)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GeneratedBy)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GeneratedDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EndUser.UserName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.CommitmentHeader)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GeneratedBy)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GeneratedDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsActive)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EndUser.UserName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.CommitmentId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.CommitmentId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.CommitmentId })
+        </td>
+    </tr>
+}
+
+</table>

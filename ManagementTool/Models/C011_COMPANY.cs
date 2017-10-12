@@ -14,11 +14,20 @@ namespace ManagementTool.Models
     
     public partial class C011_COMPANY
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public C011_COMPANY()
+        {
+            this.C008_TASK_DATA = new HashSet<C008_TASK_DATA>();
+        }
+    
         public int CompanyId { get; set; }
         public int LocationId { get; set; }
         public string CompanyName { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public System.DateTime CreatedDatetime { get; set; }
         public bool IsActive { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<C008_TASK_DATA> C008_TASK_DATA { get; set; }
     }
 }

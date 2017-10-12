@@ -23,6 +23,8 @@ namespace ManagementTool.Models
         }
     
         public int TaskId { get; set; }
+        public int LocationId { get; set; }
+        public int CompanyId { get; set; }
         public int BucketId { get; set; }
         public int AreaId { get; set; }
         public int SubAreaId { get; set; }
@@ -37,10 +39,13 @@ namespace ManagementTool.Models
         public int GeneratedBy { get; set; }
         public System.DateTime GeneratedDate { get; set; }
         public string DocsLink { get; set; }
-        public int TypeId { get; set; }
+        public int TaskTypeId { get; set; }
         public int StatusId { get; set; }
         public bool IsActive { get; set; }
     
+        public virtual C007_BUCKET C007_BUCKET { get; set; }
+        public virtual C011_COMPANY C011_COMPANY { get; set; }
+        public virtual C010_LOCATION C010_LOCATION { get; set; }
         public virtual EndUser EndUser { get; set; }
         public virtual EndUser EndUser1 { get; set; }
         public virtual C015_STATUS C015_STATUS { get; set; }
@@ -51,6 +56,5 @@ namespace ManagementTool.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<C016_CYCLED> C016_CYCLED { get; set; }
         public virtual C014_TASK_TYPE C014_TASK_TYPE { get; set; }
-        public virtual C007_BUCKET C007_BUCKET { get; set; }
     }
 }
