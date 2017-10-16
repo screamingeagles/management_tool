@@ -59,7 +59,7 @@
                             </div>
                             <label class="col-lg-2 control-label">Select Sub Area</label>
                             <div class="col-lg-4">
-                                @Html.DropDownList("SubAreaId", null, "Select Sub Area", htmlAttributes: new { @class = "form-control m-b" })
+                                @Html.DropDownList("SSubAreaId", null, "Select Sub Area", htmlAttributes: new { @class = "form-control m-b" })
                             </div>
                         </div>
 
@@ -67,7 +67,7 @@
                         <div class="form-group">
                             <label class="col-lg-2 control-label">Project/Phase/Sub</label>
                             <div class="col-lg-10">
-                                <label class="form-control m-b" id="lblProjectDetails"></label>
+                                <label class="form-control m-b" id="lblProjectDetails">@ViewBag.BucketDetial</label>
                             </div>
                         </div>
 
@@ -260,15 +260,15 @@
 
 
                 var res = message.data;
-                $("#SubAreaId").prop("disabled", false);
-                $("#SubAreaId").empty();
+                $("#SSubAreaId").prop("disabled", false);
+                $("#SSubAreaId").empty();
                 if (res.length > 0) {
                     for (var i = 0; i < message.data.length; i++) {
-                        $('#SubAreaId').append($('<option>', { value: message.data[i].SubAreaId, text: message.data[i].SubAreaName }));
+                        $('#SSubAreaId').append($('<option>', { value: message.data[i].SubAreaId, text: message.data[i].SubAreaName }));
                     } // end of for loop
                 } // end of if for length
                 else {
-                    $('#SubAreaId').append($('<option>', { value: '', text: "No Sub Area For " + selText }));
+                    $('#SSubAreaId').append($('<option>', { value: '', text: "No Sub Area For " + selText }));
                 }
             },
             error: function (xerr) {

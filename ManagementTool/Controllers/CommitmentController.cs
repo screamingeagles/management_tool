@@ -12,15 +12,13 @@ namespace ManagementTool.Controllers
 {
     public class CommitmentController : Controller
     {
-        // check for 
         private ProjectEntities db = new ProjectEntities();
 
         // GET: Commitment
         public ActionResult Index()
         {
-            return RedirectToAction("Create");
-            //var c020_CommitmentMaster = db.C020_CommitmentMaster.Include(c => c.EndUser);
-            //return View(c020_CommitmentMaster.ToList());
+            var c020_CommitmentMaster = db.C020_CommitmentMaster.Include(c => c.EndUser);
+            return View(c020_CommitmentMaster.ToList());
         }
 
         // GET: Commitment/Details/5
@@ -50,7 +48,7 @@ namespace ManagementTool.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CommitmentId,UserId,CommitmentHeader,GeneratedBy,GeneratedDate,IsActive")] C020_CommitmentMaster c020_CommitmentMaster)
+        public ActionResult Create([Bind(Include = "CommitmentHeader")] C020_CommitmentMaster c020_CommitmentMaster)
         {
             if (ModelState.IsValid)
             {
@@ -84,7 +82,7 @@ namespace ManagementTool.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CommitmentId,UserId,CommitmentHeader,GeneratedBy,GeneratedDate,IsActive")] C020_CommitmentMaster c020_CommitmentMaster)
+        public ActionResult Edit([Bind(Include = "CommitmentHeader")] C020_CommitmentMaster c020_CommitmentMaster)
         {
             if (ModelState.IsValid)
             {

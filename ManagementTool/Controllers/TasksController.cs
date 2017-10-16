@@ -41,9 +41,10 @@ namespace ManagementTool.Controllers
                                         ProjectId   = p.ProjectId,
                                         PhaseName   = ph.PhaseName,
                                         PhaseId     = ph.PhaseId,
-                                        SubPhaseName = (z.SubPhaseName == null) ? "" : z.SubPhaseName }).FirstOrDefault();
-                                    
-                return Json(new { data = q.ProjectName + "(" + q.ProjectId + ") >> " + q.PhaseName + "(" +  q.PhaseId + ") >> " + q.SubPhaseName });
+                                        SubPhaseName = (z.SubPhaseName == null) ? "" : z.SubPhaseName,
+                                        StartDate = ph.StartDate, EndDate = ph.EndDate}).FirstOrDefault();
+                
+                return Json(new { data = q.ProjectName + "(" + q.ProjectId + ") >> " + q.PhaseName + "(" +  q.PhaseId + ") >> " + q.SubPhaseName, StartDate = q.StartDate, EndDate = q.EndDate});
             }
         }
 
@@ -103,8 +104,22 @@ namespace ManagementTool.Controllers
 
             ViewBag.LocationId  = new SelectList(db.C010_LOCATION,  "LocationId",   "LocationName");
             ViewBag.CompanyId   = new SelectList(db.C011_COMPANY,   "CompanyId",    "CompanyName");
-            ViewBag.AreaId      = new SelectList(db.C002_AREA,      "AreaId",       "AreaName");
-            ViewBag.SubAreaId   = new SelectList(db.C003_SUB_AREA,  "SubAreaId",    "SubAreaName");
+
+ 
+            var area = (from a in db.C002_AREA join
+                         d in db.C001_DIVISION on a.DivisionId equals d.DivisionId
+                         where ((a.isActive == true) && (d.IsActive == true))
+                         select new { a, d }).OrderBy(x => x.d.DivisionName).ThenBy(x => x.a.AreaName).AsEnumerable()
+                         .Select(x => new {
+                             AreaId = x.a.AreaId,
+                             DivId = x.a.DivisionId,
+                             AreaName = x.a.AreaName,
+                             DivName  = x.d.DivisionName,
+                             Description = string.Format("{0} -- {1}", x.d.DivisionName, x.a.AreaName)
+                         });
+
+            ViewBag.AreaId      = new SelectList(area            ,  "AreaId"    ,    "Description");
+            ViewBag.SSubAreaId  = new SelectList(db.C003_SUB_AREA,  "SubAreaId",    "SubAreaName");
             //SSubAreaId
 
             ViewBag.BucketId    = new SelectList(db.C007_BUCKET,    "BucketId",     "Name");
@@ -122,7 +137,7 @@ namespace ManagementTool.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "LocationId,CompanyId,BucketId,AreaId,SubAreaId,SSubAreaId,SName,Description,StartDate,Deadline,ManDays,OwnerId,DocsLink,TaskTypeId,StatusId")] C008_TASK_DATA c008_TASK_DATA)
+        public ActionResult Create([Bind(Include = "LocationId,CompanyId,BucketId,AreaId,SSubAreaId,SName,Description,StartDate,Deadline,ManDays,OwnerId,DocsLink,TaskTypeId,StatusId")] C008_TASK_DATA c008_TASK_DATA)
         {
             if (c008_TASK_DATA.SName != "") //(ModelState.IsValid)
             {
@@ -138,8 +153,19 @@ namespace ManagementTool.Controllers
 
             ViewBag.LocationId  = new SelectList(db.C010_LOCATION   , "LocationId"  , "LocationName", c008_TASK_DATA.LocationId);
             ViewBag.CompanyId   = new SelectList(db.C011_COMPANY    , "CompanyId"   , "CompanyName" , c008_TASK_DATA.CompanyId);
-            ViewBag.AreaId      = new SelectList(db.C002_AREA       , "AreaId"      , "AreaName"    , c008_TASK_DATA.AreaId);
-            ViewBag.SubAreaId   = new SelectList(db.C003_SUB_AREA   , "SubAreaId"   , "SubAreaName" , c008_TASK_DATA.SubAreaId);
+            var area = (from a in db.C002_AREA join 
+                        d in db.C001_DIVISION on a.DivisionId equals d.DivisionId
+                            where ((a.isActive == true) && (d.IsActive == true))
+                            select new { a, d }).OrderBy(x => x.d.DivisionName).ThenBy(x => x.a.AreaName).AsEnumerable()
+                            .Select(x => new {
+                              AreaId = x.a.AreaId,
+                              DivId = x.a.DivisionId,
+                              AreaName = x.a.AreaName,
+                              DivName = x.d.DivisionName,
+                              Description = string.Format("{0} -- {1}", x.d.DivisionName, x.a.AreaName)
+                          });
+            ViewBag.AreaId      = new SelectList(area               , "AreaId"      , "Description" , c008_TASK_DATA.AreaId);
+            ViewBag.SubAreaId   = new SelectList(db.C003_SUB_AREA   , "SubAreaId"   , "SubAreaName" , c008_TASK_DATA.SSubAreaId);
 
 
             ViewBag.BucketId    = new SelectList(db.C007_BUCKET     , "BucketId"    , "Name"        , c008_TASK_DATA.BucketId);            
@@ -166,15 +192,27 @@ namespace ManagementTool.Controllers
 
             ViewBag.LocationId  = new SelectList(db.C010_LOCATION   , "LocationId"  , "LocationName", c008_TASK_DATA.LocationId);
             ViewBag.CompanyId   = new SelectList(db.C011_COMPANY    , "CompanyId"   , "CompanyName" , c008_TASK_DATA.CompanyId);
-            ViewBag.AreaId      = new SelectList(db.C002_AREA       , "AreaId"      , "AreaName"    , c008_TASK_DATA.AreaId);
-            ViewBag.SubAreaId   = new SelectList(db.C003_SUB_AREA   , "SubAreaId"   , "SubAreaName" , c008_TASK_DATA.SubAreaId);
 
-
+            var area = (from a in db.C002_AREA
+                        join d in db.C001_DIVISION on a.DivisionId equals d.DivisionId
+                        where ((a.isActive == true) && (d.IsActive == true))
+                        select new { a, d }).OrderBy(x => x.d.DivisionName).ThenBy(x => x.a.AreaName).AsEnumerable()
+                            .Select(x => new
+                            {
+                                AreaId = x.a.AreaId,
+                                DivId = x.a.DivisionId,
+                                AreaName = x.a.AreaName,
+                                DivName = x.d.DivisionName,
+                                Description = string.Format("{0} -- {1}", x.d.DivisionName, x.a.AreaName)
+                            });
+            ViewBag.AreaId      = new SelectList(area               , "AreaId"      , "Description" , c008_TASK_DATA.AreaId);
+            ViewBag.SSubAreaId  = new SelectList(db.C003_SUB_AREA   , "SubAreaId"   , "SubAreaName" , c008_TASK_DATA.SSubAreaId);
             ViewBag.BucketId    = new SelectList(db.C007_BUCKET     , "BucketId"    , "Name"        , c008_TASK_DATA.BucketId);
             ViewBag.OwnerId     = new SelectList(db.EndUsers        , "UID"         , "UserName"    , c008_TASK_DATA.OwnerId);
             ViewBag.StatusId    = new SelectList(db.C015_STATUS     , "StatusId"    , "TaskStatus"  , c008_TASK_DATA.StatusId);
             ViewBag.TaskTypeId  = new SelectList(db.C014_TASK_TYPE  , "TypeId"      , "TypeName"    , c008_TASK_DATA.TaskTypeId);
 
+            ViewBag.BucketDetial = Bhai.GetBucketDetail(c008_TASK_DATA.BucketId);
             ViewBag.UserName    = UserIdentity.UserName;
             return View(c008_TASK_DATA);
         }
@@ -184,7 +222,7 @@ namespace ManagementTool.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "TaskId,LocationId,CompanyId,BucketId,AreaId,SubAreaId,SSubAreaId,SName,Description,StartDate,Deadline,OrderId,ManDays,OwnerId,DocsLink,TaskTypeId,StatusId")] C008_TASK_DATA c008_TASK_DATA)
+        public ActionResult Edit([Bind(Include = "TaskId,LocationId,CompanyId,BucketId,AreaId,SSubAreaId,SSubAreaId,SName,Description,StartDate,Deadline,OrderId,ManDays,OwnerId,DocsLink,TaskTypeId,StatusId")] C008_TASK_DATA c008_TASK_DATA)
         {
             if (ModelState.IsValid)
             {

@@ -49,7 +49,7 @@
                             </div>
                             <label class="col-lg-2 control-label">Select Sub Area</label>
                             <div class="col-lg-4">
-                                @Html.DropDownList("SubAreaId", null, "Select Sub Area", htmlAttributes: new { @class = "form-control m-b", @disabled = "disabled" })
+                                @Html.DropDownList("SSubAreaId", null, "Select Sub Area", htmlAttributes: new { @class = "form-control m-b", @disabled = "disabled" })
                             </div>
                         </div>
 
@@ -263,15 +263,15 @@
 
 
                 var res = message.data;
-                $("#SubAreaId").prop("disabled", false);
-                $("#SubAreaId").empty();
+                $("#SSubAreaId").prop("disabled", false);
+                $("#SSubAreaId").empty();
                 if (res.length > 0) {
                     for (var i = 0; i < message.data.length; i++) {
-                        $('#SubAreaId').append($('<option>', { value: message.data[i].SubAreaId, text: message.data[i].SubAreaName }));
+                        $('#SSubAreaId').append($('<option>', { value: message.data[i].SubAreaId, text: message.data[i].SubAreaName }));
                     } // end of for loop
                 } // end of if for length
                 else {
-                    $('#SubAreaId').append($('<option>', { value: '', text: "No Sub Area For " + selText }));
+                    $('#SSubAreaId').append($('<option>', { value: '', text: "No Sub Area For " + selText }));
                 }
             },
             error: function (xerr) {
@@ -295,15 +295,58 @@
             url: "/Tasks/GetBucketDetails",
             data: postedContent,
             success: function (message) {
-                var res = message.data;                
+                var res = message.data;
+                var st = message.StartDate;
+                var ed = message.EndDate;
+
                 var hld = document.getElementById("lblProjectDetails");
-                hld.innerHTML=res;
+                hld.innerHTML = res;
+
+
+                $('#StartDate').datepicker('destroy');
+                $('#Deadline').datepicker('destroy');
+                ReActivateDatePickers(st, ed);
+                
             },
             error: function (xerr) {
                 /* $('#txteng').val("err : " +xerr);*/
             }
         });
 
+    }
+
+    function ReActivateDatePickers(StartDate, EndDate) {
+        //alert(StartDate + " < - > " + EndDate);
+
+        $("#StartDate").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            minDate: new Date(StartDate),
+            maxDate: new Date(EndDate),
+            dateFormat: "dd-M-yy" /*format: 'dd-M-yyyy'*/
+        });
+
+        $("#Deadline").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            minDate: new Date(StartDate),
+            maxDate: new Date(EndDate),
+            dateFormat: "dd-M-yy" /*format: 'dd-M-yyyy'*/
+        });
+
+
+    }
+
+    function parseJsonDate(jsonDateString) {
+        var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+        jsonDateString = jsonDateString.replace('/Date(', '');
+        jsonDateString = jsonDateString.replace(')/', '');
+        var date = new Date(parseInt(jsonDateString));
+        var day = date.getDate();
+        var monthIndex = date.getMonth();
+        var year = date.getFullYear();
+        return day + "-" + monthNames[monthIndex] + "-" + year;
     }
 </script>
 
