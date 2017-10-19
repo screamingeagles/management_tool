@@ -1,70 +1,164 @@
-﻿@model ManagementTool.Models.C020_CommitmentMaster
+﻿@model IEnumerable<ManagementTool.Helpers.commitment_service>
 
 @{
+    int index = 1;
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Create</h2>
-
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>C020_CommitmentMaster</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.UserId, "UserId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("UserId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.UserId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.CommitmentHeader, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CommitmentHeader, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CommitmentHeader, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.GeneratedBy, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.GeneratedBy, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.GeneratedBy, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.GeneratedDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.GeneratedDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.GeneratedDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.IsActive)
-                    @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+<br />
+<div class="row">
+    <div class="col-md-10 col-xs-offset-1">
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">List Your Commitments</h3>
+                <div class="box-tools pull-right">
+                    <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
                 </div>
-            </div>
-        </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <div class="box-body">
+                    <div class="table-responsive">
+                        <table class="table no-margin" id="tblCommitments">
+
+                            <thead>
+                                <tr style="vertical-align:top!important; text-align:center;">
+                                    <th style="text-align:center; width:5%;"> S. No             </th>
+                                    <th style="text-align:center; width:30%;"> Commitment       </th>
+                                    <th style="text-align:center; width:25%;"> Description      </th>
+                                    <th style="text-align:center; width:25%;"> Manager Remarks  </th>
+                                    <th style="text-align:center; width:10%;"> Date Created      </th>
+                                    <th style="text-align:center; width:5%;"> Action            </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                             @foreach (var outer in Model){
+                              <tr style="font-size:9pt;">
+                                <td>@index</td>
+                                <td>@outer.CommitmentHeading</td>                                     
+                              </tr>
+
+                              index = index + 1;
+                            }
+                            </tbody>
+                            <tfoot>
+                                <tr style="font-size:9pt;">
+                               
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <!-- /.table-responsive -->
+                </div>
+
             </div>
+            <div class="box-footer clearfix"> &nbsp; </div>
         </div>
     </div>
+</div>
+
+
+<script type="text/javascript">
+$(document).ready(
+function () {
+    $('#StartDate').datepicker({
+        changeMonth: true,
+        changeYear: true,
+        minDate: "-15w",
+        dateFormat: "dd-M-yy" /*format: 'dd-M-yyyy'*/
+    });
+
+    $('#Deadline').datepicker({
+        changeMonth: true,
+        changeYear: true,
+        numberOfMonths: 1,
+        dateFormat: "dd-M-yy"
+    });
+
+    $("#frmMain").validate({
+        rules: {
+            StartDate: { required: true },
+            Deadline: { required: true },
+            SName: {
+                minlength: 3,
+                maxlength: 250,
+                required: true
+            },
+            LocationId: { required: true },
+            CompanyId: { required: true },
+            AreaId: { required: true },
+            BucketId: { required: true },
+            TaskTypeId: { required: true },
+            StatusId: { required: true },
+        },
+        highlight: function (element) {
+            $(element).closest('.control-group').addClass('has-error');
+        },
+        unhighlight: function (element) {
+            $(element).closest('.control-group').removeClass('has-error');
+        },
+        submitHandler: function (form) { // for demo
+            form.submit();
+            return false;
+        }
+    });
+});
+
+
+function ReActivateDatePickers(StartDate, EndDate) {
+    //alert(StartDate + " < - > " + EndDate);
+
+    $("#StartDate").datepicker({
+        changeMonth: true,
+        changeYear: true,
+        minDate: new Date(StartDate),
+        maxDate: new Date(EndDate),
+        dateFormat: "dd-M-yy" /*format: 'dd-M-yyyy'*/
+    });
+
+    $("#Deadline").datepicker({
+        changeMonth: true,
+        changeYear: true,
+        minDate: new Date(StartDate),
+        maxDate: new Date(EndDate),
+        dateFormat: "dd-M-yy" /*format: 'dd-M-yyyy'*/
+    });
+
+
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+function parseJsonDate(jsonDateString) {
+    var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+    jsonDateString = jsonDateString.replace('/Date(', '');
+    jsonDateString = jsonDateString.replace(')/', '');
+    var date = new Date(parseInt(jsonDateString));
+    var day = date.getDate();
+    var monthIndex = date.getMonth();
+    var year = date.getFullYear();
+    return day + "-" + monthNames[monthIndex] + "-" + year;
+}
+
+$(document).ready(function () {
+    $("#btnSave").click(function () {
+        $.ajax(
+        {
+            type: "POST", //HTTP POST Method
+            url: "/Commitment/AddCommitment", // Controller/View
+            data: { //Passing data
+                CommitmentName: $("#txtmyCommitment").val(), //Reading text box values using Jquery
+                Description: $("#txtmyDescription").val(),
+                ManagerRemarks: $("#txtManagerRemarks").val(),
+                CommitmentId: $("#CommitmentId").val()
+
+            }
+
+        });
+
+    });
+});
+</script>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

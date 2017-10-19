@@ -17,6 +17,8 @@ namespace ManagementTool.Models
         public int DetailId { get; set; }
         public int CommitmentId { get; set; }
         public string CommimentName { get; set; }
+        public string CDescription { get; set; }
+        public string CRemarks { get; set; }
         public Nullable<int> ProjectId { get; set; }
         public Nullable<int> TaskId { get; set; }
         public int GeneratedBy { get; set; }

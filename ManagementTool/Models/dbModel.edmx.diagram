@@ -17,8 +17,7 @@
         <EntityTypeShape EntityType="ManagementTool.C017_MEETING" Width="1.875" PointX="15" PointY="3.875" />
         <EntityTypeShape EntityType="ManagementTool.C018_coOwners" Width="1.5" PointX="5.25" PointY="8" />
         <EntityTypeShape EntityType="ManagementTool.C019_Attachments" Width="2.125" PointX="6.125" PointY="25.875" />
-        <EntityTypeShape EntityType="ManagementTool.C020_CommitmentMaster" Width="1.875" PointX="2.875" PointY="22.375" />
-        <EntityTypeShape EntityType="ManagementTool.C021_CommimentDetails" Width="2" PointX="5.25" PointY="22.25" />
+        <EntityTypeShape EntityType="ManagementTool.C020_CommitmentMaster" Width="2.375" PointX="1.875" PointY="22.5" />
         <EntityTypeShape EntityType="ManagementTool.C022_Notification_Master" Width="2.375" PointX="3" PointY="29.25" />
         <EntityTypeShape EntityType="ManagementTool.C023_Notification_Detail" Width="2.125" PointX="8.25" PointY="20.375" />
         <EntityTypeShape EntityType="ManagementTool.EndUser" Width="1.5" PointX="0.75" PointY="11.25" />
@@ -35,7 +34,6 @@
         <AssociationConnector Association="ManagementTool.FK__GeneratedBy__AREA" />
         <AssociationConnector Association="ManagementTool.FK__GeneratedBy__SUB_AREA" />
         <AssociationConnector Association="ManagementTool.FK_GeneratedBy__SubPhase" />
-        <AssociationConnector Association="ManagementTool.FK_Commiment__Master_Details" />
         <AssociationConnector Association="ManagementTool.FK_User__Commitment" />
         <AssociationConnector Association="ManagementTool.FK_Generated__Notification" />
         <AssociationConnector Association="ManagementTool.FK_Notification__Master_Detail" />
@@ -69,6 +67,8 @@
         <AssociationConnector Association="ManagementTool.FK_TASK_DATA_CYCLED" />
         <AssociationConnector Association="ManagementTool.FK_TASK_TYPE__TASK_DATA" />
         <EntityTypeShape EntityType="ManagementTool.vw_Task_Details" Width="1.875" PointX="13.375" PointY="13.75" />
+        <EntityTypeShape EntityType="ManagementTool.C021_CommimentDetails" Width="2.5" PointX="9.25" PointY="23.25" />
+        <AssociationConnector Association="ManagementTool.FK_Commiment__Master_Details" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

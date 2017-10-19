@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using ManagementTool.Models;
+using ManagementTool.Helpers;
 
 namespace ManagementTool.Controllers
 {
@@ -39,8 +40,9 @@ namespace ManagementTool.Controllers
         // GET: Commitment/Create
         public ActionResult Create()
         {
-            ViewBag.UserId = new SelectList(db.EndUsers, "UID", "UserName");
-            return View();
+            List<commitment_service> cs = commitment_service.GetUserCommitment(1020);
+            ViewBag.CommitmentId = new SelectList(db.C020_CommitmentMaster.Where(x=>x.IsActive ==true).OrderBy(x => x.CommitmentHeader), "CommitmentId", "CommimentName");
+            return View(cs);
         }
 
         // POST: Commitment/Create

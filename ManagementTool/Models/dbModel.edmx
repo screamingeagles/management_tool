@@ -239,7 +239,9 @@
           </Key>
           <Property Name="DetailId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CommitmentId" Type="int" Nullable="false" />
-          <Property Name="CommimentName" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="CommimentName" Type="nvarchar" MaxLength="900" Nullable="false" />
+          <Property Name="CDescription" Type="nvarchar" MaxLength="900" />
+          <Property Name="CRemarks" Type="nvarchar" MaxLength="900" />
           <Property Name="ProjectId" Type="int" />
           <Property Name="TaskId" Type="int" />
           <Property Name="GeneratedBy" Type="int" Nullable="false" />
@@ -420,6 +422,7 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
             <PropertyRef Name="AreaId" />
             <PropertyRef Name="AreaName" />
             <PropertyRef Name="SubAreaId" />
+            
             <PropertyRef Name="SName" />
             <PropertyRef Name="OwnerId" />
             <PropertyRef Name="OwnerName" />
@@ -450,7 +453,7 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
           <Property Name="AreaId" Type="int" Nullable="false" />
           <Property Name="AreaName" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="SubAreaId" Type="int" Nullable="false" />
-          <Property Name="SubAreaName" Type="nvarchar" MaxLength="250" />
+          <Property Name="SubAreaName" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="SName" Type="nvarchar" MaxLength="900" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="900" />
           <Property Name="StartDate" Type="datetime" />
@@ -1100,7 +1103,6 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
           <EntitySet Name="C018_coOwners" EntityType="ManagementTool.C018_coOwners" />
           <EntitySet Name="C019_Attachments" EntityType="ManagementTool.C019_Attachments" />
           <EntitySet Name="C020_CommitmentMaster" EntityType="ManagementTool.C020_CommitmentMaster" />
-          <EntitySet Name="C021_CommimentDetails" EntityType="ManagementTool.C021_CommimentDetails" />
           <EntitySet Name="C022_Notification_Master" EntityType="ManagementTool.C022_Notification_Master" />
           <EntitySet Name="C023_Notification_Detail" EntityType="ManagementTool.C023_Notification_Detail" />
           <EntitySet Name="EndUsers" EntityType="ManagementTool.EndUser" />
@@ -1128,10 +1130,6 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
           <AssociationSet Name="FK_GeneratedBy__SubPhase" Association="ManagementTool.FK_GeneratedBy__SubPhase">
             <End Role="EndUser" EntitySet="EndUsers" />
             <End Role="C006_SubPhase" EntitySet="C006_SubPhase" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Commiment__Master_Details" Association="ManagementTool.FK_Commiment__Master_Details">
-            <End Role="C020_CommitmentMaster" EntitySet="C020_CommitmentMaster" />
-            <End Role="C021_CommimentDetails" EntitySet="C021_CommimentDetails" />
           </AssociationSet>
           <AssociationSet Name="FK_User__Commitment" Association="ManagementTool.FK_User__Commitment">
             <End Role="EndUser" EntitySet="EndUsers" />
@@ -1248,6 +1246,11 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
             <End Role="C008_TASK_DATA" EntitySet="C008_TASK_DATA" />
           </AssociationSet>
           <EntitySet Name="vw_Task_Details" EntityType="ManagementTool.vw_Task_Details" />
+          <EntitySet Name="C021_CommimentDetails" EntityType="ManagementTool.C021_CommimentDetails" />
+          <AssociationSet Name="FK_Commiment__Master_Details" Association="ManagementTool.FK_Commiment__Master_Details">
+            <End Role="C020_CommitmentMaster" EntitySet="C020_CommitmentMaster" />
+            <End Role="C021_CommimentDetails" EntitySet="C021_CommimentDetails" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="C002_AREA">
           <Key>
@@ -1415,22 +1418,8 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
           <Property Name="GeneratedBy" Type="Int32" />
           <Property Name="GeneratedDate" Type="DateTime" Precision="3" />
           <Property Name="IsActive" Type="Boolean" />
-          <NavigationProperty Name="C021_CommimentDetails" Relationship="ManagementTool.FK_Commiment__Master_Details" FromRole="C020_CommitmentMaster" ToRole="C021_CommimentDetails" />
           <NavigationProperty Name="EndUser" Relationship="ManagementTool.FK_User__Commitment" FromRole="C020_CommitmentMaster" ToRole="EndUser" />
-        </EntityType>
-        <EntityType Name="C021_CommimentDetails">
-          <Key>
-            <PropertyRef Name="DetailId" />
-          </Key>
-          <Property Name="DetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CommitmentId" Type="Int32" Nullable="false" />
-          <Property Name="CommimentName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="ProjectId" Type="Int32" />
-          <Property Name="TaskId" Type="Int32" />
-          <Property Name="GeneratedBy" Type="Int32" Nullable="false" />
-          <Property Name="GeneratedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="C020_CommitmentMaster" Relationship="ManagementTool.FK_Commiment__Master_Details" FromRole="C021_CommimentDetails" ToRole="C020_CommitmentMaster" />
+          <NavigationProperty Name="C021_CommimentDetails" Relationship="ManagementTool.FK_Commiment__Master_Details" FromRole="C020_CommitmentMaster" ToRole="C021_CommimentDetails" />
         </EntityType>
         <EntityType Name="C022_Notification_Master">
           <Key>
@@ -1643,18 +1632,6 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
             </Principal>
             <Dependent Role="C006_SubPhase">
               <PropertyRef Name="GeneratedBy" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Commiment__Master_Details">
-          <End Type="ManagementTool.C020_CommitmentMaster" Role="C020_CommitmentMaster" Multiplicity="1" />
-          <End Type="ManagementTool.C021_CommimentDetails" Role="C021_CommimentDetails" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="C020_CommitmentMaster">
-              <PropertyRef Name="CommitmentId" />
-            </Principal>
-            <Dependent Role="C021_CommimentDetails">
-              <PropertyRef Name="CommitmentId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2150,7 +2127,7 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
           <Property Name="AreaId" Type="Int32" Nullable="false" />
           <Property Name="AreaName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="SubAreaId" Type="Int32" Nullable="false" />
-          <Property Name="SubAreaName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="SubAreaName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="SName" Type="String" Nullable="false" MaxLength="900" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" MaxLength="900" FixedLength="false" Unicode="true" />
           <Property Name="StartDate" Type="DateTime" Precision="3" />
@@ -2169,6 +2146,34 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
           <Property Name="TaskStatus" Type="String" Nullable="false" MaxLength="700" FixedLength="false" Unicode="true" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
         </EntityType>
+        <EntityType Name="C021_CommimentDetails">
+          <Key>
+            <PropertyRef Name="DetailId" />
+          </Key>
+          <Property Name="DetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CommitmentId" Type="Int32" Nullable="false" />
+          <Property Name="CommimentName" Type="String" Nullable="false" MaxLength="900" FixedLength="false" Unicode="true" />
+          <Property Name="CDescription" Type="String" MaxLength="900" FixedLength="false" Unicode="true" />
+          <Property Name="CRemarks" Type="String" MaxLength="900" FixedLength="false" Unicode="true" />
+          <Property Name="ProjectId" Type="Int32" />
+          <Property Name="TaskId" Type="Int32" />
+          <Property Name="GeneratedBy" Type="Int32" Nullable="false" />
+          <Property Name="GeneratedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="C020_CommitmentMaster" Relationship="ManagementTool.FK_Commiment__Master_Details" FromRole="C021_CommimentDetails" ToRole="C020_CommitmentMaster" />
+        </EntityType>
+        <Association Name="FK_Commiment__Master_Details">
+          <End Type="ManagementTool.C020_CommitmentMaster" Role="C020_CommitmentMaster" Multiplicity="1" />
+          <End Type="ManagementTool.C021_CommimentDetails" Role="C021_CommimentDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="C020_CommitmentMaster">
+              <PropertyRef Name="CommitmentId" />
+            </Principal>
+            <Dependent Role="C021_CommimentDetails">
+              <PropertyRef Name="CommitmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2336,20 +2341,6 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
                 <ScalarProperty Name="CommitmentHeader" ColumnName="CommitmentHeader" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="CommitmentId" ColumnName="CommitmentId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="C021_CommimentDetails">
-            <EntityTypeMapping TypeName="ManagementTool.C021_CommimentDetails">
-              <MappingFragment StoreEntitySet="021_CommimentDetails">
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="GeneratedDate" ColumnName="GeneratedDate" />
-                <ScalarProperty Name="GeneratedBy" ColumnName="GeneratedBy" />
-                <ScalarProperty Name="TaskId" ColumnName="TaskId" />
-                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
-                <ScalarProperty Name="CommimentName" ColumnName="CommimentName" />
-                <ScalarProperty Name="CommitmentId" ColumnName="CommitmentId" />
-                <ScalarProperty Name="DetailId" ColumnName="DetailId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2647,6 +2638,22 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
                 <ScalarProperty Name="LocationName" ColumnName="LocationName" />
                 <ScalarProperty Name="LocationId" ColumnName="LocationId" />
                 <ScalarProperty Name="TaskId" ColumnName="TaskId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="C021_CommimentDetails">
+            <EntityTypeMapping TypeName="ManagementTool.C021_CommimentDetails">
+              <MappingFragment StoreEntitySet="021_CommimentDetails">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="GeneratedDate" ColumnName="GeneratedDate" />
+                <ScalarProperty Name="GeneratedBy" ColumnName="GeneratedBy" />
+                <ScalarProperty Name="TaskId" ColumnName="TaskId" />
+                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+                <ScalarProperty Name="CRemarks" ColumnName="CRemarks" />
+                <ScalarProperty Name="CDescription" ColumnName="CDescription" />
+                <ScalarProperty Name="CommimentName" ColumnName="CommimentName" />
+                <ScalarProperty Name="CommitmentId" ColumnName="CommitmentId" />
+                <ScalarProperty Name="DetailId" ColumnName="DetailId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
