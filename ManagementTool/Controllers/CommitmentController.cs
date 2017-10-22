@@ -21,8 +21,9 @@ namespace ManagementTool.Controllers
         // GET: Commitment
         public ActionResult Index()
         {
-            var c020_CommitmentMaster = db.C020_CommitmentMaster.Include(c => c.EndUser);
-            return View(c020_CommitmentMaster.ToList());
+            return RedirectToAction("Create");
+            //var c020_CommitmentMaster = db.C020_CommitmentMaster.Include(c => c.EndUser);
+            //return View(c020_CommitmentMaster.ToList());
         }
 
         // GET: Commitment/Details/5

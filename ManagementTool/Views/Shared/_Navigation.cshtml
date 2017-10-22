@@ -41,6 +41,7 @@
             <li class="">
                 <a href="@Url.Action("Welcome",  "Home")"><i class="fa fa-th-large"></i> <span class="nav-label">Master Templates</span> <span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse" style="height: 0px;">
+                    <li @(mycontroller.Equals("Division") ? "class=active" : "")> <a href="@Url.Action("Index",  "Commitment")">Commitment  </a></li>
                     <li @(mycontroller.Equals("Division")   ? "class=active":"")> <a href="@Url.Action("Index",  "Division")" >Division   </a></li>
                     <li  @(mycontroller.Equals("Area")      ? "class=active":"")> <a href="@Url.Action("Index",  "Area")"     >Area       </a></li>
                     <li  @(mycontroller.Equals("SubArea")   ? "class=active":"")> <a href="@Url.Action("Index",  "SubArea")"  >Sub Area   </a></li>
@@ -52,6 +53,7 @@
                     <li @(mycontroller.Equals("Project")    ? "class=active" : "")> <a href="@Url.Action("Index",  "Project")" >Project     </a></li>
                     <li @(mycontroller.Equals("Phase")      ? "class=active" : "")> <a href="@Url.Action("Index",  "Phase")"   >Phase       </a></li>
                     <li @(mycontroller.Equals("SubPhase")   ? "class=active" : "")> <a href="@Url.Action("Index",  "SubPhase")">Sub Phase   </a></li>                    
+                    <li @(mycontroller.Equals("Bucket")     ? "class=active" : "")> <a href="@Url.Action("Index",  "Bucket")"  >Bucket      </a></li>
                 </ul>
             </li>
 
