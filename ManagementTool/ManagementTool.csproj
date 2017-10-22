@@ -896,6 +896,8 @@
     <Content Include="Views\Commitment\Details.cshtml" />
     <Content Include="Views\Commitment\Edit.cshtml" />
     <Content Include="Views\Commitment\Index.cshtml" />
+    <None Include="Properties\PublishProfiles\rttmanagementtool - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\rttmanagementtool - Web Deploy.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

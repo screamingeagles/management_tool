@@ -6,159 +6,137 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+
 <br />
+
 <div class="row">
-    <div class="col-md-10 col-xs-offset-1">
-        <div class="box box-primary">
-            <div class="box-header with-border">
-                <h3 class="box-title">List Your Commitments</h3>
-                <div class="box-tools pull-right">
-                    <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                    <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+    <div class="col-lg-10 col-lg-offset-1">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Commitment For @ViewBag.UserName</h5>
+                <div class="ibox-tools">
+                    <a class="collapse-link">
+                        <i class="fa fa-chevron-up"></i>
+                    </a>
+                    <a class="close-link">
+                        <i class="fa fa-times"></i>
+                    </a>
                 </div>
-
-                <div class="box-body">
-                    <div class="table-responsive">
-                        <table class="table no-margin" id="tblCommitments">
-
-                            <thead>
-                                <tr style="vertical-align:top!important; text-align:center;">
-                                    <th style="text-align:center; width:5%;"> S. No             </th>
-                                    <th style="text-align:center; width:30%;"> Commitment       </th>
-                                    <th style="text-align:center; width:25%;"> Description      </th>
-                                    <th style="text-align:center; width:25%;"> Manager Remarks  </th>
-                                    <th style="text-align:center; width:10%;"> Date Created      </th>
-                                    <th style="text-align:center; width:5%;"> Action            </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                             @foreach (var outer in Model){
-                              <tr style="font-size:9pt;">
-                                <td>@index</td>
-                                <td>@outer.CommitmentHeading</td>                                     
-                              </tr>
-
-                              index = index + 1;
-                            }
-                            </tbody>
-                            <tfoot>
-                                <tr style="font-size:9pt;">
-                               
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>
-                    <!-- /.table-responsive -->
-                </div>
-
             </div>
-            <div class="box-footer clearfix"> &nbsp; </div>
+            <div class="ibox-content">
+                <div class="table-responsive">
+                    @using (Html.BeginForm("Create", "Division", FormMethod.Post, new { id = "frmMain" }))
+                    {
+                        @Html.AntiForgeryToken();
+
+                        foreach (var outer in Model) {
+                            <!-- / Commitment Header Comes here -->
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Commitment Heading</label>
+                                <div class="col-lg-9">
+                                    <label class="form-control m-b" id="lblCommitmentHeader">@outer.CommitmentHeading</label>
+                                </div>
+                            </div>
+
+                            <!-- / Commitment Details Comes here -->
+                            <div class="form-group">
+                                <table class="table no-margin" id="tblCommitments">
+
+                                    <thead>
+                                        <tr style="vertical-align:top!important; text-align:center;">
+                                            <th style="text-align:center; width:5%;"> S. No             </th>
+                                            <th style="text-align:center; width:30%;"> Commitment       </th>
+                                            <th style="text-align:center; width:25%;"> Description      </th>
+                                            <th style="text-align:center; width:25%;"> Manager Remarks  </th>
+                                            <th style="text-align:center; width:10%;"> Date Created      </th>
+                                            <th style="text-align:center; width:5%;"> Created By</th>
+                                            <th style="text-align:center; width:5%;"> Action            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach (var inner in outer.lst)
+                                    {
+                                    <tr style="font-size:9pt;">
+                                        <td>@index</td>
+                                        <td>@inner.Commitment   </td>
+                                        <td>@inner.Description  </td>
+                                        <td>@inner.Remarks      </td>
+                                        <td>@inner.Generateddate.ToString("MMM dd, yyyy")</td>
+                                        <td>@inner.GeneratedBy</td>
+                                        <td>
+                                            <div class="ui-pg-div"><span class="ui-icon ui-icon-pencil"></span></div>
+                                            <div class="ui-pg-div"><span class="ui-icon ui-icon-trash"></span></div>                                            
+                                        </td>
+                                    </tr>
+
+                                        index = index + 1;
+                                    }
+                                    </tbody>
+                                    <tfoot>
+                                        <tr style="font-size:9pt;">
+                                            <td colspan="7"></td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        }
+
+                        <!-- / Save Button -->
+                        <div class="form-group">
+                            <div class="col-lg-12">
+                                <button type="button" class="btn btn-sm btn-primary pull-left m-t-n-xs" data-toggle="modal" data-target="#mdlAddNew">
+                                    <strong>Add New</strong>
+                                </button>
+
+                                @Html.ActionLink("Back to List", "Index", null, htmlAttributes: new { @class = "btn btn-sm btn-primary pull-right m-t-n-xs" })
+                            </div>
+                        </div>
+                    }
+                        </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br/>
+<div class="row">
+    <div class="modal inmodal" id="mdlAddNew" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content animated flipInY">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">Add New Commitment</h4>
+                    <small class="font-bold">please Provide Commitment details for @ViewBag.UserName</small>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        <strong>Please Provide Details Below</strong>
+                    </p>                    
+                    <div class="form-group">
+
+                        <label class="col-lg-3 control-label">Select Heading</label>
+                        <div class="col-lg-9">
+                            @Html.DropDownList("CommitmentId", null, "Select Commitment", htmlAttributes: new { @class = "form-control m-b" })
+                        </div>
+
+                        <label class="col-lg-3 control-label">Provide Commitment</label>
+                        <div class="col-lg-9">
+                            @Html.DropDownList("CommitmentId", null, "Select Commitment", htmlAttributes: new { @class = "form-control m-b" })
+                        </div>
+                       
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
 
-<script type="text/javascript">
-$(document).ready(
-function () {
-    $('#StartDate').datepicker({
-        changeMonth: true,
-        changeYear: true,
-        minDate: "-15w",
-        dateFormat: "dd-M-yy" /*format: 'dd-M-yyyy'*/
-    });
-
-    $('#Deadline').datepicker({
-        changeMonth: true,
-        changeYear: true,
-        numberOfMonths: 1,
-        dateFormat: "dd-M-yy"
-    });
-
-    $("#frmMain").validate({
-        rules: {
-            StartDate: { required: true },
-            Deadline: { required: true },
-            SName: {
-                minlength: 3,
-                maxlength: 250,
-                required: true
-            },
-            LocationId: { required: true },
-            CompanyId: { required: true },
-            AreaId: { required: true },
-            BucketId: { required: true },
-            TaskTypeId: { required: true },
-            StatusId: { required: true },
-        },
-        highlight: function (element) {
-            $(element).closest('.control-group').addClass('has-error');
-        },
-        unhighlight: function (element) {
-            $(element).closest('.control-group').removeClass('has-error');
-        },
-        submitHandler: function (form) { // for demo
-            form.submit();
-            return false;
-        }
-    });
-});
-
-
-function ReActivateDatePickers(StartDate, EndDate) {
-    //alert(StartDate + " < - > " + EndDate);
-
-    $("#StartDate").datepicker({
-        changeMonth: true,
-        changeYear: true,
-        minDate: new Date(StartDate),
-        maxDate: new Date(EndDate),
-        dateFormat: "dd-M-yy" /*format: 'dd-M-yyyy'*/
-    });
-
-    $("#Deadline").datepicker({
-        changeMonth: true,
-        changeYear: true,
-        minDate: new Date(StartDate),
-        maxDate: new Date(EndDate),
-        dateFormat: "dd-M-yy" /*format: 'dd-M-yyyy'*/
-    });
-
-
-}
-
-function parseJsonDate(jsonDateString) {
-    var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-
-    jsonDateString = jsonDateString.replace('/Date(', '');
-    jsonDateString = jsonDateString.replace(')/', '');
-    var date = new Date(parseInt(jsonDateString));
-    var day = date.getDate();
-    var monthIndex = date.getMonth();
-    var year = date.getFullYear();
-    return day + "-" + monthNames[monthIndex] + "-" + year;
-}
-
-$(document).ready(function () {
-    $("#btnSave").click(function () {
-        $.ajax(
-        {
-            type: "POST", //HTTP POST Method
-            url: "/Commitment/AddCommitment", // Controller/View
-            data: { //Passing data
-                CommitmentName: $("#txtmyCommitment").val(), //Reading text box values using Jquery
-                Description: $("#txtmyDescription").val(),
-                ManagerRemarks: $("#txtManagerRemarks").val(),
-                CommitmentId: $("#CommitmentId").val()
-
-            }
-
-        });
-
-    });
-});
-</script>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
