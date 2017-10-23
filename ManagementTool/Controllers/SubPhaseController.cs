@@ -12,7 +12,7 @@ using System.Collections.Generic;
 
 namespace ManagementTool.Controllers
 {
-    public class SubPhaseController : Controller
+    public class SubPhaseController : BaseController
     {
         private ProjectEntities db = new ProjectEntities();
 
@@ -55,9 +55,8 @@ namespace ManagementTool.Controllers
         // GET: SubPhase/Create
         public ActionResult Create()
         {
-
-            UserIdentity.UserId     = 1020;
-            UserIdentity.UserName   = "Arsalan Ahmed";
+            //UserIdentity.UserId     = 1020;
+            //UserIdentity.UserName   = "Arsalan Ahmed";
 
             ViewBag.PhaseId = new SelectList(db.C005_PHASE.Where(p => p.IsActive == true), "PhaseId", "PhaseName");
             return View();

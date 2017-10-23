@@ -167,7 +167,6 @@ namespace ManagementTool.Controllers
             }
         }
 
-
         private static bool RedirectionUrlValidationCallback(string redirectionUrl)
         {
             // The default for the validation callback is to reject the URL.
@@ -185,13 +184,10 @@ namespace ManagementTool.Controllers
             return result;
         }
 
-
-
         [ChildActionOnly]
         public ActionResult LoginPartial() {
             return PartialView("_LoginPartial");
         }
-
 
         protected override void Dispose(bool disposing)
         {
