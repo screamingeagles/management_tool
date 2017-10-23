@@ -1,9 +1,13 @@
 ﻿@model IEnumerable<ManagementTool.Helpers.commitment_service>
 
+<!-- Sweet Alert -->
+<link href="/Content/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+
 @{
     int index = 1;
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    
 }
 
 
@@ -64,8 +68,8 @@
                                         <td>@inner.Generateddate.ToString("MMM dd, yyyy")</td>
                                         <td>@inner.GeneratedBy</td>
                                         <td>
-                                            <div class="ui-pg-div"><span class="ui-icon ui-icon-pencil"></span></div>
-                                            <div class="ui-pg-div"><span class="ui-icon ui-icon-trash"></span></div>                                            
+                                            <div class="ui-pg-div" id="btnEdit"><span class="ui-icon ui-icon-pencil"></span></div>
+                                            <div class="ui-pg-div" id="btnDel" ><span class="ui-icon ui-icon-trash"></span></div>                                            
                                         </td>
                                     </tr>
 
@@ -109,27 +113,49 @@
                     <small class="font-bold">please Provide Commitment details for @ViewBag.UserName</small>
                 </div>
                 <div class="modal-body">
-                    <p>
-                        <strong>Please Provide Details Below</strong>
-                    </p>                    
-                    <div class="form-group">
+                    <form name="frmAddCommitment" id="frmAddCommitment" method="post">
 
-                        <label class="col-lg-3 control-label">Select Heading</label>
-                        <div class="col-lg-9">
-                            @Html.DropDownList("CommitmentId", null, "Select Commitment", htmlAttributes: new { @class = "form-control m-b" })
+                        <div class="row">
+                            <p style="color:red; font-weight:normal; font-style:italic;">
+                                <strong>Please Provide Details Below</strong>
+                            </p>
+                            <div class="form-group">
+
+                                <label class="col-lg-3 control-label">Select Heading</label>
+                                <div class="col-lg-9">
+                                    @Html.DropDownList("CommitmentId", null, "Select Commitment", htmlAttributes: new { @class = "form-control m-b" })
+                                </div>
+
+                                <label class="col-lg-3 control-label">Enter Commitment</label>
+                                <div class="col-lg-9">
+                                    @Html.TextArea("txtCommitment", new { @class = "form-control m-b", rows="3" })
+                                </div>
+
+
+                                <label class="col-lg-3 control-label">Description</label>
+                                <div class="col-lg-9">
+                                    @Html.TextArea("txtDescription", new { @class = "form-control m-b", rows = "3" })
+                                </div>
+
+
+                                <label class="col-lg-3 control-label">Manager Remarks</label>
+                                <div class="col-lg-9">
+                                    @Html.TextArea("txtRemarks", new { @class = "form-control m-b", rows = "3" })
+                                </div>
+
+                                <label class="col-lg-3 control-label">Select Project Link</label>
+                                <div class="col-lg-9">
+                                    @Html.DropDownList("ProjectId", null, "Link to Project", htmlAttributes: new { @class = "form-control m-b" })
+                                </div>
+
+                            </div>
                         </div>
 
-                        <label class="col-lg-3 control-label">Provide Commitment</label>
-                        <div class="col-lg-9">
-                            @Html.DropDownList("CommitmentId", null, "Select Commitment", htmlAttributes: new { @class = "form-control m-b" })
-                        </div>
-                       
-                    </div>
-
+                    </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-primary" id="btnModalSave">Save changes</button>
                 </div>
             </div>
         </div>
@@ -140,3 +166,105 @@
     @section Scripts {
         @Scripts.Render("~/bundles/jqueryval")
     }
+
+    <!-- Sweet alert -->
+<script src="/Scripts/js/plugins/sweetalert/sweetalert.min.js"></script>
+
+<script type="text/javascript">
+
+    $("#btnModalSave").click(function () {
+
+        var isvalid = $("#frmAddCommitment").valid();
+        if (isvalid == false){return;}
+        
+        var commitId  = $('#CommitmentId :selected').val();
+        var txtcommit = $('#txtCommitment')         .val();
+        var txtdesc   = $('#txtDescription')        .val();
+        var txtremrks = $('#txtRemarks')            .val();
+        var projId    = $('#ProjectId :selected')   .val();
+                
+        var postedContent = {
+            CommitmentID: commitId,
+            TCommit     : txtcommit,
+            TDesc       : txtdesc,
+            TRemarks    : txtremrks,
+            ProjectId   : projId
+        }
+      
+        $.ajax({
+            type    : "POST",
+            url     : "/Commitment/AddNew",
+            data    : postedContent,
+            success : function (message) {
+                var res = message.data;
+                location.reload();
+            },
+            error   : function (xerr) {
+                // $('#txteng').val("err : " +xerr);
+            }
+        });
+       
+    });
+
+    $("#btnDel").click(function () {
+            swal({
+                title: "Are you sure?",
+                text: "Your will not be able to recover this Commitment!",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes, Delete it!",
+                cancelButtonText: "No, Cancel please!",
+                closeOnConfirm: false,
+                closeOnCancel: false
+            }, function (isConfirm) {
+                        if (isConfirm) {
+                            swal("Deleted!", "Your Commitment has been deleted.", "success");
+                        } else {
+                            swal("Cancelled", "Your Commitment is safe :)", "error");
+                        }
+                    });
+        });
+
+    $(document).ready(
+    function () {
+        $("#frmAddCommitment").validate({
+            rules: {
+                txtCommitment: {
+                    minlength: 3,
+                    maxlength: 250,
+                    required: true
+                },
+                txtDescription: {
+                    minlength: 3,
+                    maxlength: 250,
+                    required: true
+                },
+                CommitmentId: { required: true },
+                ProjectId: { required: true },
+            },
+            highlight: function (element) {
+                $(element).closest('.control-group').addClass('has-error');
+            },
+            unhighlight: function (element) {
+                $(element).closest('.control-group').removeClass('has-error');
+            },
+            submitHandler: function (form) { // for demo
+                form.submit();
+                return false;
+            }
+        });
+    });
+
+    function parseJsonDate(jsonDateString) {
+        var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+        jsonDateString = jsonDateString.replace('/Date(', '');
+        jsonDateString = jsonDateString.replace(')/', '');
+        var date = new Date(parseInt(jsonDateString));
+        var day = date.getDate();
+        var monthIndex = date.getMonth();
+        var year = date.getFullYear();
+        return day + "-" + monthNames[monthIndex] + "-" + year;
+    }
+</script>

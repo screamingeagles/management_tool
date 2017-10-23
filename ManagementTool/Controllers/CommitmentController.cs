@@ -18,6 +18,28 @@ namespace ManagementTool.Controllers
     {
         private ProjectEntities db = new ProjectEntities();
 
+
+        [HttpPost]
+        public JsonResult AddNew(int CommitmentID, string TCommit, string TDesc, string TRemarks, int ProjectId)
+        {
+            if (CommitmentID > 0) {
+                C021_CommimentDetails cm= new C021_CommimentDetails();
+                cm.CommitmentId         = CommitmentID;
+                cm.CommimentName        = TCommit;
+                cm.CDescription         = TDesc;
+                cm.CRemarks             = TRemarks;
+                cm.ProjectId            = ProjectId;
+                cm.IsActive             = true;
+                cm.GeneratedBy          = UserIdentity.UserId;
+                cm.GeneratedDate        = DateTime.Now.AddHours(4);
+                db.C021_CommimentDetails.Add(cm);
+                db.SaveChanges();
+                CommitmentID = cm.DetailId;
+            }
+            return Json(new { data = "Saved : " + CommitmentID });
+        }
+
+
         // GET: Commitment
         public ActionResult Index()
         {
@@ -42,13 +64,14 @@ namespace ManagementTool.Controllers
         }
 
         // GET: Commitment/Create
-        public ActionResult Create()
-        {
-            UserIdentity.UserName = "Arsalan Ahmed";
+        public ActionResult Create() {
+            UserIdentity.UserId         = 1020;
+            UserIdentity.UserName       = "Arsalan Ahmed";
             List<commitment_service> cs = commitment_service.GetUserCommitment(1020);
-            ViewBag.CommitmentId = new SelectList(db.C020_CommitmentMaster.Where(x=>x.IsActive ==true).OrderBy(x => x.CommitmentHeader), "CommitmentId", "CommitmentHeader");
 
-            ViewBag.UserName = UserIdentity.UserName;
+            ViewBag.UserName            = UserIdentity.UserName;
+            ViewBag.ProjectId           = new SelectList(db.C004_PROJECT            .Where(p => p.IsActive == true).OrderBy(p => p.ProjectName     ), "ProjectId", "ProjectName");
+            ViewBag.CommitmentId        = new SelectList(db.C020_CommitmentMaster   .Where(x => x.IsActive == true).OrderBy(x => x.CommitmentHeader), "CommitmentId", "CommitmentHeader");
             return View(cs);
         }
 

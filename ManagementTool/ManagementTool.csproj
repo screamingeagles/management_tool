@@ -223,6 +223,7 @@
     <Content Include="Content\css\plugins\jQueryUI\jquery-ui-1.10.4.custom.min.css" />
     <Content Include="Content\css\plugins\jQueryUI\jquery-ui.css" />
     <Content Include="Content\css\plugins\morris\morris-0.4.3.min.css" />
+    <Content Include="Content\css\plugins\sweetalert\sweetalert.css" />
     <Content Include="Content\images\profile-160x160.png" />
     <Content Include="Content\patterns\1.png" />
     <Content Include="Content\patterns\2.png" />
