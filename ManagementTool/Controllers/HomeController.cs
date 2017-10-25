@@ -26,8 +26,8 @@ namespace ManagementTool.Controllers
         public ActionResult Welcome()
         {
 
-            UserIdentity.UserId = 1020;
-            UserIdentity.UserName = "Arsalan Ahmed";
+            //UserIdentity.UserId = 1020;
+            //UserIdentity.UserName = "Arsalan Ahmed";
 
             // only for this we are checking the session of user.
             int _sid = 0;
