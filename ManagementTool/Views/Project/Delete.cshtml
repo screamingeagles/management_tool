@@ -24,6 +24,23 @@
             <div class="ibox-content">
                 <div class="table-responsive">
 
+                    <!-- / Location Name -->
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">Location :</label>
+                        <div class="col-lg-9">
+                            @Html.TextBoxFor(model => model.C010_LOCATION.LocationName, htmlAttributes: new { @readonly = "readonly", @class = "form-control m-b", @style = "font-weight:normal; background-color : white;" })
+                        </div>
+                    </div>
+
+                    <!-- / Company Name -->
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">Company Name :</label>
+                        <div class="col-lg-9">
+                            @Html.TextBoxFor(model => model.C011_COMPANY.CompanyName, htmlAttributes: new { @readonly = "readonly", @class = "form-control m-b", @style = "font-weight:normal; background-color : white;" })
+                        </div>
+                    </div>
+
+
                     <!-- / Division Name -->
                     <div class="form-group">
                         <label class="col-lg-3 control-label">Division :</label>

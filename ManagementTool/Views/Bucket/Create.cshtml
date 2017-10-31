@@ -156,7 +156,29 @@
         var sel = obj.options[obj.selectedIndex].value;
         if (sel == "") { return; }
 
-        var postedContent = { SelectedProject: sel }
+        var ListedPostedContent = { ProjectId: sel }
+        $.ajax({
+            type: "POST",
+            url: "/Phase/GetProjectPhases",
+            data: ListedPostedContent,
+            success: function (message) {
+
+                $("#PhaseId").empty();
+                $('#PhaseId').append($('<option>', { value: '', text: 'Select Phase', selected: true }));
+                var res = message.data;
+                
+                if (res.length > 0) {
+                    for (var i = 0; i < message.data.length; i++) {
+                        $('#PhaseId').append($('<option>', { value: message.data[i].PhaseId, text: message.data[i].PhaseName }));
+                    } // end of for loop
+                } // end of if for length
+            },
+            error: function (xerr) {
+                /* $('#txteng').val("err : " +xerr);*/
+            }
+        });
+
+        var postedContent = { SelectedProject : sel }
         $.ajax({
             type: "POST",
             url: "/Phase/GetProjectDates",
@@ -190,8 +212,9 @@
             data: postedContent,
             success: function (message) {
 
+                $("#SubPhaseId").empty();
+                $('#SubPhaseId').append($('<option>', { value: '', text: 'Select Sub Phase', selected: true }));
                 var res = message.data;
-                $("#SubPhaseId").empty()
 
                 if (res.length > 0) {
                     for (var i = 0; i < message.data.length; i++) {

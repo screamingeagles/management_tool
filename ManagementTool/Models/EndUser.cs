@@ -24,11 +24,11 @@ namespace ManagementTool.Models
             this.C022_Notification_Master = new HashSet<C022_Notification_Master>();
             this.C023_Notification_Detail = new HashSet<C023_Notification_Detail>();
             this.C001_DIVISION = new HashSet<C001_DIVISION>();
-            this.C004_PROJECT = new HashSet<C004_PROJECT>();
             this.C005_PHASE = new HashSet<C005_PHASE>();
             this.C007_BUCKET = new HashSet<C007_BUCKET>();
             this.C008_TASK_DATA = new HashSet<C008_TASK_DATA>();
             this.C008_TASK_DATA1 = new HashSet<C008_TASK_DATA>();
+            this.C004_PROJECT = new HashSet<C004_PROJECT>();
         }
     
         public int UID { get; set; }
@@ -57,8 +57,6 @@ namespace ManagementTool.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<C001_DIVISION> C001_DIVISION { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<C004_PROJECT> C004_PROJECT { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<C005_PHASE> C005_PHASE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<C007_BUCKET> C007_BUCKET { get; set; }
@@ -66,5 +64,7 @@ namespace ManagementTool.Models
         public virtual ICollection<C008_TASK_DATA> C008_TASK_DATA { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<C008_TASK_DATA> C008_TASK_DATA1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<C004_PROJECT> C004_PROJECT { get; set; }
     }
 }

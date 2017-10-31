@@ -15,7 +15,7 @@ namespace ManagementTool.Models
     public partial class C019_Attachments
     {
         public int AttachId { get; set; }
-        public int TaskId { get; set; }
+        public int ProjectId { get; set; }
         public string AName { get; set; }
         public Nullable<long> ASize { get; set; }
         public byte[] AContent { get; set; }
@@ -25,5 +25,6 @@ namespace ManagementTool.Models
         public Nullable<bool> IsActive { get; set; }
     
         public virtual C008_TASK_DATA C008_TASK_DATA { get; set; }
+        public virtual C004_PROJECT C004_PROJECT { get; set; }
     }
 }

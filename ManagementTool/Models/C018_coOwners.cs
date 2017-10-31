@@ -15,12 +15,12 @@ namespace ManagementTool.Models
     public partial class C018_coOwners
     {
         public int CoOwnerId { get; set; }
-        public int TaskId { get; set; }
+        public int ProjectId { get; set; }
         public int UserId { get; set; }
         public string OwnerContribution { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public int CreatedBy { get; set; }
     
-        public virtual C008_TASK_DATA C008_TASK_DATA { get; set; }
+        public virtual C004_PROJECT C004_PROJECT { get; set; }
     }
 }

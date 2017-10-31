@@ -36,6 +36,11 @@ namespace ManagementTool
             bundles.Add(new ScriptBundle("~/plugins/pace").Include(
                       "~/Scripts/plugins/pace/pace.min.js"));
 
+            // Jasny
+            bundles.Add(new ScriptBundle("~/plugins/jasny").Include(
+                      "~/Scripts/plugins/jasny/jasny-bootstrap.min.js"));
+
+
             // Typehead for *Auto Complete
             bundles.Add(new ScriptBundle("~/plugins/typehead").Include(
                       "~/Scripts/plugins/typehead/bootstrap3-typeahead.min.js"));

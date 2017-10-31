@@ -17,9 +17,8 @@ namespace ManagementTool.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public C008_TASK_DATA()
         {
-            this.C019_Attachments = new HashSet<C019_Attachments>();
-            this.C018_coOwners = new HashSet<C018_coOwners>();
             this.C016_CYCLED = new HashSet<C016_CYCLED>();
+            this.C019_Attachments = new HashSet<C019_Attachments>();
         }
     
         public int TaskId { get; set; }
@@ -50,11 +49,9 @@ namespace ManagementTool.Models
         public virtual EndUser EndUser1 { get; set; }
         public virtual C015_STATUS C015_STATUS { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<C019_Attachments> C019_Attachments { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<C018_coOwners> C018_coOwners { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<C016_CYCLED> C016_CYCLED { get; set; }
         public virtual C014_TASK_TYPE C014_TASK_TYPE { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<C019_Attachments> C019_Attachments { get; set; }
     }
 }

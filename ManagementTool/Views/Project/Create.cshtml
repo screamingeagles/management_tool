@@ -28,58 +28,70 @@
                     {
                         @Html.AntiForgeryToken();
 
+                        <!-- / Select Location and Company -->
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Select Location</label>
+                            <div class="col-lg-4">
+                                @Html.DropDownList("LocationId", null, "Select Location", htmlAttributes: new { @onchange = "FillCompany(this);", @class = "form-control m-b" })
+                            </div>
+                            <label class="col-lg-2 control-label">Select Company</label>
+                            <div class="col-lg-4">
+                                @Html.DropDownList("CompanyId", null, "Select Company", htmlAttributes: new { @class = "form-control m-b", @disabled = "disabled" })
+                            </div>
+                        </div>
+
                         <!-- / Division Name -->
                         <div class="form-group">
-                            <label class="col-lg-3 control-label">Select Divison</label>
-                            <div class="col-lg-9">
+                            <label class="col-lg-2 control-label">Select Divison</label>
+                            <div class="col-lg-10">
                                 @Html.DropDownList("DivisionId", null, "Select Division", htmlAttributes: new { @class = "form-control m-b", onchange = "FillArea(this);" })
                             </div>
                         </div>
 
                         <!-- / Area Name -->
                         <div class="form-group">
-                            <label class="col-lg-3 control-label">Select Area</label>
-                            <div class="col-lg-9">
+                            <label class="col-lg-2 control-label">Select Area</label>
+                            <div class="col-lg-10">
                                 @Html.DropDownList("AreaId", null, "Select Area", htmlAttributes: new { @class = "form-control m-b", onchange = "FillSubArea(this);" })
                             </div>
                         </div>
 
                         <!-- / Sub Area Name -->
                         <div class="form-group">
-                            <label class="col-lg-3 control-label">Select Sub Area</label>
-                            <div class="col-lg-9">
+                            <label class="col-lg-2 control-label">Select Sub Area</label>
+                            <div class="col-lg-10">
                                 @Html.DropDownList("SubAreaId", null, "Select Sub Area", htmlAttributes: new { @class = "form-control m-b" })
                             </div>
                         </div>
 
                         <!-- / Project Name -->
                         <div class="form-group">
-                            <label class="col-lg-3 control-label">New Project Name</label>
-                            <div class="col-lg-9">
+                            <label class="col-lg-2 control-label">New Project Name</label>
+                            <div class="col-lg-10">
                                 @Html.TextBoxFor(model => model.ProjectName, htmlAttributes: new { @class = "form-control m-b" })
                             </div>
                         </div>
 
                         <!-- / Start Date -->
                         <div class="form-group">
-                            <label class="col-lg-3 control-label">Start Date</label>
-                            <div class="col-lg-9">
+                            <label class="col-lg-2 control-label">Start Date</label>
+                            <div class="col-lg-10">
                                 @Html.TextBoxFor(model => model.StartDate, htmlAttributes: new { @class = "form-control m-b" })
                             </div>
                         </div>
 
                         <!-- / End Date -->
                         <div class="form-group">
-                            <label class="col-lg-3 control-label">End Date</label>
-                            <div class="col-lg-9">
+                            <label class="col-lg-2 control-label">End Date</label>
+                            <div class="col-lg-10">
                                 @Html.TextBoxFor(model => model.EndDate, htmlAttributes: new { @class = "form-control m-b" })
                             </div>
                         </div>
 
                         <!-- / Select Project Type-->
                         <div class="form-group">
-                            <label class="col-lg-3 control-label">Select Project Type</label>
-                            <div class="col-lg-9">
+                            <label class="col-lg-2 control-label">Select Project Type</label>
+                            <div class="col-lg-10">
                                 @Html.DropDownList("ProjectType", null, "Select Project Type", htmlAttributes: new { @class = "form-control m-b" })
                             </div>
                         </div>
@@ -95,7 +107,6 @@
                             </div>
                         </div>
 
-
                     }
                 </div>
             </div>
@@ -110,7 +121,7 @@
         $('#StartDate').datepicker({
             changeMonth: true,
             changeYear: true,
-            minDate: "-15w",
+            minDate: "-100w",
             dateFormat: "dd-M-yy" /*format: 'dd-M-yyyy'*/
         });
 
@@ -128,6 +139,8 @@
                     maxlength: 250,
                     required: true
                 },
+                LocationId      : { required: true },
+                CompanyId       : { required: true },
                 DivisionId      : { required: true },
                 AreaId          : { required: true },
                 ProjectType     : { required: true },
@@ -147,10 +160,43 @@
         });
     });
 
+    function FillCompany    (obj) {
+        var sel = obj.options[obj.selectedIndex].value;
+        if (sel == "") {
+            $("#CompanyId").empty();
+            $("#CompanyId").prop("disabled", true);
+            return;
+        }
+
+        var postedContent = { SelectedLocation: sel }
+        $.ajax({
+            type: "POST",
+            url: "/Tasks/GetCompaniesByLocation",
+            data: postedContent,
+            success: function (message) {
+
+                $("#CompanyId").prop("disabled", false);
+                $("#CompanyId").empty()
+
+                var res = message.data;
+                if (res.length > 0) {
+                   
+                    for (var i = 0; i < message.data.length; i++) {
+                        $('#CompanyId').append($('<option>', { value: message.data[i].CompanyId, text: message.data[i].CompanyName }));
+                    } // end of for loop
+                } // end of if for length
+            },
+            error: function (xerr) {
+                /* $('#txteng').val("err : " +xerr);*/
+            }
+        });
+
+    }
+
 
     function FillArea       (obj) {
         var sel = obj.options[obj.selectedIndex].value;
-        if (sel == "") { return; }
+        if (sel == "") { return; }        
 
         var postedContent = { SelectedDivision: sel }
         $.ajax({
@@ -178,14 +224,17 @@
         var selText = obj.options[obj.selectedIndex].text
         if (sel == "") { return; }
 
+        
+
         var postedContent = { SelectedArea: sel }
         $.ajax({
             type: "POST",
             url: "/Project/GetSubAreaByArea",
             data: postedContent,
             success: function (message) {
-                var res = message.data;
                 $("#SubAreaId").empty()
+                var res = message.data;
+                
                 if (res.length > 0) {
                     for (var i = 0; i < message.data.length; i++) {
                         $('#SubAreaId').append($('<option>', { value: message.data[i].SubAreaId, text: message.data[i].SubAreaName }));

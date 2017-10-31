@@ -9,20 +9,18 @@
         <EntityTypeShape EntityType="ManagementTool.C003_SUB_AREA" Width="1.5" PointX="9.5" PointY="12.25" />
         <EntityTypeShape EntityType="ManagementTool.C006_SubPhase" Width="1.5" PointX="5.25" PointY="11.125" />
         <EntityTypeShape EntityType="ManagementTool.C010_LOCATION" Width="1.75" PointX="2.875" PointY="0.5" />
-        <EntityTypeShape EntityType="ManagementTool.C011_COMPANY" Width="1.5" PointX="10.625" PointY="15.25" />
+        <EntityTypeShape EntityType="ManagementTool.C011_COMPANY" Width="1.875" PointX="10.625" PointY="15.25" />
         <EntityTypeShape EntityType="ManagementTool.C013_PROJECT_TYPE" Width="1.875" PointX="0.5" PointY="0.5" />
         <EntityTypeShape EntityType="ManagementTool.C014_TASK_TYPE" Width="1.875" PointX="0.5" PointY="16.75" />
         <EntityTypeShape EntityType="ManagementTool.C015_STATUS" Width="1.5" PointX="0.75" PointY="19.75" />
         <EntityTypeShape EntityType="ManagementTool.C016_CYCLED" Width="1.5" PointX="5.25" PointY="19.125" />
         <EntityTypeShape EntityType="ManagementTool.C017_MEETING" Width="1.875" PointX="15" PointY="3.875" />
-        <EntityTypeShape EntityType="ManagementTool.C018_coOwners" Width="1.5" PointX="5.25" PointY="8" />
-        <EntityTypeShape EntityType="ManagementTool.C019_Attachments" Width="2.125" PointX="6.125" PointY="25.875" />
         <EntityTypeShape EntityType="ManagementTool.C020_CommitmentMaster" Width="2.375" PointX="1.875" PointY="22.5" />
         <EntityTypeShape EntityType="ManagementTool.C022_Notification_Master" Width="2.375" PointX="3" PointY="29.25" />
         <EntityTypeShape EntityType="ManagementTool.C023_Notification_Detail" Width="2.125" PointX="8.25" PointY="20.375" />
         <EntityTypeShape EntityType="ManagementTool.EndUser" Width="1.5" PointX="0.75" PointY="11.25" />
         <EntityTypeShape EntityType="ManagementTool.EndUser_Details" Width="1.75" PointX="5.375" PointY="2.625" />
-        <EntityTypeShape EntityType="ManagementTool.EndUser_LoginDetails" Width="1.5" PointX="10.75" PointY="0.75" />
+        <EntityTypeShape EntityType="ManagementTool.EndUser_LoginDetails" Width="2" PointX="10.125" PointY="0.75" />
         <EntityTypeShape EntityType="ManagementTool.Mailer_Details" Width="1.5" PointX="10.875" PointY="9.625" />
         <EntityTypeShape EntityType="ManagementTool.ROLE_DETAIL" Width="1.5" PointX="7.875" PointY="0.625" />
         <EntityTypeShape EntityType="ManagementTool.ROLE_MASTER" Width="1.5" PointX="5.375" PointY="0.5" />
@@ -42,17 +40,10 @@
         <EntityTypeShape EntityType="ManagementTool.C001_DIVISION" Width="1.5" PointX="3" PointY="4.5" />
         <AssociationConnector Association="ManagementTool.FK__AREA__DIVISION" />
         <AssociationConnector Association="ManagementTool.FK__GeneratedBy__DIVISION" />
-        <EntityTypeShape EntityType="ManagementTool.C004_PROJECT" Width="1.5" PointX="8.75" PointY="5.875" />
-        <AssociationConnector Association="ManagementTool.FK__DIVISION__PROJECT" />
-        <AssociationConnector Association="ManagementTool.FK__AREA__PROJECT" />
-        <AssociationConnector Association="ManagementTool.FK__GeneratedBy__PROJECT" />
-        <AssociationConnector Association="ManagementTool.FK__ProjectType__PROJECT" />
         <EntityTypeShape EntityType="ManagementTool.C005_PHASE" Width="1.5" PointX="15.125" PointY="9.5" />
-        <AssociationConnector Association="ManagementTool.FK__PROJECT__PHASE" />
         <AssociationConnector Association="ManagementTool.FK__GeneratedBy__PHASE" />
         <AssociationConnector Association="ManagementTool.FK__PHASE__SubPhase" />
         <EntityTypeShape EntityType="ManagementTool.C007_BUCKET" Width="1.5" PointX="17.375" PointY="9.5" />
-        <AssociationConnector Association="ManagementTool.FK__PROJECT__BUCKET" />
         <AssociationConnector Association="ManagementTool.FK__PHASE__BUCKET" />
         <AssociationConnector Association="ManagementTool.FK__GeneratedBy__BUCKET" />
         <EntityTypeShape EntityType="ManagementTool.C008_TASK_DATA" Width="1.875" PointX="21.125" PointY="9.375" />
@@ -62,13 +53,25 @@
         <AssociationConnector Association="ManagementTool.FK_Generated__TASK_DATA" />
         <AssociationConnector Association="ManagementTool.FK_OwnerID__TASK_DATA" />
         <AssociationConnector Association="ManagementTool.FK_STATUS__TASK_DATA" />
-        <AssociationConnector Association="ManagementTool.FK_TASK_DATA_Attachments" />
-        <AssociationConnector Association="ManagementTool.FK_TASK_DATA_coOwners" />
         <AssociationConnector Association="ManagementTool.FK_TASK_DATA_CYCLED" />
         <AssociationConnector Association="ManagementTool.FK_TASK_TYPE__TASK_DATA" />
         <EntityTypeShape EntityType="ManagementTool.vw_Task_Details" Width="1.875" PointX="13.375" PointY="13.75" />
         <EntityTypeShape EntityType="ManagementTool.C021_CommimentDetails" Width="2.5" PointX="9.25" PointY="23.25" />
         <AssociationConnector Association="ManagementTool.FK_Commiment__Master_Details" />
+        <EntityTypeShape EntityType="ManagementTool.C004_PROJECT" Width="1.5" PointX="16.875" PointY="13.875" />
+        <AssociationConnector Association="ManagementTool.FK__DIVISION__PROJECT" />
+        <AssociationConnector Association="ManagementTool.FK__AREA__PROJECT" />
+        <AssociationConnector Association="ManagementTool.FK__GeneratedBy__PROJECT" />
+        <AssociationConnector Association="ManagementTool.FK__PROJECT__BUCKET" />
+        <AssociationConnector Association="ManagementTool.FK__PROJECT__COMPANY" />
+        <AssociationConnector Association="ManagementTool.FK__PROJECT__LOCATION" />
+        <AssociationConnector Association="ManagementTool.FK__PROJECT__PHASE" />
+        <AssociationConnector Association="ManagementTool.FK__ProjectType__PROJECT" />
+        <EntityTypeShape EntityType="ManagementTool.C019_Attachments" Width="1.5" PointX="23.75" PointY="11.25" />
+        <AssociationConnector Association="ManagementTool.FK_TASK_DATA_Attachments" />
+        <EntityTypeShape EntityType="ManagementTool.C018_coOwners" Width="1.5" PointX="19.125" PointY="17.375" />
+        <AssociationConnector Association="ManagementTool.FK_Project_Attachments" />
+        <AssociationConnector Association="ManagementTool.FK_Project_coOwners" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

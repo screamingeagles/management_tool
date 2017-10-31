@@ -23,6 +23,7 @@ namespace ManagementTool.Controllers
                 var q = (from c in db.C004_PROJECT
                          where (c.IsActive.Equals(true)) && (c.ProjectId == SelectedProject)
                          select new { c.StartDate, c.EndDate}).FirstOrDefault();
+
                 return Json(new { data = q });
             }
         }
@@ -35,6 +36,19 @@ namespace ManagementTool.Controllers
                 var q = (from c in db.C005_PHASE
                          where (c.IsActive.Equals(true)) && (c.PhaseId == PhaseId)
                          select new { c.StartDate, c.EndDate }).FirstOrDefault();
+                return Json(new { data = q });
+            }
+        }
+
+
+        [HttpPost]
+        public JsonResult GetProjectPhases(int ProjectId)
+        {
+            using (ProjectEntities db = new ProjectEntities())
+            {
+                var q = (from p in db.C005_PHASE
+                         where (p.ProjectId == ProjectId)
+                         select new { p.PhaseId, p.PhaseName}).ToList();
                 return Json(new { data = q });
             }
         }

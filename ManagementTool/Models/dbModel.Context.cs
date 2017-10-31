@@ -37,8 +37,6 @@ namespace ManagementTool.Models
         public virtual DbSet<C015_STATUS> C015_STATUS { get; set; }
         public virtual DbSet<C016_CYCLED> C016_CYCLED { get; set; }
         public virtual DbSet<C017_MEETING> C017_MEETING { get; set; }
-        public virtual DbSet<C018_coOwners> C018_coOwners { get; set; }
-        public virtual DbSet<C019_Attachments> C019_Attachments { get; set; }
         public virtual DbSet<C020_CommitmentMaster> C020_CommitmentMaster { get; set; }
         public virtual DbSet<C022_Notification_Master> C022_Notification_Master { get; set; }
         public virtual DbSet<C023_Notification_Detail> C023_Notification_Detail { get; set; }
@@ -53,12 +51,14 @@ namespace ManagementTool.Models
         public virtual DbSet<LOGIN_DETAIL> LOGIN_DETAIL { get; set; }
         public virtual DbSet<vw_SessionUser> vw_SessionUser { get; set; }
         public virtual DbSet<C001_DIVISION> C001_DIVISION { get; set; }
-        public virtual DbSet<C004_PROJECT> C004_PROJECT { get; set; }
         public virtual DbSet<C005_PHASE> C005_PHASE { get; set; }
         public virtual DbSet<C007_BUCKET> C007_BUCKET { get; set; }
         public virtual DbSet<C008_TASK_DATA> C008_TASK_DATA { get; set; }
         public virtual DbSet<vw_Task_Details> vw_Task_Details { get; set; }
         public virtual DbSet<C021_CommimentDetails> C021_CommimentDetails { get; set; }
+        public virtual DbSet<C004_PROJECT> C004_PROJECT { get; set; }
+        public virtual DbSet<C019_Attachments> C019_Attachments { get; set; }
+        public virtual DbSet<C018_coOwners> C018_coOwners { get; set; }
     
         public virtual ObjectResult<SP_BUCKET_LIST_Result> SP_BUCKET_LIST()
         {

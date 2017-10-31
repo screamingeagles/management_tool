@@ -18,6 +18,7 @@ namespace ManagementTool.Models
         public C010_LOCATION()
         {
             this.C008_TASK_DATA = new HashSet<C008_TASK_DATA>();
+            this.C004_PROJECT = new HashSet<C004_PROJECT>();
         }
     
         public int LocationId { get; set; }
@@ -28,5 +29,7 @@ namespace ManagementTool.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<C008_TASK_DATA> C008_TASK_DATA { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<C004_PROJECT> C004_PROJECT { get; set; }
     }
 }
