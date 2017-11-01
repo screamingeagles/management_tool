@@ -95,7 +95,14 @@ namespace ManagementTool.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.PhaseId = new SelectList(db.C005_PHASE.Where(p => p.IsActive == true), "PhaseId", "PhaseName", c006_SubPhase.PhaseId);
+
+            var q = (from c in db.C005_PHASE
+                     where (c.IsActive.Equals(true)) && (c.PhaseId == c006_SubPhase.PhaseId)
+                     select new { c.StartDate, c.EndDate }).FirstOrDefault();
+
+            ViewBag.EndDate     = q.EndDate.ToString("dd-MMM-yyyy");
+            ViewBag.StartDate   = q.StartDate.ToString("dd-MMM-yyyy");
+            ViewBag.PhaseId     = new SelectList(db.C005_PHASE.Where(p => p.IsActive == true), "PhaseId", "PhaseName", c006_SubPhase.PhaseId);
             return View(c006_SubPhase);
         }
 

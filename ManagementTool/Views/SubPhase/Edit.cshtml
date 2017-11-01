@@ -32,7 +32,18 @@
                         <div class="form-group">
                             <label class="col-lg-2 control-label">Select Phase </label>
                             <div class="col-lg-10">
-                                @Html.DropDownList("PhaseId", null, "Select Phase", htmlAttributes: new { @class = "form-control m-b" })
+                                @Html.DropDownList("PhaseId", null, "Select Phase", htmlAttributes: new { @class = "form-control m-b", onchange = "FillPhaseDetails(this);" })
+                            </div>
+                        </div>
+
+                          <!-- / Phase Dates-->
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Phase Duration</label>
+                            <div class="col-lg-5">
+                                <input type="text" class="form-control m-b"  value="@ViewBag.StartDate"  id="PStartDate" name="PStartDate" readonly="readonly" />
+                            </div>
+                            <div class="col-lg-5">
+                                <input type="text" class="form-control m-b"  value="@ViewBag.EndDate" id="PEndDate" name="PEndDate" readonly="readonly" />
                             </div>
                         </div>
 
@@ -81,18 +92,18 @@
         $('#StartDate').datepicker({
             changeMonth: true,
             changeYear: true,
-            minDate: "-100w",
+            minDate: new Date($('#PStartDate').val()),
+            maxDate: new Date($('#PEndDate').val()),
             dateFormat: "dd-M-yy" /*format: 'dd-M-yyyy'*/
         });
 
         $('#EndDate').datepicker({
             changeMonth: true,
             changeYear: true,
-            numberOfMonths: 1,
+            minDate: new Date($('#PStartDate').val()),
+            maxDate: new Date($('#PEndDate').val()),
             dateFormat: "dd-M-yy"
         });
-
-
 
         $("#frmMain").validate({
             rules: {
@@ -117,4 +128,70 @@
             }
         });
     });
+
+
+
+
+    function FillPhaseDetails(obj) {
+
+        var sel = obj.options[obj.selectedIndex].value;
+        if (sel == "") { return; }
+
+        alert(sel);
+        var postedContent = { PhaseId: sel }
+        $.ajax({
+            type: "POST",
+            url: "/Phase/GetPhaseDates",
+            data: postedContent,
+            success: function (message) {
+                var res = message.data;
+
+                $("#PStartDate").empty()
+                $("#PEndDate").empty()
+
+
+                $("#PStartDate").val(parseJsonDate(res.StartDate));
+                $("#PEndDate").val(parseJsonDate(res.EndDate));
+
+
+                $('#StartDate').datepicker('destroy');
+                $('#EndDate').datepicker('destroy');
+
+                activateDatePickers();
+            },
+            error: function (xerr) {
+                /* $('#txteng').val("err : " +xerr);*/
+            }
+        });
+    }
+
+    function activateDatePickers() {
+        $("#StartDate").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            minDate: new Date($('#PStartDate').val()),
+            maxDate: new Date($('#PEndDate').val()),
+            dateFormat: "dd-M-yy" /*format: 'dd-M-yyyy'*/
+        });
+
+        $("#EndDate").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            minDate: new Date($('#PStartDate').val()),
+            maxDate: new Date($('#PEndDate').val()),
+            dateFormat: "dd-M-yy" /*format: 'dd-M-yyyy'*/
+        });
+    }
+
+    function parseJsonDate(jsonDateString) {
+        var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+        jsonDateString = jsonDateString.replace('/Date(', '');
+        jsonDateString = jsonDateString.replace(')/', '');
+        var date = new Date(parseInt(jsonDateString));
+        var day = date.getDate();
+        var monthIndex = date.getMonth();
+        var year = date.getFullYear();
+        return day + "-" + monthNames[monthIndex] + "-" + year;
+    }
 </script>
