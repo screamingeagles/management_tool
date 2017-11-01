@@ -116,18 +116,13 @@ namespace ManagementTool.Controllers
         // GET: Project/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            if (id == null) { return new HttpStatusCodeResult(HttpStatusCode.BadRequest); }
+
             C004_PROJECT c004_PROJECT = db.C004_PROJECT.Find(id);
-            if (c004_PROJECT == null)
-            {
-                return HttpNotFound();
-            }
+            if (c004_PROJECT == null) { return HttpNotFound(); }
 
-
-            ViewBag.AttachedFiles = new SelectList(db.C019_Attachments.Where(a => a.ProjectId == id).OrderBy(a => a.CreatedDate), "AttachId", "AName");
+            ViewBag.CoOwners     = Bhai.GetContributorsList(id.Value);
+            ViewBag.AttachedFiles= new SelectList(db.C019_Attachments.Where(a => a.ProjectId == id).OrderBy(a => a.CreatedDate), "AttachId", "AName");
 
             ViewBag.LocationId  = new SelectList(db.C010_LOCATION, "LocationId", "LocationName", c004_PROJECT.LocationId);
             ViewBag.CompanyId   = new SelectList(db.C011_COMPANY.Where(x => x.LocationId == c004_PROJECT.LocationId).OrderBy(x => x.CompanyName), "CompanyId", "CompanyName", c004_PROJECT.CompanyId);
@@ -157,7 +152,7 @@ namespace ManagementTool.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
+            
             ViewBag.DivisionId  = new SelectList(db.C001_DIVISION, "DivisionId", "DivisionName", c004_PROJECT.DivisionId);
             ViewBag.AreaId      = new SelectList(db.C002_AREA.Where(c => c.DivisionId == c004_PROJECT.DivisionId), "AreaId", "AreaName", c004_PROJECT.AreaId);
             ViewBag.SubAreaId   = new SelectList(db.C003_SUB_AREA.Where(c => c.AreaId == c004_PROJECT.AreaId), "SubAreaId", "SubAreaName", c004_PROJECT.SubAreaId);
@@ -201,13 +196,28 @@ namespace ManagementTool.Controllers
             base.Dispose(disposing);
         }
 
+
+
+        public JsonResult GetUserNames(string query) {
+            string[] names = null;
+
+          if (String.IsNullOrEmpty(query) == false) {
+            names = (from i in db.EndUsers
+                        where (i.IsActive.Equals(true)) && i.UserName.StartsWith(query)
+                        select i.UserName).Distinct().ToArray();            
+            }
+            return Json(names, JsonRequestBehavior.AllowGet);
+        }
+
+
+
         /* <!--  Add new Owner --> */
         [HttpPost]
         public JsonResult AddNewOwner(int ProjectId, string OName, string ODesc)
         {
             if (ProjectId > 0) {
                 var qry = (from e in db.EndUsers
-                            where (e.UserName.StartsWith(OName))
+                            where (e.UserName == OName)
                             select new { e.UID, e.UserName }).FirstOrDefault();
 
                 if (qry != null) {
@@ -230,7 +240,20 @@ namespace ManagementTool.Controllers
             
         }
 
-        
+        /* <!--  Remove User --> */
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult OwnerRemove(int id)
+        {
+            int ProjectId= 0;
+                C018_coOwners co    = db.C018_coOwners.Find(id);
+                ProjectId           = co.ProjectId;
+                db.C018_coOwners.Remove(co);
+                db.SaveChanges();
+            return RedirectToAction("Edit", "Project", new { id = ProjectId });
+        }
+
+
         /* <!--  Add New file --> */
         [HttpPost]
         [ValidateAntiForgeryToken]

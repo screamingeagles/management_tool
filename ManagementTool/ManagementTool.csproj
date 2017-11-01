@@ -632,6 +632,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Common\AuthorizedSignatory.cs" />
     <Compile Include="Common\Bhai.cs" />
+    <Compile Include="Common\contributors.cs" />
     <Compile Include="Common\Mail_Senders.cs" />
     <Compile Include="Common\notifications.cs" />
     <Compile Include="Common\projectmodel.cs" />

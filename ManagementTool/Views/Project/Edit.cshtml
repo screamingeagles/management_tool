@@ -8,7 +8,6 @@
 <br />
 
 <div class="row">
-
     <div class="col-lg-10 col-lg-offset-1">
         <div class="ibox float-e-margins">
             <div class="ibox-title">
@@ -142,27 +141,27 @@
                                 </tr>
                             </thead>
                             <tbody>                                
-                                @foreach (SelectListItem files in ViewBag.AttachedFiles)
+                                @foreach (var usr in ViewBag.CoOwners)
                                 {
                                     <tr style="font-size:9pt;">
                                         <td>@index</td>
-                                        <td>@index</td>
-                                        <td style="text-align:left;">@index</td>
-                                        <td style="text-align:left;">
-                                            <form name='frmRemoveOwner_@index' action='/Project/Owner' onSubmit='return Confirm();' method='post'>
+                                        <td>@usr.UserName</td>
+                                        <td style="text-align:left;">@usr.UserContribution</td>
+                                        <td style="text-align:left;" title="Contributor Added @usr.ContributorAddDate">
+                                            <form name='frmRemoveOwner_@index' action='/Project/OwnerRemove' onSubmit='return Confirm();' method='post'>
                                                 @Html.AntiForgeryToken()
-                                                <input type='hidden' name='id' value='@files.Value'>
+                                                <input type='hidden' name='id' value='@usr.FieldId'>
                                                 <input type='submit' name='submit' value='remove' class='btn btn-sm btn-default btn-flat' />
                                             </form>
                                         </td>
                                     </tr>
-                                    index = 1;
+                                    index = index + 1;
                                 }                                
                             </tbody>
                             <tfoot>
                                 <tr style="font-size:9pt;">
                                     <td><small class="label bg-green">add</small></td>
-                                    <td style="text-align:left;"><input name="coOwnerName" id="coOwnerName" placeholder="Co Owner Name" class="form-control" /></td>
+                                    <td style="text-align:left;"><input name="coOwnerName" id="coOwnerName" placeholder="Co Owner Name" class="typeahead_1 form-control m-b" /></td>
                                     <td style="text-align:left;"><textarea name="OwnerDesc" id="OwnerDesc" cols="5" class="form-control" placeholder="Description" ></textarea></td>
                                     <td style=""><button onclick="AddOwner();" class="btn btn-info pull-right">Add New</button></td>
                                 </tr>
@@ -251,10 +250,36 @@
 </div>
 
 <br />
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "__AjaxAntiForgeryForm" }))
+{
+    @Html.AntiForgeryToken()
+}
 <br />
 <script type="text/javascript">
     $(document).ready(
     function () {
+
+        $("#coOwnerName").typeahead({
+            source: function (query, process) {
+                var names = [];
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("GetUserNames", "Project")",
+                    data: { query: query },                    
+                success: function (data) {
+                    $.each(data, function (i, bname) {
+                        /* alert(bname); */
+                        names.push(bname);
+                    });
+                    process(names);
+                },
+                error: function (xerr) {
+                    /* $('#txteng').val("err : " +xerr);*/
+                }
+            });
+    }
+    });
+
         $('#StartDate').datepicker({
             changeMonth: true,
             changeYear: true,
@@ -390,6 +415,9 @@
         var odesc = $("#OwnerDesc").val();
         var sid = $("#ProjectId").val();
 
+        var form = $('#__AjaxAntiForgeryForm');
+        var token = $('input[name="__RequestVerificationToken"]', form).val();
+
         if ((sid == "") || (oname == "")) { return; }
 
         var postedContent = {
@@ -411,7 +439,8 @@
                                                 "<td>" + (i + 1) + "</td>" +
                                                 "<td style='text-align:left;'>" + message.data[i].UserName + "</td>" +
                                                 "<td style='text-align:left;'>" + message.data[i].OwnerContribution + "</td>" +
-                                                "<td><form name='frmOwner_" + (i + 1) + "' action='/technician/Service/Delete' method='post'><input type='hidden' name='id' value='" + message.data[i].OID + "'>" +
+                                                "<td><form name='frmOwner_" + (i + 1) + "' action='/Project/OwnerRemove' method='post'><input type='hidden' name='id' value='" + message.data[i].CoOwnerId + "'>" +
+                                                    "<input type='hidden' name='__RequestVerificationToken' value='" + token + "' />" +
                                                     "<input type='submit' name='submit' value='remove' class='btn btn-sm btn-default btn-flat' />" +
                                                 "</form></td>" +
                                             "</tr>";

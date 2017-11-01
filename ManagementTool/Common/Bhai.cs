@@ -364,6 +364,36 @@ namespace ManagementTool.Common
             return tech;
         }
 
+        public static List<contributors>      GetContributorsList   (int ProjectId)         
+        {
+            List<contributors> tech = new List<contributors>();
+            try
+            {
+                using (ProjectEntities _db = new ProjectEntities()) {
+                    tech = (from t in _db.C018_coOwners
+                                  join u in _db.EndUsers on t.UserId equals u.UID
+                                  orderby t.CreatedDate descending
+                                  where (t.ProjectId == ProjectId) 
+                                  select new contributors { FieldId = t.CoOwnerId,
+                                                            UID = t.UserId,
+                                                            UserName = u.UserName,
+                                                            UserContribution = t.OwnerContribution,
+                                                            ContributorAddedBy = "",
+                                                            ContributorAddDate = t.CreatedDate}).ToList();                   
+                }
+            }
+            catch (Exception e) {
+                contributors c = new contributors();
+                c.FieldId            = 0;
+                c.UID                = 0;
+                c.UserName           = "Exception Occured";
+                c.UserContribution   = e.Message;
+                c.ContributorAddDate = DateTime.Now;
+                tech.Add(c);
+            }
+            return tech;
+        }
+
         public static DataTable GetDataTable    (string tablename, string sSQL)             
         {
             DataTable dt = new DataTable(tablename);
