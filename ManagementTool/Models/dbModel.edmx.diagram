@@ -7,7 +7,6 @@
       <Diagram DiagramId="e026104ae8754b6f975677a1fbbc7754" Name="Diagram1" ZoomLevel="69">
         <EntityTypeShape EntityType="ManagementTool.C002_AREA" Width="1.5" PointX="6" PointY="15.25" />
         <EntityTypeShape EntityType="ManagementTool.C003_SUB_AREA" Width="1.5" PointX="9.5" PointY="12.25" />
-        <EntityTypeShape EntityType="ManagementTool.C006_SubPhase" Width="1.5" PointX="5.25" PointY="11.125" />
         <EntityTypeShape EntityType="ManagementTool.C010_LOCATION" Width="1.75" PointX="2.875" PointY="0.5" />
         <EntityTypeShape EntityType="ManagementTool.C011_COMPANY" Width="1.875" PointX="10.625" PointY="15.25" />
         <EntityTypeShape EntityType="ManagementTool.C013_PROJECT_TYPE" Width="1.875" PointX="0.5" PointY="0.5" />
@@ -31,7 +30,6 @@
         <AssociationConnector Association="ManagementTool.FK__AREA__SUB_AREA" />
         <AssociationConnector Association="ManagementTool.FK__GeneratedBy__AREA" />
         <AssociationConnector Association="ManagementTool.FK__GeneratedBy__SUB_AREA" />
-        <AssociationConnector Association="ManagementTool.FK_GeneratedBy__SubPhase" />
         <AssociationConnector Association="ManagementTool.FK_User__Commitment" />
         <AssociationConnector Association="ManagementTool.FK_Generated__Notification" />
         <AssociationConnector Association="ManagementTool.FK_Notification__Master_Detail" />
@@ -42,7 +40,6 @@
         <AssociationConnector Association="ManagementTool.FK__GeneratedBy__DIVISION" />
         <EntityTypeShape EntityType="ManagementTool.C005_PHASE" Width="1.5" PointX="15.125" PointY="9.5" />
         <AssociationConnector Association="ManagementTool.FK__GeneratedBy__PHASE" />
-        <AssociationConnector Association="ManagementTool.FK__PHASE__SubPhase" />
         <EntityTypeShape EntityType="ManagementTool.C007_BUCKET" Width="1.5" PointX="17.375" PointY="9.5" />
         <AssociationConnector Association="ManagementTool.FK__PHASE__BUCKET" />
         <AssociationConnector Association="ManagementTool.FK__GeneratedBy__BUCKET" />
@@ -72,6 +69,9 @@
         <EntityTypeShape EntityType="ManagementTool.C018_coOwners" Width="1.5" PointX="19.125" PointY="17.375" />
         <AssociationConnector Association="ManagementTool.FK_Project_Attachments" />
         <AssociationConnector Association="ManagementTool.FK_Project_coOwners" />
+        <EntityTypeShape EntityType="ManagementTool.C006_SubPhase" Width="1.5" PointX="20.375" PointY="5.625" />
+        <AssociationConnector Association="ManagementTool.FK__PHASE__SubPhase" />
+        <AssociationConnector Association="ManagementTool.FK_GeneratedBy__SubPhase" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

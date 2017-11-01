@@ -17,10 +17,12 @@ namespace ManagementTool.Models
         public int SubPhaseId { get; set; }
         public int PhaseId { get; set; }
         public string SubPhaseName { get; set; }
+        public System.DateTime StartDate { get; set; }
+        public System.DateTime EndDate { get; set; }
         public int GeneratedBy { get; set; }
         public System.DateTime GeneratedDate { get; set; }
     
-        public virtual EndUser EndUser { get; set; }
         public virtual C005_PHASE C005_PHASE { get; set; }
+        public virtual EndUser EndUser { get; set; }
     }
 }

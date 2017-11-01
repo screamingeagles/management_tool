@@ -29,7 +29,6 @@ namespace ManagementTool.Models
     
         public virtual DbSet<C002_AREA> C002_AREA { get; set; }
         public virtual DbSet<C003_SUB_AREA> C003_SUB_AREA { get; set; }
-        public virtual DbSet<C006_SubPhase> C006_SubPhase { get; set; }
         public virtual DbSet<C010_LOCATION> C010_LOCATION { get; set; }
         public virtual DbSet<C011_COMPANY> C011_COMPANY { get; set; }
         public virtual DbSet<C013_PROJECT_TYPE> C013_PROJECT_TYPE { get; set; }
@@ -59,6 +58,7 @@ namespace ManagementTool.Models
         public virtual DbSet<C004_PROJECT> C004_PROJECT { get; set; }
         public virtual DbSet<C019_Attachments> C019_Attachments { get; set; }
         public virtual DbSet<C018_coOwners> C018_coOwners { get; set; }
+        public virtual DbSet<C006_SubPhase> C006_SubPhase { get; set; }
     
         public virtual ObjectResult<SP_BUCKET_LIST_Result> SP_BUCKET_LIST()
         {

@@ -19,7 +19,6 @@ namespace ManagementTool.Models
         {
             this.C002_AREA = new HashSet<C002_AREA>();
             this.C003_SUB_AREA = new HashSet<C003_SUB_AREA>();
-            this.C006_SubPhase = new HashSet<C006_SubPhase>();
             this.C020_CommitmentMaster = new HashSet<C020_CommitmentMaster>();
             this.C022_Notification_Master = new HashSet<C022_Notification_Master>();
             this.C023_Notification_Detail = new HashSet<C023_Notification_Detail>();
@@ -29,6 +28,7 @@ namespace ManagementTool.Models
             this.C008_TASK_DATA = new HashSet<C008_TASK_DATA>();
             this.C008_TASK_DATA1 = new HashSet<C008_TASK_DATA>();
             this.C004_PROJECT = new HashSet<C004_PROJECT>();
+            this.C006_SubPhase = new HashSet<C006_SubPhase>();
         }
     
         public int UID { get; set; }
@@ -47,8 +47,6 @@ namespace ManagementTool.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<C003_SUB_AREA> C003_SUB_AREA { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<C006_SubPhase> C006_SubPhase { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<C020_CommitmentMaster> C020_CommitmentMaster { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<C022_Notification_Master> C022_Notification_Master { get; set; }
@@ -66,5 +64,7 @@ namespace ManagementTool.Models
         public virtual ICollection<C008_TASK_DATA> C008_TASK_DATA1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<C004_PROJECT> C004_PROJECT { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<C006_SubPhase> C006_SubPhase { get; set; }
     }
 }

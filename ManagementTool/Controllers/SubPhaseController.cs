@@ -67,7 +67,7 @@ namespace ManagementTool.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "PhaseId,SubPhaseName")] C006_SubPhase c006_SubPhase)
+        public ActionResult Create([Bind(Include = "PhaseId,SubPhaseName,StartDate,EndDate")] C006_SubPhase c006_SubPhase)
         {
             if (ModelState.IsValid)
             {
@@ -104,7 +104,7 @@ namespace ManagementTool.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "SubPhaseId,PhaseId,SubPhaseName")] C006_SubPhase c006_SubPhase)
+        public ActionResult Edit([Bind(Include = "SubPhaseId,PhaseId,SubPhaseName,StartDate,EndDate")] C006_SubPhase c006_SubPhase)
         {
             if (ModelState.IsValid)
             {
