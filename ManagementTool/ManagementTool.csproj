@@ -637,6 +637,7 @@
     <Compile Include="Common\notifications.cs" />
     <Compile Include="Common\projectmodel.cs" />
     <Compile Include="Common\Service.cs" />
+    <Compile Include="Common\task_base.cs" />
     <Compile Include="Common\UserIdentity.cs" />
     <Compile Include="Controllers\AreaController.cs" />
     <Compile Include="Controllers\BaseController.cs" />

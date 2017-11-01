@@ -130,7 +130,6 @@
         var sel = obj.options[obj.selectedIndex].value;
         if (sel == "") { return; }
         
-        alert(sel);
         var postedContent = { PhaseId: sel }
         $.ajax({
             type: "POST",

@@ -96,6 +96,19 @@ namespace ManagementTool.Controllers
                 return HttpNotFound();
             }
 
+            if (id.HasValue) {
+                var q = (from c in db.C004_PROJECT
+                         where (c.IsActive.Equals(true)) && (c.ProjectId == c007_BUCKET.ProjectId)
+                         select new { c.StartDate, c.EndDate }).FirstOrDefault();
+                ViewBag.EndDate     = q.EndDate     .ToString("dd-MMM-yyyy");
+                ViewBag.StartDate   = q.StartDate   .ToString("dd-MMM-yyyy");
+
+                var ph = (from p in db.C005_PHASE
+                         where (p.IsActive.Equals(true)) && (p.PhaseId == c007_BUCKET.PhaseId)
+                         select new { p.StartDate, p.EndDate }).FirstOrDefault();
+                ViewBag.PhEndDate   = ph.EndDate    .ToString("dd-MMM-yyyy");
+                ViewBag.phStartDate = ph.StartDate  .ToString("dd-MMM-yyyy");
+            }
             ViewBag.ProjectId   = new SelectList(db.C004_PROJECT    , "ProjectId"   , "ProjectName" , c007_BUCKET.ProjectId);
             ViewBag.PhaseId     = new SelectList(db.C005_PHASE      , "PhaseId"     , "PhaseName"   , c007_BUCKET.PhaseId);
             ViewBag.SubPhaseId  = new SelectList(db.C006_SubPhase   , "SubPhaseId"  , "SubPhaseName", c007_BUCKET.SubPhaseId);
@@ -111,6 +124,10 @@ namespace ManagementTool.Controllers
         {
             if (ModelState.IsValid)
             {
+                c007_BUCKET.GeneratedBy     = UserIdentity.UserId;
+                c007_BUCKET.GenerationDate  = DateTime.Now.AddHours(4);
+                c007_BUCKET.IsActive        = true;
+
                 db.Entry(c007_BUCKET).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

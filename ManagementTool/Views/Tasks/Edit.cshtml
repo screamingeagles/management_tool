@@ -1,8 +1,10 @@
 ﻿@model ManagementTool.Models.C008_TASK_DATA
-
+@using ManagementTool.Common;
 @{
     ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    task_base tb = (task_base)ViewBag.TaskBase;
 }
 
 
@@ -30,54 +32,66 @@
                         @Html.AntiForgeryToken();
                         @Html.HiddenFor(model => model.TaskId)
 
-                        <!-- / Service Id -->
+                        <!-- / Service Id And Location -->
                         <div class="form-group">
-                            <label class="col-lg-2 control-label">Task Id</label>
-                            <div class="col-lg-10">
-                                @Html.TextBoxFor(model => model.TaskId, htmlAttributes: new { @class = "form-control m-b", @disabled="disabled" })
+                            <label class="col-lg-2 control-label">Service Id</label>
+                            <div class="col-lg-4">
+                                <input  type="text" value="@tb.ServiceId" class="form-control m-b" disabled="disabled" name="TaskId" style="background-color:lavenderblush; color:black" />                                
+                            </div>
+                            <label class="col-lg-2 control-label">Location</label>
+                            <div class="col-lg-4">
+                                <input type="text" value="@tb.ServiceId" class="form-control m-b" disabled="disabled" name="Locatoin" style="background-color:lavenderblush; color:black" />                                
                             </div>
                         </div>
 
-
-                        <!-- / Select Location and Company -->
+                        <!-- / Company And Division -->
                         <div class="form-group">
-                            <label class="col-lg-2 control-label">Select Location</label>
+                            <label class="col-lg-2 control-label">Company</label>
                             <div class="col-lg-4">
-                                @Html.DropDownList("LocationId", null, "Select Location", htmlAttributes: new { @onchange = "FillCompany(this);", @class = "form-control m-b" })
+                                <input name="Company" type="text" value="@tb.ServiceId" class="form-control m-b" disabled="disabled" style="background-color:lavenderblush; color:black" />
                             </div>
-                            <label class="col-lg-2 control-label">Select Company</label>
+                            <label class="col-lg-2 control-label">Division</label>
                             <div class="col-lg-4">
-                                @Html.DropDownList("CompanyId", null, "Select Company", htmlAttributes: new { @class = "form-control m-b" })
+                                <input name="Division" type="text" value="@tb.ServiceId" class="form-control m-b" disabled="disabled" style="background-color:lavenderblush; color:black" />
                             </div>
                         </div>
 
-                        <!-- / Select Area and Sub Area -->
+                        <!-- / Area And Sub Area -->
                         <div class="form-group">
-                            <label class="col-lg-2 control-label">Select Area</label>
+                            <label class="col-lg-2 control-label">Area</label>
                             <div class="col-lg-4">
-                                @Html.DropDownList("AreaId", null, "Select Area", htmlAttributes: new { @onchange = "FillSubArea(this);", @class = "form-control m-b" })
+                                <input name="Area" type="text" value="@tb.AreaName" class="form-control m-b" disabled="disabled" style="background-color:lavenderblush; color:black" />
                             </div>
-                            <label class="col-lg-2 control-label">Select Sub Area</label>
+                            <label class="col-lg-2 control-label">Sub Area</label>
                             <div class="col-lg-4">
-                                @Html.DropDownList("SSubAreaId", null, "Select Sub Area", htmlAttributes: new { @class = "form-control m-b" })
+                                <input name="SubArea" type="text" value="@tb.SubAreaName" class="form-control m-b" disabled="disabled" style="background-color:lavenderblush; color:black" />
                             </div>
                         </div>
 
-                        <!-- / Show Project -->
+                        <!-- / Project And Phase -->
                         <div class="form-group">
-                            <label class="col-lg-2 control-label">Project/Phase/Sub</label>
-                            <div class="col-lg-10">
-                                <label class="form-control m-b" id="lblProjectDetails">@ViewBag.BucketDetial</label>
+                            <label class="col-lg-2 control-label">Project</label>
+                            <div class="col-lg-4">
+                                <input name="Project" type="text" value="@tb.ProjectName" class="form-control m-b" disabled="disabled" style="background-color:lavenderblush; color:black" />
+                            </div>
+                            <label class="col-lg-2 control-label">Phase</label>
+                            <div class="col-lg-4">
+                                <input name="Phase" type="text" value="@tb.PhaseName" class="form-control m-b" disabled="disabled" style="background-color:lavenderblush; color:black" />
                             </div>
                         </div>
-
-                        <!-- / Select Bucket -->
+                        
+                        <!-- / Sub Phase And Sub Sub Phase -->
                         <div class="form-group">
                             <label class="col-lg-2 control-label">Select Bucket</label>
-                            <div class="col-lg-10">
+                            <div class="col-lg-4">
                                 @Html.DropDownList("BucketId", null, "Select Bucket", htmlAttributes: new { @onchange = "FillBucket(this);", @class = "form-control m-b" })
                             </div>
+                            <label class="col-lg-2 control-label">Sub Phase</label>
+                            <div class="col-lg-4">
+                                <input name="SubPhase" type="text" value="@tb.SubPhaseName" class="form-control m-b" disabled="disabled" style="background-color:lavenderblush; color:black" />
+                            </div>                           
                         </div>
+
 
                         <!-- / Task Name -->
                         <div class="form-group">
@@ -208,6 +222,8 @@
         });
     });
 
+
+    /* remove*/
     function FillCompany    (obj) {
         var sel = obj.options[obj.selectedIndex].value;
         if (sel == "") {
@@ -238,6 +254,7 @@
 
     }
 
+    /* remove */
     function FillSubArea    (obj) {
         var sel     = obj.options[obj.selectedIndex].value;
         var selText = obj.options[obj.selectedIndex].text

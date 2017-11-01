@@ -167,7 +167,11 @@ namespace ManagementTool.Controllers
             ViewBag.SubAreaId   = new SelectList(db.C003_SUB_AREA   , "SubAreaId"   , "SubAreaName" , c008_TASK_DATA.SSubAreaId);
 
 
-            ViewBag.BucketId    = new SelectList(db.C007_BUCKET     , "BucketId"    , "Name"        , c008_TASK_DATA.BucketId);            
+
+
+            
+
+            ViewBag.BucketId = new SelectList(db.C007_BUCKET, "BucketId", "Name", c008_TASK_DATA.BucketId);            
             ViewBag.OwnerId     = new SelectList(db.EndUsers        , "UID"         , "UserName"    , c008_TASK_DATA.OwnerId);
             ViewBag.StatusId    = new SelectList(db.C015_STATUS     , "StatusId"    , "TaskStatus"  , c008_TASK_DATA.StatusId);
             ViewBag.TaskTypeId  = new SelectList(db.C014_TASK_TYPE  , "TypeId"      , "TypeName"    , c008_TASK_DATA.TaskTypeId);
@@ -206,6 +210,34 @@ namespace ManagementTool.Controllers
                             });
             ViewBag.AreaId      = new SelectList(area               , "AreaId"      , "Description" , c008_TASK_DATA.AreaId);
             ViewBag.SSubAreaId  = new SelectList(db.C003_SUB_AREA   , "SubAreaId"   , "SubAreaName" , c008_TASK_DATA.SSubAreaId);
+
+
+            // 1450
+            task_base tb = (from t  in db.C008_TASK_DATA
+                            join b  in db.C007_BUCKET   on t.BucketId   equals b.BucketId
+                            join p  in db.C004_PROJECT  on b.ProjectId  equals p.ProjectId
+                            join ph in db.C005_PHASE    on b.PhaseId    equals ph.PhaseId
+                            join sp in db.C006_SubPhase on b.SubPhaseId equals sp.SubPhaseId
+                            into joinx from x in joinx.DefaultIfEmpty()
+
+                            where (t.TaskId == id)
+                            select new task_base { ServiceId    = t.TaskId,
+                                                    ProjectName = p.ProjectName,
+                                                    PhaseName   = ph.PhaseName,
+                                                    SubPhaseName= (x.SubPhaseName == null)? "": x.SubPhaseName,
+                            }).FirstOrDefault();
+
+            //var  ar = (from a in db.C002_AREA
+            //                join s in db.C003_SUB_AREA on a.AreaId equals s.AreaId
+            //                where (a.AreaId == c008_TASK_DATA.AreaId) && (s.SubAreaId == c008_TASK_DATA.SubAreaId)
+            //                select new  { a.AreaName, s.SubAreaName }).FirstOrDefault();
+            //tb.AreaName = ar.AreaName;
+            //tb.SubAreaName = ar.SubAreaName;
+
+
+
+
+            ViewBag.TaskBase = tb;
             ViewBag.BucketId    = new SelectList(db.C007_BUCKET     , "BucketId"    , "Name"        , c008_TASK_DATA.BucketId);
             ViewBag.OwnerId     = new SelectList(db.EndUsers        , "UID"         , "UserName"    , c008_TASK_DATA.OwnerId);
             ViewBag.StatusId    = new SelectList(db.C015_STATUS     , "StatusId"    , "TaskStatus"  , c008_TASK_DATA.StatusId);
