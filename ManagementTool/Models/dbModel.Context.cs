@@ -52,13 +52,13 @@ namespace ManagementTool.Models
         public virtual DbSet<C001_DIVISION> C001_DIVISION { get; set; }
         public virtual DbSet<C005_PHASE> C005_PHASE { get; set; }
         public virtual DbSet<C007_BUCKET> C007_BUCKET { get; set; }
-        public virtual DbSet<C008_TASK_DATA> C008_TASK_DATA { get; set; }
-        public virtual DbSet<vw_Task_Details> vw_Task_Details { get; set; }
         public virtual DbSet<C021_CommimentDetails> C021_CommimentDetails { get; set; }
         public virtual DbSet<C004_PROJECT> C004_PROJECT { get; set; }
         public virtual DbSet<C019_Attachments> C019_Attachments { get; set; }
         public virtual DbSet<C018_coOwners> C018_coOwners { get; set; }
         public virtual DbSet<C006_SubPhase> C006_SubPhase { get; set; }
+        public virtual DbSet<vw_Task_Details> vw_Task_Details { get; set; }
+        public virtual DbSet<C008_TASK_DATA> C008_TASK_DATA { get; set; }
     
         public virtual ObjectResult<SP_BUCKET_LIST_Result> SP_BUCKET_LIST()
         {

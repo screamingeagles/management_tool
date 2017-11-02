@@ -72,14 +72,13 @@ namespace ManagementTool.Controllers
             //UserIdentity.UserName = "Arsalan (RTT)";
 
 
-            ViewBag.LocationId  = new SelectList(db.C010_LOCATION, "LocationId", "LocationName");
-            ViewBag.CompanyId   = new SelectList(db.C011_COMPANY.OrderBy(x => x.CompanyName).Take(3), "CompanyId", "CompanyName");
-            
+            ViewBag.LocationId = new SelectList(db.C010_LOCATION.OrderBy(x => x.LocationName), "LocationId", "LocationName");
+            ViewBag.CompanyId = new SelectList(db.C011_COMPANY.OrderBy(x => x.CompanyName), "CompanyId", "CompanyName");
+            ViewBag.DivisionId = new SelectList(db.C001_DIVISION.OrderBy(x => x.DivisionName), "DivisionId", "DivisionName");
 
-            ViewBag.AreaId          = new SelectList(db.C002_AREA            , "AreaId", "AreaName");
-            ViewBag.SubAreaId       = new SelectList(db.C003_SUB_AREA.Take(5), "SubAreaId", "SubAreaName");
-            ViewBag.DivisionId      = new SelectList(db.C001_DIVISION        , "DivisionId", "DivisionName");
-            ViewBag.ProjectType     = new SelectList(db.C013_PROJECT_TYPE    , "ProjectTypeId", "ProjectType");
+            ViewBag.AreaId = new SelectList(db.C002_AREA.OrderBy(x => x.AreaName), "AreaId", "AreaName");
+            ViewBag.SubAreaId = new SelectList(db.C003_SUB_AREA.Take(5), "SubAreaId", "SubAreaName");
+            ViewBag.ProjectType = new SelectList(db.C013_PROJECT_TYPE, "ProjectTypeId", "ProjectType");
 
             return View();
         }
@@ -93,22 +92,26 @@ namespace ManagementTool.Controllers
         {
             if ((c004_PROJECT.DivisionId > 0) && (c004_PROJECT.AreaId > 0) && (c004_PROJECT.ProjectName != "")) //(ModelState.IsValid)
             {
+                int? pid = null;
                 c004_PROJECT.GeneratedBy    = UserIdentity.UserId;
                 c004_PROJECT.GeneratedDate  = DateTime.Now.AddHours(4);
                 c004_PROJECT.IsActive       = true;
 
                 db.C004_PROJECT.Add(c004_PROJECT);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+
+                pid                         = c004_PROJECT.ProjectId;
+                if (pid.HasValue) { return RedirectToAction("Edit", "Project", new { id = pid }); }
+                else { return RedirectToAction("Index"); }
+                
             }
 
-            ViewBag.LocationId  = new SelectList(db.C010_LOCATION,          "LocationId",   "LocationName");
-            ViewBag.CompanyId   = new SelectList(db.C011_COMPANY.OrderBy(x => x.CompanyName), "CompanyId", "CompanyName");
+            ViewBag.LocationId  = new SelectList(db.C010_LOCATION.OrderBy(x => x.LocationName), "LocationId",   "LocationName");
+            ViewBag.CompanyId   = new SelectList(db.C011_COMPANY.OrderBy(x => x.CompanyName)  , "CompanyId",    "CompanyName");
+            ViewBag.DivisionId = new SelectList(db.C001_DIVISION.OrderBy(x => x.DivisionName) , "DivisionId",   "DivisionName");
 
-
-            ViewBag.AreaId      = new SelectList(db.C002_AREA               , "AreaId",         "AreaName");
-            ViewBag.SubAreaId   = new SelectList(db.C003_SUB_AREA.Take(5)   , "SubAreaId",      "SubAreaName");
-            ViewBag.DivisionId  = new SelectList(db.C001_DIVISION           , "DivisionId",     "DivisionName");
+            ViewBag.AreaId      = new SelectList(db.C002_AREA.OrderBy(x => x.AreaName)          , "AreaId",         "AreaName");
+            ViewBag.SubAreaId   = new SelectList(db.C003_SUB_AREA.Take(5)   , "SubAreaId",      "SubAreaName");            
             ViewBag.ProjectType = new SelectList(db.C013_PROJECT_TYPE       , "ProjectTypeId",  "ProjectType");
             return View(c004_PROJECT);
         }
@@ -124,13 +127,12 @@ namespace ManagementTool.Controllers
             ViewBag.CoOwners     = Bhai.GetContributorsList(id.Value);
             ViewBag.AttachedFiles= new SelectList(db.C019_Attachments.Where(a => a.ProjectId == id).OrderBy(a => a.CreatedDate), "AttachId", "AName");
 
-            ViewBag.LocationId  = new SelectList(db.C010_LOCATION, "LocationId", "LocationName", c004_PROJECT.LocationId);
+            ViewBag.LocationId  = new SelectList(db.C010_LOCATION.OrderBy(x => x.LocationName), "LocationId", "LocationName", c004_PROJECT.LocationId);
             ViewBag.CompanyId   = new SelectList(db.C011_COMPANY.Where(x => x.LocationId == c004_PROJECT.LocationId).OrderBy(x => x.CompanyName), "CompanyId", "CompanyName", c004_PROJECT.CompanyId);
+            ViewBag.DivisionId  = new SelectList(db.C001_DIVISION.OrderBy(x => x.DivisionName), "DivisionId", "DivisionName", c004_PROJECT.DivisionId);
 
-
-            ViewBag.DivisionId  = new SelectList(db.C001_DIVISION, "DivisionId", "DivisionName", c004_PROJECT.DivisionId);
-            ViewBag.AreaId      = new SelectList(db.C002_AREA.Where(c => c.DivisionId == c004_PROJECT.DivisionId), "AreaId", "AreaName", c004_PROJECT.AreaId);
-            ViewBag.SubAreaId   = new SelectList(db.C003_SUB_AREA.Where(c => c.AreaId   == c004_PROJECT.AreaId)   , "SubAreaId", "SubAreaName", c004_PROJECT.SubAreaId);
+            ViewBag.AreaId      = new SelectList(db.C002_AREA.Where(c => c.DivisionId == c004_PROJECT.DivisionId).OrderBy(x => x.AreaName), "AreaId", "AreaName", c004_PROJECT.AreaId);
+            ViewBag.SubAreaId   = new SelectList(db.C003_SUB_AREA.Where(c => c.AreaId   == c004_PROJECT.AreaId).OrderBy(x => x.SubAreaName)   , "SubAreaId", "SubAreaName", c004_PROJECT.SubAreaId);
             ViewBag.ProjectType = new SelectList(db.C013_PROJECT_TYPE, "ProjectTypeId", "ProjectType", c004_PROJECT.ProjectType);
             return View(c004_PROJECT);
         }
@@ -150,12 +152,14 @@ namespace ManagementTool.Controllers
 
                 db.Entry(c004_PROJECT).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Edit", "Project", new { id = c004_PROJECT.ProjectId });
             }
-            
-            ViewBag.DivisionId  = new SelectList(db.C001_DIVISION, "DivisionId", "DivisionName", c004_PROJECT.DivisionId);
-            ViewBag.AreaId      = new SelectList(db.C002_AREA.Where(c => c.DivisionId == c004_PROJECT.DivisionId), "AreaId", "AreaName", c004_PROJECT.AreaId);
-            ViewBag.SubAreaId   = new SelectList(db.C003_SUB_AREA.Where(c => c.AreaId == c004_PROJECT.AreaId), "SubAreaId", "SubAreaName", c004_PROJECT.SubAreaId);
+            ViewBag.LocationId  = new SelectList(db.C010_LOCATION, "LocationId", "LocationName", c004_PROJECT.LocationId);
+            ViewBag.CompanyId   = new SelectList(db.C011_COMPANY.Where(x => x.LocationId == c004_PROJECT.LocationId).OrderBy(x => x.CompanyName), "CompanyId", "CompanyName", c004_PROJECT.CompanyId);
+            ViewBag.DivisionId  = new SelectList(db.C001_DIVISION.OrderBy(x => x.DivisionName), "DivisionId", "DivisionName", c004_PROJECT.DivisionId);
+
+            ViewBag.AreaId      = new SelectList(db.C002_AREA.Where(c => c.DivisionId == c004_PROJECT.DivisionId).OrderBy(x => x.AreaName), "AreaId", "AreaName", c004_PROJECT.AreaId);
+            ViewBag.SubAreaId   = new SelectList(db.C003_SUB_AREA.Where(c => c.AreaId == c004_PROJECT.AreaId).OrderBy(x => x.SubAreaName), "SubAreaId", "SubAreaName", c004_PROJECT.SubAreaId);
             ViewBag.ProjectType = new SelectList(db.C013_PROJECT_TYPE, "ProjectTypeId", "ProjectType", c004_PROJECT.ProjectType);
             return View(c004_PROJECT);
         }
@@ -196,8 +200,6 @@ namespace ManagementTool.Controllers
             base.Dispose(disposing);
         }
 
-
-
         public JsonResult GetUserNames(string query) {
             string[] names = null;
 
@@ -208,6 +210,8 @@ namespace ManagementTool.Controllers
             }
             return Json(names, JsonRequestBehavior.AllowGet);
         }
+
+
 
 
 

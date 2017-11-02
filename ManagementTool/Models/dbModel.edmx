@@ -98,12 +98,7 @@
             <PropertyRef Name="TaskId" />
           </Key>
           <Property Name="TaskId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="LocationId" Type="int" Nullable="false" />
-          <Property Name="CompanyId" Type="int" Nullable="false" />
           <Property Name="BucketId" Type="int" Nullable="false" />
-          <Property Name="AreaId" Type="int" Nullable="false" />
-          <Property Name="SubAreaId" Type="int" Nullable="false" />
-          <Property Name="SSubAreaId" Type="int" Nullable="false" />
           <Property Name="SName" Type="nvarchar" MaxLength="900" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="900" />
           <Property Name="StartDate" Type="datetime" />
@@ -426,7 +421,7 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
             <PropertyRef Name="AreaId" />
             <PropertyRef Name="AreaName" />
             <PropertyRef Name="SubAreaId" />
-            
+            <PropertyRef Name="SubAreaName" />
             <PropertyRef Name="SName" />
             <PropertyRef Name="OwnerId" />
             <PropertyRef Name="OwnerName" />
@@ -512,18 +507,6 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__COMPANY__TASK_DATA">
-          <End Role="011_COMPANY" Type="Self.011_COMPANY" Multiplicity="1" />
-          <End Role="008_TASK_DATA" Type="Self.008_TASK_DATA" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="011_COMPANY">
-              <PropertyRef Name="CompanyId" />
-            </Principal>
-            <Dependent Role="008_TASK_DATA">
-              <PropertyRef Name="CompanyId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__DIVISION__PROJECT">
           <End Role="001_DIVISION" Type="Self.001_DIVISION" Multiplicity="1" />
           <End Role="004_PROJECT" Type="Self.004_PROJECT" Multiplicity="*" />
@@ -605,18 +588,6 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
             </Principal>
             <Dependent Role="003_SUB_AREA">
               <PropertyRef Name="GeneratedBy" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__LOCATION__TASK_DATA">
-          <End Role="010_LOCATION" Type="Self.010_LOCATION" Multiplicity="1" />
-          <End Role="008_TASK_DATA" Type="Self.008_TASK_DATA" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="010_LOCATION">
-              <PropertyRef Name="LocationId" />
-            </Principal>
-            <Dependent Role="008_TASK_DATA">
-              <PropertyRef Name="LocationId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -996,10 +967,6 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
             <End Role="002_AREA" EntitySet="002_AREA" />
             <End Role="003_SUB_AREA" EntitySet="003_SUB_AREA" />
           </AssociationSet>
-          <AssociationSet Name="FK__COMPANY__TASK_DATA" Association="Self.FK__COMPANY__TASK_DATA">
-            <End Role="011_COMPANY" EntitySet="011_COMPANY" />
-            <End Role="008_TASK_DATA" EntitySet="008_TASK_DATA" />
-          </AssociationSet>
           <AssociationSet Name="FK__DIVISION__PROJECT" Association="Self.FK__DIVISION__PROJECT">
             <End Role="001_DIVISION" EntitySet="001_DIVISION" />
             <End Role="004_PROJECT" EntitySet="004_PROJECT" />
@@ -1027,10 +994,6 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
           <AssociationSet Name="FK__GeneratedBy__SUB_AREA" Association="Self.FK__GeneratedBy__SUB_AREA">
             <End Role="EndUser" EntitySet="EndUser" />
             <End Role="003_SUB_AREA" EntitySet="003_SUB_AREA" />
-          </AssociationSet>
-          <AssociationSet Name="FK__LOCATION__TASK_DATA" Association="Self.FK__LOCATION__TASK_DATA">
-            <End Role="010_LOCATION" EntitySet="010_LOCATION" />
-            <End Role="008_TASK_DATA" EntitySet="008_TASK_DATA" />
           </AssociationSet>
           <AssociationSet Name="FK__PHASE__BUCKET" Association="Self.FK__PHASE__BUCKET">
             <End Role="005_PHASE" EntitySet="005_PHASE" />
@@ -1204,40 +1167,6 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
             <End Role="C007_BUCKET" EntitySet="C007_BUCKET" />
           </AssociationSet>
           <FunctionImport Name="SP_BUCKET_LIST" ReturnType="Collection(ManagementTool.SP_BUCKET_LIST_Result)" />
-          <EntitySet Name="C008_TASK_DATA" EntityType="ManagementTool.C008_TASK_DATA" />
-          <AssociationSet Name="FK_BUCKET_TASK_DATA" Association="ManagementTool.FK_BUCKET_TASK_DATA">
-            <End Role="C007_BUCKET" EntitySet="C007_BUCKET" />
-            <End Role="C008_TASK_DATA" EntitySet="C008_TASK_DATA" />
-          </AssociationSet>
-          <AssociationSet Name="FK__COMPANY__TASK_DATA" Association="ManagementTool.FK__COMPANY__TASK_DATA">
-            <End Role="C011_COMPANY" EntitySet="C011_COMPANY" />
-            <End Role="C008_TASK_DATA" EntitySet="C008_TASK_DATA" />
-          </AssociationSet>
-          <AssociationSet Name="FK__LOCATION__TASK_DATA" Association="ManagementTool.FK__LOCATION__TASK_DATA">
-            <End Role="C010_LOCATION" EntitySet="C010_LOCATION" />
-            <End Role="C008_TASK_DATA" EntitySet="C008_TASK_DATA" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Generated__TASK_DATA" Association="ManagementTool.FK_Generated__TASK_DATA">
-            <End Role="EndUser" EntitySet="EndUsers" />
-            <End Role="C008_TASK_DATA" EntitySet="C008_TASK_DATA" />
-          </AssociationSet>
-          <AssociationSet Name="FK_OwnerID__TASK_DATA" Association="ManagementTool.FK_OwnerID__TASK_DATA">
-            <End Role="EndUser" EntitySet="EndUsers" />
-            <End Role="C008_TASK_DATA" EntitySet="C008_TASK_DATA" />
-          </AssociationSet>
-          <AssociationSet Name="FK_STATUS__TASK_DATA" Association="ManagementTool.FK_STATUS__TASK_DATA">
-            <End Role="C015_STATUS" EntitySet="C015_STATUS" />
-            <End Role="C008_TASK_DATA" EntitySet="C008_TASK_DATA" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TASK_DATA_CYCLED" Association="ManagementTool.FK_TASK_DATA_CYCLED">
-            <End Role="C008_TASK_DATA" EntitySet="C008_TASK_DATA" />
-            <End Role="C016_CYCLED" EntitySet="C016_CYCLED" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TASK_TYPE__TASK_DATA" Association="ManagementTool.FK_TASK_TYPE__TASK_DATA">
-            <End Role="C014_TASK_TYPE" EntitySet="C014_TASK_TYPE" />
-            <End Role="C008_TASK_DATA" EntitySet="C008_TASK_DATA" />
-          </AssociationSet>
-          <EntitySet Name="vw_Task_Details" EntityType="ManagementTool.vw_Task_Details" />
           <EntitySet Name="C021_CommimentDetails" EntityType="ManagementTool.C021_CommimentDetails" />
           <AssociationSet Name="FK_Commiment__Master_Details" Association="ManagementTool.FK_Commiment__Master_Details">
             <End Role="C020_CommitmentMaster" EntitySet="C020_CommitmentMaster" />
@@ -1277,10 +1206,6 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
             <End Role="C004_PROJECT" EntitySet="C004_PROJECT" />
           </AssociationSet>
           <EntitySet Name="C019_Attachments" EntityType="ManagementTool.C019_Attachments" />
-          <AssociationSet Name="FK_TASK_DATA_Attachments" Association="ManagementTool.FK_TASK_DATA_Attachments">
-            <End Role="C008_TASK_DATA" EntitySet="C008_TASK_DATA" />
-            <End Role="C019_Attachments" EntitySet="C019_Attachments" />
-          </AssociationSet>
           <EntitySet Name="C018_coOwners" EntityType="ManagementTool.C018_coOwners" />
           <AssociationSet Name="FK_Project_Attachments" Association="ManagementTool.FK_Project_Attachments">
             <End Role="C004_PROJECT" EntitySet="C004_PROJECT" />
@@ -1298,6 +1223,32 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
           <AssociationSet Name="FK_GeneratedBy__SubPhase" Association="ManagementTool.FK_GeneratedBy__SubPhase">
             <End Role="EndUser" EntitySet="EndUsers" />
             <End Role="C006_SubPhase" EntitySet="C006_SubPhase" />
+          </AssociationSet>
+          <EntitySet Name="vw_Task_Details" EntityType="ManagementTool.vw_Task_Details" />
+          <EntitySet Name="C008_TASK_DATA" EntityType="ManagementTool.C008_TASK_DATA" />
+          <AssociationSet Name="FK_BUCKET_TASK_DATA" Association="ManagementTool.FK_BUCKET_TASK_DATA">
+            <End Role="C007_BUCKET" EntitySet="C007_BUCKET" />
+            <End Role="C008_TASK_DATA" EntitySet="C008_TASK_DATA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Generated__TASK_DATA" Association="ManagementTool.FK_Generated__TASK_DATA">
+            <End Role="EndUser" EntitySet="EndUsers" />
+            <End Role="C008_TASK_DATA" EntitySet="C008_TASK_DATA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OwnerID__TASK_DATA" Association="ManagementTool.FK_OwnerID__TASK_DATA">
+            <End Role="EndUser" EntitySet="EndUsers" />
+            <End Role="C008_TASK_DATA" EntitySet="C008_TASK_DATA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_STATUS__TASK_DATA" Association="ManagementTool.FK_STATUS__TASK_DATA">
+            <End Role="C015_STATUS" EntitySet="C015_STATUS" />
+            <End Role="C008_TASK_DATA" EntitySet="C008_TASK_DATA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TASK_DATA_CYCLED" Association="ManagementTool.FK_TASK_DATA_CYCLED">
+            <End Role="C008_TASK_DATA" EntitySet="C008_TASK_DATA" />
+            <End Role="C016_CYCLED" EntitySet="C016_CYCLED" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TASK_TYPE__TASK_DATA" Association="ManagementTool.FK_TASK_TYPE__TASK_DATA">
+            <End Role="C014_TASK_TYPE" EntitySet="C014_TASK_TYPE" />
+            <End Role="C008_TASK_DATA" EntitySet="C008_TASK_DATA" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="C002_AREA">
@@ -1337,7 +1288,6 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
           <Property Name="CreatedBy" Type="Int32" />
           <Property Name="CreatedDatetime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="C008_TASK_DATA" Relationship="ManagementTool.FK__LOCATION__TASK_DATA" FromRole="C010_LOCATION" ToRole="C008_TASK_DATA" />
           <NavigationProperty Name="C004_PROJECT" Relationship="ManagementTool.FK__PROJECT__LOCATION" FromRole="C010_LOCATION" ToRole="C004_PROJECT" />
         </EntityType>
         <EntityType Name="C011_COMPANY">
@@ -1350,7 +1300,6 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
           <Property Name="CreatedBy" Type="Int32" />
           <Property Name="CreatedDatetime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="C008_TASK_DATA" Relationship="ManagementTool.FK__COMPANY__TASK_DATA" FromRole="C011_COMPANY" ToRole="C008_TASK_DATA" />
           <NavigationProperty Name="C004_PROJECT" Relationship="ManagementTool.FK__PROJECT__COMPANY" FromRole="C011_COMPANY" ToRole="C004_PROJECT" />
         </EntityType>
         <EntityType Name="C013_PROJECT_TYPE">
@@ -1479,10 +1428,10 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
           <NavigationProperty Name="C001_DIVISION" Relationship="ManagementTool.FK__GeneratedBy__DIVISION" FromRole="EndUser" ToRole="C001_DIVISION" />
           <NavigationProperty Name="C005_PHASE" Relationship="ManagementTool.FK__GeneratedBy__PHASE" FromRole="EndUser" ToRole="C005_PHASE" />
           <NavigationProperty Name="C007_BUCKET" Relationship="ManagementTool.FK__GeneratedBy__BUCKET" FromRole="EndUser" ToRole="C007_BUCKET" />
-          <NavigationProperty Name="C008_TASK_DATA" Relationship="ManagementTool.FK_Generated__TASK_DATA" FromRole="EndUser" ToRole="C008_TASK_DATA" />
-          <NavigationProperty Name="C008_TASK_DATA1" Relationship="ManagementTool.FK_OwnerID__TASK_DATA" FromRole="EndUser" ToRole="C008_TASK_DATA" />
           <NavigationProperty Name="C004_PROJECT" Relationship="ManagementTool.FK__GeneratedBy__PROJECT" FromRole="EndUser" ToRole="C004_PROJECT" />
           <NavigationProperty Name="C006_SubPhase" Relationship="ManagementTool.FK_GeneratedBy__SubPhase" FromRole="EndUser" ToRole="C006_SubPhase" />
+          <NavigationProperty Name="C008_TASK_DATA" Relationship="ManagementTool.FK_Generated__TASK_DATA" FromRole="EndUser" ToRole="C008_TASK_DATA" />
+          <NavigationProperty Name="C008_TASK_DATA1" Relationship="ManagementTool.FK_OwnerID__TASK_DATA" FromRole="EndUser" ToRole="C008_TASK_DATA" />
         </EntityType>
         <EntityType Name="EndUser_Details">
           <Key>
@@ -1774,8 +1723,8 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
           <Property Name="GenerationDate" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="C005_PHASE" Relationship="ManagementTool.FK__PHASE__BUCKET" FromRole="C007_BUCKET" ToRole="C005_PHASE" />
           <NavigationProperty Name="EndUser" Relationship="ManagementTool.FK__GeneratedBy__BUCKET" FromRole="C007_BUCKET" ToRole="EndUser" />
-          <NavigationProperty Name="C008_TASK_DATA" Relationship="ManagementTool.FK_BUCKET_TASK_DATA" FromRole="C007_BUCKET" ToRole="C008_TASK_DATA" />
           <NavigationProperty Name="C004_PROJECT" Relationship="ManagementTool.FK__PROJECT__BUCKET" FromRole="C007_BUCKET" ToRole="C004_PROJECT" />
+          <NavigationProperty Name="C008_TASK_DATA" Relationship="ManagementTool.FK_BUCKET_TASK_DATA" FromRole="C007_BUCKET" ToRole="C008_TASK_DATA" />
         </EntityType>
         <Association Name="FK__PHASE__BUCKET">
           <End Type="ManagementTool.C005_PHASE" Role="C005_PHASE" Multiplicity="1" />
@@ -1815,205 +1764,6 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
           <Property Type="String" Name="UserName" Nullable="false" MaxLength="250" />
           <Property Type="DateTime" Name="GenerationDate" Nullable="false" Precision="23" />
         </ComplexType>
-        <EntityType Name="C008_TASK_DATA">
-          <Key>
-            <PropertyRef Name="TaskId" />
-          </Key>
-          <Property Name="TaskId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="LocationId" Type="Int32" Nullable="false" />
-          <Property Name="CompanyId" Type="Int32" Nullable="false" />
-          <Property Name="BucketId" Type="Int32" Nullable="false" />
-          <Property Name="AreaId" Type="Int32" Nullable="false" />
-          <Property Name="SubAreaId" Type="Int32" Nullable="false" />
-          <Property Name="SSubAreaId" Type="Int32" Nullable="false" />
-          <Property Name="SName" Type="String" Nullable="false" MaxLength="900" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" MaxLength="900" FixedLength="false" Unicode="true" />
-          <Property Name="StartDate" Type="DateTime" Precision="3" />
-          <Property Name="Deadline" Type="DateTime" Precision="3" />
-          <Property Name="OrderId" Type="Int32" />
-          <Property Name="ManDays" Type="Double" />
-          <Property Name="OwnerId" Type="Int32" Nullable="false" />
-          <Property Name="GeneratedBy" Type="Int32" Nullable="false" />
-          <Property Name="GeneratedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="DocsLink" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="TaskTypeId" Type="Int32" Nullable="false" />
-          <Property Name="StatusId" Type="Int32" Nullable="false" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="C007_BUCKET" Relationship="ManagementTool.FK_BUCKET_TASK_DATA" FromRole="C008_TASK_DATA" ToRole="C007_BUCKET" />
-          <NavigationProperty Name="C011_COMPANY" Relationship="ManagementTool.FK__COMPANY__TASK_DATA" FromRole="C008_TASK_DATA" ToRole="C011_COMPANY" />
-          <NavigationProperty Name="C010_LOCATION" Relationship="ManagementTool.FK__LOCATION__TASK_DATA" FromRole="C008_TASK_DATA" ToRole="C010_LOCATION" />
-          <NavigationProperty Name="EndUser" Relationship="ManagementTool.FK_Generated__TASK_DATA" FromRole="C008_TASK_DATA" ToRole="EndUser" />
-          <NavigationProperty Name="EndUser1" Relationship="ManagementTool.FK_OwnerID__TASK_DATA" FromRole="C008_TASK_DATA" ToRole="EndUser" />
-          <NavigationProperty Name="C015_STATUS" Relationship="ManagementTool.FK_STATUS__TASK_DATA" FromRole="C008_TASK_DATA" ToRole="C015_STATUS" />
-          <NavigationProperty Name="C016_CYCLED" Relationship="ManagementTool.FK_TASK_DATA_CYCLED" FromRole="C008_TASK_DATA" ToRole="C016_CYCLED" />
-          <NavigationProperty Name="C014_TASK_TYPE" Relationship="ManagementTool.FK_TASK_TYPE__TASK_DATA" FromRole="C008_TASK_DATA" ToRole="C014_TASK_TYPE" />
-          <NavigationProperty Name="C019_Attachments" Relationship="ManagementTool.FK_TASK_DATA_Attachments" FromRole="C008_TASK_DATA" ToRole="C019_Attachments" />
-        </EntityType>
-        <Association Name="FK_BUCKET_TASK_DATA">
-          <End Type="ManagementTool.C007_BUCKET" Role="C007_BUCKET" Multiplicity="1" />
-          <End Type="ManagementTool.C008_TASK_DATA" Role="C008_TASK_DATA" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="C007_BUCKET">
-              <PropertyRef Name="BucketId" />
-            </Principal>
-            <Dependent Role="C008_TASK_DATA">
-              <PropertyRef Name="BucketId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__COMPANY__TASK_DATA">
-          <End Type="ManagementTool.C011_COMPANY" Role="C011_COMPANY" Multiplicity="1" />
-          <End Type="ManagementTool.C008_TASK_DATA" Role="C008_TASK_DATA" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="C011_COMPANY">
-              <PropertyRef Name="CompanyId" />
-            </Principal>
-            <Dependent Role="C008_TASK_DATA">
-              <PropertyRef Name="CompanyId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__LOCATION__TASK_DATA">
-          <End Type="ManagementTool.C010_LOCATION" Role="C010_LOCATION" Multiplicity="1" />
-          <End Type="ManagementTool.C008_TASK_DATA" Role="C008_TASK_DATA" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="C010_LOCATION">
-              <PropertyRef Name="LocationId" />
-            </Principal>
-            <Dependent Role="C008_TASK_DATA">
-              <PropertyRef Name="LocationId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Generated__TASK_DATA">
-          <End Type="ManagementTool.EndUser" Role="EndUser" Multiplicity="1" />
-          <End Type="ManagementTool.C008_TASK_DATA" Role="C008_TASK_DATA" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="EndUser">
-              <PropertyRef Name="UID" />
-            </Principal>
-            <Dependent Role="C008_TASK_DATA">
-              <PropertyRef Name="GeneratedBy" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_OwnerID__TASK_DATA">
-          <End Type="ManagementTool.EndUser" Role="EndUser" Multiplicity="1" />
-          <End Type="ManagementTool.C008_TASK_DATA" Role="C008_TASK_DATA" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="EndUser">
-              <PropertyRef Name="UID" />
-            </Principal>
-            <Dependent Role="C008_TASK_DATA">
-              <PropertyRef Name="OwnerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_STATUS__TASK_DATA">
-          <End Type="ManagementTool.C015_STATUS" Role="C015_STATUS" Multiplicity="1" />
-          <End Type="ManagementTool.C008_TASK_DATA" Role="C008_TASK_DATA" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="C015_STATUS">
-              <PropertyRef Name="StatusId" />
-            </Principal>
-            <Dependent Role="C008_TASK_DATA">
-              <PropertyRef Name="StatusId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TASK_DATA_CYCLED">
-          <End Type="ManagementTool.C008_TASK_DATA" Role="C008_TASK_DATA" Multiplicity="1" />
-          <End Type="ManagementTool.C016_CYCLED" Role="C016_CYCLED" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="C008_TASK_DATA">
-              <PropertyRef Name="TaskId" />
-            </Principal>
-            <Dependent Role="C016_CYCLED">
-              <PropertyRef Name="TaskId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TASK_TYPE__TASK_DATA">
-          <End Type="ManagementTool.C014_TASK_TYPE" Role="C014_TASK_TYPE" Multiplicity="1" />
-          <End Type="ManagementTool.C008_TASK_DATA" Role="C008_TASK_DATA" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="C014_TASK_TYPE">
-              <PropertyRef Name="TypeId" />
-            </Principal>
-            <Dependent Role="C008_TASK_DATA">
-              <PropertyRef Name="TaskTypeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="vw_Task_Details">
-          <Key>
-            <PropertyRef Name="TaskId" />
-            <PropertyRef Name="LocationId" />
-            <PropertyRef Name="LocationName" />
-            <PropertyRef Name="CompanyId" />
-            <PropertyRef Name="CompanyName" />
-            <PropertyRef Name="ProjectId" />
-            <PropertyRef Name="ProjectName" />
-            <PropertyRef Name="PhaseId" />
-            <PropertyRef Name="PhaseName" />
-            <PropertyRef Name="SubPhaseId" />
-            <PropertyRef Name="SubPhaseName" />
-            <PropertyRef Name="BucketId" />
-            <PropertyRef Name="BucketName" />
-            <PropertyRef Name="DivisionId" />
-            <PropertyRef Name="DivisionName" />
-            <PropertyRef Name="AreaId" />
-            <PropertyRef Name="AreaName" />
-            <PropertyRef Name="SubAreaId" />
-            <PropertyRef Name="SName" />
-            <PropertyRef Name="OwnerId" />
-            <PropertyRef Name="OwnerName" />
-            <PropertyRef Name="GeneratedBy" />
-            <PropertyRef Name="GerneratedName" />
-            <PropertyRef Name="GeneratedDate" />
-            <PropertyRef Name="TaskTypeId" />
-            <PropertyRef Name="TypeName" />
-            <PropertyRef Name="StatusId" />
-            <PropertyRef Name="TaskStatus" />
-            <PropertyRef Name="IsActive" />
-          </Key>
-          <Property Name="TaskId" Type="Int32" Nullable="false" />
-          <Property Name="LocationId" Type="Int32" Nullable="false" />
-          <Property Name="LocationName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="CompanyId" Type="Int32" Nullable="false" />
-          <Property Name="CompanyName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="ProjectId" Type="Int32" Nullable="false" />
-          <Property Name="ProjectName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="PhaseId" Type="Int32" Nullable="false" />
-          <Property Name="PhaseName" Type="String" Nullable="false" MaxLength="550" FixedLength="false" Unicode="true" />
-          <Property Name="SubPhaseId" Type="Int32" Nullable="false" />
-          <Property Name="SubPhaseName" Type="String" Nullable="false" MaxLength="550" FixedLength="false" Unicode="true" />
-          <Property Name="BucketId" Type="Int32" Nullable="false" />
-          <Property Name="BucketName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="DivisionId" Type="Int32" Nullable="false" />
-          <Property Name="DivisionName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="AreaId" Type="Int32" Nullable="false" />
-          <Property Name="AreaName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="SubAreaId" Type="Int32" Nullable="false" />
-          <Property Name="SubAreaName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="SName" Type="String" Nullable="false" MaxLength="900" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" MaxLength="900" FixedLength="false" Unicode="true" />
-          <Property Name="StartDate" Type="DateTime" Precision="3" />
-          <Property Name="Deadline" Type="DateTime" Precision="3" />
-          <Property Name="OrderId" Type="Int32" />
-          <Property Name="ManDays" Type="Double" />
-          <Property Name="OwnerId" Type="Int32" Nullable="false" />
-          <Property Name="OwnerName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="GeneratedBy" Type="Int32" Nullable="false" />
-          <Property Name="GerneratedName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="GeneratedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="DocsLink" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="TaskTypeId" Type="Int32" Nullable="false" />
-          <Property Name="TypeName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="StatusId" Type="Int32" Nullable="false" />
-          <Property Name="TaskStatus" Type="String" Nullable="false" MaxLength="700" FixedLength="false" Unicode="true" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-        </EntityType>
         <EntityType Name="C021_CommimentDetails">
           <Key>
             <PropertyRef Name="DetailId" />
@@ -2179,21 +1929,8 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
           <Property Name="CreatedBy" Type="Int32" />
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="IsActive" Type="Boolean" />
-          <NavigationProperty Name="C008_TASK_DATA" Relationship="ManagementTool.FK_TASK_DATA_Attachments" FromRole="C019_Attachments" ToRole="C008_TASK_DATA" />
           <NavigationProperty Name="C004_PROJECT" Relationship="ManagementTool.FK_Project_Attachments" FromRole="C019_Attachments" ToRole="C004_PROJECT" />
         </EntityType>
-        <Association Name="FK_TASK_DATA_Attachments">
-          <End Type="ManagementTool.C008_TASK_DATA" Role="C008_TASK_DATA" Multiplicity="1" />
-          <End Type="ManagementTool.C019_Attachments" Role="C019_Attachments" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="C008_TASK_DATA">
-              <PropertyRef Name="TaskId" />
-            </Principal>
-            <Dependent Role="C019_Attachments">
-              <PropertyRef Name="ProjectId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="C018_coOwners">
           <Key>
             <PropertyRef Name="CoOwnerId" />
@@ -2265,6 +2002,174 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
             </Principal>
             <Dependent Role="C006_SubPhase">
               <PropertyRef Name="GeneratedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="vw_Task_Details">
+          <Key>
+            <PropertyRef Name="TaskId" />
+            <PropertyRef Name="LocationId" />
+            <PropertyRef Name="LocationName" />
+            <PropertyRef Name="CompanyId" />
+            <PropertyRef Name="CompanyName" />
+            <PropertyRef Name="ProjectId" />
+            <PropertyRef Name="ProjectName" />
+            <PropertyRef Name="PhaseId" />
+            <PropertyRef Name="PhaseName" />
+            <PropertyRef Name="SubPhaseId" />
+            <PropertyRef Name="SubPhaseName" />
+            <PropertyRef Name="BucketId" />
+            <PropertyRef Name="BucketName" />
+            <PropertyRef Name="DivisionId" />
+            <PropertyRef Name="DivisionName" />
+            <PropertyRef Name="AreaId" />
+            <PropertyRef Name="AreaName" />
+            <PropertyRef Name="SubAreaId" />
+            <PropertyRef Name="SubAreaName" />
+            <PropertyRef Name="SName" />
+            <PropertyRef Name="OwnerId" />
+            <PropertyRef Name="OwnerName" />
+            <PropertyRef Name="GeneratedBy" />
+            <PropertyRef Name="GerneratedName" />
+            <PropertyRef Name="GeneratedDate" />
+            <PropertyRef Name="TaskTypeId" />
+            <PropertyRef Name="TypeName" />
+            <PropertyRef Name="StatusId" />
+            <PropertyRef Name="TaskStatus" />
+            <PropertyRef Name="IsActive" />
+          </Key>
+          <Property Name="TaskId" Type="Int32" Nullable="false" />
+          <Property Name="LocationId" Type="Int32" Nullable="false" />
+          <Property Name="LocationName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyId" Type="Int32" Nullable="false" />
+          <Property Name="CompanyName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="ProjectId" Type="Int32" Nullable="false" />
+          <Property Name="ProjectName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="PhaseId" Type="Int32" Nullable="false" />
+          <Property Name="PhaseName" Type="String" Nullable="false" MaxLength="550" FixedLength="false" Unicode="true" />
+          <Property Name="SubPhaseId" Type="Int32" Nullable="false" />
+          <Property Name="SubPhaseName" Type="String" Nullable="false" MaxLength="550" FixedLength="false" Unicode="true" />
+          <Property Name="BucketId" Type="Int32" Nullable="false" />
+          <Property Name="BucketName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="DivisionId" Type="Int32" Nullable="false" />
+          <Property Name="DivisionName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="AreaId" Type="Int32" Nullable="false" />
+          <Property Name="AreaName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="SubAreaId" Type="Int32" Nullable="false" />
+          <Property Name="SubAreaName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="SName" Type="String" Nullable="false" MaxLength="900" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="900" FixedLength="false" Unicode="true" />
+          <Property Name="StartDate" Type="DateTime" Precision="3" />
+          <Property Name="Deadline" Type="DateTime" Precision="3" />
+          <Property Name="OrderId" Type="Int32" />
+          <Property Name="ManDays" Type="Double" />
+          <Property Name="OwnerId" Type="Int32" Nullable="false" />
+          <Property Name="OwnerName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="GeneratedBy" Type="Int32" Nullable="false" />
+          <Property Name="GerneratedName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="GeneratedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DocsLink" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="TaskTypeId" Type="Int32" Nullable="false" />
+          <Property Name="TypeName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="StatusId" Type="Int32" Nullable="false" />
+          <Property Name="TaskStatus" Type="String" Nullable="false" MaxLength="700" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="C008_TASK_DATA">
+          <Key>
+            <PropertyRef Name="TaskId" />
+          </Key>
+          <Property Name="TaskId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BucketId" Type="Int32" Nullable="false" />
+          <Property Name="SName" Type="String" Nullable="false" MaxLength="900" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="900" FixedLength="false" Unicode="true" />
+          <Property Name="StartDate" Type="DateTime" Precision="3" />
+          <Property Name="Deadline" Type="DateTime" Precision="3" />
+          <Property Name="OrderId" Type="Int32" />
+          <Property Name="ManDays" Type="Double" />
+          <Property Name="OwnerId" Type="Int32" Nullable="false" />
+          <Property Name="GeneratedBy" Type="Int32" Nullable="false" />
+          <Property Name="GeneratedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DocsLink" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="TaskTypeId" Type="Int32" Nullable="false" />
+          <Property Name="StatusId" Type="Int32" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="C007_BUCKET" Relationship="ManagementTool.FK_BUCKET_TASK_DATA" FromRole="C008_TASK_DATA" ToRole="C007_BUCKET" />
+          <NavigationProperty Name="EndUser" Relationship="ManagementTool.FK_Generated__TASK_DATA" FromRole="C008_TASK_DATA" ToRole="EndUser" />
+          <NavigationProperty Name="EndUser1" Relationship="ManagementTool.FK_OwnerID__TASK_DATA" FromRole="C008_TASK_DATA" ToRole="EndUser" />
+          <NavigationProperty Name="C015_STATUS" Relationship="ManagementTool.FK_STATUS__TASK_DATA" FromRole="C008_TASK_DATA" ToRole="C015_STATUS" />
+          <NavigationProperty Name="C016_CYCLED" Relationship="ManagementTool.FK_TASK_DATA_CYCLED" FromRole="C008_TASK_DATA" ToRole="C016_CYCLED" />
+          <NavigationProperty Name="C014_TASK_TYPE" Relationship="ManagementTool.FK_TASK_TYPE__TASK_DATA" FromRole="C008_TASK_DATA" ToRole="C014_TASK_TYPE" />
+        </EntityType>
+        <Association Name="FK_BUCKET_TASK_DATA">
+          <End Type="ManagementTool.C007_BUCKET" Role="C007_BUCKET" Multiplicity="1" />
+          <End Type="ManagementTool.C008_TASK_DATA" Role="C008_TASK_DATA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="C007_BUCKET">
+              <PropertyRef Name="BucketId" />
+            </Principal>
+            <Dependent Role="C008_TASK_DATA">
+              <PropertyRef Name="BucketId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Generated__TASK_DATA">
+          <End Type="ManagementTool.EndUser" Role="EndUser" Multiplicity="1" />
+          <End Type="ManagementTool.C008_TASK_DATA" Role="C008_TASK_DATA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EndUser">
+              <PropertyRef Name="UID" />
+            </Principal>
+            <Dependent Role="C008_TASK_DATA">
+              <PropertyRef Name="GeneratedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OwnerID__TASK_DATA">
+          <End Type="ManagementTool.EndUser" Role="EndUser" Multiplicity="1" />
+          <End Type="ManagementTool.C008_TASK_DATA" Role="C008_TASK_DATA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EndUser">
+              <PropertyRef Name="UID" />
+            </Principal>
+            <Dependent Role="C008_TASK_DATA">
+              <PropertyRef Name="OwnerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_STATUS__TASK_DATA">
+          <End Type="ManagementTool.C015_STATUS" Role="C015_STATUS" Multiplicity="1" />
+          <End Type="ManagementTool.C008_TASK_DATA" Role="C008_TASK_DATA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="C015_STATUS">
+              <PropertyRef Name="StatusId" />
+            </Principal>
+            <Dependent Role="C008_TASK_DATA">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TASK_DATA_CYCLED">
+          <End Type="ManagementTool.C008_TASK_DATA" Role="C008_TASK_DATA" Multiplicity="1" />
+          <End Type="ManagementTool.C016_CYCLED" Role="C016_CYCLED" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="C008_TASK_DATA">
+              <PropertyRef Name="TaskId" />
+            </Principal>
+            <Dependent Role="C016_CYCLED">
+              <PropertyRef Name="TaskId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TASK_TYPE__TASK_DATA">
+          <End Type="ManagementTool.C014_TASK_TYPE" Role="C014_TASK_TYPE" Multiplicity="1" />
+          <End Type="ManagementTool.C008_TASK_DATA" Role="C008_TASK_DATA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="C014_TASK_TYPE">
+              <PropertyRef Name="TypeId" />
+            </Principal>
+            <Dependent Role="C008_TASK_DATA">
+              <PropertyRef Name="TaskTypeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2612,74 +2517,6 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <EntitySetMapping Name="C008_TASK_DATA">
-            <EntityTypeMapping TypeName="ManagementTool.C008_TASK_DATA">
-              <MappingFragment StoreEntitySet="008_TASK_DATA">
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
-                <ScalarProperty Name="TaskTypeId" ColumnName="TaskTypeId" />
-                <ScalarProperty Name="DocsLink" ColumnName="DocsLink" />
-                <ScalarProperty Name="GeneratedDate" ColumnName="GeneratedDate" />
-                <ScalarProperty Name="GeneratedBy" ColumnName="GeneratedBy" />
-                <ScalarProperty Name="OwnerId" ColumnName="OwnerId" />
-                <ScalarProperty Name="ManDays" ColumnName="ManDays" />
-                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
-                <ScalarProperty Name="Deadline" ColumnName="Deadline" />
-                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="SName" ColumnName="SName" />
-                <ScalarProperty Name="SSubAreaId" ColumnName="SSubAreaId" />
-                <ScalarProperty Name="SubAreaId" ColumnName="SubAreaId" />
-                <ScalarProperty Name="AreaId" ColumnName="AreaId" />
-                <ScalarProperty Name="BucketId" ColumnName="BucketId" />
-                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
-                <ScalarProperty Name="LocationId" ColumnName="LocationId" />
-                <ScalarProperty Name="TaskId" ColumnName="TaskId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="vw_Task_Details">
-            <EntityTypeMapping TypeName="ManagementTool.vw_Task_Details">
-              <MappingFragment StoreEntitySet="vw_Task_Details">
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="TaskStatus" ColumnName="TaskStatus" />
-                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
-                <ScalarProperty Name="TypeName" ColumnName="TypeName" />
-                <ScalarProperty Name="TaskTypeId" ColumnName="TaskTypeId" />
-                <ScalarProperty Name="DocsLink" ColumnName="DocsLink" />
-                <ScalarProperty Name="GeneratedDate" ColumnName="GeneratedDate" />
-                <ScalarProperty Name="GerneratedName" ColumnName="GerneratedName" />
-                <ScalarProperty Name="GeneratedBy" ColumnName="GeneratedBy" />
-                <ScalarProperty Name="OwnerName" ColumnName="OwnerName" />
-                <ScalarProperty Name="OwnerId" ColumnName="OwnerId" />
-                <ScalarProperty Name="ManDays" ColumnName="ManDays" />
-                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
-                <ScalarProperty Name="Deadline" ColumnName="Deadline" />
-                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="SName" ColumnName="SName" />
-                <ScalarProperty Name="SubAreaName" ColumnName="SubAreaName" />
-                <ScalarProperty Name="SubAreaId" ColumnName="SubAreaId" />
-                <ScalarProperty Name="AreaName" ColumnName="AreaName" />
-                <ScalarProperty Name="AreaId" ColumnName="AreaId" />
-                <ScalarProperty Name="DivisionName" ColumnName="DivisionName" />
-                <ScalarProperty Name="DivisionId" ColumnName="DivisionId" />
-                <ScalarProperty Name="BucketName" ColumnName="BucketName" />
-                <ScalarProperty Name="BucketId" ColumnName="BucketId" />
-                <ScalarProperty Name="SubPhaseName" ColumnName="SubPhaseName" />
-                <ScalarProperty Name="SubPhaseId" ColumnName="SubPhaseId" />
-                <ScalarProperty Name="PhaseName" ColumnName="PhaseName" />
-                <ScalarProperty Name="PhaseId" ColumnName="PhaseId" />
-                <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
-                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
-                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
-                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
-                <ScalarProperty Name="LocationName" ColumnName="LocationName" />
-                <ScalarProperty Name="LocationId" ColumnName="LocationId" />
-                <ScalarProperty Name="TaskId" ColumnName="TaskId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="C021_CommimentDetails">
             <EntityTypeMapping TypeName="ManagementTool.C021_CommimentDetails">
               <MappingFragment StoreEntitySet="021_CommimentDetails">
@@ -2752,6 +2589,69 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
                 <ScalarProperty Name="SubPhaseName" ColumnName="SubPhaseName" />
                 <ScalarProperty Name="PhaseId" ColumnName="PhaseId" />
                 <ScalarProperty Name="SubPhaseId" ColumnName="SubPhaseId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_Task_Details">
+            <EntityTypeMapping TypeName="ManagementTool.vw_Task_Details">
+              <MappingFragment StoreEntitySet="vw_Task_Details">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="TaskStatus" ColumnName="TaskStatus" />
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+                <ScalarProperty Name="TypeName" ColumnName="TypeName" />
+                <ScalarProperty Name="TaskTypeId" ColumnName="TaskTypeId" />
+                <ScalarProperty Name="DocsLink" ColumnName="DocsLink" />
+                <ScalarProperty Name="GeneratedDate" ColumnName="GeneratedDate" />
+                <ScalarProperty Name="GerneratedName" ColumnName="GerneratedName" />
+                <ScalarProperty Name="GeneratedBy" ColumnName="GeneratedBy" />
+                <ScalarProperty Name="OwnerName" ColumnName="OwnerName" />
+                <ScalarProperty Name="OwnerId" ColumnName="OwnerId" />
+                <ScalarProperty Name="ManDays" ColumnName="ManDays" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="Deadline" ColumnName="Deadline" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="SName" ColumnName="SName" />
+                <ScalarProperty Name="SubAreaName" ColumnName="SubAreaName" />
+                <ScalarProperty Name="SubAreaId" ColumnName="SubAreaId" />
+                <ScalarProperty Name="AreaName" ColumnName="AreaName" />
+                <ScalarProperty Name="AreaId" ColumnName="AreaId" />
+                <ScalarProperty Name="DivisionName" ColumnName="DivisionName" />
+                <ScalarProperty Name="DivisionId" ColumnName="DivisionId" />
+                <ScalarProperty Name="BucketName" ColumnName="BucketName" />
+                <ScalarProperty Name="BucketId" ColumnName="BucketId" />
+                <ScalarProperty Name="SubPhaseName" ColumnName="SubPhaseName" />
+                <ScalarProperty Name="SubPhaseId" ColumnName="SubPhaseId" />
+                <ScalarProperty Name="PhaseName" ColumnName="PhaseName" />
+                <ScalarProperty Name="PhaseId" ColumnName="PhaseId" />
+                <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="LocationName" ColumnName="LocationName" />
+                <ScalarProperty Name="LocationId" ColumnName="LocationId" />
+                <ScalarProperty Name="TaskId" ColumnName="TaskId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="C008_TASK_DATA">
+            <EntityTypeMapping TypeName="ManagementTool.C008_TASK_DATA">
+              <MappingFragment StoreEntitySet="008_TASK_DATA">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+                <ScalarProperty Name="TaskTypeId" ColumnName="TaskTypeId" />
+                <ScalarProperty Name="DocsLink" ColumnName="DocsLink" />
+                <ScalarProperty Name="GeneratedDate" ColumnName="GeneratedDate" />
+                <ScalarProperty Name="GeneratedBy" ColumnName="GeneratedBy" />
+                <ScalarProperty Name="OwnerId" ColumnName="OwnerId" />
+                <ScalarProperty Name="ManDays" ColumnName="ManDays" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="Deadline" ColumnName="Deadline" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="SName" ColumnName="SName" />
+                <ScalarProperty Name="BucketId" ColumnName="BucketId" />
+                <ScalarProperty Name="TaskId" ColumnName="TaskId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

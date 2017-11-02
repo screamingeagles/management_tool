@@ -40,7 +40,7 @@
                             </div>
                             <label class="col-lg-2 control-label">Location</label>
                             <div class="col-lg-4">
-                                <input type="text" value="@tb.ServiceId" class="form-control m-b" disabled="disabled" name="Locatoin" style="background-color:lavenderblush; color:black" />                                
+                                <input type="text" value="@tb.LocationName" class="form-control m-b" disabled="disabled" name="Locatoin" id="Locatoin"  style="background-color:lavenderblush; color:black" />                                
                             </div>
                         </div>
 
@@ -48,11 +48,11 @@
                         <div class="form-group">
                             <label class="col-lg-2 control-label">Company</label>
                             <div class="col-lg-4">
-                                <input name="Company" type="text" value="@tb.ServiceId" class="form-control m-b" disabled="disabled" style="background-color:lavenderblush; color:black" />
+                                <input name="Company" id="Company" type="text" value="@tb.CompanyName" class="form-control m-b" disabled="disabled" style="background-color:lavenderblush; color:black" />
                             </div>
                             <label class="col-lg-2 control-label">Division</label>
                             <div class="col-lg-4">
-                                <input name="Division" type="text" value="@tb.ServiceId" class="form-control m-b" disabled="disabled" style="background-color:lavenderblush; color:black" />
+                                <input name="Division" id="Division" type="text" value="@tb.DivisionName" class="form-control m-b" disabled="disabled" style="background-color:lavenderblush; color:black" />
                             </div>
                         </div>
 
@@ -60,11 +60,11 @@
                         <div class="form-group">
                             <label class="col-lg-2 control-label">Area</label>
                             <div class="col-lg-4">
-                                <input name="Area" type="text" value="@tb.AreaName" class="form-control m-b" disabled="disabled" style="background-color:lavenderblush; color:black" />
+                                <input name="Area" id="Area" type="text" value="@tb.AreaName" class="form-control m-b" disabled="disabled" style="background-color:lavenderblush; color:black" />
                             </div>
                             <label class="col-lg-2 control-label">Sub Area</label>
                             <div class="col-lg-4">
-                                <input name="SubArea" type="text" value="@tb.SubAreaName" class="form-control m-b" disabled="disabled" style="background-color:lavenderblush; color:black" />
+                                <input name="SubArea" id="SubArea" type="text" value="@tb.SubAreaName" class="form-control m-b" disabled="disabled" style="background-color:lavenderblush; color:black" />
                             </div>
                         </div>
 
@@ -72,15 +72,15 @@
                         <div class="form-group">
                             <label class="col-lg-2 control-label">Project</label>
                             <div class="col-lg-4">
-                                <input name="Project" type="text" value="@tb.ProjectName" class="form-control m-b" disabled="disabled" style="background-color:lavenderblush; color:black" />
+                                <input name="Project" id="Project"  type="text" value="@tb.ProjectName" class="form-control m-b" disabled="disabled" style="background-color:lavenderblush; color:black" />
                             </div>
                             <label class="col-lg-2 control-label">Phase</label>
                             <div class="col-lg-4">
-                                <input name="Phase" type="text" value="@tb.PhaseName" class="form-control m-b" disabled="disabled" style="background-color:lavenderblush; color:black" />
+                                <input name="Phase" id="Phase" type="text" value="@tb.PhaseName" class="form-control m-b" disabled="disabled" style="background-color:lavenderblush; color:black" />
                             </div>
                         </div>
                         
-                        <!-- / Sub Phase And Sub Sub Phase -->
+                        <!-- / Bucket And Sub Sub Phase -->
                         <div class="form-group">
                             <label class="col-lg-2 control-label">Select Bucket</label>
                             <div class="col-lg-4">
@@ -88,7 +88,7 @@
                             </div>
                             <label class="col-lg-2 control-label">Sub Phase</label>
                             <div class="col-lg-4">
-                                <input name="SubPhase" type="text" value="@tb.SubPhaseName" class="form-control m-b" disabled="disabled" style="background-color:lavenderblush; color:black" />
+                                <input name="SubPhase" id="SubPhase" type="text" value="@tb.SubPhaseName" class="form-control m-b" disabled="disabled" style="background-color:lavenderblush; color:black" />
                             </div>                           
                         </div>
 
@@ -175,7 +175,10 @@
     </div>
 </div>
 
-
+<br />
+<input type="hidden" id="PStartDate" name="PStartDate" value="" />
+<input type="hidden" id="PEndDate" name="PEndDate" value="" />
+<br />
 <script type="text/javascript">
     $(document).ready(
     function () {
@@ -222,84 +225,10 @@
         });
     });
 
-
-    /* remove*/
-    function FillCompany    (obj) {
-        var sel = obj.options[obj.selectedIndex].value;
-        if (sel == "") {
-            $("#CompanyId").empty();
-            $("#CompanyId").prop("disabled", true);
-            return;
-        }
-
-        var postedContent = { SelectedLocation: sel }
-        $.ajax({
-            type: "POST",
-            url: "/Tasks/GetCompaniesByLocation",
-            data: postedContent,
-            success: function (message) {
-                var res = message.data;
-                if (res.length > 0) {
-                    $("#CompanyId").prop("disabled", false);
-                    $("#CompanyId").empty()
-                    for (var i = 0; i < message.data.length; i++) {
-                        $('#CompanyId').append($('<option>', { value: message.data[i].CompanyId, text: message.data[i].CompanyName }));
-                    } // end of for loop
-                } // end of if for length
-            },
-            error: function (xerr) {
-                /* $('#txteng').val("err : " +xerr);*/
-            }
-        });
-
-    }
-
-    /* remove */
-    function FillSubArea    (obj) {
+    function FillBucket             (obj)               {
         var sel     = obj.options[obj.selectedIndex].value;
         var selText = obj.options[obj.selectedIndex].text
         if (sel == "") {
-            $("#SubAreaId").empty();
-            $("#SubAreaId").prop("disabled", true);
-            return;
-        }
-
-        var postedContent = { SelectedArea: sel }
-        $.ajax({
-            type: "POST",
-            url: "/Tasks/GetSubAreaByArea",
-            data: postedContent,
-            success: function (message) {
-
-                var dv = message.DvDetail;
-                document.getElementById("dvDetails").innerHTML = "Modify Task [Division >> " + dv + "]";
-
-
-
-                var res = message.data;
-                $("#SSubAreaId").prop("disabled", false);
-                $("#SSubAreaId").empty();
-                if (res.length > 0) {
-                    for (var i = 0; i < message.data.length; i++) {
-                        $('#SSubAreaId').append($('<option>', { value: message.data[i].SubAreaId, text: message.data[i].SubAreaName }));
-                    } // end of for loop
-                } // end of if for length
-                else {
-                    $('#SSubAreaId').append($('<option>', { value: '', text: "No Sub Area For " + selText }));
-                }
-            },
-            error: function (xerr) {
-                /* $('#txteng').val("err : " +xerr);*/
-            }
-        });
-
-    }
-
-    function FillBucket     (obj) {
-        var sel     = obj.options[obj.selectedIndex].value;
-        var selText = obj.options[obj.selectedIndex].text
-        if (sel == "") {
-            $("#lblProjectDetails").empty();
             return;
         }
 
@@ -309,15 +238,70 @@
             url: "/Tasks/GetBucketDetails",
             data: postedContent,
             success: function (message) {
-                var res = message.data;
-                var hld = document.getElementById("lblProjectDetails");
-                hld.innerHTML=res;
+                
+                document.getElementById("Locatoin") .value = message.LocationName;
+                document.getElementById("Company")  .value = message.CompanyName;
+                document.getElementById("Division") .value = message.DivisionName;
+                document.getElementById("Area")     .value = message.AreaName;
+                document.getElementById("SubArea")  .value = message.SubAreaName;
+
+                document.getElementById("Project")  .value = message.ProjectName;
+                document.getElementById("Phase")    .value = message.PhaseName;
+                document.getElementById("SubPhase") .value = message.SubPhaseName;
+
+
+                $('#StartDate') .datepicker('destroy');
+                $('#Deadline')  .datepicker('destroy');
+
+                $('#PStartDate').empty();
+                $("#PEndDate")  .empty();
+
+                var st = message.StartDate;
+                var ed = message.EndDate;
+
+                $("#PStartDate").val(parseJsonDate(st));
+                $("#PEndDate")  .val(parseJsonDate(ed));
+
+                ReActivateDatePickers(st, ed);
             },
             error: function (xerr) {
                 /* $('#txteng').val("err : " +xerr);*/
             }
         });
 
+    }
+
+    function ReActivateDatePickers(StartDate, EndDate) {
+
+        $("#StartDate").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            minDate: new Date($('#PStartDate').val()),
+            maxDate: new Date($('#PEndDate').val()),
+            dateFormat: "dd-M-yy" /*format: 'dd-M-yyyy'*/
+        });
+
+        $("#Deadline").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            minDate: new Date($('#PStartDate').val()),
+            maxDate: new Date($('#PEndDate').val()),
+            dateFormat: "dd-M-yy" /*format: 'dd-M-yyyy'*/
+        });
+
+
+    }
+
+    function parseJsonDate(jsonDateString) {
+        var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+        jsonDateString = jsonDateString.replace('/Date(', '');
+        jsonDateString = jsonDateString.replace(')/', '');
+        var date = new Date(parseInt(jsonDateString));
+        var day = date.getDate();
+        var monthIndex = date.getMonth();
+        var year = date.getFullYear();
+        return day + "-" + monthNames[monthIndex] + "-" + year;
     }
 </script>
 

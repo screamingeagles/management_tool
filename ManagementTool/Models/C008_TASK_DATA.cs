@@ -18,16 +18,10 @@ namespace ManagementTool.Models
         public C008_TASK_DATA()
         {
             this.C016_CYCLED = new HashSet<C016_CYCLED>();
-            this.C019_Attachments = new HashSet<C019_Attachments>();
         }
     
         public int TaskId { get; set; }
-        public int LocationId { get; set; }
-        public int CompanyId { get; set; }
         public int BucketId { get; set; }
-        public int AreaId { get; set; }
-        public int SubAreaId { get; set; }
-        public int SSubAreaId { get; set; }
         public string SName { get; set; }
         public string Description { get; set; }
         public Nullable<System.DateTime> StartDate { get; set; }
@@ -43,15 +37,11 @@ namespace ManagementTool.Models
         public bool IsActive { get; set; }
     
         public virtual C007_BUCKET C007_BUCKET { get; set; }
-        public virtual C011_COMPANY C011_COMPANY { get; set; }
-        public virtual C010_LOCATION C010_LOCATION { get; set; }
         public virtual EndUser EndUser { get; set; }
         public virtual EndUser EndUser1 { get; set; }
         public virtual C015_STATUS C015_STATUS { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<C016_CYCLED> C016_CYCLED { get; set; }
         public virtual C014_TASK_TYPE C014_TASK_TYPE { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<C019_Attachments> C019_Attachments { get; set; }
     }
 }
