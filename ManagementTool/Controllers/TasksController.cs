@@ -244,7 +244,7 @@ namespace ManagementTool.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "TaskId,BucketId,SName,Description,StartDate,Deadline,OrderId,ManDays,OwnerId,DocsLink,TaskTypeId,StatusId")] C008_TASK_DATA c008_TASK_DATA)
+        public ActionResult Edit([Bind(Include = "TaskId,BucketId,SName,Description,OrderId,ManDays,OwnerId,DocsLink,TaskTypeId,StatusId")] C008_TASK_DATA c008_TASK_DATA)
         {
             if (ModelState.IsValid)
             {
@@ -253,8 +253,11 @@ namespace ManagementTool.Controllers
                 c008_TASK_DATA.IsActive         = true;
 
                 db.Entry(c008_TASK_DATA).State = EntityState.Modified;
+                db.Entry(c008_TASK_DATA).Property(x => x.StartDate) .IsModified = false;
+                db.Entry(c008_TASK_DATA).Property(x => x.Deadline)  .IsModified = false;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Edit", "Tasks", new { id = c008_TASK_DATA.TaskId });
+                //return RedirectToAction("Index");
             }
 
             ViewBag.BucketId    = new SelectList(db.C007_BUCKET     , "BucketId"    , "Name"        , c008_TASK_DATA.BucketId);

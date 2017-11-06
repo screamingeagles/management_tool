@@ -83,7 +83,7 @@
                             </div>
                             <label class="col-lg-2 control-label">End Date</label>
                             <div class="col-lg-4">
-                                @Html.TextBoxFor(model => model.EndDate, "{0:dd-MMM-yyyy}", htmlAttributes: new { @class = "form-control m-b" })
+                                @Html.TextBoxFor(model => model.EndDate, "{0:dd-MMM-yyyy}", htmlAttributes: new { @class = "form-control m-b"})
                             </div>
                         </div>
 
@@ -142,22 +142,25 @@
                                 </tr>
                             </thead>
                             <tbody>                                
-                                @foreach (var usr in ViewBag.CoOwners)
-                                {
-                                    <tr style="font-size:9pt;">
-                                        <td>@index</td>
-                                        <td>@usr.UserName</td>
-                                        <td style="text-align:left;">@usr.UserContribution</td>
-                                        <td style="text-align:left;" title="Contributor Added @usr.ContributorAddDate">
-                                            <form name='frmRemoveOwner_@index' action='/Project/OwnerRemove' onSubmit='return Confirm();' method='post'>
-                                                @Html.AntiForgeryToken()
-                                                <input type='hidden' name='id' value='@usr.FieldId'>
-                                                <input type='submit' name='submit' value='remove' class='btn btn-sm btn-default btn-flat' />
-                                            </form>
-                                        </td>
-                                    </tr>
-                                    index = index + 1;
-                                }                                
+                                @{ 
+                                    if (ViewBag.CoOwners != null) {
+                                        foreach (var usr in ViewBag.CoOwners) {
+                                            <tr style="font-size:9pt;">
+                                                <td>@index</td>
+                                                <td>@usr.UserName</td>
+                                                <td style="text-align:left;">@usr.UserContribution</td>
+                                                <td style="text-align:left;" title="Contributor Added @usr.ContributorAddDate">
+                                                    <form name='frmRemoveOwner_@index' action='/Project/OwnerRemove' onSubmit='return Confirm();' method='post'>
+                                                        @Html.AntiForgeryToken()
+                                                        <input type='hidden' name='id' value='@usr.FieldId'>
+                                                        <input type='submit' name='submit' value='remove' class='btn btn-sm btn-default btn-flat' />
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                            index = index + 1;
+                                        }
+                                    }
+                                }                              
                             </tbody>
                             <tfoot>
                                 <tr style="font-size:9pt;">
@@ -199,20 +202,21 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (SelectListItem files in ViewBag.AttachedFiles)
-                                {
-                                    <tr style="font-size:9pt;">
-                                        <td>@index</td>
-                                        <td style="text-align:left;"><a href="@Url.Action("Download","Project", new { id = files.Value })" style="text-decoration:none;">@files.Text</a></td>
-                                        <td style="text-align:left;">
-                                            <form name='frmRemoveFile_@index' action='/Project/Remove' onSubmit='return Confirm();' method='post'>
-                                                @Html.AntiForgeryToken()
-                                                <input type='hidden' name='id' value='@files.Value'>
-                                                <input type='submit' name='submit' value='remove' class='btn btn-sm btn-default btn-flat' />
-                                            </form>
-                                        </td>
-                                    </tr>
-                                    index = 1;
+                                @if (ViewBag.AttachedFiles != null) {
+                                    foreach (SelectListItem files in ViewBag.AttachedFiles) {
+                                        <tr style="font-size:9pt;">
+                                            <td>@index</td>
+                                            <td style="text-align:left;"><a href="@Url.Action("Download", "Project", new { id = files.Value })" style="text-decoration:none;">@files.Text</a></td>
+                                            <td style="text-align:left;">
+                                                <form name='frmRemoveFile_@index' action='/Project/Remove' onSubmit='return Confirm();' method='post'>
+                                                    @Html.AntiForgeryToken()
+                                                    <input type='hidden' name='id' value='@files.Value'>
+                                                    <input type='submit' name='submit' value='remove' class='btn btn-sm btn-default btn-flat' />
+                                                </form>
+                                            </td>
+                                        </tr>
+                                        index = 1;
+                                    }
                                 }
                             </tbody>
                             <tfoot>

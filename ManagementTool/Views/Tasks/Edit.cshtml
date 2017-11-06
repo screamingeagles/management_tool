@@ -27,7 +27,7 @@
             </div>
             <div class="ibox-content">
                 <div class="table-responsive">
-                    @using (Html.BeginForm("Create", "Tasks", FormMethod.Post, new { id = "frmMain" }))
+                    @using (Html.BeginForm("Edit", "Tasks", FormMethod.Post, new { id = "frmMain" }))
                     {
                         @Html.AntiForgeryToken();
                         @Html.HiddenFor(model => model.TaskId)
@@ -111,13 +111,13 @@
 
                         <!-- / Start date and End date -->
                         <div class="form-group">
-                            <label class="col-lg-2 control-label">Start Date</label>
+                            <label class="col-lg-2 control-label">Start Date <small style="font-weight:normal; font-size:8pt;">readonly</small></label>
                             <div class="col-lg-4">
-                                @Html.TextBoxFor(model => model.StartDate, "{0:dd-MMM-yyyy}", htmlAttributes: new { @class = "form-control m-b" })
+                                @Html.TextBoxFor(model => model.StartDate, "{0:dd-MMM-yyyy}", htmlAttributes: new { @class = "form-control m-b", @readonly = "readonly" })
                             </div>
-                            <label class="col-lg-2 control-label">End Date</label>
+                            <label class="col-lg-2 control-label">End Date <small style="font-weight:normal; font-size:8pt;">readonly</small></label>
                             <div class="col-lg-4">
-                                @Html.TextBoxFor(model => model.Deadline, "{0:dd-MMM-yyyy}", htmlAttributes: new { @class = "form-control m-b" })
+                                @Html.TextBoxFor(model => model.Deadline, "{0:dd-MMM-yyyy}", htmlAttributes: new { @class = "form-control m-b", @readonly = "readonly" })
                             </div>
                         </div>
 
