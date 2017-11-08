@@ -31,6 +31,18 @@
                     <table class="table table-striped">
                         <thead>
                             <tr>
+                                <th colspan="9">
+                                    <label class="col-lg-2 control-label m-b">Select Project : </label>
+                                    <div class="col-lg-10">
+                                        @using (Html.BeginForm("Index", "Phase", FormMethod.Post))
+                                        {
+                                            @Html.DropDownList("ProjectId", null, "Select Project", htmlAttributes: new { @class = "form-control m-b", onchange = "this.form.submit()" })
+                                        }
+                                        
+                                    </div>
+                                </th>
+                            </tr>
+                            <tr>
                                 <th>#</th>
                                 <th>Project Name</th>
                                 <th>Phase Name  </th>
@@ -43,34 +55,50 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var item in Model)
+                            @if ((Model == null) || (Model.Count() == 0))
                             {
                                 <tr>
-                                    <td>@index                              </td>
-                                    <td>@item.C004_PROJECT.ProjectName      </td>
-                                    <td>@item.PhaseName</td>
-                                    <td>@item.StartDate.ToString("dd-MMM-yyyy")</td>
-                                    <td>@item.EndDate.ToString("dd-MMM-yyyy")</td>
-                                    <td>
-                                        @if (item.IsActive == true)
-                                        {
-                                            WriteLiteral("<i class='fa fa-check-square text-navy'></i>");
-                                        }
-                                        else
-                                        {
-                                            WriteLiteral("<i class='fa fa-square text-navy'></i>");
-                                        }
-                                    </td>
-                                    <td>@Html.DisplayFor(modelItem => item.EndUser.UserName)                </td>
-                                    <td>@item.GeneratedDate.ToString("MMM dd, yyyy")                        </td>
-                                    <td>
-                                        @Html.ActionLink("Edit", "Edit",        new { id = item.PhaseId }) |
-                                        @Html.ActionLink("Details", "Details",  new { id = item.PhaseId }) |
-                                        @Html.ActionLink("Delete", "Delete",    new { id = item.PhaseId })
+                                    <td colspan="9">
+                                        <div class="col-md-9">
+                                            <div class="forum-icon">
+                                                <i class="fa fa-bomb"></i>
+                                            </div>
+                                            <div class="forum-item-title">No Items Found, Please Select Any project</div>
+                                        </div>
                                     </td>
                                 </tr>
-                                index = index + 1;
                             }
+                            else
+                            {
+                                foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@index                              </td>
+                                        <td>@item.C004_PROJECT.ProjectName      </td>
+                                        <td>@item.PhaseName</td>
+                                        <td>@item.StartDate.ToString("dd-MMM-yyyy")</td>
+                                        <td>@item.EndDate.ToString("dd-MMM-yyyy")</td>
+                                        <td>
+                                            @if (item.IsActive == true)
+                                            {
+                                                WriteLiteral("<i class='fa fa-check-square text-navy'></i>");
+                                            }
+                                            else
+                                            {
+                                                WriteLiteral("<i class='fa fa-square text-navy'></i>");
+                                            }
+                                        </td>
+                                        <td>@Html.DisplayFor(modelItem => item.EndUser.UserName)                </td>
+                                        <td>@item.GeneratedDate.ToString("MMM dd, yyyy")                        </td>
+                                        <td>
+                                            @Html.ActionLink("Edit", "Edit", new { id = item.PhaseId }) |
+                                            @Html.ActionLink("Details", "Details", new { id = item.PhaseId }) |
+                                            @Html.ActionLink("Delete", "Delete", new { id = item.PhaseId })
+                                        </td>
+                                    </tr>
+                                    index = index + 1;
+                                }
+                            }                            
                         </tbody>
                     </table>
                 </div>

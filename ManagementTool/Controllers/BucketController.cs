@@ -29,9 +29,17 @@ namespace ManagementTool.Controllers
 
 
         // GET: Bucket
-        public ActionResult Index()
+        public ActionResult Index(int? PhaseId)
         {
-            var q = db.Database.SqlQuery<SP_BUCKET_LIST_Result>("SP_BUCKET_LIST").ToList();
+            if (PhaseId.HasValue) {
+                ViewBag.PhaseId = new SelectList(db.C005_PHASE.Where(p => p.IsActive == true), "PhaseId", "PhaseName", PhaseId.Value);
+            }
+            else {
+                ViewBag.PhaseId = new SelectList(db.C005_PHASE.Where(p => p.IsActive == true), "PhaseId", "PhaseName");
+            }
+
+            ViewBag.ProjectId = new SelectList(db.C004_PROJECT.Where(p => p.IsActive == true).OrderBy(p => p.ProjectName), "ProjectId", "ProjectName");
+            var q = db.Database.SqlQuery<SP_BUCKET_LIST_Result>("SP_BUCKET_LIST").Where(x => x.PhaseId == ((PhaseId.HasValue) ?PhaseId.Value:0)).ToList();
             return View(q);
         }
 
@@ -65,10 +73,9 @@ namespace ManagementTool.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ProjectId,PhaseId,SubPhaseId,Name")] C007_BUCKET c007_BUCKET)
-        {
-            if (ModelState.IsValid)
-            {
+        public ActionResult Create([Bind(Include = "ProjectId,PhaseId,SubPhaseId,Name")] C007_BUCKET c007_BUCKET) {
+            
+            if ((ModelState.IsValid) || (ModelState.IsValid==false && c007_BUCKET.SubPhaseId==0)) {
                 c007_BUCKET.GeneratedBy     = UserIdentity.UserId;
                 c007_BUCKET.GenerationDate  = DateTime.Now.AddHours(4);
                 c007_BUCKET.IsActive        = true;

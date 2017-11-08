@@ -42,9 +42,15 @@ namespace ManagementTool.Controllers
 
 
         // GET: Project
-        public ActionResult Index()
+        public ActionResult Index(int? AreaId)
         {
-            var c004_PROJECT = db.C004_PROJECT.Include(c => c.C001_DIVISION).Include(c => c.C002_AREA).Include(c => c.EndUser).Include(c => c.C013_PROJECT_TYPE);
+            if (AreaId.HasValue) {
+                ViewBag.AreaId = new SelectList(db.C002_AREA, "AreaId", "AreaName", AreaId.Value);
+            } else {
+                ViewBag.AreaId = new SelectList(db.C002_AREA, "AreaId", "AreaName");
+            }
+            ViewBag.DivisionId = new SelectList(db.C001_DIVISION.Where(d => d.IsActive == true).OrderBy(d => d.DivisionName), "DivisionId", "DivisionName");
+            var c004_PROJECT = db.C004_PROJECT.Include(c => c.C001_DIVISION).Include(c => c.C002_AREA).Include(c => c.EndUser).Include(c => c.C013_PROJECT_TYPE).Where(x => x.AreaId == ((AreaId.HasValue) ?AreaId.Value:0)).OrderBy(x => x.ProjectName);
             return View(c004_PROJECT.ToList());
         }
 

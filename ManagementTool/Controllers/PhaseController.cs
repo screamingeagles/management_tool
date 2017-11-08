@@ -54,9 +54,15 @@ namespace ManagementTool.Controllers
         }
 
         // GET: Phase
-        public ActionResult Index()
+        public ActionResult Index(int? ProjectId)
         {
-            var c005_PHASE = db.C005_PHASE.Include(c => c.EndUser);
+            if (ProjectId.HasValue) {
+                ViewBag.ProjectId = new SelectList(db.C004_PROJECT.Where(p => p.IsActive == true), "ProjectId", "ProjectName", ProjectId.Value);
+            }
+            else {
+                ViewBag.ProjectId = new SelectList(db.C004_PROJECT.Where(p => p.IsActive == true), "ProjectId", "ProjectName");
+            }
+            var c005_PHASE = db.C005_PHASE.Include(c => c.EndUser).Where(x => x.ProjectId == ((ProjectId.HasValue) ? ProjectId.Value : 0)).OrderBy(x => x.PhaseName);
             return View(c005_PHASE.ToList());
         }
 

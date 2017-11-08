@@ -31,9 +31,17 @@ namespace ManagementTool.Controllers
 
 
         // GET: SubPhase
-        public ActionResult Index()
+        public ActionResult Index(int? PhaseId)
         {
-            var c006_SubPhase = db.C006_SubPhase.Include(c => c.C005_PHASE).Include(c => c.EndUser);
+            if (PhaseId.HasValue) {
+                ViewBag.PhaseId = new SelectList(db.C005_PHASE.Where(p => p.IsActive == true), "PhaseId", "PhaseName", PhaseId.Value);
+            }
+            else {
+                ViewBag.PhaseId = new SelectList(db.C005_PHASE.Where(p => p.IsActive == true), "PhaseId", "PhaseName");
+            }
+
+            ViewBag.ProjectId = new SelectList(db.C004_PROJECT.Where(p => p.IsActive == true).OrderBy(p => p.ProjectName), "ProjectId", "ProjectName");
+            var c006_SubPhase = db.C006_SubPhase.Include(c => c.C005_PHASE).Include(c => c.EndUser).Where(x => x.PhaseId == ((PhaseId.HasValue) ?PhaseId.Value:0)).OrderBy(x=> x.SubPhaseName) ;
             return View(c006_SubPhase.ToList());
         }
 

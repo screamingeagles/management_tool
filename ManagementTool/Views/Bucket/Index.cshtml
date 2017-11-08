@@ -32,6 +32,26 @@
                     <table class="table table-striped">
                         <thead>
                             <tr>
+                                <th colspan="9">
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label">Select Project </label>
+                                        <div class="col-lg-10">
+                                            @Html.DropDownList("ProjectId", null, "Select Project", htmlAttributes: new { @class = "form-control m-b", onchange = "FillProjectDetails(this);" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label">Select Phase </label>
+                                        <div class="col-lg-10">
+                                            @using (Html.BeginForm("Index", "SubPhase", FormMethod.Post))
+                                            {
+                                                @Html.DropDownList("PhaseId", null, "Select Phase", htmlAttributes: new { @class = "form-control m-b", onchange = "this.form.submit()", disabled = "disabled" })
+                                            }
+                                        </div>
+                                    </div>
+                                </th>
+                            </tr>
+                            <tr>
                                 <th>#</th>
                                 <th>Project Name</th>
                                 <th>Phase Name </th>
@@ -80,3 +100,32 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    function FillProjectDetails(obj) {
+        var sel = obj.options[obj.selectedIndex].value;
+        if (sel == "") { return; }
+
+        var postedContent = { ProjectId: sel }
+        $.ajax({
+            type: "POST",
+            url: "/Phase/GetProjectPhases",
+            data: postedContent,
+            success: function (message) {
+                $("#PhaseId").prop('disabled', false);
+                $("#PhaseId").empty();
+                $('#PhaseId').append($('<option>', { value: '', text: 'Select Phase', selected: true }));
+                var res = message.data;
+
+                if (res.length > 0) {
+                    for (var i = 0; i < message.data.length; i++) {
+                        $('#PhaseId').append($('<option>', { value: message.data[i].PhaseId, text: message.data[i].PhaseName }));
+                    } // end of for loop
+                } // end of if for length
+            },
+            error: function (xerr) {
+                /* $('#txteng').val("err : " +xerr);*/
+            }
+        });
+
+    }
+</script>
