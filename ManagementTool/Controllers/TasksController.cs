@@ -133,7 +133,7 @@ namespace ManagementTool.Controllers
         }
 
         // GET: Tasks/Create
-        public ActionResult Create()
+        public ActionResult Create(int? PhaseId)
         {
             #region A R E A
             /* var area = (from a in db.C002_AREA join
@@ -149,7 +149,18 @@ namespace ManagementTool.Controllers
                          });*/
             #endregion
 
-            ViewBag.BucketId    = new SelectList(db.C007_BUCKET,    "BucketId",     "Name");
+            ViewBag.ProjectId   = new SelectList(db.C004_PROJECT.Where(p => p.IsActive== true).OrderBy(p => p.ProjectName), "ProjectId", "ProjectName");
+            if (PhaseId.HasValue) {
+                ViewBag.PhaseId = new SelectList(db.C005_PHASE.Where(p => p.IsActive == true).Take(5), "PhaseId", "PhaseName",PhaseId.Value);
+            }
+            else {
+                ViewBag.PhaseId = new SelectList(db.C005_PHASE.Where(p => p.IsActive == true).Take(5), "PhaseId", "PhaseName");
+            }
+
+
+            
+
+            ViewBag.BucketId    = new SelectList(db.C007_BUCKET.Where(x => x.PhaseId == ((PhaseId.HasValue)?PhaseId.Value:0)).OrderBy(x => x.Name),    "BucketId",     "Name");
             ViewBag.OwnerId     = new SelectList(db.EndUsers,       "UID",          "UserName");
             ViewBag.StatusId    = new SelectList(db.C015_STATUS,    "StatusId",     "TaskStatus");
             ViewBag.TaskTypeId  = new SelectList(db.C014_TASK_TYPE, "TypeId",       "TypeName");

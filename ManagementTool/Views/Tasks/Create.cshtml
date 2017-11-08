@@ -7,9 +7,37 @@
 
 
 <br />
-
 <div class="row">
 
+    <div class="col-lg-10 col-lg-offset-1">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">Select Following</label>
+                    <div class="col-lg-4">
+                        @Html.DropDownList("ProjectId", null, "Select Project", htmlAttributes: new { @class = "form-control m-b", onchange = "FillProjectDetails(this);" })
+                    </div>
+                    <div class="col-lg-5">
+                        @using (Html.BeginForm("Create", "Tasks", FormMethod.Get)){
+                            @Html.DropDownList("PhaseId", null, "Select Phase", htmlAttributes: new { @class = "form-control m-b", onchange = "this.form.submit()", disabled = "disabled" })
+                        }
+                    </div>
+                </div>
+                <div class="ibox-tools">
+                    <a class="collapse-link">
+                        <i class="fa fa-chevron-up"></i>
+                    </a>
+                    <a class="close-link">
+                        <i class="fa fa-times"></i>
+                    </a>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+<div class="row">
     <div class="col-lg-10 col-lg-offset-1">
         <div class="ibox float-e-margins">
             <div class="ibox-title">
@@ -25,6 +53,7 @@
             </div>
             <div class="ibox-content">
                 <div class="table-responsive">
+
                     @using (Html.BeginForm("Create", "Tasks", FormMethod.Post, new { id = "frmMain" }))
                     {
                         @Html.AntiForgeryToken();
@@ -84,7 +113,6 @@
                                 <input name="SubPhase" id="SubPhase" type="text" class="form-control m-b" disabled="disabled" style="background-color:lavenderblush; color:black" />
                             </div>
                         </div>
-
 
                         <!-- / Task Name -->
                         <div class="form-group">
@@ -231,7 +259,7 @@
             });
         });
 
-        function FillCompany(obj) {
+        function FillCompany            (obj)                {
             var sel = obj.options[obj.selectedIndex].value;
             if (sel == "") {
                 $("#CompanyId").empty();
@@ -261,7 +289,7 @@
 
         }
 
-        function FillSubArea(obj) {
+        function FillSubArea            (obj) {
             var sel = obj.options[obj.selectedIndex].value;
             var selText = obj.options[obj.selectedIndex].text
             if (sel == "") {
@@ -301,7 +329,7 @@
 
         }
 
-        function FillBucket(obj) {
+        function FillBucket             (obj) {
             var sel = obj.options[obj.selectedIndex].value;
             var selText = obj.options[obj.selectedIndex].text
             if (sel == "") {
@@ -349,7 +377,35 @@
 
         }
 
-        function ReActivateDatePickers(StartDate, EndDate) {
+        function FillProjectDetails     (obj) {
+            var sel = obj.options[obj.selectedIndex].value;
+            if (sel == "") { return; }
+
+            var postedContent = { ProjectId: sel }
+            $.ajax({
+                type: "POST",
+                url: "/Phase/GetProjectPhases",
+                data: postedContent,
+                success: function (message) {
+                    $("#PhaseId").prop('disabled', false);
+                    $("#PhaseId").empty();
+                    $('#PhaseId').append($('<option>', { value: '', text: 'Select Phase', selected: true }));
+                    var res = message.data;
+
+                    if (res.length > 0) {
+                        for (var i = 0; i < message.data.length; i++) {
+                            $('#PhaseId').append($('<option>', { value: message.data[i].PhaseId, text: message.data[i].PhaseName }));
+                        } // end of for loop
+                    } // end of if for length
+                },
+                error: function (xerr) {
+                    /* $('#txteng').val("err : " +xerr);*/
+                }
+            });
+
+        }
+
+        function ReActivateDatePickers  (StartDate, EndDate) {
             //alert(StartDate + " < - > " + EndDate);
 
             $("#StartDate").datepicker({
@@ -371,7 +427,7 @@
 
         }
 
-        function parseJsonDate(jsonDateString) {
+        function parseJsonDate          (jsonDateString) {
             var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
             jsonDateString = jsonDateString.replace('/Date(', '');
