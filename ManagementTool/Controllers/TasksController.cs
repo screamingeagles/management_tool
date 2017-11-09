@@ -16,7 +16,7 @@ namespace ManagementTool.Controllers
         private ProjectEntities db = new ProjectEntities();
 
         [HttpPost]
-        public JsonResult GetCompaniesByLocation(int SelectedLocation)
+        public JsonResult GetCompaniesByLocation    (int SelectedLocation)  
         {
             using (ProjectEntities _db = new ProjectEntities()) {
                 var q = (from c in _db.C011_COMPANY
@@ -27,7 +27,7 @@ namespace ManagementTool.Controllers
         }
 
         [HttpPost]
-        public JsonResult GetBucketDetails(int SelectedBucket)
+        public JsonResult GetBucketDetails          (int SelectedBucket)    
         {
             using (ProjectEntities _db = new ProjectEntities())
             {
@@ -88,7 +88,7 @@ namespace ManagementTool.Controllers
         }
 
         [HttpPost]
-        public JsonResult GetSubAreaByArea(int SelectedArea)
+        public JsonResult GetSubAreaByArea          (int SelectedArea)      
         {
             using (ProjectEntities _db = new ProjectEntities())
             {
@@ -108,7 +108,7 @@ namespace ManagementTool.Controllers
 
 
         // GET: Tasks
-        public ActionResult Index(){
+        public ActionResult         Index       ()              {
             int uid = UserIdentity.UserId;
             List<Service> s = Service.GetServiceList(uid,0);
             return View(s);
@@ -118,7 +118,7 @@ namespace ManagementTool.Controllers
         }
 
         // GET: Tasks/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult         Details     (int? id)       
         {
             if (id == null)
             {
@@ -133,7 +133,7 @@ namespace ManagementTool.Controllers
         }
 
         // GET: Tasks/Create
-        public ActionResult Create(int? PhaseId)
+        public ActionResult         Create      (int? PhaseId)  
         {
             #region A R E A
             /* var area = (from a in db.C002_AREA join
