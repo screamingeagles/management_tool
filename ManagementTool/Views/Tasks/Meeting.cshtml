@@ -1,7 +1,7 @@
 ﻿@model ManagementTool.Models.C008_TASK_DATA
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Meeting";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -18,7 +18,8 @@
                         @Html.DropDownList("ProjectId", null, "Select Project", htmlAttributes: new { @class = "form-control m-b", onchange = "FillProjectDetails(this);" })
                     </div>
                     <div class="col-lg-5">
-                        @using (Html.BeginForm("Create", "Tasks", FormMethod.Get)){
+                        @using (Html.BeginForm("Meeting", "Tasks", FormMethod.Get))
+                        {
                             @Html.DropDownList("PhaseId", null, "Select Phase", htmlAttributes: new { @class = "form-control m-b", onchange = "this.form.submit()", disabled = "disabled" })
                         }
                     </div>
@@ -32,7 +33,7 @@
                     </a>
                 </div>
             </div>
-            
+
         </div>
     </div>
 </div>
@@ -54,7 +55,7 @@
             <div class="ibox-content">
                 <div class="table-responsive">
 
-                    @using (Html.BeginForm("Create", "Tasks", FormMethod.Post, new { id = "frmMain" }))
+                    @using (Html.BeginForm("Meeting", "Tasks", FormMethod.Post, new { id = "frmMain" }))
                     {
                         @Html.AntiForgeryToken();
 
@@ -62,7 +63,7 @@
                         <div class="form-group">
                             <label class="col-lg-2 control-label">Location</label>
                             <div class="col-lg-10">
-                                <input type="text"  class="form-control m-b" disabled="disabled" name="Locatoin" id="Locatoin" style="background-color:lavenderblush; color:black" />
+                                <input type="text" class="form-control m-b" disabled="disabled" name="Locatoin" id="Locatoin" style="background-color:lavenderblush; color:black" />
                             </div>
                         </div>
 
@@ -74,7 +75,7 @@
                             </div>
                             <label class="col-lg-2 control-label">Division</label>
                             <div class="col-lg-4">
-                                <input name="Division" id="Division" type="text"  class="form-control m-b" disabled="disabled" style="background-color:lavenderblush; color:black" />
+                                <input name="Division" id="Division" type="text" class="form-control m-b" disabled="disabled" style="background-color:lavenderblush; color:black" />
                             </div>
                         </div>
 
@@ -114,11 +115,11 @@
                             </div>
                         </div>
 
-                        <!-- / Task Name -->
+                        <!-- / Meeting Name -->
                         <div class="form-group">
-                            <label class="col-lg-2 control-label">New Task Name</label>
+                            <label class="col-lg-2 control-label">Meeting Name</label>
                             <div class="col-lg-10">
-                                @Html.TextBoxFor(model => model.SName, htmlAttributes: new { @class = "form-control m-b", @placeholder = "Task Name" })
+                                @Html.TextBoxFor(model => model.SName, htmlAttributes: new { @class = "form-control m-b", @placeholder = "Meeting Name" })
                             </div>
                         </div>
 
@@ -126,7 +127,7 @@
                         <div class="form-group">
                             <label class="col-lg-2 control-label">Description</label>
                             <div class="col-lg-10">
-                                <textarea class="form-control m-b" id="Description" name="Description" rows="2" cols="20"></textarea>                                
+                                <textarea class="form-control m-b" id="Description" name="Description" rows="2" cols="20"></textarea>
                             </div>
                         </div>
 
@@ -138,7 +139,7 @@
                             </div>
                             <label class="col-lg-2 control-label">End Date</label>
                             <div class="col-lg-4">
-                                @Html.TextBoxFor(model => model.Deadline, htmlAttributes: new { @class = "form-control m-b" })
+                                @Html.TextBoxFor(model => model.Deadline, htmlAttributes: new { @class = "form-control m-b" })                                
                             </div>
                         </div>
 
@@ -147,23 +148,27 @@
                             <label class="col-lg-2 control-label">Select Owner</label>
                             <div class="col-lg-4">
                                 <select class="form-control m-b" id="OwnerId" name="OwnerId">
-                                    <option value="">Select Owner</option>                                    
-                                @{
-                                    foreach (SelectListItem a in ViewBag.OwnerId) {
-                                        if (ViewBag.UserId.ToString() == a.Value.ToString()) {
-                                            WriteLiteral("<option value=\"" + a.Value + "\" selected>" + a.Text + "</option>");
-                                        } else {
-                                            WriteLiteral("<option value=\"" + a.Value + "\" >" + a.Text + "</option>");
-                                        }
+                                    <option value="">Select Owner</option>
+                                    @{
+                                        foreach (SelectListItem a in ViewBag.OwnerId)
+                                        {
+                                            if (ViewBag.UserId.ToString() == a.Value.ToString())
+                                            {
+                                                WriteLiteral("<option value=\"" + a.Value + "\" selected>" + a.Text + "</option>");
+                                            }
+                                            else
+                                            {
+                                                WriteLiteral("<option value=\"" + a.Value + "\" >" + a.Text + "</option>");
+                                            }
 
+                                        }
                                     }
-                                }    
                                 </select>
-                                
+
                             </div>
                             <label class="col-lg-2 control-label">Created By</label>
                             <div class="col-lg-4">
-                                <input id="GeneratedBy" name="GeneratedBy" class="form-control m-b" value="@ViewBag.UserName" placeholder="Created By"  disabled="disabled">
+                                <input id="GeneratedBy" name="GeneratedBy" class="form-control m-b" value="@ViewBag.UserName" placeholder="Created By" disabled="disabled">
                             </div>
                         </div>
 
@@ -171,7 +176,8 @@
                         <div class="form-group">
                             <label class="col-lg-2 control-label">Task Type</label>
                             <div class="col-lg-4">
-                                @Html.DropDownList("TaskTypeId", null, "Select Type", htmlAttributes: new { @class = "form-control m-b" })
+                                <input type="text" value="Meeting" class="form-control m-b" disabled="disabled" style="background-color:lavenderblush; color:black">
+                                <input type="hidden" value="5" name="TaskTypeId" id="TaskTypeId" />
                             </div>
                             <label class="col-lg-2 control-label">Task Status</label>
                             <div class="col-lg-4">
@@ -181,9 +187,9 @@
 
                         <!-- / Man Days and Doc Links   -->
                         <div class="form-group">
-                            <label class="col-lg-2 control-label">Man Days</label>
+                            <label class="col-lg-2 control-label">Meeting Hours</label>
                             <div class="col-lg-4">
-                                @Html.TextBoxFor(model => model.ManDays, htmlAttributes: new { @class = "form-control m-b", @placeholder = "Man Days" })
+                                @Html.TextBoxFor(model => model.ManDays, htmlAttributes: new { @class = "form-control m-b", @placeholder = "Hours" })
                             </div>
                             <label class="col-lg-2 control-label">Doc Links</label>
                             <div class="col-lg-4">
@@ -202,40 +208,59 @@
                                 @Html.ActionLink("Back to List", "Index", null, htmlAttributes: new { @class = "btn btn-sm btn-primary pull-right m-t-n-xs" })
                             </div>
                         </div>
-                    }
+                }
                 </div>
             </div>
         </div>
     </div>
 </div>
-<br/>
-<input type="hidden" id="PStartDate" name="PStartDate" value=""  />
-<input type="hidden" id="PEndDate"   name="PEndDate"   value=""  />
-<br/>
+<br />
+<input type="hidden" id="PStartDate" name="PStartDate" value="" />
+<input type="hidden" id="PEndDate" name="PEndDate" value="" />
+<br />
 
-    <script type="text/javascript">
+<script type="text/javascript">
+    // jquery-ui-timepicker-addon
+    // Scripts\js\plugins\datapicker\jquery-ui-timepicker-addon.js
 
-        $("#ManDays").blur(function () {
-            var q = $('#ManDays').val();
-            q = (q / 8).toFixed(2);
-            $('#ManDays').val(q);
-        });
+    $("#Deadline").blur(function () {
+        var tstDate = $('#StartDate').val();
+        var tedDate = $('#Deadline').val();
+
+        var stDate = new Date(tstDate);
+        var edDate = new Date(tedDate);
+
+        var difference = edDate - stDate;
+        var minss = Math.round(difference / 60000);        
+
+        if (minss < 0) {
+            $('#Deadline').val('');
+            alert("End time Must be greater than Starting Time");
+        }
+        else {
+            $('#ManDays').val((Math.round(minss / 60)));
+        }
+    });
 
 
         $(document).ready(
         function () {
-            $('#StartDate').datepicker({
-                changeMonth: true,
-                changeYear: true,
-                minDate: "-15w",
-                dateFormat: "dd-M-yy" /*format: 'dd-M-yyyy'*/
+            /*("#StartDate").on('input propertychange paste', function () {
+                var q = $('#StartDate').val();
+                $('#txtDeadline').val(q);
+                $('#Deadline').val(q);
+            });*/
+
+            $('#StartDate').datetimepicker({
+                timeInput: true,
+                format: 'd-M-Y H:i' /* dateFormat: 'dd M yy',*/,
+                timeFormat: "hh:mm tt"
             });
 
-            $('#Deadline').datepicker({
-                changeMonth: true,
-                changeYear: true,
-                numberOfMonths: 1,
-                dateFormat: "dd-M-yy"
+            $('#Deadline').datetimepicker({
+                timeInput: true,
+                format: 'd-M-Y H:i', 
+                timeFormat: "hh:mm tt"
             });
 
             $("#frmMain").validate({
@@ -363,11 +388,11 @@
                     document.getElementById("SubPhase").value = message.SubPhaseName;
 
 
-                    $('#StartDate').datepicker('destroy');
-                    $('#Deadline').datepicker('destroy');
+                    //$('#StartDate').datepicker('destroy');
+                    //$('#Deadline').datepicker('destroy');
 
-                    $('#PStartDate').empty();
-                    $("#PEndDate")  .empty();
+                    //$('#PStartDate').empty();
+                    //$("#PEndDate")  .empty();
 
                     var st = message.StartDate;
                     var ed = message.EndDate;
@@ -375,7 +400,7 @@
                     $("#PStartDate").val(parseJsonDate(st));
                     $("#PEndDate")  .val(parseJsonDate(ed));
 
-                    ReActivateDatePickers(st, ed);
+                    //ReActivateDatePickers(st, ed);
 
                 },
                 error: function (xerr) {
@@ -394,8 +419,7 @@
                 type: "POST",
                 url: "/Phase/GetProjectPhases",
                 data: postedContent,
-                success: function (message) {
-                    $("#PhaseId").prop('disabled', false);
+                success: function (message) {                    
                     $("#PhaseId").empty();
                     $('#PhaseId').append($('<option>', { value: '', text: 'Select Phase', selected: true }));
                     var res = message.data;
@@ -405,6 +429,7 @@
                             $('#PhaseId').append($('<option>', { value: message.data[i].PhaseId, text: message.data[i].PhaseName }));
                         } // end of for loop
                     } // end of if for length
+                    $("#PhaseId").prop('disabled', false);
                 },
                 error: function (xerr) {
                     /* $('#txteng').val("err : " +xerr);*/
@@ -446,9 +471,10 @@
             var year = date.getFullYear();
             return day + "-" + monthNames[monthIndex] + "-" + year;
         }
-    </script>
+</script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.12/jquery.datetimepicker.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.12/jquery.datetimepicker.full.min.js"></script>
 
-
-    @section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
-    }
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

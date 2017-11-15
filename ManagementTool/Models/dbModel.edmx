@@ -268,6 +268,17 @@
           <Property Name="Seen" Type="bit" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="024_participants">
+          <Key>
+            <PropertyRef Name="PId" />
+          </Key>
+          <Property Name="PId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TaskId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="PDesc" Type="nvarchar" MaxLength="900" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="EndUser">
           <Key>
             <PropertyRef Name="UID" />
@@ -555,6 +566,18 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__GeneratedBy__participants">
+          <End Role="EndUser" Type="Self.EndUser" Multiplicity="1" />
+          <End Role="024_participants" Type="Self.024_participants" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EndUser">
+              <PropertyRef Name="UID" />
+            </Principal>
+            <Dependent Role="024_participants">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__GeneratedBy__PHASE">
           <End Role="EndUser" Type="Self.EndUser" Multiplicity="1" />
           <End Role="005_PHASE" Type="Self.005_PHASE" Multiplicity="*" />
@@ -672,6 +695,18 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
             </Principal>
             <Dependent Role="004_PROJECT">
               <PropertyRef Name="ProjectType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TASK__participants">
+          <End Role="008_TASK_DATA" Type="Self.008_TASK_DATA" Multiplicity="1" />
+          <End Role="024_participants" Type="Self.024_participants" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="008_TASK_DATA">
+              <PropertyRef Name="TaskId" />
+            </Principal>
+            <Dependent Role="024_participants">
+              <PropertyRef Name="TaskId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -878,6 +913,7 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
           <EntitySet Name="021_CommimentDetails" EntityType="Self.021_CommimentDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="022_Notification_Master" EntityType="Self.022_Notification_Master" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="023_Notification_Detail" EntityType="Self.023_Notification_Detail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="024_participants" EntityType="Self.024_participants" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EndUser" EntityType="Self.EndUser" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EndUser_Details" EntityType="Self.EndUser_Details" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EndUser_LoginDetails" EntityType="Self.EndUser_LoginDetails" Schema="dbo" store:Type="Tables" />
@@ -983,6 +1019,10 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
             <End Role="EndUser" EntitySet="EndUser" />
             <End Role="001_DIVISION" EntitySet="001_DIVISION" />
           </AssociationSet>
+          <AssociationSet Name="FK__GeneratedBy__participants" Association="Self.FK__GeneratedBy__participants">
+            <End Role="EndUser" EntitySet="EndUser" />
+            <End Role="024_participants" EntitySet="024_participants" />
+          </AssociationSet>
           <AssociationSet Name="FK__GeneratedBy__PHASE" Association="Self.FK__GeneratedBy__PHASE">
             <End Role="EndUser" EntitySet="EndUser" />
             <End Role="005_PHASE" EntitySet="005_PHASE" />
@@ -1022,6 +1062,10 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
           <AssociationSet Name="FK__ProjectType__PROJECT" Association="Self.FK__ProjectType__PROJECT">
             <End Role="013_PROJECT_TYPE" EntitySet="013_PROJECT_TYPE" />
             <End Role="004_PROJECT" EntitySet="004_PROJECT" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TASK__participants" Association="Self.FK__TASK__participants">
+            <End Role="008_TASK_DATA" EntitySet="008_TASK_DATA" />
+            <End Role="024_participants" EntitySet="024_participants" />
           </AssociationSet>
           <AssociationSet Name="FK_BUCKET_TASK_DATA" Association="Self.FK_BUCKET_TASK_DATA">
             <End Role="007_BUCKET" EntitySet="007_BUCKET" />
@@ -1250,6 +1294,15 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
             <End Role="C014_TASK_TYPE" EntitySet="C014_TASK_TYPE" />
             <End Role="C008_TASK_DATA" EntitySet="C008_TASK_DATA" />
           </AssociationSet>
+          <EntitySet Name="C024_participants" EntityType="ManagementTool.C024_participants" />
+          <AssociationSet Name="FK__TASK__participants" Association="ManagementTool.FK__TASK__participants">
+            <End Role="C008_TASK_DATA" EntitySet="C008_TASK_DATA" />
+            <End Role="C024_participants" EntitySet="C024_participants" />
+          </AssociationSet>
+          <AssociationSet Name="FK__GeneratedBy__participants" Association="ManagementTool.FK__GeneratedBy__participants">
+            <End Role="EndUser" EntitySet="EndUsers" />
+            <End Role="C024_participants" EntitySet="C024_participants" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="C002_AREA">
           <Key>
@@ -1432,6 +1485,7 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
           <NavigationProperty Name="C006_SubPhase" Relationship="ManagementTool.FK_GeneratedBy__SubPhase" FromRole="EndUser" ToRole="C006_SubPhase" />
           <NavigationProperty Name="C008_TASK_DATA" Relationship="ManagementTool.FK_Generated__TASK_DATA" FromRole="EndUser" ToRole="C008_TASK_DATA" />
           <NavigationProperty Name="C008_TASK_DATA1" Relationship="ManagementTool.FK_OwnerID__TASK_DATA" FromRole="EndUser" ToRole="C008_TASK_DATA" />
+          <NavigationProperty Name="C024_participants" Relationship="ManagementTool.FK__GeneratedBy__participants" FromRole="EndUser" ToRole="C024_participants" />
         </EntityType>
         <EntityType Name="EndUser_Details">
           <Key>
@@ -2100,6 +2154,7 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
           <NavigationProperty Name="C015_STATUS" Relationship="ManagementTool.FK_STATUS__TASK_DATA" FromRole="C008_TASK_DATA" ToRole="C015_STATUS" />
           <NavigationProperty Name="C016_CYCLED" Relationship="ManagementTool.FK_TASK_DATA_CYCLED" FromRole="C008_TASK_DATA" ToRole="C016_CYCLED" />
           <NavigationProperty Name="C014_TASK_TYPE" Relationship="ManagementTool.FK_TASK_TYPE__TASK_DATA" FromRole="C008_TASK_DATA" ToRole="C014_TASK_TYPE" />
+          <NavigationProperty Name="C024_participants" Relationship="ManagementTool.FK__TASK__participants" FromRole="C008_TASK_DATA" ToRole="C024_participants" />
         </EntityType>
         <Association Name="FK_BUCKET_TASK_DATA">
           <End Type="ManagementTool.C007_BUCKET" Role="C007_BUCKET" Multiplicity="1" />
@@ -2170,6 +2225,43 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
             </Principal>
             <Dependent Role="C008_TASK_DATA">
               <PropertyRef Name="TaskTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="C024_participants">
+          <Key>
+            <PropertyRef Name="PId" />
+          </Key>
+          <Property Name="PId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TaskId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="PDesc" Type="String" MaxLength="900" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="C008_TASK_DATA" Relationship="ManagementTool.FK__TASK__participants" FromRole="C024_participants" ToRole="C008_TASK_DATA" />
+          <NavigationProperty Name="EndUser" Relationship="ManagementTool.FK__GeneratedBy__participants" FromRole="C024_participants" ToRole="EndUser" />
+        </EntityType>
+        <Association Name="FK__TASK__participants">
+          <End Type="ManagementTool.C008_TASK_DATA" Role="C008_TASK_DATA" Multiplicity="1" />
+          <End Type="ManagementTool.C024_participants" Role="C024_participants" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="C008_TASK_DATA">
+              <PropertyRef Name="TaskId" />
+            </Principal>
+            <Dependent Role="C024_participants">
+              <PropertyRef Name="TaskId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__GeneratedBy__participants">
+          <End Type="ManagementTool.EndUser" Role="EndUser" Multiplicity="1" />
+          <End Type="ManagementTool.C024_participants" Role="C024_participants" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EndUser">
+              <PropertyRef Name="UID" />
+            </Principal>
+            <Dependent Role="C024_participants">
+              <PropertyRef Name="CreatedBy" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2652,6 +2744,18 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
                 <ScalarProperty Name="SName" ColumnName="SName" />
                 <ScalarProperty Name="BucketId" ColumnName="BucketId" />
                 <ScalarProperty Name="TaskId" ColumnName="TaskId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="C024_participants">
+            <EntityTypeMapping TypeName="ManagementTool.C024_participants">
+              <MappingFragment StoreEntitySet="024_participants">
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="PDesc" ColumnName="PDesc" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="TaskId" ColumnName="TaskId" />
+                <ScalarProperty Name="PId" ColumnName="PId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -59,6 +59,7 @@ namespace ManagementTool.Models
         public virtual DbSet<C006_SubPhase> C006_SubPhase { get; set; }
         public virtual DbSet<vw_Task_Details> vw_Task_Details { get; set; }
         public virtual DbSet<C008_TASK_DATA> C008_TASK_DATA { get; set; }
+        public virtual DbSet<C024_participants> C024_participants { get; set; }
     
         public virtual ObjectResult<SP_BUCKET_LIST_Result> SP_BUCKET_LIST()
         {

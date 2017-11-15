@@ -163,7 +163,7 @@ namespace ManagementTool.Controllers
             ViewBag.BucketId    = new SelectList(db.C007_BUCKET.Where(x => x.PhaseId == ((PhaseId.HasValue)?PhaseId.Value:0)).OrderBy(x => x.Name),    "BucketId",     "Name");
             ViewBag.OwnerId     = new SelectList(db.EndUsers,       "UID",          "UserName");
             ViewBag.StatusId    = new SelectList(db.C015_STATUS,    "StatusId",     "TaskStatus");
-            ViewBag.TaskTypeId  = new SelectList(db.C014_TASK_TYPE, "TypeId",       "TypeName");
+            ViewBag.TaskTypeId  = new SelectList(db.C014_TASK_TYPE.Where(t => t.TypeName != "Meeting"), "TypeId",       "TypeName");
 
             ViewBag.UserId      = UserIdentity.UserId;
             ViewBag.UserName    = UserIdentity.UserName;
@@ -193,12 +193,182 @@ namespace ManagementTool.Controllers
             ViewBag.BucketId = new SelectList(db.C007_BUCKET, "BucketId", "Name", c008_TASK_DATA.BucketId);            
             ViewBag.OwnerId     = new SelectList(db.EndUsers        , "UID"         , "UserName"    , c008_TASK_DATA.OwnerId);
             ViewBag.StatusId    = new SelectList(db.C015_STATUS     , "StatusId"    , "TaskStatus"  , c008_TASK_DATA.StatusId);
-            ViewBag.TaskTypeId  = new SelectList(db.C014_TASK_TYPE  , "TypeId"      , "TypeName"    , c008_TASK_DATA.TaskTypeId);
+            ViewBag.TaskTypeId  = new SelectList(db.C014_TASK_TYPE.Where(t => t.TypeName != "Meeting"), "TypeId"      , "TypeName"    , c008_TASK_DATA.TaskTypeId);
 
             ViewBag.UserId      = UserIdentity.UserId;
             ViewBag.UserName    = UserIdentity.UserName;
             return View(c008_TASK_DATA);
         }
+
+
+        public ActionResult Meeting(int? PhaseId)
+        {           
+
+            ViewBag.ProjectId = new SelectList(db.C004_PROJECT.Where(p => p.IsActive == true).OrderBy(p => p.ProjectName), "ProjectId", "ProjectName");
+            if (PhaseId.HasValue) {
+                ViewBag.PhaseId = new SelectList(db.C005_PHASE.Where(p => p.IsActive == true).Take(5), "PhaseId", "PhaseName", PhaseId.Value);
+            } else {
+                ViewBag.PhaseId = new SelectList(db.C005_PHASE.Where(p => p.IsActive == true).Take(5), "PhaseId", "PhaseName");
+            }
+
+            ViewBag.BucketId = new SelectList(db.C007_BUCKET.Where(x => x.PhaseId == ((PhaseId.HasValue) ? PhaseId.Value : 0)).OrderBy(x => x.Name), "BucketId", "Name");
+            ViewBag.OwnerId = new SelectList(db.EndUsers, "UID", "UserName");
+            ViewBag.StatusId = new SelectList(db.C015_STATUS, "StatusId", "TaskStatus");
+
+            ViewBag.UserId = UserIdentity.UserId;
+            ViewBag.UserName = UserIdentity.UserName;
+            return View();
+        }
+
+        // POST: Tasks/Meeting                
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Meeting([Bind(Include = "BucketId,SName,Description,StartDate,Deadline,ManDays,OwnerId,DocsLink,TaskTypeId,StatusId")] C008_TASK_DATA c008_TASK_DATA)
+        {
+            if (c008_TASK_DATA.SName != "") //(ModelState.IsValid)
+            {
+                c008_TASK_DATA.GeneratedBy = UserIdentity.UserId;
+                c008_TASK_DATA.GeneratedDate = DateTime.Now.AddHours(4);
+                c008_TASK_DATA.IsActive = true;
+
+                db.C008_TASK_DATA.Add(c008_TASK_DATA);
+                db.SaveChanges();
+                int ServiceId = c008_TASK_DATA.TaskId;
+                return RedirectToAction("Meetings", "Tasks", new { id = ServiceId });
+            }
+
+            ViewBag.ProjectId = new SelectList(db.C004_PROJECT.Where(p => p.IsActive == true).OrderBy(p => p.ProjectName), "ProjectId", "ProjectName");
+            ViewBag.PhaseId = new SelectList(db.C005_PHASE.Where(p => p.IsActive == true).Take(5), "PhaseId", "PhaseName");
+
+            ViewBag.BucketId = new SelectList(db.C007_BUCKET, "BucketId", "Name", c008_TASK_DATA.BucketId);
+            ViewBag.OwnerId = new SelectList(db.EndUsers, "UID", "UserName", c008_TASK_DATA.OwnerId);
+            ViewBag.StatusId = new SelectList(db.C015_STATUS, "StatusId", "TaskStatus", c008_TASK_DATA.StatusId);
+
+            ViewBag.UserId = UserIdentity.UserId;
+            ViewBag.UserName = UserIdentity.UserName;
+            return View(c008_TASK_DATA);
+        }
+
+
+        // GET: Tasks/Edit/5
+        public ActionResult Meetings(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            C008_TASK_DATA c008_TASK_DATA = db.C008_TASK_DATA.Find(id);
+            if (c008_TASK_DATA == null)
+            {
+                return HttpNotFound();
+            }
+
+            task_base tb = (from t in db.C008_TASK_DATA
+                            join b in db.C007_BUCKET on t.BucketId equals b.BucketId
+                            join p in db.C004_PROJECT on b.ProjectId equals p.ProjectId
+                            join ph in db.C005_PHASE on b.PhaseId equals ph.PhaseId
+                            join sp in db.C006_SubPhase on b.SubPhaseId equals sp.SubPhaseId
+                            into joinx
+                            from x in joinx.DefaultIfEmpty()
+
+                            join l in db.C010_LOCATION on p.LocationId equals l.LocationId
+                            join c in db.C011_COMPANY on p.CompanyId equals c.CompanyId
+                            join d in db.C001_DIVISION on p.DivisionId equals d.DivisionId
+                            join a in db.C002_AREA on p.AreaId equals a.AreaId
+                            join sa in db.C003_SUB_AREA on p.SubAreaId equals sa.SubAreaId
+                            into joiny
+                            from z in joiny.DefaultIfEmpty()
+
+                            where (t.TaskId == id)
+                            select new task_base
+                            {
+                                ServiceId = t.TaskId,
+                                ProjectName = p.ProjectName,
+                                PhaseName = ph.PhaseName,
+                                SubPhaseName = (x.SubPhaseName == null) ? "" : x.SubPhaseName,
+
+                                LocationName = l.LocationName,
+                                CompanyName = c.CompanyName,
+                                DivisionName = d.DivisionName,
+                                AreaName = a.AreaName,
+                                SubAreaName = (z.SubAreaName == null) ? "No Sub Area" : z.SubAreaName
+                            }).FirstOrDefault();
+
+            ViewBag.TaskBase = tb;
+            ViewBag.CoOwners = Bhai.GetParticipantsList(id.Value);
+            ViewBag.BucketId = new SelectList(db.C007_BUCKET, "BucketId", "Name", c008_TASK_DATA.BucketId);
+            ViewBag.OwnerId = new SelectList(db.EndUsers, "UID", "UserName", c008_TASK_DATA.OwnerId);
+            ViewBag.StatusId = new SelectList(db.C015_STATUS, "StatusId", "TaskStatus", c008_TASK_DATA.StatusId);
+            ViewBag.TaskTypeId = new SelectList(db.C014_TASK_TYPE, "TypeId", "TypeName", c008_TASK_DATA.TaskTypeId);
+
+            ViewBag.BucketDetial = Bhai.GetBucketDetail(c008_TASK_DATA.BucketId);
+            ViewBag.UserName = UserIdentity.UserName;
+            return View(c008_TASK_DATA);
+        }
+
+
+        // POST: Tasks/Meetings/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Meetings([Bind(Include = "TaskId,BucketId,SName,Description,OrderId,ManDays,OwnerId,DocsLink,TaskTypeId,StatusId")] C008_TASK_DATA c008_TASK_DATA)
+        {
+            if (ModelState.IsValid)
+            {
+                c008_TASK_DATA.GeneratedBy = UserIdentity.UserId;
+                c008_TASK_DATA.GeneratedDate = DateTime.Now.AddHours(4);
+                c008_TASK_DATA.IsActive = true;
+
+                db.Entry(c008_TASK_DATA).State = EntityState.Modified;
+                db.Entry(c008_TASK_DATA).Property(x => x.StartDate).IsModified = false;
+                db.Entry(c008_TASK_DATA).Property(x => x.Deadline).IsModified = false;
+                db.SaveChanges();
+                return RedirectToAction("Meetings", "Tasks", new { id = c008_TASK_DATA.TaskId });
+                //return RedirectToAction("Index");
+            }
+
+            task_base tb = (from t in db.C008_TASK_DATA
+                            join b in db.C007_BUCKET on t.BucketId equals b.BucketId
+                            join p in db.C004_PROJECT on b.ProjectId equals p.ProjectId
+                            join ph in db.C005_PHASE on b.PhaseId equals ph.PhaseId
+                            join sp in db.C006_SubPhase on b.SubPhaseId equals sp.SubPhaseId
+                            into joinx
+                            from x in joinx.DefaultIfEmpty()
+
+                            join l in db.C010_LOCATION on p.LocationId equals l.LocationId
+                            join c in db.C011_COMPANY on p.CompanyId equals c.CompanyId
+                            join d in db.C001_DIVISION on p.DivisionId equals d.DivisionId
+                            join a in db.C002_AREA on p.AreaId equals a.AreaId
+                            join sa in db.C003_SUB_AREA on p.SubAreaId equals sa.SubAreaId
+                            into joiny
+                            from z in joiny.DefaultIfEmpty()
+
+                            where (t.TaskId == c008_TASK_DATA.TaskId)
+                            select new task_base
+                            {
+                                ServiceId = t.TaskId,
+                                ProjectName = p.ProjectName,
+                                PhaseName = ph.PhaseName,
+                                SubPhaseName = (x.SubPhaseName == null) ? "" : x.SubPhaseName,
+
+                                LocationName = l.LocationName,
+                                CompanyName = c.CompanyName,
+                                DivisionName = d.DivisionName,
+                                AreaName = a.AreaName,
+                                SubAreaName = (z.SubAreaName == null) ? "No Sub Area" : z.SubAreaName
+                            }).FirstOrDefault();
+
+            ViewBag.TaskBase = tb;
+            ViewBag.BucketId = new SelectList(db.C007_BUCKET, "BucketId", "Name", c008_TASK_DATA.BucketId);
+            ViewBag.OwnerId = new SelectList(db.EndUsers, "UID", "UserName", c008_TASK_DATA.OwnerId);
+            ViewBag.StatusId = new SelectList(db.C015_STATUS, "StatusId", "TaskStatus", c008_TASK_DATA.StatusId);
+            ViewBag.TaskTypeId = new SelectList(db.C014_TASK_TYPE, "TypeId", "TypeName", c008_TASK_DATA.TaskTypeId);
+
+            ViewBag.BucketDetial = Bhai.GetBucketDetail(c008_TASK_DATA.BucketId);
+            ViewBag.UserName = UserIdentity.UserName;
+            return View(c008_TASK_DATA);
+        }
+
 
         // GET: Tasks/Edit/5
         public ActionResult Edit(int? id)
@@ -210,6 +380,10 @@ namespace ManagementTool.Controllers
             C008_TASK_DATA c008_TASK_DATA = db.C008_TASK_DATA.Find(id);
             if (c008_TASK_DATA == null) {
                 return HttpNotFound();
+            }
+
+            if (c008_TASK_DATA.TaskTypeId == 5) {
+                return RedirectToAction("Meetings", "Tasks", new { id = id});
             }
             
             task_base tb = (from t  in db.C008_TASK_DATA
@@ -314,5 +488,51 @@ namespace ManagementTool.Controllers
             }
             base.Dispose(disposing);
         }
+
+
+        /* <!--  Add new Participant --> */
+        [HttpPost]
+        public JsonResult AddNewParticipant(int TaskId, string PName, string PDesc)
+        {
+            if (TaskId > 0)
+            {
+                var qry = (from e in db.EndUsers
+                           where (e.UserName == PName)
+                           select new { e.UID, e.UserName }).FirstOrDefault();
+
+                if (qry != null)
+                {
+                    C024_participants co = new C024_participants();
+                    co.TaskId = TaskId;
+                    co.UserId = qry.UID;
+                    co.PDesc  = PDesc;
+                    co.CreatedBy = UserIdentity.UserId;
+                    co.CreatedDate = DateTime.Now.AddHours(4);
+                    db.C024_participants.Add(co);
+                    db.SaveChanges();
+                }
+            }
+
+            var q = (from o in db.C024_participants
+                     join u in db.EndUsers on o.UserId equals u.UID
+                     where (o.TaskId == TaskId)
+                     select new { o.PId, u.UserName, o.PDesc }).ToList();
+            return Json(new { data = q });
+
+        }
+
+        /* <!--  Remove User --> */
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ParticipantRemove(int id)
+        {
+            int ProjectId = 0;
+            C024_participants co = db.C024_participants.Find(id);
+            ProjectId = co.TaskId;
+            db.C024_participants.Remove(co);
+            db.SaveChanges();
+            return RedirectToAction("Meetings", "Tasks", new { id = ProjectId });
+        }
+
     }
 }

@@ -69,6 +69,9 @@
         <AssociationConnector Association="ManagementTool.FK_STATUS__TASK_DATA" />
         <AssociationConnector Association="ManagementTool.FK_TASK_DATA_CYCLED" />
         <AssociationConnector Association="ManagementTool.FK_TASK_TYPE__TASK_DATA" />
+        <EntityTypeShape EntityType="ManagementTool.C024_participants" Width="1.5" PointX="21.875" PointY="15.625" />
+        <AssociationConnector Association="ManagementTool.FK__TASK__participants" />
+        <AssociationConnector Association="ManagementTool.FK__GeneratedBy__participants" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

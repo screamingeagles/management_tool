@@ -18,6 +18,7 @@ namespace ManagementTool.Models
         public C008_TASK_DATA()
         {
             this.C016_CYCLED = new HashSet<C016_CYCLED>();
+            this.C024_participants = new HashSet<C024_participants>();
         }
     
         public int TaskId { get; set; }
@@ -43,5 +44,7 @@ namespace ManagementTool.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<C016_CYCLED> C016_CYCLED { get; set; }
         public virtual C014_TASK_TYPE C014_TASK_TYPE { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<C024_participants> C024_participants { get; set; }
     }
 }

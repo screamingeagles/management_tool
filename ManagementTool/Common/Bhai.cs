@@ -364,7 +364,7 @@ namespace ManagementTool.Common
             return tech;
         }
 
-        public static List<contributors>      GetContributorsList   (int ProjectId)         
+        public static List<contributors>        GetContributorsList   (int ProjectId)       
         {
             List<contributors> tech = new List<contributors>();
             try
@@ -388,6 +388,41 @@ namespace ManagementTool.Common
                 c.UID                = 0;
                 c.UserName           = "Exception Occured";
                 c.UserContribution   = e.Message;
+                c.ContributorAddDate = DateTime.Now;
+                tech.Add(c);
+            }
+            return tech;
+        }
+
+        public static List<contributors>        GetParticipantsList   (int TaskId)          
+        {
+            List<contributors> tech = new List<contributors>();
+            try
+            {
+                using (ProjectEntities _db = new ProjectEntities())
+                {
+                    tech = (from t in _db.C024_participants
+                            join u in _db.EndUsers on t.UserId equals u.UID
+                            orderby t.CreatedDate descending
+                            where (t.TaskId== TaskId)
+                            select new contributors
+                            {
+                                FieldId = t.PId,
+                                UID = t.UserId,
+                                UserName = u.UserName,
+                                UserContribution = t.PDesc,
+                                ContributorAddedBy = "",
+                                ContributorAddDate = t.CreatedDate
+                            }).ToList();
+                }
+            }
+            catch (Exception e)
+            {
+                contributors c = new contributors();
+                c.FieldId = 0;
+                c.UID = 0;
+                c.UserName = "Exception Occured";
+                c.UserContribution = e.Message;
                 c.ContributorAddDate = DateTime.Now;
                 tech.Add(c);
             }

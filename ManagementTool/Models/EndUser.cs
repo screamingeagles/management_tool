@@ -29,6 +29,7 @@ namespace ManagementTool.Models
             this.C006_SubPhase = new HashSet<C006_SubPhase>();
             this.C008_TASK_DATA = new HashSet<C008_TASK_DATA>();
             this.C008_TASK_DATA1 = new HashSet<C008_TASK_DATA>();
+            this.C024_participants = new HashSet<C024_participants>();
         }
     
         public int UID { get; set; }
@@ -66,5 +67,7 @@ namespace ManagementTool.Models
         public virtual ICollection<C008_TASK_DATA> C008_TASK_DATA { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<C008_TASK_DATA> C008_TASK_DATA1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<C024_participants> C024_participants { get; set; }
     }
 }

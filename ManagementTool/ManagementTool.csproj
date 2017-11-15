@@ -719,6 +719,9 @@
     <Compile Include="Models\C023_Notification_Detail.cs">
       <DependentUpon>dbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\C024_participants.cs">
+      <DependentUpon>dbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\dbModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -901,6 +904,8 @@
     <Content Include="Views\Commitment\Index.cshtml" />
     <None Include="Properties\PublishProfiles\rttmanagementtool - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\rttmanagementtool - Web Deploy.pubxml" />
+    <Content Include="Views\Tasks\Meeting.cshtml" />
+    <Content Include="Views\Tasks\Meetings.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
