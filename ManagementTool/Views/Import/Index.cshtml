@@ -1,0 +1,77 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+
+}
+<link href="/Content/css/plugins/toastr/toastr.min.css" rel="stylesheet">
+<br />
+<div class="row">
+    <div class="col-lg-10 col-lg-offset-1">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Select File to Upload</h5>
+                <div class="ibox-tools">
+                    <a class="collapse-link">
+                        <i class="fa fa-chevron-up"></i>
+                    </a>
+                    <a class="close-link">
+                        <i class="fa fa-times"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="ibox-content">
+                <div class="table-responsive">
+                @using (Html.BeginForm("Save", "Import", FormMethod.Post, new { id = "frmMain", enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken();
+
+                    <!-- / Select File -->
+                    <div class="form-group">
+                        <div class="fileinput input-group fileinput-new" data-provides="fileinput">
+                            
+                            <div class="form-control" data-trigger="fileinput">
+                                <i class="glyphicon glyphicon-file fileinput-exists"></i> 
+                                <span  class="fileinput-filename"></span>
+                            </div>
+
+                            <span class="input-group-addon btn btn-default btn-file">
+                                <span class="fileinput-new">Select file</span><span class="fileinput-exists">Change</span>
+                                <input type="hidden" value="" name="...">
+                                <input type="file" name="attachment" />
+                            </span>
+                            <a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
+                        </div>
+                        <p>Max File Size 2 MB.</p>
+                    </div>
+
+                    <!-- / Save Button -->
+                    <div class="form-group">
+                            <div class="col-lg-12">
+                                <button class="btn btn-sm btn-primary pull-left m-t-n-xs" type="submit">
+                                    <strong>Upload</strong>
+                                </button>
+
+                                @Html.ActionLink("Home", "Welcome", "Home", null, htmlAttributes: new { @class = "btn btn-sm btn-primary pull-right m-t-n-xs" })
+                            </div>
+                        </div>
+                }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/Scripts/js/plugins/jasny/jasny-bootstrap.min.js"></script>
+<script src="~/Scripts/js/plugins/toastr/toastr.min.js"></script>
+@{ 
+    string toast = ViewBag.Message;
+    if (string.IsNullOrEmpty(toast) == false){
+        WriteLiteral("<script>");
+        WriteLiteral("$(document).ready(function () {");
+        WriteLiteral("toastr.success(\"Your File was Uploaded Successfully\",\"Success!!!\");");
+        WriteLiteral("});");
+        WriteLiteral("</script>");
+    }
+}
+   

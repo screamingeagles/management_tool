@@ -328,6 +328,31 @@ namespace ManagementTool.Common
 
         }
 
+        public static int                       SaveStatsImport       (List<STATS_TABLE_LOCAL> l) {
+            int result = 0;
+            using (ProjectEntities db = new ProjectEntities()) {
+                foreach (STATS_TABLE_LOCAL d in l) {
+                    // STATS_TABLE sd1 = ((STATS_TABLE)d);
+                    STATS_TABLE sd = new STATS_TABLE();
+                    sd.SID          = d.SID;
+                    sd.Server       = d.Server;
+                    sd.TCode        = d.TCode;
+                    sd.StartDate    = d.StartDate;
+                    sd.StartTime    = d.StartTime;
+                    sd.UserName     = d.UserName;
+                    sd.FirstName    = d.FirstName;
+                    sd.LastName     = d.LastName;
+                    sd.Department   = d.Department;
+                    sd.CompanyCode  = d.CompanyCode;
+                    sd.CompanyName  = d.CompanyName;
+                    sd.CreatedBy    = d.CreatedBy;
+                    sd.CreatedDate  = d.CreatedDate;
+                    db.STATS_TABLE.Add(sd);
+                    result = result + db.SaveChanges();
+                }
+            }
+            return result;
+        }
 
         public static List<SelectListItem>      GetTechnicianList   (int id)                {
 
