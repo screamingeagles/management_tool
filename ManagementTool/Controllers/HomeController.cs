@@ -157,6 +157,7 @@ namespace ManagementTool.Controllers
                 service.Credentials = new WebCredentials(userid, pass);
                 service.TraceEnabled = true;
                 service.TraceFlags = TraceFlags.All;
+                //service.Url("");
                 service.AutodiscoverUrl(userid, RedirectionUrlValidationCallback);
 
                 return true;

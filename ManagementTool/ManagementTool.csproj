@@ -212,6 +212,7 @@
     <Content Include="Content\animate.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\css\plugins\bootstrapTour\bootstrap-tour.min.css" />
     <Content Include="Content\css\plugins\datepicker\datepicker3.css" />
     <Content Include="Content\css\plugins\jasny\jasny-bootstrap.min.css" />
     <Content Include="Content\css\plugins\jQueryUI\images\animated-overlay.gif" />

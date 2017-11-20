@@ -1,8 +1,9 @@
 ﻿@model IEnumerable<ManagementTool.Helpers.commitment_service>
 
 <!-- Sweet Alert -->
-<link href="/Content/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
-
+<link href="/Content/css/plugins/sweetalert/sweetalert.css"             rel="stylesheet">
+<!-- Tour -->
+<link href="/Content/css/plugins/bootstrapTour/bootstrap-tour.min.css" rel="stylesheet" />
 @{
     int index = 1;
     ViewBag.Title = "Create";
@@ -11,14 +12,15 @@
 }
 
 
-<br />
-
 <div class="row">
     <div class="col-lg-10 col-lg-offset-1">
         <div class="ibox float-e-margins">
             <div class="ibox-title">
                 <h5>Commitment For @ViewBag.UserName</h5>
                 <div class="ibox-tools">
+                    <a class="navy-link tour-tour-element tour-tour-0-element"  id="step1" title="Add New Title" data-toggle="modal" data-target="#mdlAddParent">
+                        <i class="fa fa-cogs"></i>
+                    </a>
                     <a class="collapse-link">
                         <i class="fa fa-chevron-up"></i>
                     </a>
@@ -36,9 +38,9 @@
                         foreach (var outer in Model) {
                             <!-- / Commitment Header Comes here -->
                             <div class="form-group">
-                                <label class="col-lg-3 control-label">Commitment Heading</label>
+                                <label class="col-lg-3 control-label m-b">Commitment Heading</label>
                                 <div class="col-lg-9">
-                                    <label class="form-control m-b" id="lblCommitmentHeader">@outer.CommitmentHeading</label>
+                                    <label class="form-control m-b" id="lblCommitmentHeader" style="border-color:ghostwhite;">@outer.CommitmentHeading</label>                                    
                                 </div>
                             </div>
 
@@ -60,7 +62,7 @@
                                     <tbody>
                                     @foreach (var inner in outer.lst)
                                     {
-                                    <tr style="font-size:9pt;">
+                                    <tr style="font-size:9pt;" id="trd_@inner.Detaild">
                                         <td>@index</td>
                                         <td>@inner.Commitment   </td>
                                         <td>@inner.Description  </td>
@@ -68,12 +70,59 @@
                                         <td>@inner.Generateddate.ToString("MMM dd, yyyy")</td>
                                         <td>@inner.GeneratedBy</td>
                                         <td>
-                                            <div class="ui-pg-div" id="btnEdit"><span class="ui-icon ui-icon-pencil"></span></div>
-                                            <div class="ui-pg-div" id="btnDel" ><span class="ui-icon ui-icon-trash"></span></div>                                            
+                                            <!--div class="ui-pg-div" id="btnEdit">                                                
+                                                    <span class="ui-icon ui-icon-pencil tour-tour-element tour-tour-0-element" id="step2"></span>                                                
+                                            </!div-->
+                                            <div class="ui-pg-div" id="btnDel_@inner.Detaild"  
+                                                                    title="Delete the Commitment Named : @inner.Commitment">
+                                                <a>
+                                                    <span class="ui-icon ui-icon-trash  tour-tour-element tour-tour-0-element" id="step3"></span>
+                                                </a>
+                                            </div>                                
                                         </td>
                                     </tr>
-
                                         index = index + 1;
+                                        <script type="text/javascript">
+                                            $("#btnDel_"+@inner.Detaild).click(function () {
+                                                swal({
+                                                    title: "Are you sure?",
+                                                    text: "Your will not be able to recover this Commitment :  @inner.Commitment",
+                                                    type: "warning",
+                                                    showCancelButton: true,
+                                                    confirmButtonColor: "#DD6B55",
+                                                    confirmButtonText: "Yes, Delete it!",
+                                                    cancelButtonText: "No, Cancel please!",
+                                                    closeOnConfirm: false,
+                                                    closeOnCancel: false
+                                                }, function (isConfirm) {
+                                                    if (isConfirm) {
+
+                                                        var DeleteContent = {
+                                                            CommitmentDetail: @inner.Detaild,
+                                                        }
+
+                                                        $.ajax({
+                                                            type: "POST",
+                                                            url: "/Commitment/DeleteCommitment",
+                                                            data: DeleteContent,
+                                                            success: function (message) {                                                                
+                                                                if (message.data==true){
+                                                                    $('#trd_@inner.Detaild').remove(); 
+                                                                }                                                                
+                                                            },
+                                                            error: function (xerr) {
+                                                                // $('#txteng').val("err : " +xerr);
+                                                                swal("Cancelled", "Delete failed", "error");
+                                                            }
+                                                        });
+
+                                                        swal("Deleted!", "Your Commitment has been deleted.", "success");
+                                                    } else {
+                                                        swal("Cancelled", "Your Commitment is safe :)", "error");
+                                                    }
+                                                });
+                                            });
+                                        </script>
                                     }
                                     </tbody>
                                     <tfoot>
@@ -88,7 +137,7 @@
                         <!-- / Save Button -->
                         <div class="form-group">
                             <div class="col-lg-12">
-                                <button type="button" class="btn btn-sm btn-primary pull-left m-t-n-xs" data-toggle="modal" data-target="#mdlAddNew">
+                                <button type="button" class="btn btn-sm btn-primary pull-left m-t-n-xs tour-tour-element tour-tour-0-element"  id="step4"  data-toggle="modal" data-target="#mdlAddNew">
                                     <strong>Add New</strong>
                                 </button>
 
@@ -102,7 +151,7 @@
     </div>
 </div>
 
-<br/>
+
 <div class="row">
     <div class="modal inmodal" id="mdlAddNew" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
         <div class="modal-dialog">
@@ -154,7 +203,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-white" data-dismiss="modal" id="ParentClose">Close</button>
                     <button type="button" class="btn btn-primary" id="btnModalSave">Save changes</button>
                 </div>
             </div>
@@ -163,12 +212,51 @@
 </div>
 
 
-    @section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
-    }
+<div class="row">
+    <div class="modal inmodal" id="mdlAddParent" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content animated flipInY">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">Add New Commitment Category</h4>
+                    <small class="font-bold">please Provide Commitment Category for @ViewBag.UserName</small>
+                </div>
+                <div class="modal-body">
+                    <form name="frmAddCommitment" id="frmAddCommitment" method="post">
 
-    <!-- Sweet alert -->
+                        <div class="row">
+                            <p style="color:red; font-weight:normal; font-style:italic;">
+                                <strong>Please Provide Details Below</strong>
+                            </p>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Category Heading</label>
+                                <div class="col-lg-9">
+                                    @Html.TextArea("txtAddCategoryHeading", new { @class = "form-control m-b", rows = "3" })
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="btnModalSaveParent">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<!-- Sweet alert -->
 <script src="/Scripts/js/plugins/sweetalert/sweetalert.min.js"></script>
+
+<!-- Tour -->
+<script src="/Scripts/js/plugins/bootstrapTour/bootstrap-tour.min.js"></script>
 
 <script type="text/javascript">
 
@@ -176,13 +264,13 @@
 
         var isvalid = $("#frmAddCommitment").valid();
         if (isvalid == false){return;}
-        
+
         var commitId  = $('#CommitmentId :selected').val();
         var txtcommit = $('#txtCommitment')         .val();
         var txtdesc   = $('#txtDescription')        .val();
         var txtremrks = $('#txtRemarks')            .val();
         var projId    = $('#ProjectId :selected')   .val();
-                
+
         var postedContent = {
             CommitmentID: commitId,
             TCommit     : txtcommit,
@@ -190,7 +278,7 @@
             TRemarks    : txtremrks,
             ProjectId   : projId
         }
-      
+
         $.ajax({
             type    : "POST",
             url     : "/Commitment/AddNew",
@@ -203,32 +291,83 @@
                 // $('#txteng').val("err : " +xerr);
             }
         });
-       
+
     });
 
-    $("#btnDel").click(function () {
-            swal({
-                title: "Are you sure?",
-                text: "Your will not be able to recover this Commitment!",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Yes, Delete it!",
-                cancelButtonText: "No, Cancel please!",
-                closeOnConfirm: false,
-                closeOnCancel: false
-            }, function (isConfirm) {
-                        if (isConfirm) {
-                            swal("Deleted!", "Your Commitment has been deleted.", "success");
-                        } else {
-                            swal("Cancelled", "Your Commitment is safe :)", "error");
-                        }
-                    });
+    $("#btnModalSaveParent").click(function () {
+
+        var txt = document.getElementById("txtAddCategoryHeading");
+        if (txt.value == "") {
+            return;
+        }
+
+        var postedContent = {
+            CommitmentMaster: txt.value
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "/Commitment/AddNewMaster",
+            data: postedContent,
+            success: function (message) {
+                var retrn = message.data;
+                if (retrn.length > 0) {
+                    $("#CommitmentId").empty();
+                    for (var i = 0; i < message.data.length; i++) {
+                        $('#CommitmentId').append($('<option>', { value: message.data[i].CommitmentId, text: message.data[i].CommitmentHeader }));
+                    } // end of for loop
+                } // end of if for length
+                txt.value = "";
+                $('#mdlAddParent').modal('hide');
+            },
+            error: function (xerr) {
+                // $('#txteng').val("err : " +xerr);
+            }
         });
 
+    });
 
     $(document).ready(
     function () {
+
+        // Instance the tour
+        var tour = new Tour({
+            steps: [{
+                    element: "#step1",
+                    title: "Add New Heading",
+                    content: "Click here to Add New Header for your Commitment",
+                    placement: "bottom",
+                    backdrop: true
+                },
+                {
+                    element: "#step4",
+                    title: "Add Commitment",
+                    content: "Click Here to Add New Commitment",
+                    placement: "top",
+                    backdrop: true
+                },
+                {
+                    element: "#step2",
+                    title: "Edit Commitment ",
+                    content: "Click Here to Edit your Commitment",
+                    placement: "bottom"
+                },
+                {
+                    element: "#step3",
+                    title: "Delete Commitment ",
+                    content: "Click Here to Delete your Commiment",
+                    placement: "top"
+                }
+            ]
+        });
+
+        // Initialize the tour
+        tour.init();
+
+        // Start the tour
+        tour.restart();
+        //tour.start();
+
         $("#frmAddCommitment").validate({
             rules: {
                 txtCommitment: {
@@ -256,6 +395,13 @@
             }
         });
     });
+
+    
+    //function ConfirmDelete() {        
+            // (dollar)('#' + i).remove(); // remove tr
+            // o n c l i c k  = "DeleteItem((at)inner.Detaild)"
+        //return confirm("Are you Sure you want to delete this Commitment");
+    //}
 
     function parseJsonDate(jsonDateString) {
         var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];

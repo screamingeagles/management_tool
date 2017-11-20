@@ -14,13 +14,33 @@ using System.Collections.Generic;
 
 namespace ManagementTool.Controllers
 {
-    public class CommitmentController : Controller
+    public class CommitmentController : BaseController
     {
         private ProjectEntities db = new ProjectEntities();
 
+        [HttpPost]
+        public JsonResult AddNewMaster  (string CommitmentMaster)                                                           {
+
+            if (string.IsNullOrEmpty(CommitmentMaster) == false) {
+                C020_CommitmentMaster cm    = new C020_CommitmentMaster();
+                cm.UserId                   = UserIdentity.UserId;
+                cm.CommitmentHeader         = CommitmentMaster;                                
+                cm.IsActive                 = true;
+                cm.GeneratedBy              = UserIdentity.UserId;
+                cm.GeneratedDate            = DateTime.Now.AddHours(4);
+                db.C020_CommitmentMaster.Add(cm);
+                db.SaveChanges();                
+            }
+
+            var q = (from dt in db.C020_CommitmentMaster
+                     where (dt.UserId == UserIdentity.UserId) && (dt.IsActive == true)
+                     select new { dt.CommitmentId, dt.CommitmentHeader }).ToList();
+
+            return Json(new { data = q});
+        }
 
         [HttpPost]
-        public JsonResult AddNew(int CommitmentID, string TCommit, string TDesc, string TRemarks, int ProjectId)
+        public JsonResult AddNew        (int CommitmentID, string TCommit, string TDesc, string TRemarks, int ProjectId)    
         {
             if (CommitmentID > 0) {
                 C021_CommimentDetails cm= new C021_CommimentDetails();
@@ -65,9 +85,9 @@ namespace ManagementTool.Controllers
 
         // GET: Commitment/Create
         public ActionResult Create() {
-            UserIdentity.UserId         = 1020;
-            UserIdentity.UserName       = "Arsalan Ahmed";
-            List<commitment_service> cs = commitment_service.GetUserCommitment(1020);
+            int Userid = UserIdentity.UserId; //= 1020;
+            //UserIdentity.UserName       = "Arsalan Ahmed";
+            List<commitment_service> cs = commitment_service.GetUserCommitment(Userid);
 
             ViewBag.UserName            = UserIdentity.UserName;
             ViewBag.ProjectId           = new SelectList(db.C004_PROJECT            .Where(p => p.IsActive == true).OrderBy(p => p.ProjectName     ), "ProjectId", "ProjectName");
@@ -125,6 +145,18 @@ namespace ManagementTool.Controllers
             ViewBag.UserId = new SelectList(db.EndUsers, "UID", "UserName", c020_CommitmentMaster.UserId);
             return View(c020_CommitmentMaster);
         }
+
+        
+        [HttpPost]
+        public JsonResult DeleteCommitment(int CommitmentDetail) {
+            if (CommitmentDetail > 0 ) {
+                C021_CommimentDetails cdt = db.C021_CommimentDetails.Find(CommitmentDetail);
+                db.C021_CommimentDetails.Remove(cdt);
+                db.SaveChanges();                
+            }
+            return Json(new { data = true });
+        }
+
 
         // GET: Commitment/Delete/5
         public ActionResult Delete(int? id)
