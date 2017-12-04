@@ -157,9 +157,8 @@ namespace ManagementTool.Controllers
                 service.Credentials = new WebCredentials(userid, pass);
                 service.TraceEnabled = true;
                 service.TraceFlags = TraceFlags.All;
-                //service.Url("");
-                service.AutodiscoverUrl(userid, RedirectionUrlValidationCallback);
-
+                service.Url = new Uri("https://outlook.office365.com/EWS/Exchange.asmx");
+                //service.AutodiscoverUrl(userid, RedirectionUrlValidationCallback);
                 return true;
             }
             catch

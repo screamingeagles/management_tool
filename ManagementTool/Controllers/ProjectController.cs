@@ -40,6 +40,17 @@ namespace ManagementTool.Controllers
             }
         }
 
+        [HttpPost]
+        public JsonResult GetSubAreaByDivision(int SelectedDivision)       {
+            using (ProjectEntities db = new ProjectEntities())
+            {
+                var q = (from s in db.vw_SubAreaListByDivision
+                         where (s.DivisionId == SelectedDivision)
+                         select new { s.AreaId, s.AreaName }).ToList();
+                return Json(new { data = q });
+            }
+        }
+
 
         // GET: Project
         public ActionResult Index(int? AreaId)

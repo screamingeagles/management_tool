@@ -10,8 +10,8 @@
 <br />
 <div class="row">
     <br />
-    <div class="col-lg-12">
-        <button class="btn btn-sm btn-primary pull-left m-t-n-xs" type="button" onclick="window.location.href='@Url.Content("~/SubArea/Create")'"><strong>Add New Sub Area</strong></button>
+    <div class="col-lg-12"><!--  window.location.href='(at) Url.Content("~/SubArea/Create")' -->        
+        <button class="btn btn-sm btn-primary pull-left m-t-n-xs" type="button" onclick="newOnClick();"><strong>Add New Sub Area</strong></button>
     </div>
 
 
@@ -32,6 +32,28 @@
                 <div class="table-responsive">
                     <table class="table table-striped">
                         <thead>
+
+                            <tr>
+                                <th colspan="9">
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label">Select Division </label>
+                                        <div class="col-lg-10">
+                                            @Html.DropDownList("DivisionId", null, "Select Division", htmlAttributes: new { @class = "form-control m-b", onchange = "FillArea(this);" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label">Select Area </label>
+                                        <div class="col-lg-10">
+                                            @using (Html.BeginForm("Index", "SubArea", FormMethod.Post)) {
+                                                @Html.DropDownList("AreaId", null, "Select Area", htmlAttributes: new { @class = "form-control m-b", onchange = "this.form.submit()" })                                                
+                                                <input type="hidden" name="DivisionId" value="@ViewBag.DivId" /> 
+                                            }
+                                        </div>
+                                    </div>
+                                </th>
+                            </tr>
+
                             <tr>
                                 <th>#</th>                                
                                 <th>Area Name </th>
@@ -77,3 +99,37 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    function FillArea(obj) {
+        var sel = obj.options[obj.selectedIndex].value;
+        if (sel == "") { return; }
+
+        $('input[name="DivisionId"]').val(sel);
+
+        var postedContent = { SelectedDivision: sel }
+        $.ajax({
+            type: "POST",
+            url: "/Project/GetSubAreaByDivision",
+            data: postedContent,
+            success: function (message) {
+                var res = message.data;
+                $("#AreaId").prop('disabled', false);
+                $("#AreaId").empty()
+                if (res.length > 0) {
+                    for (var i = 0; i < message.data.length; i++) {
+                        $('#AreaId').append($('<option>', { value: message.data[i].AreaId, text: message.data[i].AreaName }));
+                    } // end of for loop
+                } // end of if for length
+            },
+            error: function (xerr) {
+                /* $('#txteng').val("err : " +xerr);*/
+            }
+        });
+
+    }
+
+    function newOnClick() {
+        var selValue = $('#AreaId').find(":selected").val();
+        window.location.href = "/SubArea/Create/" + selValue;
+    }
+</script>

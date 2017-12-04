@@ -18,8 +18,32 @@ namespace ManagementTool.Controllers
         // GET: SubArea
         public ActionResult Index()
         {
-            var c003_SUB_AREA = db.C003_SUB_AREA.Include(c => c.C002_AREA).Include(c => c.EndUser);
-            return View(c003_SUB_AREA.ToList());
+            
+            int area = 0;
+            int division = 0;
+            List<C003_SUB_AREA> sa;
+            string div = (Request.Form["DivisionId"]== null) ? "" : Request.Form["DivisionId"]  .ToString();
+            string ara = (Request.Form["AreaId"]    == null) ? "" : Request.Form["AreaId"]      .ToString();
+
+            if (string.IsNullOrEmpty(div)) {
+                ViewBag.DivisionId = new SelectList(db.C001_DIVISION.Where(d => d.IsActive == true).OrderBy(d => d.DivisionName), "DivisionId", "DivisionName");
+            }
+            else {
+                division           = Convert.ToInt32(div);
+                ViewBag.DivisionId = new SelectList(db.C001_DIVISION.Where(d => d.IsActive == true).OrderBy(d => d.DivisionName), "DivisionId", "DivisionName", Convert.ToInt32(div));
+            }
+
+            if (string.IsNullOrEmpty(ara)) {
+                ViewBag.AreaId  = new SelectList(db.C002_AREA.Where(a => a.isActive == true).Take(0), "AreaId", "AreaName");
+                sa              = db.C003_SUB_AREA.Include(c => c.C002_AREA).Include(c => c.EndUser).ToList();
+            }
+            else {
+                area            = Convert.ToInt32(ara);                
+                ViewBag.AreaId  = new SelectList(db.vw_SubAreaListByDivision.Where(a => a.DivisionId == division), "AreaId", "AreaName", area);
+                sa              = db.C003_SUB_AREA.Include(c => c.C002_AREA).Include(c => c.EndUser).Where(s => s.AreaId == area) .ToList();
+            }
+            ViewBag.DivId       = div;            
+            return View(sa);
         }
 
         // GET: SubArea/Details/5
@@ -38,9 +62,13 @@ namespace ManagementTool.Controllers
         }
 
         // GET: SubArea/Create
-        public ActionResult Create()
-        {            
-            ViewBag.AreaId = new SelectList(db.C002_AREA, "AreaId", "AreaName");
+        public ActionResult Create(int? id)
+        {
+            if (id.HasValue) {
+                ViewBag.AreaId = new SelectList(db.C002_AREA, "AreaId", "AreaName", id.Value);
+            } else {
+                ViewBag.AreaId = new SelectList(db.C002_AREA, "AreaId", "AreaName");
+            }            
             return View();
         }
 

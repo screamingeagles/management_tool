@@ -16,9 +16,15 @@ namespace ManagementTool.Controllers
         private ProjectEntities db = new ProjectEntities();
 
         // GET: Area
-        public ActionResult Index()
+        public ActionResult Index(int? DivisionId)
         {
-            var c002_AREA = db.C002_AREA.Include(c => c.C001_DIVISION).Include(c => c.EndUser).OrderBy(c => c.C001_DIVISION.DivisionName).ThenBy(c => c.AreaName);
+            if (DivisionId.HasValue) {
+                ViewBag.DivisionId = new SelectList(db.C001_DIVISION.Where(d => d.IsActive == true).OrderBy(d => d.DivisionName), "DivisionId", "DivisionName", DivisionId.Value);
+            }
+            else {
+                ViewBag.DivisionId = new SelectList(db.C001_DIVISION.Where(d => d.IsActive == true).OrderBy(d => d.DivisionName), "DivisionId", "DivisionName");
+            }
+            var c002_AREA = db.C002_AREA.Include(c => c.C001_DIVISION).Include(c => c.EndUser).Where( c => c.DivisionId  == (DivisionId.HasValue? DivisionId.Value:0) ).OrderBy(c => c.C001_DIVISION.DivisionName).ThenBy(c => c.AreaName);
             return View(c002_AREA.ToList());
         }
 
@@ -38,9 +44,16 @@ namespace ManagementTool.Controllers
         }
 
         // GET: Area/Create
-        public ActionResult Create()
+        public ActionResult Create(int? id)
         {
-            ViewBag.DivisionId = new SelectList(db.C001_DIVISION, "DivisionId", "DivisionName");            
+            if (id.HasValue) {
+                ViewBag.DivisionId = new SelectList(db.C001_DIVISION, "DivisionId", "DivisionName", id.Value);
+            }
+            else {
+                ViewBag.DivisionId = new SelectList(db.C001_DIVISION, "DivisionId", "DivisionName");
+            }
+
+            
             return View();
         }
 
