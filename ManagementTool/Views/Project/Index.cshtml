@@ -28,7 +28,7 @@
             </div>
             <div class="ibox-content">
                 <div class="table-responsive">
-                    <table class="table table-striped">
+                    <table class="table table-striped" id="tblList">
                         <thead>
                             <tr>
                                 <th colspan="9">
@@ -41,9 +41,16 @@
 
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label">Select Area </label>
+                                        <div class="col-lg-10">                                            
+                                                @Html.DropDownList("AreaId", null, "Select Area", htmlAttributes: new { @class = "form-control m-b", onchange = "FillSubArea(this);" , disabled = "disabled" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label">Select Sub Area </label>
                                         <div class="col-lg-10">
-                                            @using (Html.BeginForm("Index", "Project", FormMethod.Post)) {
-                                                @Html.DropDownList("AreaId", null, "Select Area", htmlAttributes: new { @class = "form-control m-b", onchange = "this.form.submit()", disabled = "disabled" })
+                                            @using (Html.BeginForm("Index", "Project", FormMethod.Post)){
+                                                @Html.DropDownList("SubAreaId", null, "Select Sub Area", htmlAttributes: new { @class = "form-control m-b", onchange = "FillProjectsList(this);" })
                                             }
                                         </div>
                                     </div>
@@ -63,6 +70,10 @@
                             </tr>
                         </thead>
                         <tbody>
+
+                            <tr>
+                                <td colspan="9">clear it </td>
+                            </tr>
                             @foreach (var item in Model)
                             {
                                 <tr>
@@ -100,6 +111,86 @@
     </div>
 </div>
 <script type="text/javascript">
+
+    function FillProjectsList(obj) {    
+        var selDiv      = $('#DivisionId').find(":selected").val();
+        var selArea     = $('#AreaId')    .find(":selected").val();
+        var selSArea    = $('#SubAreaId') .find(":selected").val();
+
+        if ((selDiv == "") || (selArea == "")) {
+            return;
+        }
+
+        var postedContent = { dv: selDiv, area: selArea, sarea: selSArea }
+        $.ajax({
+            type: "POST",
+            url: "/Project/GetProjectsListBySubArea",
+            data: postedContent,
+            success: function (message) {
+                var res = message.data;
+                if (res.length > 0) {
+                    var innerhtml = "";
+                    $("#tblList > tbody").empty();
+                    for (var i = 0; i < message.data.length; i++) {                        
+                        innerhtml += "<tr>" +
+                                        "<td>" + (i + 1) + "</td>" +
+                                        "<td>" + message.data[i].pl.DivisionName + "</td>" +
+                                        "<td>" + message.data[i].pl.AreaName     + "</td>" +
+                                        "<td>" + message.data[i].pl.SubAreaName  + "</td>" +
+                                        "<td>" + message.data[i].pl.ProjectName  + "</td>" +
+                                        "<td>" + message.data[i].pl.IsActive     + "</td>" +
+                                        "<td>" + message.data[i].pl.GeneratedByName + "</td>" +
+                                     "</tr>";
+
+                    } // end of for loop
+                    $("#tblList > tbody").append(innerhtml);
+                } // end of if for length
+                else {                    
+                }
+            },
+            error: function (xerr) {
+                /* $('#txteng').val("err : " +xerr);*/
+            }
+        });
+
+
+
+
+    }
+
+
+    function FillSubArea(obj) {
+        var sel = obj.options[obj.selectedIndex].value;
+        var selText = obj.options[obj.selectedIndex].text
+        if (sel == "") { return; }
+
+
+
+        var postedContent = { SelectedArea: sel }
+        $.ajax({
+            type: "POST",
+            url: "/Project/GetSubAreaByArea",
+            data: postedContent,
+            success: function (message) {
+                $("#SubAreaId").empty()
+                var res = message.data;
+
+                if (res.length > 0) {
+                    $('#SubAreaId').append($('<option>', { value: "", text: "Select Sub Area", selected: true }));
+                    for (var i = 0; i < message.data.length; i++) {
+                        $('#SubAreaId').append($('<option>', { value: message.data[i].SubAreaId, text: message.data[i].SubAreaName }));
+                    } // end of for loop
+                } // end of if for length
+                else {
+                    $('#SubAreaId').append($('<option>', { value: '', text: "No Sub Area For " + selText }));
+                }
+            },
+            error: function (xerr) {
+                /* $('#txteng').val("err : " +xerr);*/
+            }
+        });
+    }
+
     function FillArea(obj) {
         var sel = obj.options[obj.selectedIndex].value;
         if (sel == "") { return; }
@@ -107,7 +198,7 @@
         var postedContent = { SelectedDivision: sel }
         $.ajax({
             type: "POST",
-            url: "/Project/GetAreaByDivision",
+            url: "/Project/GetSubAreaByDivision",
             data: postedContent,
             success: function (message) {
                 var res = message.data;

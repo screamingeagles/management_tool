@@ -51,17 +51,32 @@ namespace ManagementTool.Controllers
             }
         }
 
+        [HttpPost]
+        public JsonResult GetProjectsListBySubArea(int dv,int area,int sarea)
+        {
+            using (ProjectEntities db = new ProjectEntities()) {
+                var q = (from pl in db.vw_ProjectListing
+                         where (pl.DivisionId == dv) && (pl.AreaId== area) && (pl.SubAreaId == sarea)
+                         select new { pl}).ToList();
+                return Json(new { data = q });
+
+            }
+        }
+
+
+
 
         // GET: Project
         public ActionResult Index(int? AreaId)
         {
             if (AreaId.HasValue) {
-                ViewBag.AreaId = new SelectList(db.C002_AREA, "AreaId", "AreaName", AreaId.Value);
+                ViewBag.AreaId  = new SelectList(db.C002_AREA, "AreaId", "AreaName", AreaId.Value);
             } else {
-                ViewBag.AreaId = new SelectList(db.C002_AREA, "AreaId", "AreaName");
+                ViewBag.AreaId  = new SelectList(db.C002_AREA, "AreaId", "AreaName");
             }
-            ViewBag.DivisionId = new SelectList(db.C001_DIVISION.Where(d => d.IsActive == true).OrderBy(d => d.DivisionName), "DivisionId", "DivisionName");
-            var c004_PROJECT = db.C004_PROJECT.Include(c => c.C001_DIVISION).Include(c => c.C002_AREA).Include(c => c.EndUser).Include(c => c.C013_PROJECT_TYPE).Where(x => x.AreaId == ((AreaId.HasValue) ?AreaId.Value:0)).OrderBy(x => x.ProjectName);
+            ViewBag.DivisionId  = new SelectList(db.C001_DIVISION.Where(d => d.IsActive == true).OrderBy(d => d.DivisionName), "DivisionId", "DivisionName");
+            ViewBag.SubAreaId   = new SelectList(db.C003_SUB_AREA.Take(0), "SubAreaId", "SubAreaName");
+            var c004_PROJECT    = db.C004_PROJECT.Include(c => c.C001_DIVISION).Include(c => c.C002_AREA).Include(c => c.EndUser).Include(c => c.C013_PROJECT_TYPE).Where(x => x.AreaId == ((AreaId.HasValue) ?AreaId.Value:0)).OrderBy(x => x.ProjectName);
             return View(c004_PROJECT.ToList());
         }
 

@@ -405,6 +405,52 @@ warning 6002: The table/view 'db_management_tool.dbo.LOGIN_DETAIL' does not have
           <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6002: The table/view 'db_management_tool.dbo.vw_ProjectListing' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vw_ProjectListing">
+          <Key>
+            <PropertyRef Name="ProjectId" />
+            <PropertyRef Name="LocationId" />
+            <PropertyRef Name="LocationName" />
+            <PropertyRef Name="CompanyId" />
+            <PropertyRef Name="CompanyName" />
+            <PropertyRef Name="DivisionId" />
+            <PropertyRef Name="DivisionName" />
+            <PropertyRef Name="AreaId" />
+            <PropertyRef Name="AreaName" />
+            <PropertyRef Name="SubAreaId" />
+            <PropertyRef Name="SubAreaName" />
+            <PropertyRef Name="ProjectName" />
+            <PropertyRef Name="ProjectType" />
+            <PropertyRef Name="ProjectTypeName" />
+            <PropertyRef Name="StartDate" />
+            <PropertyRef Name="EndDate" />
+            <PropertyRef Name="GeneratedBy" />
+            <PropertyRef Name="GeneratedByName" />
+            <PropertyRef Name="GeneratedDate" />
+            <PropertyRef Name="IsActive" />
+          </Key>
+          <Property Name="ProjectId" Type="int" Nullable="false" />
+          <Property Name="LocationId" Type="int" Nullable="false" />
+          <Property Name="LocationName" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="CompanyId" Type="int" Nullable="false" />
+          <Property Name="CompanyName" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="DivisionId" Type="int" Nullable="false" />
+          <Property Name="DivisionName" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="AreaId" Type="int" Nullable="false" />
+          <Property Name="AreaName" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="SubAreaId" Type="int" Nullable="false" />
+          <Property Name="SubAreaName" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="ProjectName" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="ProjectType" Type="int" Nullable="false" />
+          <Property Name="ProjectTypeName" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="StartDate" Type="datetime" Nullable="false" />
+          <Property Name="EndDate" Type="datetime" Nullable="false" />
+          <Property Name="GeneratedBy" Type="int" Nullable="false" />
+          <Property Name="GeneratedByName" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="GeneratedDate" Type="datetime" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'db_management_tool.dbo.vw_SessionUser' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vw_SessionUser">
           <Key>
@@ -964,6 +1010,30 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
     [LOGIN_DETAIL].[LoginLocation] AS [LoginLocation]
     FROM [dbo].[LOGIN_DETAIL] AS [LOGIN_DETAIL]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="vw_ProjectListing" EntityType="Self.vw_ProjectListing" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_ProjectListing].[ProjectId] AS [ProjectId], 
+    [vw_ProjectListing].[LocationId] AS [LocationId], 
+    [vw_ProjectListing].[LocationName] AS [LocationName], 
+    [vw_ProjectListing].[CompanyId] AS [CompanyId], 
+    [vw_ProjectListing].[CompanyName] AS [CompanyName], 
+    [vw_ProjectListing].[DivisionId] AS [DivisionId], 
+    [vw_ProjectListing].[DivisionName] AS [DivisionName], 
+    [vw_ProjectListing].[AreaId] AS [AreaId], 
+    [vw_ProjectListing].[AreaName] AS [AreaName], 
+    [vw_ProjectListing].[SubAreaId] AS [SubAreaId], 
+    [vw_ProjectListing].[SubAreaName] AS [SubAreaName], 
+    [vw_ProjectListing].[ProjectName] AS [ProjectName], 
+    [vw_ProjectListing].[ProjectType] AS [ProjectType], 
+    [vw_ProjectListing].[ProjectTypeName] AS [ProjectTypeName], 
+    [vw_ProjectListing].[StartDate] AS [StartDate], 
+    [vw_ProjectListing].[EndDate] AS [EndDate], 
+    [vw_ProjectListing].[GeneratedBy] AS [GeneratedBy], 
+    [vw_ProjectListing].[GeneratedByName] AS [GeneratedByName], 
+    [vw_ProjectListing].[GeneratedDate] AS [GeneratedDate], 
+    [vw_ProjectListing].[IsActive] AS [IsActive]
+    FROM [dbo].[vw_ProjectListing] AS [vw_ProjectListing]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="vw_SessionUser" EntityType="Self.vw_SessionUser" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vw_SessionUser].[LID] AS [LID], 
@@ -1342,6 +1412,7 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
           </AssociationSet>
           <EntitySet Name="STATS_TABLE" EntityType="ManagementTool.STATS_TABLE" />
           <EntitySet Name="vw_SubAreaListByDivision" EntityType="ManagementTool.vw_SubAreaListByDivision" />
+          <EntitySet Name="vw_ProjectListing" EntityType="ManagementTool.vw_ProjectListing" />
           </EntityContainer>
         <EntityType Name="C002_AREA">
           <Key>
@@ -2331,6 +2402,50 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
           <Property Name="AreaId" Type="Int32" Nullable="false" />
           <Property Name="AreaName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="vw_ProjectListing">
+          <Key>
+            <PropertyRef Name="ProjectId" />
+            <PropertyRef Name="LocationId" />
+            <PropertyRef Name="LocationName" />
+            <PropertyRef Name="CompanyId" />
+            <PropertyRef Name="CompanyName" />
+            <PropertyRef Name="DivisionId" />
+            <PropertyRef Name="DivisionName" />
+            <PropertyRef Name="AreaId" />
+            <PropertyRef Name="AreaName" />
+            <PropertyRef Name="SubAreaId" />
+            <PropertyRef Name="SubAreaName" />
+            <PropertyRef Name="ProjectName" />
+            <PropertyRef Name="ProjectType" />
+            <PropertyRef Name="ProjectTypeName" />
+            <PropertyRef Name="StartDate" />
+            <PropertyRef Name="EndDate" />
+            <PropertyRef Name="GeneratedBy" />
+            <PropertyRef Name="GeneratedByName" />
+            <PropertyRef Name="GeneratedDate" />
+            <PropertyRef Name="IsActive" />
+          </Key>
+          <Property Name="ProjectId" Type="Int32" Nullable="false" />
+          <Property Name="LocationId" Type="Int32" Nullable="false" />
+          <Property Name="LocationName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyId" Type="Int32" Nullable="false" />
+          <Property Name="CompanyName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="DivisionId" Type="Int32" Nullable="false" />
+          <Property Name="DivisionName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="AreaId" Type="Int32" Nullable="false" />
+          <Property Name="AreaName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="SubAreaId" Type="Int32" Nullable="false" />
+          <Property Name="SubAreaName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="ProjectName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="ProjectType" Type="Int32" Nullable="false" />
+          <Property Name="ProjectTypeName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="GeneratedBy" Type="Int32" Nullable="false" />
+          <Property Name="GeneratedByName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="GeneratedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2850,6 +2965,32 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
                 <ScalarProperty Name="AreaName" ColumnName="AreaName" />
                 <ScalarProperty Name="AreaId" ColumnName="AreaId" />
                 <ScalarProperty Name="DivisionId" ColumnName="DivisionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_ProjectListing">
+            <EntityTypeMapping TypeName="ManagementTool.vw_ProjectListing">
+              <MappingFragment StoreEntitySet="vw_ProjectListing">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="GeneratedDate" ColumnName="GeneratedDate" />
+                <ScalarProperty Name="GeneratedByName" ColumnName="GeneratedByName" />
+                <ScalarProperty Name="GeneratedBy" ColumnName="GeneratedBy" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="ProjectTypeName" ColumnName="ProjectTypeName" />
+                <ScalarProperty Name="ProjectType" ColumnName="ProjectType" />
+                <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+                <ScalarProperty Name="SubAreaName" ColumnName="SubAreaName" />
+                <ScalarProperty Name="SubAreaId" ColumnName="SubAreaId" />
+                <ScalarProperty Name="AreaName" ColumnName="AreaName" />
+                <ScalarProperty Name="AreaId" ColumnName="AreaId" />
+                <ScalarProperty Name="DivisionName" ColumnName="DivisionName" />
+                <ScalarProperty Name="DivisionId" ColumnName="DivisionId" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="LocationName" ColumnName="LocationName" />
+                <ScalarProperty Name="LocationId" ColumnName="LocationId" />
+                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
