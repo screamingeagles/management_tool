@@ -5,6 +5,7 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<link href="/Content/css/plugins/toastr/toastr.min.css" rel="stylesheet">
 <br />
 <div class="row">
     <br />
@@ -26,7 +27,18 @@
                     </a>
                 </div>
             </div>
-            <div class="ibox-content">
+            <div class="ibox-content" id="ibox1">
+                <div class="sk-spinner sk-spinner-cube-grid">
+                    <div class="sk-cube"></div>
+                    <div class="sk-cube"></div>
+                    <div class="sk-cube"></div>
+                    <div class="sk-cube"></div>
+                    <div class="sk-cube"></div>
+                    <div class="sk-cube"></div>
+                    <div class="sk-cube"></div>
+                    <div class="sk-cube"></div>
+                    <div class="sk-cube"></div>
+                </div>
                 <div class="table-responsive">
                     <table class="table table-striped" id="tblList">
                         <thead>
@@ -70,10 +82,6 @@
                             </tr>
                         </thead>
                         <tbody>
-
-                            <tr>
-                                <td colspan="9">clear it </td>
-                            </tr>
                             @foreach (var item in Model)
                             {
                                 <tr>
@@ -105,115 +113,8 @@
                         </tbody>
                     </table>
                 </div>
-
             </div>
         </div>
     </div>
 </div>
-<script type="text/javascript">
-
-    function FillProjectsList(obj) {    
-        var selDiv      = $('#DivisionId').find(":selected").val();
-        var selArea     = $('#AreaId')    .find(":selected").val();
-        var selSArea    = $('#SubAreaId') .find(":selected").val();
-
-        if ((selDiv == "") || (selArea == "")) {
-            return;
-        }
-
-        var postedContent = { dv: selDiv, area: selArea, sarea: selSArea }
-        $.ajax({
-            type: "POST",
-            url: "/Project/GetProjectsListBySubArea",
-            data: postedContent,
-            success: function (message) {
-                var res = message.data;
-                if (res.length > 0) {
-                    var innerhtml = "";
-                    $("#tblList > tbody").empty();
-                    for (var i = 0; i < message.data.length; i++) {                        
-                        innerhtml += "<tr>" +
-                                        "<td>" + (i + 1) + "</td>" +
-                                        "<td>" + message.data[i].pl.DivisionName + "</td>" +
-                                        "<td>" + message.data[i].pl.AreaName     + "</td>" +
-                                        "<td>" + message.data[i].pl.SubAreaName  + "</td>" +
-                                        "<td>" + message.data[i].pl.ProjectName  + "</td>" +
-                                        "<td>" + message.data[i].pl.IsActive     + "</td>" +
-                                        "<td>" + message.data[i].pl.GeneratedByName + "</td>" +
-                                     "</tr>";
-
-                    } // end of for loop
-                    $("#tblList > tbody").append(innerhtml);
-                } // end of if for length
-                else {                    
-                }
-            },
-            error: function (xerr) {
-                /* $('#txteng').val("err : " +xerr);*/
-            }
-        });
-
-
-
-
-    }
-
-
-    function FillSubArea(obj) {
-        var sel = obj.options[obj.selectedIndex].value;
-        var selText = obj.options[obj.selectedIndex].text
-        if (sel == "") { return; }
-
-
-
-        var postedContent = { SelectedArea: sel }
-        $.ajax({
-            type: "POST",
-            url: "/Project/GetSubAreaByArea",
-            data: postedContent,
-            success: function (message) {
-                $("#SubAreaId").empty()
-                var res = message.data;
-
-                if (res.length > 0) {
-                    $('#SubAreaId').append($('<option>', { value: "", text: "Select Sub Area", selected: true }));
-                    for (var i = 0; i < message.data.length; i++) {
-                        $('#SubAreaId').append($('<option>', { value: message.data[i].SubAreaId, text: message.data[i].SubAreaName }));
-                    } // end of for loop
-                } // end of if for length
-                else {
-                    $('#SubAreaId').append($('<option>', { value: '', text: "No Sub Area For " + selText }));
-                }
-            },
-            error: function (xerr) {
-                /* $('#txteng').val("err : " +xerr);*/
-            }
-        });
-    }
-
-    function FillArea(obj) {
-        var sel = obj.options[obj.selectedIndex].value;
-        if (sel == "") { return; }
-
-        var postedContent = { SelectedDivision: sel }
-        $.ajax({
-            type: "POST",
-            url: "/Project/GetSubAreaByDivision",
-            data: postedContent,
-            success: function (message) {
-                var res = message.data;
-                $("#AreaId").prop('disabled', false);
-                $("#AreaId").empty()
-                if (res.length > 0) {
-                    for (var i = 0; i < message.data.length; i++) {
-                        $('#AreaId').append($('<option>', { value: message.data[i].AreaId, text: message.data[i].AreaName }));
-                    } // end of for loop
-                } // end of if for length
-            },
-            error: function (xerr) {
-                /* $('#txteng').val("err : " +xerr);*/
-            }
-        });
-
-    }
-</script>
+<script src="~/Scripts/js/pages/project.js"></script>

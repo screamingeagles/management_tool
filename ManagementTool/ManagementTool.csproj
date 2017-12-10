@@ -627,6 +627,7 @@
     <Content Include="Scripts\js\plugins\validate\jquery.validate.min.js" />
     <Content Include="Scripts\js\plugins\video\responsible-video.js" />
     <Content Include="Scripts\js\plugins\wow\wow.min.js" />
+    <Content Include="Scripts\js\pages\project.js" />
     <Content Include="Scripts\plugins\chartJs\Chart.min.js" />
     <Content Include="Scripts\plugins\metisMenu\metisMenu.min.js" />
     <Content Include="Scripts\plugins\pace\pace.min.js" />
