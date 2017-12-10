@@ -103,14 +103,30 @@ namespace ManagementTool.Controllers
             //UserIdentity.UserId = 1020;
             //UserIdentity.UserName = "Arsalan (RTT)";
 
+            string div      = (Request.QueryString["div"]  != null) ? Request.QueryString["div"]  .ToString() : "0";
+            string area     = (Request.QueryString["area"] != null) ? Request.QueryString["area"] .ToString() : "0";
+            string subarea  = (Request.QueryString["sa"]   != null) ? Request.QueryString["sa"]   .ToString() : "0";
 
             ViewBag.LocationId = new SelectList(db.C010_LOCATION.OrderBy(x => x.LocationName), "LocationId", "LocationName");
             ViewBag.CompanyId = new SelectList(db.C011_COMPANY.OrderBy(x => x.CompanyName), "CompanyId", "CompanyName");
-            ViewBag.DivisionId = new SelectList(db.C001_DIVISION.OrderBy(x => x.DivisionName), "DivisionId", "DivisionName");
-
-            ViewBag.AreaId = new SelectList(db.C002_AREA.OrderBy(x => x.AreaName), "AreaId", "AreaName");
-            ViewBag.SubAreaId = new SelectList(db.C003_SUB_AREA.Take(5), "SubAreaId", "SubAreaName");
             ViewBag.ProjectType = new SelectList(db.C013_PROJECT_TYPE, "ProjectTypeId", "ProjectType");
+
+            if ((string.IsNullOrEmpty(div) == false) && (string.IsNullOrEmpty(area)))
+            {
+                int d = Convert.ToInt32(div);
+                int a = Convert.ToInt32(div);
+                int _a = (string.IsNullOrEmpty(area))? 0: Convert.ToInt32(subarea);
+                ViewBag.DivisionId  = new SelectList(db.C001_DIVISION                          .OrderBy(x => x.DivisionName), "DivisionId"  , "DivisionName", d);
+                ViewBag.AreaId      = new SelectList(db.C002_AREA.Where(x => x.DivisionId == d).OrderBy(x => x.AreaName)    , "AreaId"      , "AreaName", a);
+                ViewBag.SubAreaId   = new SelectList(db.C003_SUB_AREA.Where(x => x.AreaId== a) .OrderBy(x => x.SubAreaName) , "SubAreaId"   , "SubAreaName", _a);
+            }
+            else
+            {
+                ViewBag.DivisionId = new SelectList(db.C001_DIVISION.OrderBy(x => x.DivisionName), "DivisionId", "DivisionName");
+                ViewBag.AreaId = new SelectList(db.C002_AREA.OrderBy(x => x.AreaName), "AreaId", "AreaName");
+                ViewBag.SubAreaId = new SelectList(db.C003_SUB_AREA.Take(5), "SubAreaId", "SubAreaName");
+            }
+
 
             return View();
         }

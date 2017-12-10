@@ -1,13 +1,24 @@
 /*!
  * project file v1.0.7 (http://getbootstrap.com)
  * Copyright 2011-2016 Twitter, Inc.
- * Licensed under the rethink
+ * Licensed under the Arsalan Open Genreal Public Liscense
  */
+function newOnClick() {
+    // onclick="window.location.href='(at)Url.Content("~/Project/Create")'"
+
+    var selDivisionId = $('#DivisionId').find(":selected").val();
+    var selAreaId = $('#AreaId').find(":selected").val();
+    var selSubAreaId = $('#SubAreaId').find(":selected").val();
+
+    window.location.href = "/Project/Create?div=" + selDivisionId + "&area=" + selAreaId + "&sa=" + selSubAreaId;
+}
 
 function FillProjectsList(obj) {
     var selDiv = $('#DivisionId').find(":selected").val();
     var selArea = $('#AreaId').find(":selected").val();
     var selSArea = $('#SubAreaId').find(":selected").val();
+
+    //alert(selSArea);
 
     if ((selDiv == "") || (selArea == "")) {
         return;
@@ -58,15 +69,15 @@ function FillProjectsList(obj) {
 
 }
 
-
 function FillSubArea(obj) {
     var sel = obj.options[obj.selectedIndex].value;
     var selText = obj.options[obj.selectedIndex].text
     if (sel == "") { return; }
 
-
+    $("#tblList > tbody").empty();
 
     var postedContent = { SelectedArea: sel }
+
     $.ajax({
         type: "POST",
         url: "/Project/GetSubAreaByArea",
@@ -82,7 +93,8 @@ function FillSubArea(obj) {
                 } // end of for loop
             } // end of if for length
             else {
-                $('#SubAreaId').append($('<option>', { value: '', text: "No Sub Area For " + selText }));
+                $('#SubAreaId').append($('<option>', { value: "", text: "Select Sub Area", selected: true }));
+                $('#SubAreaId').append($('<option>', { value: '0', text: "Select to Load Projects For " + selText }));
             }
         },
         error: function (xerr) {
@@ -98,6 +110,8 @@ function FillArea(obj) {
     call_toggle();
 
     var postedContent = { SelectedDivision: sel }
+
+    $("#tblList > tbody").empty();
 
     $.ajax({
         type: "POST",
@@ -124,7 +138,6 @@ function FillArea(obj) {
 function call_toggle() {
     $('#ibox1').toggleClass('sk-loading');
 }
-
 
 function parseJsonDate(jsonDateString) {
     var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];

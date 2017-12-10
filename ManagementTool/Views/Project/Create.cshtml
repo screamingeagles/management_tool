@@ -28,18 +28,6 @@
                     {
                         @Html.AntiForgeryToken();
 
-                        <!-- / Select Location and Company -->
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">Select Location</label>
-                            <div class="col-lg-4">
-                                @Html.DropDownList("LocationId", null, "Select Location", htmlAttributes: new { @onchange = "FillCompany(this);", @class = "form-control m-b" })
-                            </div>
-                            <label class="col-lg-2 control-label">Select Company</label>
-                            <div class="col-lg-4">
-                                @Html.DropDownList("CompanyId", null, "Select Company", htmlAttributes: new { @class = "form-control m-b", @disabled = "disabled" })
-                            </div>
-                        </div>
-
                         <!-- / Division Name -->
                         <div class="form-group">
                             <label class="col-lg-2 control-label">Select Divison</label>
@@ -63,6 +51,20 @@
                                 @Html.DropDownList("SubAreaId", null, "Select Sub Area", htmlAttributes: new { @class = "form-control m-b" })
                             </div>
                         </div>
+
+                        
+                        <!-- / Select Location and Company -->
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Select Location</label>
+                            <div class="col-lg-4">
+                                @Html.DropDownList("LocationId", null, "Select Location", htmlAttributes: new { @onchange = "FillCompany(this);", @class = "form-control m-b" })
+                            </div>
+                            <label class="col-lg-2 control-label">Select Company</label>
+                            <div class="col-lg-4">
+                                @Html.DropDownList("CompanyId", null, "Select Company", htmlAttributes: new { @class = "form-control m-b", @disabled = "disabled" })
+                            </div>
+                        </div>
+                        
 
                         <!-- / Project Name -->
                         <div class="form-group">
