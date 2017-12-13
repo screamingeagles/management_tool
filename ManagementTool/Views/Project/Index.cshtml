@@ -44,6 +44,21 @@
                         <thead>
                             <tr>
                                 <th colspan="9">
+                                    
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label">Select Location </label>
+                                        <div class="col-lg-10">
+                                            @Html.DropDownList("LocationId", null, "Select Location", htmlAttributes: new { @class = "form-control m-b", onchange = "FillProjectsByLocation(this);" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label">Select Company</label>
+                                        <div class="col-lg-10">
+                                            @Html.DropDownList("CompanyId", null, "Select Company", htmlAttributes: new { @class = "form-control m-b", onchange = "FillProjectsByCompany(this);" })
+                                        </div>
+                                    </div>
+
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label">Select Division </label>
                                         <div class="col-lg-10">
@@ -66,6 +81,7 @@
                                             }
                                         </div>
                                     </div>
+                                
                                 </th>
                             </tr>
 

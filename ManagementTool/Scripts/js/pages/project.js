@@ -3,6 +3,124 @@
  * Copyright 2011-2016 Twitter, Inc.
  * Licensed under the Arsalan Open Genreal Public Liscense
  */
+
+
+$(document).ready(function () {
+
+    FillProjectsByLocation = function (param) {
+        if (param.value == "") { return; }
+        // var sel = param.options[param.selectedIndex].value;
+
+        call_toggle();
+
+        $("#CompanyId").empty();
+        $("#tblList > tbody").empty();
+
+        var postedContent = { LocId: param.value }
+
+        $.ajax({
+            type: "POST",
+            url: "/Project/GetProjectsListByLocation",
+            data: postedContent,
+            success: function (message) {
+
+                if (message.comp.length > 0) {
+                    $('#CompanyId').append($('<option>', { value: '0', text: 'Select Company', selected: true }));
+                    for (var i = 0; i < message.comp.length; i++) {
+                        $('#CompanyId').append($('<option>', { value: message.comp[i].CompanyId, text: message.comp[i].CompanyName + ' (' + message.comp[i].total + ')' }));
+                    } // end of for loop
+                }
+                // end of if for length
+
+                if (message.data.length > 0) {
+                    var innerhtml = "";
+                    for (var i = 0; i < message.data.length; i++) {
+                        var res = message.data[i].pl;
+                        innerhtml += "<tr>" +
+                                        "<td>" + (i + 1) + "</td>" +
+                                        "<td>" + res.DivisionName + "</td>" +
+                                        "<td>" + res.AreaName + "</td>" +
+                                        "<td>" + res.SubAreaName + "</td>" +
+                                        "<td>" + res.ProjectName + "</td>" +
+                                        "<td>" + ((res.IsActive == true) ? "<i class='fa fa-check-square text-navy'></i>" : "<i class='fa fa-square text-navy'></i>") + "</td>" +
+                                        "<td>" + res.GeneratedByName + "</td>" +
+                                        "<td>" + parseJsonDate(res.GeneratedDate) + "</td>" +
+                                        "<td>" +
+                                            "<a href='/Project/Edit/" + res.ProjectId + "'>Edit    </a> |" +
+                                            "<a href='/Project/Details/" + res.ProjectId + "'>Details </a> |" +
+                                            "<a href='/Project/Delete/" + res.ProjectId + "'>Delete  </a>" +
+                                        "</td>" +
+                                     "</tr>";
+
+                    } // end of for loop
+                    $("#tblList > tbody").append(innerhtml);
+                }
+                // end of if for length
+
+            },
+            error: function (xerr) {
+                /* $('#txteng').val("err : " +xerr);*/
+            }
+        });
+
+        setTimeout(call_toggle, 500);
+
+    }
+
+    FillProjectsByCompany = function (compId) {
+        var locId = $('#LocationId').find(":selected").val();
+        // alert(locId + ' <--> ' + compId.value);
+
+        if (compId.value == "") { return; }
+
+        call_toggle();
+
+        $("#tblList > tbody").empty();
+
+        var postedContent = { LocId: locId, CompId: compId.value }
+
+        $.ajax({
+            type: "POST",
+            url: "/Project/GetProjectsListByCompany",
+            data: postedContent,
+            success: function (message) {
+
+                if (message.data.length > 0) {
+                    var innerhtml = "";
+                    for (var i = 0; i < message.data.length; i++) {
+                        var res = message.data[i].pl;
+                        innerhtml += "<tr>" +
+                                        "<td>" + (i + 1) + "</td>" +
+                                        "<td>" + res.DivisionName + "</td>" +
+                                        "<td>" + res.AreaName + "</td>" +
+                                        "<td>" + res.SubAreaName + "</td>" +
+                                        "<td>" + res.ProjectName + "</td>" +
+                                        "<td>" + ((res.IsActive == true) ? "<i class='fa fa-check-square text-navy'></i>" : "<i class='fa fa-square text-navy'></i>") + "</td>" +
+                                        "<td>" + res.GeneratedByName + "</td>" +
+                                        "<td>" + parseJsonDate(res.GeneratedDate) + "</td>" +
+                                        "<td>" +
+                                            "<a href='/Project/Edit/" + res.ProjectId + "'>Edit    </a> |" +
+                                            "<a href='/Project/Details/" + res.ProjectId + "'>Details </a> |" +
+                                            "<a href='/Project/Delete/" + res.ProjectId + "'>Delete  </a>" +
+                                        "</td>" +
+                                     "</tr>";
+
+                    } // end of for loop
+                    $("#tblList > tbody").append(innerhtml);
+                }
+                // end of if for length
+
+            },
+            error: function (xerr) {
+                /* $('#txteng').val("err : " +xerr);*/
+            }
+        });
+
+        setTimeout(call_toggle, 500);
+    }
+});
+
+
 function newOnClick() {
     // onclick="window.location.href='(at)Url.Content("~/Project/Create")'"
 
@@ -49,8 +167,8 @@ function FillProjectsList(obj) {
                                     "<td>" + parseJsonDate(message.data[i].pl.GeneratedDate) + "</td>" +
                                     "<td>" +
                                         "<a href='/Project/Edit/" + message.data[i].pl.ProjectId + "'>Edit    </a> |" +
-                                        "<a href='/Project/Details" + message.data[i].pl.ProjectId + "'>Details </a> |" +
-                                        "<a href='/Project/Delete" + message.data[i].pl.ProjectId + "'>Delete  </a>" +
+                                        "<a href='/Project/Details/" + message.data[i].pl.ProjectId + "'>Details </a> |" +
+                                        "<a href='/Project/Delete/" + message.data[i].pl.ProjectId + "'>Delete  </a>" +
                                     "</td>" +
                                  "</tr>";
 

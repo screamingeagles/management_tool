@@ -17,7 +17,7 @@ namespace ManagementTool.Controllers
         private ProjectEntities db = new ProjectEntities();
 
         [HttpPost]
-        public JsonResult GetSubAreaByArea(int SelectedArea)
+        public JsonResult GetSubAreaByArea              (int SelectedArea)              
         {
             using (ProjectEntities db = new ProjectEntities())
             {
@@ -29,7 +29,7 @@ namespace ManagementTool.Controllers
         }
 
         [HttpPost]
-        public JsonResult GetAreaByDivision(int SelectedDivision)
+        public JsonResult GetAreaByDivision             (int SelectedDivision)          
         {
             using (ProjectEntities db = new ProjectEntities())
             {
@@ -41,7 +41,7 @@ namespace ManagementTool.Controllers
         }
 
         [HttpPost]
-        public JsonResult GetSubAreaByDivision(int SelectedDivision)       {
+        public JsonResult GetSubAreaByDivision          (int SelectedDivision)          {
             using (ProjectEntities db = new ProjectEntities())
             {
                 var q = (from s in db.vw_SubAreaListByDivision
@@ -52,7 +52,7 @@ namespace ManagementTool.Controllers
         }
 
         [HttpPost]
-        public JsonResult GetProjectsListBySubArea(int dv,int area,int sarea)
+        public JsonResult GetProjectsListBySubArea      (int dv,int area,int sarea)     
         {
             using (ProjectEntities db = new ProjectEntities()) {
                 var q = (from pl in db.vw_ProjectListing
@@ -62,6 +62,55 @@ namespace ManagementTool.Controllers
 
             }
         }
+
+        [HttpPost]
+        public JsonResult GetProjectsListByLocation     (int LocId)                     
+        {
+            using (ProjectEntities db = new ProjectEntities())
+            {
+                var q = (from pl in db.vw_ProjectListing
+                         where (pl.LocationId == LocId) && (pl.IsActive== true) 
+                         select new { pl }).ToList();
+
+                var a = (from c in db.C011_COMPANY
+                         join pi in db.C004_PROJECT on c.CompanyId equals pi.CompanyId
+                            into JoinOne
+                         from pi in JoinOne.DefaultIfEmpty()
+                         where (c.LocationId == 12) && (c.IsActive == true)
+                         select new {
+                             CompanyId = c.CompanyId,
+                             CompanyName = c.CompanyName, 
+                             ProjectId = (pi.ProjectId == null) ? 0 : pi.ProjectId                             /*, Projects       = x.ProjectId*/
+                         });
+
+
+                var p = (from i in a
+                         group i by new { i.CompanyId, i.CompanyName } into grouped
+                         select new
+                         {
+                             CompanyId = grouped.Key.CompanyId,
+                             CompanyName = grouped.Key.CompanyName,
+                             total = grouped.Count(x => x.ProjectId != 0)
+                         }).ToList();
+
+                return Json(new { data = q, comp = p });
+            }
+        }
+        
+        [HttpPost]
+        public JsonResult GetProjectsListByCompany      (int LocId, int CompId)         
+        {
+            using (ProjectEntities db = new ProjectEntities())
+            {
+                var q = (from pl in db.vw_ProjectListing
+                         where (pl.LocationId == LocId) && (pl.CompanyId == CompId) && (pl.IsActive == true)
+                         select new { pl }).ToList();
+
+                return Json(new { data = q });
+            }
+        }
+
+
 
 
 
@@ -74,7 +123,10 @@ namespace ManagementTool.Controllers
             } else {
                 ViewBag.AreaId  = new SelectList(db.C002_AREA, "AreaId", "AreaName");
             }
-            ViewBag.DivisionId  = new SelectList(db.C001_DIVISION.Where(d => d.IsActive == true).OrderBy(d => d.DivisionName), "DivisionId", "DivisionName");
+            
+            ViewBag.LocationId  = new SelectList(db.C010_LOCATION.                                   OrderBy(l => l.LocationName), "LocationId", "LocationName");
+            ViewBag.CompanyId   = new SelectList(db.C011_COMPANY.                                    OrderBy(x => x.CompanyName) , "CompanyId" , "CompanyName");
+            ViewBag.DivisionId  = new SelectList(db.C001_DIVISION.Where(d => d.IsActive == true).    OrderBy(d => d.DivisionName), "DivisionId", "DivisionName");
             ViewBag.SubAreaId   = new SelectList(db.C003_SUB_AREA.Take(0), "SubAreaId", "SubAreaName");
             var c004_PROJECT    = db.C004_PROJECT.Include(c => c.C001_DIVISION).Include(c => c.C002_AREA).Include(c => c.EndUser).Include(c => c.C013_PROJECT_TYPE).Where(x => x.AreaId == ((AreaId.HasValue) ?AreaId.Value:0)).OrderBy(x => x.ProjectName);
             return View(c004_PROJECT.ToList());

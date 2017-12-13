@@ -405,6 +405,23 @@ warning 6002: The table/view 'db_management_tool.dbo.LOGIN_DETAIL' does not have
           <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6002: The table/view 'db_management_tool.dbo.vw_PhasebyLCDASAP' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vw_PhasebyLCDASAP">
+          <Key>
+            <PropertyRef Name="PhaseId" />
+            <PropertyRef Name="PhaseName" />
+            <PropertyRef Name="SubAreaId" />
+          </Key>
+          <Property Name="PhaseId" Type="int" Nullable="false" />
+          <Property Name="PhaseName" Type="nvarchar" MaxLength="550" Nullable="false" />
+          <Property Name="LocationId" Type="int" />
+          <Property Name="CompanyId" Type="int" />
+          <Property Name="DivisionId" Type="int" />
+          <Property Name="AreaId" Type="int" />
+          <Property Name="SubAreaId" Type="int" Nullable="false" />
+          <Property Name="ProjectId" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'db_management_tool.dbo.vw_ProjectListing' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vw_ProjectListing">
           <Key>
@@ -1010,6 +1027,18 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
     [LOGIN_DETAIL].[LoginLocation] AS [LoginLocation]
     FROM [dbo].[LOGIN_DETAIL] AS [LOGIN_DETAIL]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="vw_PhasebyLCDASAP" EntityType="Self.vw_PhasebyLCDASAP" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_PhasebyLCDASAP].[PhaseId] AS [PhaseId], 
+    [vw_PhasebyLCDASAP].[PhaseName] AS [PhaseName], 
+    [vw_PhasebyLCDASAP].[LocationId] AS [LocationId], 
+    [vw_PhasebyLCDASAP].[CompanyId] AS [CompanyId], 
+    [vw_PhasebyLCDASAP].[DivisionId] AS [DivisionId], 
+    [vw_PhasebyLCDASAP].[AreaId] AS [AreaId], 
+    [vw_PhasebyLCDASAP].[SubAreaId] AS [SubAreaId], 
+    [vw_PhasebyLCDASAP].[ProjectId] AS [ProjectId]
+    FROM [dbo].[vw_PhasebyLCDASAP] AS [vw_PhasebyLCDASAP]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="vw_ProjectListing" EntityType="Self.vw_ProjectListing" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vw_ProjectListing].[ProjectId] AS [ProjectId], 
@@ -1413,6 +1442,7 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
           <EntitySet Name="STATS_TABLE" EntityType="ManagementTool.STATS_TABLE" />
           <EntitySet Name="vw_SubAreaListByDivision" EntityType="ManagementTool.vw_SubAreaListByDivision" />
           <EntitySet Name="vw_ProjectListing" EntityType="ManagementTool.vw_ProjectListing" />
+          <EntitySet Name="vw_PhasebyLCDASAP" EntityType="ManagementTool.vw_PhasebyLCDASAP" />
           </EntityContainer>
         <EntityType Name="C002_AREA">
           <Key>
@@ -2446,6 +2476,21 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
           <Property Name="GeneratedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
         </EntityType>
+        <EntityType Name="vw_PhasebyLCDASAP">
+          <Key>
+            <PropertyRef Name="PhaseId" />
+            <PropertyRef Name="PhaseName" />
+            <PropertyRef Name="SubAreaId" />
+          </Key>
+          <Property Name="PhaseId" Type="Int32" Nullable="false" />
+          <Property Name="PhaseName" Type="String" Nullable="false" MaxLength="550" FixedLength="false" Unicode="true" />
+          <Property Name="LocationId" Type="Int32" />
+          <Property Name="CompanyId" Type="Int32" />
+          <Property Name="DivisionId" Type="Int32" />
+          <Property Name="AreaId" Type="Int32" />
+          <Property Name="SubAreaId" Type="Int32" Nullable="false" />
+          <Property Name="ProjectId" Type="Int32" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2991,6 +3036,20 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
                 <ScalarProperty Name="LocationName" ColumnName="LocationName" />
                 <ScalarProperty Name="LocationId" ColumnName="LocationId" />
                 <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_PhasebyLCDASAP">
+            <EntityTypeMapping TypeName="ManagementTool.vw_PhasebyLCDASAP">
+              <MappingFragment StoreEntitySet="vw_PhasebyLCDASAP">
+                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+                <ScalarProperty Name="SubAreaId" ColumnName="SubAreaId" />
+                <ScalarProperty Name="AreaId" ColumnName="AreaId" />
+                <ScalarProperty Name="DivisionId" ColumnName="DivisionId" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="LocationId" ColumnName="LocationId" />
+                <ScalarProperty Name="PhaseName" ColumnName="PhaseName" />
+                <ScalarProperty Name="PhaseId" ColumnName="PhaseId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

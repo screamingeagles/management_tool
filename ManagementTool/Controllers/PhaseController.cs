@@ -16,7 +16,7 @@ namespace ManagementTool.Controllers
         private ProjectEntities db = new ProjectEntities();
 
         [HttpPost]
-        public JsonResult GetProjectDates(int SelectedProject)
+        public JsonResult GetProjectDates           (int SelectedProject)   
         {
             using (ProjectEntities db = new ProjectEntities())
             {
@@ -29,7 +29,7 @@ namespace ManagementTool.Controllers
         }
 
         [HttpPost]
-        public JsonResult GetPhaseDates(int PhaseId)
+        public JsonResult GetPhaseDates             (int PhaseId)           
         {
             using (ProjectEntities db = new ProjectEntities())
             {
@@ -39,10 +39,9 @@ namespace ManagementTool.Controllers
                 return Json(new { data = q });
             }
         }
-
-
+        
         [HttpPost]
-        public JsonResult GetProjectPhases(int ProjectId)
+        public JsonResult GetProjectPhases          (int ProjectId)         
         {
             using (ProjectEntities db = new ProjectEntities())
             {
@@ -52,17 +51,94 @@ namespace ManagementTool.Controllers
                 return Json(new { data = q });
             }
         }
+        
+        [HttpPost]
+        public JsonResult GetCompanyByLocation      (int LocId)             {
+            using (ProjectEntities db = new ProjectEntities()) {
+                var q = (from c in db.C011_COMPANY
+                         where (c.LocationId == LocId) && (c.IsActive == true)
+                         select new { c.CompanyId, c.CompanyName}).ToList();
+                return Json(new { data = q });
+            }
+        }
+        
+        [HttpPost]
+        public JsonResult GetAreaByDivision         (int DivId)             {
+            using (ProjectEntities db = new ProjectEntities()) {
+                var q = (from a in db.C002_AREA
+                         where (a.DivisionId == DivId) && (a.isActive == true)
+                         select new { a.AreaId, a.AreaName}).ToList();
+                return Json(new { data = q });
+            }
+        }
+
+        [HttpPost]
+        public JsonResult GetPhaseBySubArea         (int Area, int SubArea) 
+        {
+            using (ProjectEntities db = new ProjectEntities()) {
+                var q = (from p in db.C005_PHASE
+                         join v in db.vw_PhasebyLCDASAP  on p.PhaseId equals v.PhaseId
+                         join po in db.C004_PROJECT on v.ProjectId equals po.ProjectId
+                         join u in db.EndUsers on p.GeneratedBy equals u.UID
+                         where (v.AreaId == Area) && (v.SubAreaId == SubArea)
+                         select new { p.PhaseId, po.ProjectName, p.PhaseName, p.StartDate, p.EndDate , p.IsActive, u.UserName, p.GeneratedDate}).ToList();
+
+                var k = (from j in db.C004_PROJECT
+                         join v in db.vw_PhasebyLCDASAP on j.ProjectId equals v.ProjectId
+                         where (v.AreaId == Area) && (v.SubAreaId == SubArea)
+                         select new { j.ProjectId, j.ProjectName }).ToList();
+
+                return Json(new { data = k, list = q });
+
+            }
+        }
+
+        [HttpPost]
+        public JsonResult GetPhaseByProject         (int ProjectId)         
+        {
+            using (ProjectEntities db = new ProjectEntities())
+            {
+                var q = (from p in db.C005_PHASE
+                         join v in db.vw_PhasebyLCDASAP on p.PhaseId equals v.PhaseId
+                         join po in db.C004_PROJECT on v.ProjectId equals po.ProjectId
+                         join u in db.EndUsers on p.GeneratedBy equals u.UID
+                         where (v.ProjectId == ProjectId) 
+                         select new { p.PhaseId, po.ProjectName, p.PhaseName, p.StartDate, p.EndDate, p.IsActive, u.UserName, p.GeneratedDate }).ToList();
+                
+                return Json(new { data = q});
+
+            }
+        }
+
+        [HttpPost]
+        public JsonResult GetPhaseByCompany         (int CompanyId)         
+        {
+            using (ProjectEntities db = new ProjectEntities()) {
+
+                var q = (from p  in db.C005_PHASE
+                         join v  in db.vw_PhasebyLCDASAP    on p.PhaseId equals v.PhaseId
+                         join po in db.C004_PROJECT         on v.ProjectId equals po.ProjectId
+                         join u  in db.EndUsers             on p.GeneratedBy equals u.UID
+                         where (v.CompanyId == CompanyId)
+                         select new { p.PhaseId, po.ProjectName, p.PhaseName, p.StartDate, p.EndDate, p.IsActive, u.UserName, p.GeneratedDate }).ToList();
+
+                return Json(new { data = q });
+
+            }
+        }
 
         // GET: Phase
-        public ActionResult Index(int? ProjectId)
+        public ActionResult Index()
         {
-            if (ProjectId.HasValue) {
-                ViewBag.ProjectId = new SelectList(db.C004_PROJECT.Where(p => p.IsActive == true), "ProjectId", "ProjectName", ProjectId.Value);
-            }
-            else {
-                ViewBag.ProjectId = new SelectList(db.C004_PROJECT.Where(p => p.IsActive == true), "ProjectId", "ProjectName");
-            }
-            var c005_PHASE = db.C005_PHASE.Include(c => c.EndUser).Where(x => x.ProjectId == ((ProjectId.HasValue) ? ProjectId.Value : 0)).OrderBy(x => x.PhaseName);
+            ViewBag.LocationId  = new SelectList(db.C010_LOCATION.OrderBy(l => l.LocationName), "LocationId", "LocationName");
+            ViewBag.CompanyId   = new SelectList(db.C011_COMPANY.Take(0),                       "CompanyId" , "CompanyName");
+
+            ViewBag.DivisionId  = new SelectList(db.C001_DIVISION.Where(d => d.IsActive == true).OrderBy(d => d.DivisionName), "DivisionId", "DivisionName");
+            ViewBag.AreaId      = new SelectList(db.C002_AREA.      Take(0), "AreaId"   , "AreaName");
+            ViewBag.SubAreaId   = new SelectList(db.C003_SUB_AREA.  Take(0), "SubAreaId", "SubAreaName");
+            ViewBag.ProjectId   = new SelectList(db.C004_PROJECT.   Take(0), "ProjectId", "ProjectName");            
+
+            var c005_PHASE = db.C005_PHASE.Include(c => c.EndUser).OrderBy(x => x.PhaseName).Take(0);
             return View(c005_PHASE.ToList());
         }
 

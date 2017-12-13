@@ -16,6 +16,9 @@ namespace ManagementTool.Common
 {
     public class Bhai
     {
+        public static void testunit() {
+
+        }
         public static string GetJsonLocation    (string ip)                                 
         {
             string cty = "Local";

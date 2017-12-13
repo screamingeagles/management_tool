@@ -782,6 +782,9 @@
     <Compile Include="Models\STATUS.cs">
       <DependentUpon>dbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\vw_PhasebyLCDASAP.cs">
+      <DependentUpon>dbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\vw_ProjectListing.cs">
       <DependentUpon>dbModel.tt</DependentUpon>
     </Compile>
