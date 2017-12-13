@@ -503,6 +503,32 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_SubAreaListByDivision' d
           <Property Name="AreaName" Type="nvarchar" MaxLength="256" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6002: The table/view 'db_management_tool.dbo.vw_SubPhasebyLCDASAP' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vw_SubPhasebyLCDASAP">
+          <Key>
+            <PropertyRef Name="SubPhaseId" />
+            <PropertyRef Name="SubPhaseName" />
+            <PropertyRef Name="StartDate" />
+            <PropertyRef Name="EndDate" />
+            <PropertyRef Name="GeneratedBy" />
+            <PropertyRef Name="GeneratedDate" />
+            <PropertyRef Name="SubAreaId" />
+          </Key>
+          <Property Name="SubPhaseId" Type="int" Nullable="false" />
+          <Property Name="SubPhaseName" Type="nvarchar" MaxLength="550" Nullable="false" />
+          <Property Name="StartDate" Type="datetime" Nullable="false" />
+          <Property Name="EndDate" Type="datetime" Nullable="false" />
+          <Property Name="GeneratedBy" Type="int" Nullable="false" />
+          <Property Name="GeneratedDate" Type="datetime" Nullable="false" />
+          <Property Name="LocationId" Type="int" />
+          <Property Name="CompanyId" Type="int" />
+          <Property Name="DivisionId" Type="int" />
+          <Property Name="AreaId" Type="int" />
+          <Property Name="SubAreaId" Type="int" Nullable="false" />
+          <Property Name="ProjectId" Type="int" />
+          <Property Name="PhaseId" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vw_Task_Details">
           <Key>
@@ -1087,6 +1113,23 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
     [vw_SubAreaListByDivision].[AreaName] AS [AreaName]
     FROM [dbo].[vw_SubAreaListByDivision] AS [vw_SubAreaListByDivision]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="vw_SubPhasebyLCDASAP" EntityType="Self.vw_SubPhasebyLCDASAP" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_SubPhasebyLCDASAP].[SubPhaseId] AS [SubPhaseId], 
+    [vw_SubPhasebyLCDASAP].[SubPhaseName] AS [SubPhaseName], 
+    [vw_SubPhasebyLCDASAP].[StartDate] AS [StartDate], 
+    [vw_SubPhasebyLCDASAP].[EndDate] AS [EndDate], 
+    [vw_SubPhasebyLCDASAP].[GeneratedBy] AS [GeneratedBy], 
+    [vw_SubPhasebyLCDASAP].[GeneratedDate] AS [GeneratedDate], 
+    [vw_SubPhasebyLCDASAP].[LocationId] AS [LocationId], 
+    [vw_SubPhasebyLCDASAP].[CompanyId] AS [CompanyId], 
+    [vw_SubPhasebyLCDASAP].[DivisionId] AS [DivisionId], 
+    [vw_SubPhasebyLCDASAP].[AreaId] AS [AreaId], 
+    [vw_SubPhasebyLCDASAP].[SubAreaId] AS [SubAreaId], 
+    [vw_SubPhasebyLCDASAP].[ProjectId] AS [ProjectId], 
+    [vw_SubPhasebyLCDASAP].[PhaseId] AS [PhaseId]
+    FROM [dbo].[vw_SubPhasebyLCDASAP] AS [vw_SubPhasebyLCDASAP]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="vw_Task_Details" EntityType="Self.vw_Task_Details" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vw_Task_Details].[TaskId] AS [TaskId], 
@@ -1443,6 +1486,7 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
           <EntitySet Name="vw_SubAreaListByDivision" EntityType="ManagementTool.vw_SubAreaListByDivision" />
           <EntitySet Name="vw_ProjectListing" EntityType="ManagementTool.vw_ProjectListing" />
           <EntitySet Name="vw_PhasebyLCDASAP" EntityType="ManagementTool.vw_PhasebyLCDASAP" />
+          <EntitySet Name="vw_SubPhasebyLCDASAP" EntityType="ManagementTool.vw_SubPhasebyLCDASAP" />
           </EntityContainer>
         <EntityType Name="C002_AREA">
           <Key>
@@ -2491,6 +2535,30 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
           <Property Name="SubAreaId" Type="Int32" Nullable="false" />
           <Property Name="ProjectId" Type="Int32" />
         </EntityType>
+        <EntityType Name="vw_SubPhasebyLCDASAP">
+          <Key>
+            <PropertyRef Name="SubPhaseId" />
+            <PropertyRef Name="SubPhaseName" />
+            <PropertyRef Name="StartDate" />
+            <PropertyRef Name="EndDate" />
+            <PropertyRef Name="GeneratedBy" />
+            <PropertyRef Name="GeneratedDate" />
+            <PropertyRef Name="SubAreaId" />
+          </Key>
+          <Property Name="SubPhaseId" Type="Int32" Nullable="false" />
+          <Property Name="SubPhaseName" Type="String" Nullable="false" MaxLength="550" FixedLength="false" Unicode="true" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="GeneratedBy" Type="Int32" Nullable="false" />
+          <Property Name="GeneratedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LocationId" Type="Int32" />
+          <Property Name="CompanyId" Type="Int32" />
+          <Property Name="DivisionId" Type="Int32" />
+          <Property Name="AreaId" Type="Int32" />
+          <Property Name="SubAreaId" Type="Int32" Nullable="false" />
+          <Property Name="ProjectId" Type="Int32" />
+          <Property Name="PhaseId" Type="Int32" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3050,6 +3118,25 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
                 <ScalarProperty Name="LocationId" ColumnName="LocationId" />
                 <ScalarProperty Name="PhaseName" ColumnName="PhaseName" />
                 <ScalarProperty Name="PhaseId" ColumnName="PhaseId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_SubPhasebyLCDASAP">
+            <EntityTypeMapping TypeName="ManagementTool.vw_SubPhasebyLCDASAP">
+              <MappingFragment StoreEntitySet="vw_SubPhasebyLCDASAP">
+                <ScalarProperty Name="PhaseId" ColumnName="PhaseId" />
+                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+                <ScalarProperty Name="SubAreaId" ColumnName="SubAreaId" />
+                <ScalarProperty Name="AreaId" ColumnName="AreaId" />
+                <ScalarProperty Name="DivisionId" ColumnName="DivisionId" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="LocationId" ColumnName="LocationId" />
+                <ScalarProperty Name="GeneratedDate" ColumnName="GeneratedDate" />
+                <ScalarProperty Name="GeneratedBy" ColumnName="GeneratedBy" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="SubPhaseName" ColumnName="SubPhaseName" />
+                <ScalarProperty Name="SubPhaseId" ColumnName="SubPhaseId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

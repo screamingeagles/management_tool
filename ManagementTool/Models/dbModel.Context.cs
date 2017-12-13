@@ -64,6 +64,7 @@ namespace ManagementTool.Models
         public virtual DbSet<vw_SubAreaListByDivision> vw_SubAreaListByDivision { get; set; }
         public virtual DbSet<vw_ProjectListing> vw_ProjectListing { get; set; }
         public virtual DbSet<vw_PhasebyLCDASAP> vw_PhasebyLCDASAP { get; set; }
+        public virtual DbSet<vw_SubPhasebyLCDASAP> vw_SubPhasebyLCDASAP { get; set; }
     
         public virtual ObjectResult<SP_BUCKET_LIST_Result> SP_BUCKET_LIST()
         {

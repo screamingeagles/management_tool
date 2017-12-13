@@ -795,6 +795,9 @@
     <Compile Include="Models\vw_SubAreaListByDivision.cs">
       <DependentUpon>dbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\vw_SubPhasebyLCDASAP.cs">
+      <DependentUpon>dbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\vw_Task_Details.cs">
       <DependentUpon>dbModel.tt</DependentUpon>
     </Compile>
