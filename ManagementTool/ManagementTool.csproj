@@ -284,6 +284,7 @@
     <Content Include="Scripts\js\demo\sparkline-demo.js" />
     <Content Include="Scripts\js\inspinia.js" />
     <Content Include="Scripts\js\jquery-2.1.1.js" />
+    <Content Include="Scripts\js\pages\phase.js" />
     <Content Include="Scripts\js\plugins\blueimp\jquery.blueimp-gallery.min.js" />
     <Content Include="Scripts\js\plugins\bootstrap-markdown\bootstrap-markdown.js" />
     <Content Include="Scripts\js\plugins\bootstrap-markdown\markdown.js" />
