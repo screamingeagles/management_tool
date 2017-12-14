@@ -16,7 +16,7 @@ namespace ManagementTool.Controllers
         private ProjectEntities db = new ProjectEntities();
 
         
-        public JsonResult GetBucketNames(string query) {
+        public JsonResult GetBucketNames            (string query)              {
             string[] names = null;
             if (String.IsNullOrEmpty(query) == false) {                
                 names = (from i in db.C007_BUCKET
@@ -25,21 +25,115 @@ namespace ManagementTool.Controllers
             }
             return Json(names, JsonRequestBehavior.AllowGet);
         }
+        
+        [HttpPost]
+        public JsonResult GetBucketListByCompany    (int CompanyId)             
+        {
+            using (ProjectEntities db = new ProjectEntities())
+            {
+                var q = (from b  in db.vw_BucketbyLCDASAP
+                         join po in db.C004_PROJECT         on b.ProjectId  equals po.ProjectId
+                         join ph in db.C005_PHASE           on b.PhaseId    equals ph.PhaseId
+                         join sp in db.C006_SubPhase        on b.SubPhaseId equals sp.SubPhaseId
+                         where (b.CompanyId == CompanyId)
+                         select new { b.BucketId, po.ProjectName, ph.PhaseName, sp.SubPhaseName, b.BucketName, b.GeneratedUserName, b.GenerationDate }).ToList();
 
+                return Json(new { data = q });
+
+            }
+        }
+
+        [HttpPost]
+        public JsonResult GetBucketListBySubArea    (int Area, int SubArea)     
+        {
+            using (ProjectEntities db = new ProjectEntities())
+            {
+                var q = (from b in db.vw_BucketbyLCDASAP
+                         join po in db.C004_PROJECT on b.ProjectId equals po.ProjectId
+                         join ph in db.C005_PHASE on b.PhaseId equals ph.PhaseId
+                         join sp in db.C006_SubPhase on b.SubPhaseId equals sp.SubPhaseId
+                         where (b.AreaId== Area) && (b.SubAreaId == SubArea)
+                         select new { b.BucketId, po.ProjectName, ph.PhaseName, sp.SubPhaseName, b.BucketName, b.GeneratedUserName, b.GenerationDate }).ToList();
+
+
+                var k = (from j in db.C004_PROJECT
+                         join v in db.vw_PhasebyLCDASAP on j.ProjectId equals v.ProjectId
+                         where (v.AreaId == Area) && (v.SubAreaId == SubArea)
+                         select new { j.ProjectId, j.ProjectName }).ToList();
+
+                return Json(new { data = k, list = q });
+
+            }
+        }
+
+        [HttpPost]
+        public JsonResult GetBucketListByProject    (int ProjectId)             
+        {
+            using (ProjectEntities db = new ProjectEntities())
+            {
+                var q = (from b in db.vw_BucketbyLCDASAP
+                         join po in db.C004_PROJECT on b.ProjectId equals po.ProjectId
+                         join ph in db.C005_PHASE on b.PhaseId equals ph.PhaseId
+                         join sp in db.C006_SubPhase on b.SubPhaseId equals sp.SubPhaseId
+                         where (b.ProjectId== ProjectId)
+                         select new { b.BucketId, po.ProjectName, ph.PhaseName, sp.SubPhaseName, b.BucketName, b.GeneratedUserName, b.GenerationDate }).ToList();
+
+
+                var pl = (from pr in db.C004_PROJECT
+                          join ph in db.C005_PHASE on pr.ProjectId equals ph.ProjectId
+                          where (pr.ProjectId == ProjectId)
+                          select new { ph.PhaseId, ph.PhaseName }).ToList();
+                return Json(new { data = q, list = pl });
+            }
+        }
+
+        [HttpPost]
+        public JsonResult GetBucketListByPhase      (int PhaseId)                {
+            using (ProjectEntities db = new ProjectEntities()) {
+                var q = (from b in db.vw_BucketbyLCDASAP
+                         join po in db.C004_PROJECT on b.ProjectId equals po.ProjectId
+                         join ph in db.C005_PHASE on b.PhaseId equals ph.PhaseId
+                         join sp in db.C006_SubPhase on b.SubPhaseId equals sp.SubPhaseId
+                         where (b.PhaseId == PhaseId)
+                         select new { b.BucketId, po.ProjectName, ph.PhaseName, sp.SubPhaseName, b.BucketName, b.GeneratedUserName, b.GenerationDate }).ToList();
+
+                var spl = (from spc in db.C006_SubPhase
+                           where spc.PhaseId == PhaseId
+                           select new { spc.SubPhaseId, spc.SubPhaseName }).OrderBy(x => x.SubPhaseName).ToList();
+
+                return Json(new { data = q , list = spl });
+            }
+        }
+
+        [HttpPost]
+        public JsonResult GetBucketListBySubPhase   (int SubPhaseId)
+        {
+            using (ProjectEntities db = new ProjectEntities())
+            {
+                var q = (from b in db.vw_BucketbyLCDASAP
+                         join po in db.C004_PROJECT on b.ProjectId equals po.ProjectId
+                         join ph in db.C005_PHASE on b.PhaseId equals ph.PhaseId
+                         join sp in db.C006_SubPhase on b.SubPhaseId equals sp.SubPhaseId
+                         where (b.SubPhaseId == SubPhaseId)
+                         select new { b.BucketId, po.ProjectName, ph.PhaseName, sp.SubPhaseName, b.BucketName, b.GeneratedUserName, b.GenerationDate }).ToList();
+                return Json(new { data = q});
+            }
+        }
 
 
         // GET: Bucket
-        public ActionResult Index(int? PhaseId)
+        public ActionResult Index()
         {
-            if (PhaseId.HasValue) {
-                ViewBag.PhaseId = new SelectList(db.C005_PHASE.Where(p => p.IsActive == true), "PhaseId", "PhaseName", PhaseId.Value);
-            }
-            else {
-                ViewBag.PhaseId = new SelectList(db.C005_PHASE.Where(p => p.IsActive == true), "PhaseId", "PhaseName");
-            }
+            ViewBag.LocationId  = new SelectList(db.C010_LOCATION.OrderBy(l => l.LocationName), "LocationId", "LocationName");
+            ViewBag.CompanyId   = new SelectList(db.C011_COMPANY    .Take(0), "CompanyId", "CompanyName");
 
-            ViewBag.ProjectId = new SelectList(db.C004_PROJECT.Where(p => p.IsActive == true).OrderBy(p => p.ProjectName), "ProjectId", "ProjectName");
-            var q = db.Database.SqlQuery<SP_BUCKET_LIST_Result>("SP_BUCKET_LIST").Where(x => x.PhaseId == ((PhaseId.HasValue) ?PhaseId.Value:0)).ToList();
+            ViewBag.DivisionId  = new SelectList(db.C001_DIVISION.Where(d => d.IsActive == true).OrderBy(d => d.DivisionName), "DivisionId", "DivisionName");
+            ViewBag.AreaId      = new SelectList(db.C002_AREA       .Take(0), "AreaId", "AreaName");
+            ViewBag.SubAreaId   = new SelectList(db.C003_SUB_AREA   .Take(0), "SubAreaId", "SubAreaName");
+            ViewBag.ProjectId   = new SelectList(db.C004_PROJECT    .Take(0), "ProjectId", "ProjectName");
+            ViewBag.PhaseId     = new SelectList(db.C005_PHASE      .Take(0), "PhaseId", "PhaseName");            
+            ViewBag.SubPhaseId  = new SelectList(db.C006_SubPhase   .Take(0), "SubPhaseId", "SubPhaseName");
+            var q               = db.Database.SqlQuery<SP_BUCKET_LIST_Result>("SP_BUCKET_LIST").Take(0).ToList();
             return View(q);
         }
 

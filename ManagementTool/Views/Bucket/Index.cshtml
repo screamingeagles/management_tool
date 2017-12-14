@@ -28,29 +28,83 @@
                 </div>
             </div>
             <div class="ibox-content">
+                <div class="sk-spinner sk-spinner-cube-grid">
+                    <div class="sk-cube"></div>
+                    <div class="sk-cube"></div>
+                    <div class="sk-cube"></div>
+                    <div class="sk-cube"></div>
+                    <div class="sk-cube"></div>
+                    <div class="sk-cube"></div>
+                    <div class="sk-cube"></div>
+                    <div class="sk-cube"></div>
+                    <div class="sk-cube"></div>
+                </div>
+
                 <div class="table-responsive">
-                    <table class="table table-striped">
+                    <table class="table table-striped" id="tblList">
+                        
                         <thead>
                             <tr>
                                 <th colspan="9">
+
                                     <div class="form-group">
-                                        <label class="col-lg-2 control-label">Select Project </label>
+                                        <label class="col-lg-2 control-label">Select Location </label>
                                         <div class="col-lg-10">
-                                            @Html.DropDownList("ProjectId", null, "Select Project", htmlAttributes: new { @class = "form-control m-b", onchange = "FillProjectDetails(this);" })
+                                            @Html.DropDownList("LocationId", null, "Select Location", htmlAttributes: new { @class = "form-control m-b", onchange = "GetCompanyByLocation(this);" })
                                         </div>
                                     </div>
 
                                     <div class="form-group">
-                                        <label class="col-lg-2 control-label">Select Phase </label>
+                                        <label class="col-lg-2 control-label">Select Company</label>
                                         <div class="col-lg-10">
-                                            @using (Html.BeginForm("Index", "Bucket", FormMethod.Post))
-                                            {
-                                                @Html.DropDownList("PhaseId", null, "Select Phase", htmlAttributes: new { @class = "form-control m-b", onchange = "this.form.submit()", disabled = "disabled" })
-                                            }
+                                            @Html.DropDownList("CompanyId", null, "Select Company", htmlAttributes: new { @class = "form-control m-b", onchange = "GetBucketListByCompany(this);" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label">Select Division </label>
+                                        <div class="col-lg-10">
+                                            @Html.DropDownList("DivisionId", null, "Select Division", htmlAttributes: new { @class = "form-control m-b", onchange = "GetAreaByDivision(this);" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label">Select Area </label>
+                                        <div class="col-lg-10">
+                                            @Html.DropDownList("AreaId", null, "Select Area", htmlAttributes: new { @class = "form-control m-b", onchange = "GetSubAreaByArea(this);" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label">Select Sub Area </label>
+                                        <div class="col-lg-10">
+                                            @Html.DropDownList("SubAreaId", null, "Select Sub Area", htmlAttributes: new { @class = "form-control m-b", onchange = "GetBucketListBySubArea(this);" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label">Select Project : </label>
+                                        <div class="col-lg-10">
+                                            @Html.DropDownList("ProjectId", null, "Select Project", htmlAttributes: new { @class = "form-control m-b", onchange = "GetBucketListByProject(this);" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label">Select Phase : </label>
+                                        <div class="col-lg-10">
+                                            @Html.DropDownList("PhaseId", null, "Select Phase", htmlAttributes: new { @class = "form-control m-b", onchange = "GetBucketListByPhase(this);" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label">Select Sub Phase : </label>
+                                        <div class="col-lg-10">
+                                            @Html.DropDownList("SubPhaseId", null, "Select SubPhase", htmlAttributes: new { @class = "form-control m-b", onchange = "GetBucketListBySubPhase(this);" })
                                         </div>
                                     </div>
                                 </th>
                             </tr>
+
                             <tr>
                                 <th>#</th>
                                 <th>Project Name</th>
@@ -63,6 +117,7 @@
                                 <th>Action</th>
                             </tr>
                         </thead>
+
                         <tbody>
                             @foreach (var item in Model)
                             {
@@ -100,32 +155,5 @@
         </div>
     </div>
 </div>
-<script type="text/javascript">
-    function FillProjectDetails(obj) {
-        var sel = obj.options[obj.selectedIndex].value;
-        if (sel == "") { return; }
-
-        var postedContent = { ProjectId: sel }
-        $.ajax({
-            type: "POST",
-            url: "/Phase/GetProjectPhases",
-            data: postedContent,
-            success: function (message) {
-                $("#PhaseId").prop('disabled', false);
-                $("#PhaseId").empty();
-                $('#PhaseId').append($('<option>', { value: '', text: 'Select Phase', selected: true }));
-                var res = message.data;
-
-                if (res.length > 0) {
-                    for (var i = 0; i < message.data.length; i++) {
-                        $('#PhaseId').append($('<option>', { value: message.data[i].PhaseId, text: message.data[i].PhaseName }));
-                    } // end of for loop
-                } // end of if for length
-            },
-            error: function (xerr) {
-                /* $('#txteng').val("err : " +xerr);*/
-            }
-        });
-
-    }
-</script>
+<script src="~/Scripts/js/pages/bucket.js"></script>
+<script type="text/javascript"></script>

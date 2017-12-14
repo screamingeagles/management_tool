@@ -77,6 +77,27 @@ namespace ManagementTool.Controllers
                          join u in db.EndUsers          on sp.GeneratedBy   equals u.UID
                          where (sp.ProjectId == ProjectId)
                          select new { sp.SubPhaseId, po.ProjectName, P.PhaseName, sp.SubPhaseName, sp.StartDate, sp.EndDate, u.UserName, sp.GeneratedDate }).ToList();
+
+                var pl = (from pr in db.C004_PROJECT
+                          join ph in db.C005_PHASE on pr.ProjectId equals ph.ProjectId
+                          where (pr.ProjectId == ProjectId)
+                          select new {  ph.PhaseId, ph.PhaseName }).ToList();
+                return Json(new { data = q, list = pl });
+            }
+        }
+
+        [HttpPost]
+        public JsonResult GetSubPhaseByPhase            (int PhaseId)           
+        {
+            using (ProjectEntities db = new ProjectEntities())
+            {
+                var q = (from sp in db.vw_SubPhasebyLCDASAP
+                         join P in db.C005_PHASE on sp.PhaseId equals P.PhaseId
+                         join po in db.C004_PROJECT on sp.ProjectId equals po.ProjectId
+                         join u in db.EndUsers on sp.GeneratedBy equals u.UID
+                         where (sp.PhaseId == PhaseId)
+                         select new { sp.SubPhaseId, po.ProjectName, P.PhaseName, sp.SubPhaseName, sp.StartDate, sp.EndDate, u.UserName, sp.GeneratedDate }).ToList();
+
                 return Json(new { data = q });
             }
         }
@@ -90,10 +111,10 @@ namespace ManagementTool.Controllers
             ViewBag.CompanyId   = new SelectList(db.C011_COMPANY.Take(0), "CompanyId", "CompanyName");
 
             ViewBag.DivisionId  = new SelectList(db.C001_DIVISION.Where(d => d.IsActive == true).OrderBy(d => d.DivisionName), "DivisionId", "DivisionName");
-            ViewBag.AreaId      = new SelectList(db.C002_AREA.Take(0), "AreaId", "AreaName");
-            ViewBag.SubAreaId   = new SelectList(db.C003_SUB_AREA.Take(0), "SubAreaId", "SubAreaName");
-            ViewBag.ProjectId   = new SelectList(db.C004_PROJECT.Take(0), "ProjectId", "ProjectName");
-
+            ViewBag.AreaId      = new SelectList(db.C002_AREA.Take(0)       , "AreaId", "AreaName");
+            ViewBag.SubAreaId   = new SelectList(db.C003_SUB_AREA.Take(0)   , "SubAreaId", "SubAreaName");
+            ViewBag.ProjectId   = new SelectList(db.C004_PROJECT.Take(0)    , "ProjectId", "ProjectName");
+            ViewBag.PhaseId     = new SelectList(db.C005_PHASE.Take(0)      , "PhaseId", "PhaseName");
 
             var c006_SubPhase = db.C006_SubPhase.Include(c => c.C005_PHASE).Include(c => c.EndUser).Take(0);
             return View(c006_SubPhase.ToList());
