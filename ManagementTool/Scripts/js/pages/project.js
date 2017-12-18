@@ -124,11 +124,14 @@ $(document).ready(function () {
 function newOnClick() {
     // onclick="window.location.href='(at)Url.Content("~/Project/Create")'"
 
-    var selDivisionId = $('#DivisionId').find(":selected").val();
-    var selAreaId = $('#AreaId').find(":selected").val();
-    var selSubAreaId = $('#SubAreaId').find(":selected").val();
+    var selDivisionId   = $('#DivisionId').find(":selected").val();
+    var selAreaId       = $('#AreaId').find(":selected").val();
+    var selSubAreaId    = $('#SubAreaId').find(":selected").val();
 
-    window.location.href = "/Project/Create?div=" + selDivisionId + "&area=" + selAreaId + "&sa=" + selSubAreaId;
+    var selLocId    = $('#LocationId').find(":selected").val();
+    var selCompId = $('#CompanyId').find(":selected").val();
+
+    window.location.href = "/Project/Create?div=" + selDivisionId + "&area=" + selAreaId + "&sa=" + selSubAreaId + "&LocId=" + selLocId + "&CompId=" + selCompId;
 }
 
 function FillProjectsList(obj) {
