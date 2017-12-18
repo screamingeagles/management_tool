@@ -2,12 +2,42 @@
     <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
         <div class="navbar-header">
             <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
-            <form role="search" class="navbar-form-custom" method="post" action="">
+            @using (Html.BeginForm("Index", "Search", FormMethod.Post, new { id = "frmSearch", role = "search", @class = "navbar-form-custom" })) {
+                @Html.AntiForgeryToken();
                 <div class="form-group">
-                    <input type="text" placeholder="Search for something..." class="form-control" name="top-search" id="top-search">
+                    <input type="text" placeholder="Search for something..." class="typeahead_1 form-control" name="top-search" id="top-search">
                 </div>
-            </form>
+            }
         </div>
         @Html.Action("LoginPartial", "Home")
     </nav>
 </div>
+
+
+<script type="text/javascript">
+
+    $(document).ready(
+    function () {
+
+        $("#top-search").typeahead({
+            source: function (query, process) {
+                var names = [];
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("GetSearchOptions", "Search")",
+                    data: { query: query },
+                    success: function (data) {
+                        $.each(data, function (i, bname) {
+                            names.push(bname);
+                        });
+                        process(names);
+                    },
+                    error: function (xerr) {
+                        /* $('#txteng').val("err : " +xerr);*/
+                    }
+                });
+            }
+        });
+    });
+
+</script>

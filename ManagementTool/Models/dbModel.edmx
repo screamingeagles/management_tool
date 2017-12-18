@@ -494,6 +494,18 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_ProjectListing' does not
           <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6002: The table/view 'db_management_tool.dbo.vw_SearchSource' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vw_SearchSource">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Names" />
+            <PropertyRef Name="TableCol" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Names" Type="nvarchar" MaxLength="2530" Nullable="false" />
+          <Property Name="TableCol" Type="varchar" MaxLength="7" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'db_management_tool.dbo.vw_SessionUser' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vw_SessionUser">
           <Key>
@@ -1132,6 +1144,13 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
     [vw_ProjectListing].[IsActive] AS [IsActive]
     FROM [dbo].[vw_ProjectListing] AS [vw_ProjectListing]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="vw_SearchSource" EntityType="Self.vw_SearchSource" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_SearchSource].[ID] AS [ID], 
+    [vw_SearchSource].[Names] AS [Names], 
+    [vw_SearchSource].[TableCol] AS [TableCol]
+    FROM [dbo].[vw_SearchSource] AS [vw_SearchSource]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="vw_SessionUser" EntityType="Self.vw_SessionUser" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vw_SessionUser].[LID] AS [LID], 
@@ -1531,6 +1550,7 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
           <EntitySet Name="vw_PhasebyLCDASAP" EntityType="ManagementTool.vw_PhasebyLCDASAP" />
           <EntitySet Name="vw_SubPhasebyLCDASAP" EntityType="ManagementTool.vw_SubPhasebyLCDASAP" />
           <EntitySet Name="vw_BucketbyLCDASAP" EntityType="ManagementTool.vw_BucketbyLCDASAP" />
+          <EntitySet Name="vw_SearchSource" EntityType="ManagementTool.vw_SearchSource" />
           </EntityContainer>
         <EntityType Name="C002_AREA">
           <Key>
@@ -2627,6 +2647,16 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
           <Property Name="AreaId" Type="Int32" />
           <Property Name="SubAreaId" Type="Int32" Nullable="false" />
         </EntityType>
+        <EntityType Name="vw_SearchSource">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Names" />
+            <PropertyRef Name="TableCol" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Names" Type="String" Nullable="false" MaxLength="2530" FixedLength="false" Unicode="true" />
+          <Property Name="TableCol" Type="String" Nullable="false" MaxLength="7" FixedLength="false" Unicode="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3224,6 +3254,15 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
                 <ScalarProperty Name="GeneratedBy" ColumnName="GeneratedBy" />
                 <ScalarProperty Name="BucketName" ColumnName="BucketName" />
                 <ScalarProperty Name="BucketId" ColumnName="BucketId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_SearchSource">
+            <EntityTypeMapping TypeName="ManagementTool.vw_SearchSource">
+              <MappingFragment StoreEntitySet="vw_SearchSource">
+                <ScalarProperty Name="TableCol" ColumnName="TableCol" />
+                <ScalarProperty Name="Names" ColumnName="Names" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

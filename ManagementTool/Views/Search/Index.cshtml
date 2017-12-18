@@ -1,0 +1,70 @@
+﻿@model List<ManagementTool.Common.SearchResultDTO>
+@{
+    int index = 1;
+    ViewBag.Title = "Search Result";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<br />
+<div class="row">
+    <br />
+    <div class="col-lg-12">
+        <button class="btn btn-sm btn-primary pull-left m-t-n-xs" type="button" onclick="window.location.href='@Url.Content("~/Division/Create")'"><strong>Add New Division</strong></button>
+    </div>
+
+
+    <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Search Result</h5>
+                <div class="ibox-tools">
+                    <a class="collapse-link">
+                        <i class="fa fa-chevron-up"></i>
+                    </a>
+                    <a class="close-link">
+                        <i class="fa fa-times"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="ibox-content">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>#               </th>
+                                <th>Result         </th>
+                                <th>Action          </th>                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@index</td>
+                                    <td>@item.Name</td>                                    
+                                    <td>@{
+                                        if (item.Table == "Area") {
+                                            <p>@Html.ActionLink("Open", "Edit", "Area", new { id = item.id }, null)</p>
+                                        }
+                                        else if (item.Table == "Project") {
+                                            <p>@Html.ActionLink("Open", "Edit", "Project", new { id = item.id }, null)</p>
+                                        }
+                                        else if (item.Table == "Task") {
+                                            <p>@Html.ActionLink("Open", "Edit", "Tasks", new { id = item.id }, null)</p>
+                                        }
+                                        else{
+                                            <p>@Html.ActionLink("Go to Home", "Welcome", "Home", null, null)</p>
+                                        }
+                                    }
+                                    </td>
+                                </tr>
+                                index = index + 1;
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>

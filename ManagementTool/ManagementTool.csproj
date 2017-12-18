@@ -649,6 +649,7 @@
     <Compile Include="Common\Mail_Senders.cs" />
     <Compile Include="Common\notifications.cs" />
     <Compile Include="Common\projectmodel.cs" />
+    <Compile Include="Common\SearchResultDTO.cs" />
     <Compile Include="Common\Service.cs" />
     <Compile Include="Common\STATS_TABLE_LOCAL.cs" />
     <Compile Include="Common\task_base.cs" />
@@ -662,6 +663,7 @@
     <Compile Include="Controllers\ImportController.cs" />
     <Compile Include="Controllers\PhaseController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
+    <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\SubAreaController.cs" />
     <Compile Include="Controllers\SubPhaseController.cs" />
     <Compile Include="Controllers\TasksController.cs" />
@@ -792,6 +794,9 @@
       <DependentUpon>dbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vw_ProjectListing.cs">
+      <DependentUpon>dbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\vw_SearchSource.cs">
       <DependentUpon>dbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vw_SessionUser.cs">
@@ -940,6 +945,7 @@
     <Content Include="Views\Tasks\Meeting.cshtml" />
     <Content Include="Views\Tasks\Meetings.cshtml" />
     <Content Include="Views\Import\Index.cshtml" />
+    <Content Include="Views\Search\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

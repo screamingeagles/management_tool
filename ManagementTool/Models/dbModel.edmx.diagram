@@ -15,7 +15,7 @@
         <EntityTypeShape EntityType="ManagementTool.C016_CYCLED" Width="1.5" PointX="5.25" PointY="19.125" />
         <EntityTypeShape EntityType="ManagementTool.C017_MEETING" Width="1.875" PointX="15" PointY="3.875" />
         <EntityTypeShape EntityType="ManagementTool.C020_CommitmentMaster" Width="2.375" PointX="1.875" PointY="22.5" />
-        <EntityTypeShape EntityType="ManagementTool.C022_Notification_Master" Width="2.375" PointX="3" PointY="29.25" />
+        <EntityTypeShape EntityType="ManagementTool.C022_Notification_Master" Width="2.375" PointX="5.125" PointY="25.375" />
         <EntityTypeShape EntityType="ManagementTool.C023_Notification_Detail" Width="2.125" PointX="8.25" PointY="20.375" />
         <EntityTypeShape EntityType="ManagementTool.EndUser" Width="1.5" PointX="0.75" PointY="11.25" />
         <EntityTypeShape EntityType="ManagementTool.EndUser_Details" Width="1.75" PointX="5.375" PointY="2.625" />
@@ -75,9 +75,10 @@
         <EntityTypeShape EntityType="ManagementTool.STATS_TABLE" Width="1.5" PointX="7.375" PointY="5.75" />
         <EntityTypeShape EntityType="ManagementTool.vw_SubAreaListByDivision" Width="2.5" PointX="19.625" PointY="1" />
         <EntityTypeShape EntityType="ManagementTool.vw_ProjectListing" Width="1.5" PointX="13.375" PointY="13.75" />
-        <EntityTypeShape EntityType="ManagementTool.vw_PhasebyLCDASAP" Width="1.5" PointX="11.375" PointY="19.75" />
+        <EntityTypeShape EntityType="ManagementTool.vw_PhasebyLCDASAP" Width="2.125" PointX="19.75" PointY="2.75" />
         <EntityTypeShape EntityType="ManagementTool.vw_SubPhasebyLCDASAP" Width="1.5" PointX="9.375" PointY="4.75" />
         <EntityTypeShape EntityType="ManagementTool.vw_BucketbyLCDASAP" Width="1.5" PointX="11.375" PointY="4.75" />
+        <EntityTypeShape EntityType="ManagementTool.vw_SearchSource" Width="2" PointX="0.5" PointY="7.375" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
