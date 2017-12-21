@@ -138,10 +138,17 @@ namespace ManagementTool.Controllers
         // GET: SubPhase/Create
         public ActionResult Create()
         {
-            //UserIdentity.UserId     = 1020;
-            //UserIdentity.UserName   = "Arsalan Ahmed";
+            #region Phase
+            int pid = (Request.QueryString["phase"] != null) ? Convert.ToInt32(Request.QueryString["phase"].ToString()) : 0;
+            if (pid > 0) {
+                ViewBag.PhaseId = new SelectList(db.C005_PHASE.Where(p => p.IsActive == true), "PhaseId", "PhaseName", pid);
+            }
+            else {
+                ViewBag.PhaseId = new SelectList(db.C005_PHASE.Where(p => p.IsActive == true), "PhaseId", "PhaseName");
+            }
+            #endregion
 
-            ViewBag.PhaseId = new SelectList(db.C005_PHASE.Where(p => p.IsActive == true), "PhaseId", "PhaseName");
+            
             return View();
         }
 

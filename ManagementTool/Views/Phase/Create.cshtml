@@ -89,6 +89,10 @@
 <script type="text/javascript">
     $(document).ready(
     function () {
+        var selPrj  = document.getElementById("ProjectId");
+        var opt     = selPrj.options[selPrj.selectedIndex].value;
+        if (opt!='') { FillProjectDetails(selPrj); }
+
         $('#StartDate').datepicker({
             changeMonth: true,
             changeYear: true,

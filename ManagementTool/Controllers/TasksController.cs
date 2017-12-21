@@ -16,6 +16,18 @@ namespace ManagementTool.Controllers
         private ProjectEntities db = new ProjectEntities();
 
         [HttpPost]
+        public JsonResult GetBucketListbySubPhase   (int SubPhaseId)        
+        {
+            using (ProjectEntities _db = new ProjectEntities())
+            {
+                var q = (from b in _db.C007_BUCKET
+                         where (b.IsActive.Equals(true)) && (b.SubPhaseId == SubPhaseId)
+                         select new { b.BucketId, b.Name }).ToList();
+                return Json(new { data = q });
+            }
+        }
+
+        [HttpPost]
         public JsonResult GetCompaniesByLocation    (int SelectedLocation)  
         {
             using (ProjectEntities _db = new ProjectEntities()) {
@@ -44,48 +56,61 @@ namespace ManagementTool.Controllers
                 //                SubPhaseName = (z.SubPhaseName == null) ? "" : z.SubPhaseName,
                 //                StartDate = ph.StartDate, EndDate = ph.EndDate}).FirstOrDefault();
 
-                var q = (from b in db.C007_BUCKET
-                         join p in db.C004_PROJECT on b.ProjectId equals p.ProjectId
-                         join ph in db.C005_PHASE on b.PhaseId equals ph.PhaseId
-                         join sp in db.C006_SubPhase on b.SubPhaseId equals sp.SubPhaseId
-                         into joinx
-                         from x in joinx.DefaultIfEmpty()
+                #region Commented bucket    
+                /*
+                    var q = (from b in db.C007_BUCKET
+                             join p in db.C004_PROJECT on b.ProjectId equals p.ProjectId
+                             join ph in db.C005_PHASE on b.PhaseId equals ph.PhaseId
+                             join sp in db.C006_SubPhase on b.SubPhaseId equals sp.SubPhaseId
+                             into joinx
+                             from x in joinx.DefaultIfEmpty()
 
-                         join l in db.C010_LOCATION on p.LocationId equals l.LocationId
-                         join c in db.C011_COMPANY on p.CompanyId equals c.CompanyId
-                         join d in db.C001_DIVISION on p.DivisionId equals d.DivisionId
-                         join a in db.C002_AREA on p.AreaId equals a.AreaId
-                         join sa in db.C003_SUB_AREA on p.SubAreaId equals sa.SubAreaId
-                         into joiny
-                         from z in joiny.DefaultIfEmpty()
+                             join l in db.C010_LOCATION on p.LocationId equals l.LocationId
+                             join c in db.C011_COMPANY on p.CompanyId equals c.CompanyId
+                             join d in db.C001_DIVISION on p.DivisionId equals d.DivisionId
+                             join a in db.C002_AREA on p.AreaId equals a.AreaId
+                             join sa in db.C003_SUB_AREA on p.SubAreaId equals sa.SubAreaId
+                             into joiny
+                             from z in joiny.DefaultIfEmpty()
 
-                         where (b.BucketId == SelectedBucket)
-                         select new {
-                             ProjectName    = p.ProjectName,
-                             PhaseName      = ph.PhaseName,
-                             SubPhaseName   = (x.SubPhaseName == null) ? "" : x.SubPhaseName,
+                             where (b.BucketId == SelectedBucket)
+                             select new {
+                                 ProjectName    = p.ProjectName,
+                                 PhaseName      = ph.PhaseName,
+                                 SubPhaseName   = (x.SubPhaseName == null) ? "" : x.SubPhaseName,
 
-                             LocationName   = l.LocationName,
-                             CompanyName    = c.CompanyName,
-                             DivisionName   = d.DivisionName,
-                             AreaName       = a.AreaName,
-                             SubAreaName    = (z.SubAreaName== null) ? "No Sub Area"    : z.SubAreaName,
-                             StartDate      = (x.StartDate  == null) ? ph.StartDate     : x.StartDate,
-                             EndDate        = (x.EndDate    == null) ? ph.EndDate       : x.EndDate
-                         }).FirstOrDefault();
+                                 LocationName   = l.LocationName,
+                                 CompanyName    = c.CompanyName,
+                                 DivisionName   = d.DivisionName,
+                                 AreaName       = a.AreaName,
+                                 SubAreaName    = (z.SubAreaName== null) ? "No Sub Area"    : z.SubAreaName,
+                                 StartDate      = (x.StartDate  == null) ? ph.StartDate     : x.StartDate,
+                                 EndDate        = (x.EndDate    == null) ? ph.EndDate       : x.EndDate
+                             }).FirstOrDefault();
 
-                    return Json(new {   ProjectName  = q.ProjectName ,
-                                        PhaseName    = q.PhaseName   ,
-                                        SubPhaseName = q.SubPhaseName,
-                                        LocationName = q.LocationName,
-                                        CompanyName  = q.CompanyName ,
-                                        DivisionName = q.DivisionName,
-                                        AreaName     = q.AreaName    ,
-                                        SubAreaName  = q.SubAreaName,
-                                        StartDate    = q.StartDate,
-                                        EndDate      = q.EndDate });
+
+                        return Json(new {   ProjectName  = q.ProjectName ,
+                                            PhaseName    = q.PhaseName   ,
+                                            SubPhaseName = q.SubPhaseName,
+                                            LocationName = q.LocationName,
+                                            CompanyName  = q.CompanyName ,
+                                            DivisionName = q.DivisionName,
+                                            AreaName     = q.AreaName    ,
+                                            SubAreaName  = q.SubAreaName,
+                                            StartDate    = q.StartDate,
+                                            EndDate      = q.EndDate });
+                    */
+                #endregion
+
+                var q = (from b in _db.C007_BUCKET
+                         join sp in _db.C006_SubPhase on b.SubPhaseId equals sp.SubPhaseId
+                         where (b.IsActive.Equals(true)) && (b.BucketId == SelectedBucket)
+                         select new { sp.StartDate, sp.EndDate }).FirstOrDefault();
+
+                return Json(new { StartDate = q.StartDate, EndDate = q.EndDate });
             }
         }
+
 
         [HttpPost]
         public JsonResult GetSubAreaByArea          (int SelectedArea)      
@@ -149,16 +174,17 @@ namespace ManagementTool.Controllers
                          });*/
             #endregion
 
-            ViewBag.ProjectId   = new SelectList(db.C004_PROJECT.Where(p => p.IsActive== true).OrderBy(p => p.ProjectName), "ProjectId", "ProjectName");
-            if (PhaseId.HasValue) {
-                ViewBag.PhaseId = new SelectList(db.C005_PHASE.Where(p => p.IsActive == true).Take(5), "PhaseId", "PhaseName",PhaseId.Value);
-            }
-            else {
-                ViewBag.PhaseId = new SelectList(db.C005_PHASE.Where(p => p.IsActive == true).Take(5), "PhaseId", "PhaseName");
-            }
+            ViewBag.LocationId  = new SelectList(db.C010_LOCATION.Where(l => l.IsActive == true).OrderBy(l => l.LocationName), "LocationId", "LocationName");
+            ViewBag.CompanyId   = new SelectList(db.C011_COMPANY    .Take(0), "CompanyId", "CompanyName");
+
+            ViewBag.DivisionId  = new SelectList(db.C001_DIVISION.Where(d => d.IsActive == true).OrderBy(d => d.DivisionName), "DivisionId", "DivisionName");
+            ViewBag.AreaId      = new SelectList(db.C002_AREA.      Take(0), "AreaId"    , "AreaName"    );
+            ViewBag.SubAreaId   = new SelectList(db.C003_SUB_AREA.  Take(0), "SubAreaId" , "SubAreaName" );
+            ViewBag.ProjectId   = new SelectList(db.C004_PROJECT.   Take(0), "ProjectId" , "ProjectName" );
+            ViewBag.PhaseId     = new SelectList(db.C005_PHASE.     Take(0), "PhaseId"   , "PhaseName"   );
+            ViewBag.SubPhaseId  = new SelectList(db.C006_SubPhase.  Take(0), "SubPhaseId", "SubPhaseName");
 
 
-            
 
             ViewBag.BucketId    = new SelectList(db.C007_BUCKET.Where(x => x.PhaseId == ((PhaseId.HasValue)?PhaseId.Value:0)).OrderBy(x => x.Name),    "BucketId",     "Name");
             ViewBag.OwnerId     = new SelectList(db.EndUsers,       "UID",          "UserName");

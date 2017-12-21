@@ -158,13 +158,18 @@ namespace ManagementTool.Controllers
         }
 
         // GET: Phase/Create
-        public ActionResult Create()
-        {
-            // UserIdentity.UserId     = 1020;
-            // UserIdentity.UserName   = "Arsalan";
-
-
-            ViewBag.ProjectId       = new SelectList(db.C004_PROJECT.Where(p => p.IsActive == true), "ProjectId", "ProjectName");
+        public ActionResult Create(){
+            
+            #region Project
+                int lid = (Request.QueryString["prj"] != null) ? Convert.ToInt32(Request.QueryString["prj"].ToString()) : 0;            
+                if (lid > 0 ) {
+                    ViewBag.ProjectId = new SelectList(db.C004_PROJECT.Where(p => p.IsActive == true), "ProjectId", "ProjectName", lid);
+                }
+                else {
+                    ViewBag.ProjectId = new SelectList(db.C004_PROJECT.Where(p => p.IsActive == true), "ProjectId", "ProjectName");
+                }
+            #endregion
+                            
             return View();
         }
 

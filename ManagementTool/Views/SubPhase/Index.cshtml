@@ -10,10 +10,94 @@
 <div class="row">
     <br />
     <div class="col-lg-12">
-        <button class="btn btn-sm btn-primary pull-left m-t-n-xs" type="button" onclick="window.location.href='@Url.Content("~/SubPhase/Create")'"><strong>Add New Sub Phase</strong></button>
+        <button class="btn btn-sm btn-primary pull-left m-t-n-xs" type="button" onclick="newOnClick();"><strong>Add New Sub Phase</strong></button>
     </div>
 
 
+    <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5 id="dvDetails">Filters</h5>
+                <div class="ibox-tools">
+                    <a class="collapse-link">
+                        <i class="fa fa-chevron-up"></i>
+                    </a>
+                    <a class="close-link">
+                        <i class="fa fa-times"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="ibox-content" id="ibox1">
+                <div class="sk-spinner sk-spinner-cube-grid">
+                    <div class="sk-cube"></div>
+                    <div class="sk-cube"></div>
+                    <div class="sk-cube"></div>
+                    <div class="sk-cube"></div>
+                    <div class="sk-cube"></div>
+                    <div class="sk-cube"></div>
+                    <div class="sk-cube"></div>
+                    <div class="sk-cube"></div>
+                    <div class="sk-cube"></div>
+                </div>
+                <div class="table-responsive">
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Select Location </label>
+                        <div class="col-lg-10">
+                            @Html.DropDownList("LocationId", null, "Select Location", htmlAttributes: new { @class = "form-control m-b", onchange = "GetCompanyByLocation(this);" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Select Company</label>
+                        <div class="col-lg-10">
+                            @Html.DropDownList("CompanyId", null, "Select Company", htmlAttributes: new { @class = "form-control m-b", onchange = "GetSubPhaseByCompany(this);" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Select Division </label>
+                        <div class="col-lg-10">
+                            @Html.DropDownList("DivisionId", null, "Select Division", htmlAttributes: new { @class = "form-control m-b", onchange = "GetAreaByDivision(this);" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Select Area </label>
+                        <div class="col-lg-10">
+                            @Html.DropDownList("AreaId", null, "Select Area", htmlAttributes: new { @class = "form-control m-b", onchange = "GetSubAreaByArea(this);" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Select Sub Area </label>
+                        <div class="col-lg-10">
+                            @Html.DropDownList("SubAreaId", null, "Select Sub Area", htmlAttributes: new { @class = "form-control m-b", onchange = "GetSubPhaseListBySubArea(this);" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Select Project : </label>
+                        <div class="col-lg-10">
+                            @Html.DropDownList("ProjectId", null, "Select Project", htmlAttributes: new { @class = "form-control m-b", onchange = "GetSubPhaseListByProject(this);" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Select Phase : </label>
+                        <div class="col-lg-10">
+                            @Html.DropDownList("PhaseId", null, "Select Phase", htmlAttributes: new { @class = "form-control m-b", onchange = "GetSubPhaseListByPhase(this);" })
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="row">
     <div class="col-lg-12">
         <div class="ibox float-e-margins">
             <div class="ibox-title">
@@ -27,75 +111,10 @@
                     </a>
                 </div>
             </div>
-            <div class="ibox-content"  id="ibox1">
-                <div class="sk-spinner sk-spinner-cube-grid">
-                    <div class="sk-cube"></div>
-                    <div class="sk-cube"></div>
-                    <div class="sk-cube"></div>
-                    <div class="sk-cube"></div>
-                    <div class="sk-cube"></div>
-                    <div class="sk-cube"></div>
-                    <div class="sk-cube"></div>
-                    <div class="sk-cube"></div>
-                    <div class="sk-cube"></div>
-                </div>
+            <div class="ibox-content">
                 <div class="table-responsive">
                     <table class="table table-striped" id="tblList">
                         <thead>
-                            <tr>
-                                <th colspan="9">
-
-                                    <div class="form-group">
-                                        <label class="col-lg-2 control-label">Select Location </label>
-                                        <div class="col-lg-10">
-                                            @Html.DropDownList("LocationId", null, "Select Location", htmlAttributes: new { @class = "form-control m-b", onchange = "GetCompanyByLocation(this);" })
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label class="col-lg-2 control-label">Select Company</label>
-                                        <div class="col-lg-10">
-                                            @Html.DropDownList("CompanyId", null, "Select Company", htmlAttributes: new { @class = "form-control m-b", onchange = "GetSubPhaseByCompany(this);" })
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label class="col-lg-2 control-label">Select Division </label>
-                                        <div class="col-lg-10">
-                                            @Html.DropDownList("DivisionId", null, "Select Division", htmlAttributes: new { @class = "form-control m-b", onchange = "GetAreaByDivision(this);" })
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label class="col-lg-2 control-label">Select Area </label>
-                                        <div class="col-lg-10">
-                                            @Html.DropDownList("AreaId", null, "Select Area", htmlAttributes: new { @class = "form-control m-b", onchange = "GetSubAreaByArea(this);" })
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label class="col-lg-2 control-label">Select Sub Area </label>
-                                        <div class="col-lg-10">
-                                            @Html.DropDownList("SubAreaId", null, "Select Sub Area", htmlAttributes: new { @class = "form-control m-b", onchange = "GetSubPhaseListBySubArea(this);" })
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label class="col-lg-2 control-label">Select Project : </label>
-                                        <div class="col-lg-10">
-                                            @Html.DropDownList("ProjectId", null, "Select Project", htmlAttributes: new { @class = "form-control m-b", onchange = "GetSubPhaseListByProject(this);" })
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label class="col-lg-2 control-label">Select Phase : </label>
-                                        <div class="col-lg-10">
-                                            @Html.DropDownList("PhaseId", null, "Select Phase", htmlAttributes: new { @class = "form-control m-b", onchange = "GetSubPhaseListByPhase(this);" })
-                                        </div>
-                                    </div>
-                                    
-                                </th>
-                            </tr>
                             <tr>
                                 <th>#</th>
                                 <th>Project Name</th>
@@ -155,4 +174,10 @@
     </div>
 </div>
 <script src="~/Scripts/js/pages/subphase.js"></script>
-<script type="text/javascript"></script>
+<script type="text/javascript">
+    function newOnClick() {
+        // <!-- ="window.location.href='Url.Content("~/SubPhase/Create")'"-->
+        var selPhaseId = $('#PhaseId').find(":selected").val();
+        window.location.href = "/SubPhase/Create?phase=" + selPhaseId;
+    }
+</script>

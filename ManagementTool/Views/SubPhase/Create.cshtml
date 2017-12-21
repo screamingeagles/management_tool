@@ -85,6 +85,9 @@
 <script type="text/javascript">
     $(document).ready(
     function () {
+        var selPhase    = document.getElementById("PhaseId");
+        var opt         = selPhase.options[selPhase.selectedIndex].value;
+        if (opt != '') { FillPhaseDetails(selPhase); }
 
         $('#StartDate').datepicker({
             changeMonth: true,
