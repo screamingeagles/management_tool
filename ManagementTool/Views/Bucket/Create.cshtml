@@ -104,6 +104,15 @@
 
     $(document).ready(
     function () {
+
+        var selProject = document.getElementById("ProjectId");
+        var optPrj = selProject.options[selProject.selectedIndex].value;
+        if (optPrj != '') { FillProjectDetails(selProject); }
+
+        var selPhase = document.getElementById("PhaseId");
+        var optPh = selPhase.options[selPhase.selectedIndex].value;
+        if (optPh != '') { FillPhaseDetails(selPhase); }
+
         
         $("#Name").typeahead({
             source: function (query, process) {

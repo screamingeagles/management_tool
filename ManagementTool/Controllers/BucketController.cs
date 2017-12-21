@@ -156,9 +156,39 @@ namespace ManagementTool.Controllers
         // GET: Bucket/Create
         public ActionResult Create()
         {
-            ViewBag.ProjectId   = new SelectList(db.C004_PROJECT     , "ProjectId"   , "ProjectName");
-            ViewBag.PhaseId     = new SelectList(db.C005_PHASE       , "PhaseId"     , "PhaseName");
-            ViewBag.SubPhaseId  = new SelectList(db.C006_SubPhase    , "SubPhaseId"  , "SubPhaseName");
+            #region P r o j e c t 
+            int prjid = (Request.QueryString["project"] != null) ? Convert.ToInt32(Request.QueryString["project"].ToString()) : 0;
+            if (prjid > 0) {
+                ViewBag.ProjectId = new SelectList(db.C004_PROJECT.OrderBy(x => x.ProjectName), "ProjectId", "ProjectName", prjid);
+            }
+            else {
+                ViewBag.ProjectId = new SelectList(db.C004_PROJECT.OrderBy(x => x.ProjectName), "ProjectId", "ProjectName");
+            }
+            #endregion
+
+            #region P h a s e  
+            int phid = (Request.QueryString["phase"] != null) ? Convert.ToInt32(Request.QueryString["phase"].ToString()) : 0;
+            if (phid > 0) {
+                ViewBag.PhaseId = new SelectList(db.C005_PHASE.Where(x => x.ProjectId == prjid).OrderBy(x => x.PhaseName), "PhaseId", "PhaseName", phid);
+            }
+            else {
+                ViewBag.PhaseId = new SelectList(db.C005_PHASE.OrderBy(x => x.PhaseName), "PhaseId", "PhaseName");
+            }
+            #endregion
+
+            #region S u b  P h a s e 
+            int sphid = (Request.QueryString["subphase"] != null) ? Convert.ToInt32(Request.QueryString["subphase"].ToString()) : 0;
+            if (sphid > 0)
+            {
+                ViewBag.SubPhaseId = new SelectList(db.C006_SubPhase.Where(x => x.PhaseId == phid).OrderBy(x => x.SubPhaseName), "SubPhaseId", "SubPhaseName", sphid);
+            }
+            else
+            {
+                ViewBag.SubPhaseId = new SelectList(db.C006_SubPhase.OrderBy(x => x.SubPhaseName), "SubPhaseId", "SubPhaseName");
+            }
+            #endregion
+
+            
             return View();
         }
 
