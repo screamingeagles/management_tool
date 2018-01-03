@@ -35,7 +35,7 @@ namespace ManagementTool.Controllers
                          join po in db.C004_PROJECT         on b.ProjectId  equals po.ProjectId
                          join ph in db.C005_PHASE           on b.PhaseId    equals ph.PhaseId
                          join sp in db.C006_SubPhase        on b.SubPhaseId equals sp.SubPhaseId
-                         where (b.CompanyId == CompanyId)
+                         where (b.CompanyId == CompanyId) && (b.GeneratedBy == UserIdentity.UserId)
                          select new { b.BucketId, po.ProjectName, ph.PhaseName, sp.SubPhaseName, b.BucketName, b.GeneratedUserName, b.GenerationDate }).ToList();
 
                 return Json(new { data = q });
@@ -52,7 +52,7 @@ namespace ManagementTool.Controllers
                          join po in db.C004_PROJECT on b.ProjectId equals po.ProjectId
                          join ph in db.C005_PHASE on b.PhaseId equals ph.PhaseId
                          join sp in db.C006_SubPhase on b.SubPhaseId equals sp.SubPhaseId
-                         where (b.AreaId== Area) && (b.SubAreaId == SubArea)
+                         where (b.AreaId== Area) && (b.SubAreaId == SubArea) && (b.GeneratedBy == UserIdentity.UserId)
                          select new { b.BucketId, po.ProjectName, ph.PhaseName, sp.SubPhaseName, b.BucketName, b.GeneratedUserName, b.GenerationDate }).ToList();
 
 
@@ -75,7 +75,7 @@ namespace ManagementTool.Controllers
                          join po in db.C004_PROJECT on b.ProjectId equals po.ProjectId
                          join ph in db.C005_PHASE on b.PhaseId equals ph.PhaseId
                          join sp in db.C006_SubPhase on b.SubPhaseId equals sp.SubPhaseId
-                         where (b.ProjectId== ProjectId)
+                         where (b.ProjectId== ProjectId) && (b.GeneratedBy == UserIdentity.UserId)
                          select new { b.BucketId, po.ProjectName, ph.PhaseName, sp.SubPhaseName, b.BucketName, b.GeneratedUserName, b.GenerationDate }).ToList();
 
 
@@ -94,7 +94,7 @@ namespace ManagementTool.Controllers
                          join po in db.C004_PROJECT on b.ProjectId equals po.ProjectId
                          join ph in db.C005_PHASE on b.PhaseId equals ph.PhaseId
                          join sp in db.C006_SubPhase on b.SubPhaseId equals sp.SubPhaseId
-                         where (b.PhaseId == PhaseId)
+                         where (b.PhaseId == PhaseId) && (b.GeneratedBy == UserIdentity.UserId)
                          select new { b.BucketId, po.ProjectName, ph.PhaseName, sp.SubPhaseName, b.BucketName, b.GeneratedUserName, b.GenerationDate }).ToList();
 
                 var spl = (from spc in db.C006_SubPhase
@@ -114,7 +114,7 @@ namespace ManagementTool.Controllers
                          join po in db.C004_PROJECT on b.ProjectId equals po.ProjectId
                          join ph in db.C005_PHASE on b.PhaseId equals ph.PhaseId
                          join sp in db.C006_SubPhase on b.SubPhaseId equals sp.SubPhaseId
-                         where (b.SubPhaseId == SubPhaseId)
+                         where (b.SubPhaseId == SubPhaseId) && (b.GeneratedBy == UserIdentity.UserId)
                          select new { b.BucketId, po.ProjectName, ph.PhaseName, sp.SubPhaseName, b.BucketName, b.GeneratedUserName, b.GenerationDate }).ToList();
                 return Json(new { data = q});
             }
