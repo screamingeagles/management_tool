@@ -157,7 +157,7 @@ namespace ManagementTool.Controllers
         public ActionResult Create()
         {
             #region P r o j e c t 
-            int prjid = (Request.QueryString["project"] != null) ? Convert.ToInt32(Request.QueryString["project"].ToString()) : 0;
+            int prjid = (string.IsNullOrEmpty(Request.QueryString["project"])  == false) ? Convert.ToInt32(Request.QueryString["project"].ToString()) : 0;
             if (prjid > 0) {
                 ViewBag.ProjectId = new SelectList(db.C004_PROJECT.OrderBy(x => x.ProjectName), "ProjectId", "ProjectName", prjid);
             }
@@ -167,7 +167,7 @@ namespace ManagementTool.Controllers
             #endregion
 
             #region P h a s e  
-            int phid = (Request.QueryString["phase"] != null) ? Convert.ToInt32(Request.QueryString["phase"].ToString()) : 0;
+            int phid = (string.IsNullOrEmpty(Request.QueryString["phase"]) == false) ? Convert.ToInt32(Request.QueryString["phase"].ToString()) : 0;
             if (phid > 0) {
                 ViewBag.PhaseId = new SelectList(db.C005_PHASE.Where(x => x.ProjectId == prjid).OrderBy(x => x.PhaseName), "PhaseId", "PhaseName", phid);
             }
@@ -177,7 +177,7 @@ namespace ManagementTool.Controllers
             #endregion
 
             #region S u b  P h a s e 
-            int sphid = (Request.QueryString["subphase"] != null) ? Convert.ToInt32(Request.QueryString["subphase"].ToString()) : 0;
+            int sphid = (string.IsNullOrEmpty(Request.QueryString["subphase"]) == false) ? Convert.ToInt32(Request.QueryString["subphase"].ToString()) : 0;
             if (sphid > 0)
             {
                 ViewBag.SubPhaseId = new SelectList(db.C006_SubPhase.Where(x => x.PhaseId == phid).OrderBy(x => x.SubPhaseName), "SubPhaseId", "SubPhaseName", sphid);
