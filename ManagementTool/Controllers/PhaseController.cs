@@ -161,7 +161,7 @@ namespace ManagementTool.Controllers
         public ActionResult Create(){
             
             #region Project
-                int lid = (Request.QueryString["prj"] != null) ? Convert.ToInt32(Request.QueryString["prj"].ToString()) : 0;            
+                int lid = (string.IsNullOrEmpty(Request.QueryString["prj"]) == false) ? Convert.ToInt32(Request.QueryString["prj"].ToString()) : 0;            
                 if (lid > 0 ) {
                     ViewBag.ProjectId = new SelectList(db.C004_PROJECT.Where(p => p.IsActive == true), "ProjectId", "ProjectName", lid);
                 }

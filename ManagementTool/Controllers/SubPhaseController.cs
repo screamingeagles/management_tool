@@ -139,7 +139,7 @@ namespace ManagementTool.Controllers
         public ActionResult Create()
         {
             #region Phase
-            int pid = (Request.QueryString["phase"] != null) ? Convert.ToInt32(Request.QueryString["phase"].ToString()) : 0;
+            int pid = (string.IsNullOrEmpty(Request.QueryString["phase"]) == false) ? Convert.ToInt32(Request.QueryString["phase"].ToString()) : 0;
             if (pid > 0) {
                 ViewBag.PhaseId = new SelectList(db.C005_PHASE.Where(p => p.IsActive == true), "PhaseId", "PhaseName", pid);
             }
