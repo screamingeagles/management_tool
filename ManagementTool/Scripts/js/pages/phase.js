@@ -120,8 +120,8 @@ $(document).ready(function () {
                     } // end of for loop
                 }
                 else {
-                    $('#SubAreaId').append($('<option>', { value: '', text: 'Select Sub Area', selected: true }));
-                    $('#SubAreaId').append($('<option>', { value: '0', text: 'No Sub Area', selected: true }));
+                    $('#SubAreaId').append($('<option>', { value: '', text: 'No Sub Area', selected: true }));
+                    $('#SubAreaId').append($('<option>', { value: '0', text: 'Select To Load Project For Area'}));
                 }
                 // end of if for length
             },

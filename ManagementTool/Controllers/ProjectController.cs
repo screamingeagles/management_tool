@@ -157,9 +157,9 @@ namespace ManagementTool.Controllers
 
             #region Division & Area ... Sub Area
 
-            string div      = (Request.QueryString["div"]   != null) ? Request.QueryString["div"]   .ToString() : "0";
-            string area     = (Request.QueryString["area"]  != null) ? Request.QueryString["area"]  .ToString() : "0";
-            string subarea  = (Request.QueryString["sa"]    != null) ? Request.QueryString["sa"]    .ToString() : "0";
+            string div      = (string.IsNullOrEmpty(Request.QueryString["div"])     == false) ? Request.QueryString["div"]   .ToString() : "0";
+            string area     = (string.IsNullOrEmpty(Request.QueryString["area"])    == false) ? Request.QueryString["area"]  .ToString() : "0";
+            string subarea  = (string.IsNullOrEmpty(Request.QueryString["sa"])      == false) ? Request.QueryString["sa"]    .ToString() : "0";
 
             if ((string.IsNullOrEmpty(div) == false) && (string.IsNullOrEmpty(area)== false))
             {

@@ -84,8 +84,7 @@ namespace ManagementTool.Controllers
                          select new { p.PhaseId, po.ProjectName, p.PhaseName, p.StartDate, p.EndDate , p.IsActive, u.UserName, p.GeneratedDate}).ToList();
 
                 var k = (from j in db.C004_PROJECT
-                         join v in db.vw_PhasebyLCDASAP on j.ProjectId equals v.ProjectId
-                         where (v.AreaId == Area) && (v.SubAreaId == SubArea)
+                         where (j.AreaId == Area) && (j.SubAreaId == SubArea)
                          select new { j.ProjectId, j.ProjectName }).ToList();
 
                 return Json(new { data = k, list = q });
