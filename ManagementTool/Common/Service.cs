@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace ManagementTool.Common
 {
-    public class Service
+    public class Service : RoleAuthenticate
     {
         public int      ServiceId     { get; set; }
         public string   LocationName  { get; set; }

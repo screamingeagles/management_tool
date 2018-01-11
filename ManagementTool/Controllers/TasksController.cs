@@ -154,6 +154,7 @@ namespace ManagementTool.Controllers
             {
                 return HttpNotFound();
             }
+            //c008_TASK_DATA.isAddAllowed = true;
             return View(c008_TASK_DATA);
         }
 
@@ -488,10 +489,55 @@ namespace ManagementTool.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             C008_TASK_DATA c008_TASK_DATA = db.C008_TASK_DATA.Find(id);
-            if (c008_TASK_DATA == null)
-            {
+            if (c008_TASK_DATA == null) {
                 return HttpNotFound();
             }
+
+
+            if (c008_TASK_DATA.TaskTypeId == 5)
+            {
+                return RedirectToAction("Meetings", "Tasks", new { id = id });
+            }
+
+            task_base tb = (from t in db.C008_TASK_DATA
+                            join b in db.C007_BUCKET on t.BucketId equals b.BucketId
+                            join p in db.C004_PROJECT on b.ProjectId equals p.ProjectId
+                            join ph in db.C005_PHASE on b.PhaseId equals ph.PhaseId
+                            join sp in db.C006_SubPhase on b.SubPhaseId equals sp.SubPhaseId
+                            into joinx
+                            from x in joinx.DefaultIfEmpty()
+
+                            join l in db.C010_LOCATION on p.LocationId equals l.LocationId
+                            join c in db.C011_COMPANY on p.CompanyId equals c.CompanyId
+                            join d in db.C001_DIVISION on p.DivisionId equals d.DivisionId
+                            join a in db.C002_AREA on p.AreaId equals a.AreaId
+                            join sa in db.C003_SUB_AREA on p.SubAreaId equals sa.SubAreaId
+                            into joiny
+                            from z in joiny.DefaultIfEmpty()
+
+                            where (t.TaskId == id)
+                            select new task_base
+                            {
+                                ServiceId = t.TaskId,
+                                ProjectName = p.ProjectName,
+                                PhaseName = ph.PhaseName,
+                                SubPhaseName = (x.SubPhaseName == null) ? "" : x.SubPhaseName,
+
+                                LocationName = l.LocationName,
+                                CompanyName = c.CompanyName,
+                                DivisionName = d.DivisionName,
+                                AreaName = a.AreaName,
+                                SubAreaName = (z.SubAreaName == null) ? "No Sub Area" : z.SubAreaName
+                            }).FirstOrDefault();
+
+            ViewBag.TaskBase    = tb;
+            ViewBag.BucketId    = new SelectList(db.C007_BUCKET, "BucketId", "Name", c008_TASK_DATA.BucketId);
+            ViewBag.OwnerId     = new SelectList(db.EndUsers, "UID", "UserName", c008_TASK_DATA.OwnerId);
+            ViewBag.StatusId    = new SelectList(db.C015_STATUS, "StatusId", "TaskStatus", c008_TASK_DATA.StatusId);
+            ViewBag.TaskTypeId  = new SelectList(db.C014_TASK_TYPE, "TypeId", "TypeName", c008_TASK_DATA.TaskTypeId);
+
+            ViewBag.BucketDetial= Bhai.GetBucketDetail(c008_TASK_DATA.BucketId);
+            ViewBag.UserName    = UserIdentity.UserName;
             return View(c008_TASK_DATA);
         }
 
@@ -501,9 +547,18 @@ namespace ManagementTool.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             C008_TASK_DATA c008_TASK_DATA = db.C008_TASK_DATA.Find(id);
-            db.C008_TASK_DATA.Remove(c008_TASK_DATA);
+
+            c008_TASK_DATA.GeneratedBy  = UserIdentity.UserId;
+            c008_TASK_DATA.GeneratedDate= DateTime.Now.AddHours(4);
+            c008_TASK_DATA.IsActive     = false;
+
+            db.Entry(c008_TASK_DATA).State = EntityState.Modified;
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Tasks");
+
+            //db.C008_TASK_DATA.Remove(c008_TASK_DATA);
+            //db.SaveChanges();
+            // return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)

@@ -649,6 +649,7 @@
     <Compile Include="Common\Mail_Senders.cs" />
     <Compile Include="Common\notifications.cs" />
     <Compile Include="Common\projectmodel.cs" />
+    <Compile Include="Common\RoleAuthenticate.cs" />
     <Compile Include="Common\SearchResultDTO.cs" />
     <Compile Include="Common\Service.cs" />
     <Compile Include="Common\STATS_TABLE_LOCAL.cs" />
