@@ -5,7 +5,7 @@ using System.Web;
 
 namespace ManagementTool.Common
 {
-    public class task_base
+    public class task_base : RoleAuthenticate
     {
         public int ServiceId { get; set; }
         public string LocationName { get; set; }

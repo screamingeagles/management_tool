@@ -4,6 +4,9 @@
     int index = 1;
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    bool isAddAllowed    = ViewBag.isAddAllowed;
+    bool isDeleteAllowed = ViewBag.isDeleteAllowed;
 }
 <br />
 <div class="row">
@@ -73,9 +76,18 @@
                                         <td><small>@item.GeneratedDate.ToString("MMM dd, yyyy")</small></td>
                                         <td>
                                             <small>
-                                                @Html.ActionLink("Edit", "Edit", new { id = item.ServiceId }) |
-                                                @Html.ActionLink("Delete", "Delete", new { id = item.ServiceId })
-                                                @*@@Html.ActionLink("Details", "Details", new { id = item.ServiceId })*@ 
+                                                @if (isAddAllowed == true)
+                                                {
+                                                    @Html.ActionLink("Edit", "Edit", new { id = item.ServiceId }) 
+                                                    @Html.Raw("|")
+                                                }
+                                                
+                                                @if (isDeleteAllowed == true)
+                                                {
+                                                    @Html.ActionLink("Delete", "Delete", new { id = item.ServiceId })
+                                                }
+
+                                                @*Html.ActionLink("Details", "Details", new { id = item.ServiceId })*@ 
                                             </small>
                                         </td>
                                     </tr>

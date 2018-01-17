@@ -228,6 +228,18 @@ namespace ManagementTool.Controllers
             {
                 return HttpNotFound();
             }
+
+            Dictionary<int, string[]> dbucket = new Dictionary<int, string[]>();
+            var bucket = (from b in db.C007_BUCKET
+                          join e in db.EndUsers on b.GeneratedBy equals e.UID
+                          where ((b.SubPhaseId == id) && (b.IsActive == true))
+                          select new { ID = b.BucketId, IName = b.Name, Owner = e.UserName, Generated = b.GenerationDate }).ToList();
+            foreach (var item in bucket)
+            {
+                dbucket.Add(item.ID, new string[] { item.IName, item.Owner, item.Generated.ToString("dd-MMM-yyyy") });
+            }
+            ViewBag.Bucket = dbucket;
+
             return View(c006_SubPhase);
         }
 

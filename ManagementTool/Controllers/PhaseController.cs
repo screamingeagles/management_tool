@@ -259,18 +259,47 @@ namespace ManagementTool.Controllers
             {
                 return HttpNotFound();
             }
+
+            Dictionary<int, string[]> sbphase = new Dictionary<int, string[]>();
+            Dictionary<int, string[]> dbucket = new Dictionary<int, string[]>();
+
+            var sphase = (from sp in db.C006_SubPhase
+                            join e in db.EndUsers on sp.GeneratedBy equals e.UID
+                         where (sp.PhaseId == id)
+                         select new { ID = sp.SubPhaseId, IName = sp.SubPhaseName, Owner = e.UserName, Generated = sp.GeneratedDate }).ToList();
+            foreach (var item in sphase){
+                sbphase.Add(item.ID, new string[] { item.IName, item.Owner, item.Generated.ToString("dd-MMM-yyyy") });
+            }
+            ViewBag.sbphase=sbphase;
+
+            var bucket = (from b in db.C007_BUCKET
+                          join e in db.EndUsers on b.GeneratedBy equals e.UID
+                          where ((b.PhaseId == id) && (b.IsActive == true))
+                          select new { ID = b.BucketId, IName = b.Name, Owner = e.UserName, Generated = b.GenerationDate }).ToList();
+            foreach (var item in bucket) {
+                dbucket.Add(item.ID, new string[] { item.IName, item.Owner, item.Generated.ToString("dd-MMM-yyyy") });
+            }
+            ViewBag.Bucket = dbucket;
+
+
             return View(c005_PHASE);
         }
 
         // POST: Phase/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            C005_PHASE c005_PHASE = db.C005_PHASE.Find(id);
-            db.C005_PHASE.Remove(c005_PHASE);
+        public ActionResult DeleteConfirmed(int id) {
+            C005_PHASE c005_PHASE       = db.C005_PHASE.Find(id);
+            c005_PHASE.GeneratedBy      = UserIdentity.UserId;
+            c005_PHASE.GeneratedDate    = DateTime.Now.AddHours(4);
+            c005_PHASE.IsActive         = false;
+            db.Entry(c005_PHASE).State  = EntityState.Modified;
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Phase");
+
+            // db.C005_PHASE.Remove(c005_PHASE);
+            // db.SaveChanges();
+            // return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)

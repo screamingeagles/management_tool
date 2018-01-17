@@ -134,8 +134,26 @@ namespace ManagementTool.Controllers
 
         // GET: Tasks
         public ActionResult         Index       ()              {
+
+            ViewBag.isAddAllowed    = false;
+            ViewBag.isDeleteAllowed = false;
+
             int uid = UserIdentity.UserId;
             List<Service> s = Service.GetServiceList(uid,0);
+
+            #region authorizatoin check
+            string[] inparam = { "Create", "Delete" };
+            var qry = (from r in db.ROLE_DETAIL
+                       join e in db.EndUsers on r.RoleId equals e.UserType
+                       where (e.UID == UserIdentity.UserId) && (r.Controller == "Tasks") && (inparam.Contains(r.Action))
+                       select new { r.Action, r.Allowed }).ToList();
+            foreach (var item in qry) {
+                     if (item.Action == "Create") { ViewBag.isAddAllowed    = (item.Allowed) ? true : false; }
+                else if (item.Action == "Delete") { ViewBag.isDeleteAllowed = (item.Allowed) ? true : false; }
+            }
+            #endregion
+
+            
             return View(s);
 
             //var c008_TASK_DATA = db.C008_TASK_DATA.Include(c => c.C007_BUCKET).Include(c => c.C011_COMPANY).Include(c => c.C010_LOCATION).Include(c => c.EndUser).Include(c => c.EndUser1).Include(c => c.C015_STATUS).Include(c => c.C014_TASK_TYPE);
@@ -439,6 +457,19 @@ namespace ManagementTool.Controllers
                                                     AreaName     = a.AreaName,   
                                                     SubAreaName  = (z.SubAreaName == null)? "No Sub Area": z.SubAreaName
                             }).FirstOrDefault();
+
+
+            #region authorizatoin check
+            string[] inparam = { "Create", "Delete" }; 
+            var qry = (from r in db.ROLE_DETAIL
+                       join e in db.EndUsers on r.RoleId equals e.UserType
+                       where (e.UID == UserIdentity.UserId) && (r.Controller == "Tasks") && (inparam.Contains(r.Action))
+                       select new { r.Action, r.Allowed }).ToList();
+            foreach (var item in qry) {
+                     if (item.Action == "Create") { tb.isAddAllowed     = (item.Allowed) ? true : false; }
+                else if(item.Action  == "Delete") { tb.isDeleteAllowed  = (item.Allowed) ? true : false; }                
+            }
+            #endregion
 
             ViewBag.TaskBase    = tb;
             ViewBag.BucketId    = new SelectList(db.C007_BUCKET     , "BucketId"    , "Name"        , c008_TASK_DATA.BucketId);

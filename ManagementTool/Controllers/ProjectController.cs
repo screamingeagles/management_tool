@@ -290,6 +290,27 @@ namespace ManagementTool.Controllers
             {
                 return HttpNotFound();
             }
+            Dictionary<int, string[]> dphase  = new Dictionary<int, string[]>();
+            Dictionary<int, string[]> dbucket = new Dictionary<int, string[]>();
+
+            var phase   = (from p in db.C005_PHASE
+                           join e in db.EndUsers on p.GeneratedBy equals e.UID
+                            where ((p.ProjectId == id) && (p.IsActive ==true))
+                            select new {ID = p.PhaseId, IName = p.PhaseName, Owner = e.UserName, Generated = p.GeneratedDate }).ToList();
+            foreach (var item in phase) {
+                dphase.Add(item.ID, new string[] { item.IName, item.Owner, item.Generated.ToString("dd-MMM-yyyy") });
+            }
+            ViewBag.Phase = dphase;
+
+            var bucket = (from b in db.C007_BUCKET
+                          join e in db.EndUsers on b.GeneratedBy equals e.UID
+                          where ((b.ProjectId== id) && (b.IsActive == true))
+                                select new { ID = b.BucketId, IName = b.Name, Owner = e.UserName, Generated = b.GenerationDate }).ToList();
+            foreach (var item in bucket) {
+                dbucket.Add(item.ID, new string[] { item.IName, item.Owner, item.Generated.ToString("dd-MMM-yyyy") });
+            }
+            ViewBag.Bucket = dbucket;
+
             ViewBag.SubAreaId = Bhai.getSubArea(c004_PROJECT.SubAreaId);
             return View(c004_PROJECT);
         }
@@ -297,12 +318,18 @@ namespace ManagementTool.Controllers
         // POST: Project/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            C004_PROJECT c004_PROJECT = db.C004_PROJECT.Find(id);
-            db.C004_PROJECT.Remove(c004_PROJECT);
+        public ActionResult DeleteConfirmed(int id) {
+            C004_PROJECT c004_PROJECT   = db.C004_PROJECT.Find(id);
+            c004_PROJECT.GeneratedBy    = UserIdentity.UserId;
+            c004_PROJECT.GeneratedDate  = DateTime.Now.AddHours(4);
+            c004_PROJECT.IsActive       = false;
+            db.Entry(c004_PROJECT).State= EntityState.Modified;
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Project");
+
+            //db.C004_PROJECT.Remove(c004_PROJECT);
+            //db.SaveChanges();
+            //return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)

@@ -255,9 +255,9 @@ function filltable(obj) {
                             "<td>" + res.UserName + "</td>" +
                             "<td>" + parseJsonDate(res.GeneratedDate) + "</td>" +
                             "<td>" +
-                                "<a href='/Phase/Edit/" + res.SubPhaseId + "'>Edit    </a> |" +
-                                "<a href='/Phase/Details/" + res.SubPhaseId + "'>Details </a> |" +
-                                "<a href='/Phase/Delete/" + res.SubPhaseId + "'>Delete  </a>" +
+                                "<a href='/SubPhase/Edit/" + res.SubPhaseId + "'>Edit    </a> |" +
+                                "<a href='/SubPhase/Details/" + res.SubPhaseId + "'>Details </a> |" +
+                                "<a href='/SubPhase/Delete/" + res.SubPhaseId + "'>Delete  </a>" +
                             "</td>" +
                          "</tr>";
 
