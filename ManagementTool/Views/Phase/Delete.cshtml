@@ -148,19 +148,21 @@
 
                     <!-- / Close Button -->
                     <div class="form-group">
-                        @if (ItemCanbeDeleted == true) {
-                            using (Html.BeginForm()) {
-                            Html.AntiForgeryToken();
-                            <input type="submit" value="Delete" class="btn btn-default" />
-                            }
-                            @Html.ActionLink("Back to List", "Index", null, htmlAttributes: new { @class = "btn btn-sm btn-primary pull-right m-t-n-xs" })
-                        }
-                        else {
-                            @Html.ActionLink("Back to List", "Index", null, htmlAttributes: new { @class = "btn btn-sm btn-primary pull-right m-t-n-xs" })
-                        }
                         <div class="col-lg-12">
 
-                         
+                            @if (ItemCanbeDeleted == true)
+                            {
+                                using (Html.BeginForm())
+                                {
+                                    Html.AntiForgeryToken();
+                                    <input type="submit" value="Delete" class="btn btn-default" />
+                                }
+                                @Html.ActionLink("Back to List", "Index", null, htmlAttributes: new { @class = "btn btn-sm btn-primary pull-right m-t-n-xs" })
+                            }
+                            else
+                            {
+                                @Html.ActionLink("Back to List", "Index", null, htmlAttributes: new { @class = "btn btn-sm btn-primary pull-right m-t-n-xs" })
+                            }
                         </div>
                     </div>
                 </div>
