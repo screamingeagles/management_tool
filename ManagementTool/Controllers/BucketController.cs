@@ -281,6 +281,18 @@ namespace ManagementTool.Controllers
             {
                 return HttpNotFound();
             }
+
+            Dictionary<int, string[]> dtasks= new Dictionary<int, string[]>();
+            var t = (from tk in db.C008_TASK_DATA
+                     join e in db.EndUsers on tk.GeneratedBy equals e.UID
+                     where (tk.BucketId == id)
+                     select new { ID = tk.TaskId, IName = tk.SName, Owner = e.UserName, Generated = tk.GeneratedDate }).ToList();
+            foreach (var item in t) {
+                dtasks.Add(item.ID, new string[] { item.IName, item.Owner, item.Generated.ToString("dd-MMM-yyyy") });
+            }
+            ViewBag.tasks = dtasks;
+
+
             ViewBag.SubPhaseName = Bhai.getSubPhase(c007_BUCKET.SubPhaseId);
             return View(c007_BUCKET);
         }
@@ -290,10 +302,17 @@ namespace ManagementTool.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            C007_BUCKET c007_BUCKET = db.C007_BUCKET.Find(id);
-            db.C007_BUCKET.Remove(c007_BUCKET);
+            C007_BUCKET c007_BUCKET     = db.C007_BUCKET.Find(id);
+            c007_BUCKET.GeneratedBy     = UserIdentity.UserId;
+            c007_BUCKET.GenerationDate  = DateTime.Now.AddHours(4);
+            c007_BUCKET.IsActive        = false;
+            db.Entry(c007_BUCKET).State = EntityState.Modified;
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Bucket");
+
+            //db.C007_BUCKET.Remove(c007_BUCKET);
+            //db.SaveChanges();
+            //return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)

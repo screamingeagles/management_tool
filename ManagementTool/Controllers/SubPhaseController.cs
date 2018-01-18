@@ -248,7 +248,7 @@ namespace ManagementTool.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            C006_SubPhase c006_SubPhase = db.C006_SubPhase.Find(id);
+            C006_SubPhase c006_SubPhase     = db.C006_SubPhase.Find(id);
             db.C006_SubPhase.Remove(c006_SubPhase);
             db.SaveChanges();
             return RedirectToAction("Index");

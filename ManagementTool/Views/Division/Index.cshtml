@@ -59,8 +59,8 @@
                                     <td>@item.GeneratedDate.ToString("MMM dd, yyyy")                        </td>
                                 <td>
                                     @Html.ActionLink("Edit", "Edit", new { id = item.DivisionId }) |
-                                    @Html.ActionLink("Details", "Details", new { id = item.DivisionId }) |
-                                    @Html.ActionLink("Delete", "Delete", new { id = item.DivisionId })
+                                    @Html.ActionLink("Details", "Details", new { id = item.DivisionId }) 
+                                    @*Html.ActionLink("Delete", "Delete", new { id = item.DivisionId })*@
                                 </td>
                             </tr>
                                 index = index + 1;

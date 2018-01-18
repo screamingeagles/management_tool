@@ -142,6 +142,20 @@ namespace ManagementTool.Controllers
             {
                 return HttpNotFound();
             }
+
+            #region  Project
+            Dictionary<int, string[]> projects = new Dictionary<int, string[]>();
+            var pj = (from p in db.C004_PROJECT
+                     join e in db.EndUsers on p.GeneratedBy equals e.UID
+                     where (p.SubAreaId == id)
+                     select new { ID = p.ProjectId, IName = p.ProjectName, Owner = e.UserName, Generated = p.GeneratedDate }).ToList();
+            foreach (var item in pj) {
+                projects.Add(item.ID, new string[] { item.IName, item.Owner, item.Generated.ToString("dd-MMM-yyyy") });
+            }
+            ViewBag.Project = projects;
+            #endregion  
+
+
             return View(c003_SUB_AREA);
         }
 
@@ -150,10 +164,17 @@ namespace ManagementTool.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            C003_SUB_AREA c003_SUB_AREA = db.C003_SUB_AREA.Find(id);
-            db.C003_SUB_AREA.Remove(c003_SUB_AREA);
+            C003_SUB_AREA c003_SUB_AREA     = db.C003_SUB_AREA.Find(id);
+            c003_SUB_AREA.GeneratedBy       = UserIdentity.UserId;
+            c003_SUB_AREA.GeneratedDate     = DateTime.Now.AddHours(4);
+            c003_SUB_AREA.AreaActive        = false;
+            db.Entry(c003_SUB_AREA).State   = EntityState.Modified;
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Bucket");
+
+            //db.C003_SUB_AREA.Remove(c003_SUB_AREA);
+            //db.SaveChanges();
+            //return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
