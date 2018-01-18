@@ -170,7 +170,7 @@ namespace ManagementTool.Controllers
             c003_SUB_AREA.AreaActive        = false;
             db.Entry(c003_SUB_AREA).State   = EntityState.Modified;
             db.SaveChanges();
-            return RedirectToAction("Index", "Bucket");
+            return RedirectToAction("Index", "SubArea");
 
             //db.C003_SUB_AREA.Remove(c003_SUB_AREA);
             //db.SaveChanges();
