@@ -132,8 +132,30 @@ namespace ManagementTool.Controllers
 
 
 
+        [HttpPost]
+        public JsonResult GetProjectsByAreaSubArea(int Area, int SubArea)
+        {
+            using (ProjectEntities _db = new ProjectEntities()) {
+                if (SubArea == 0) {
+                    var q = (from p in _db.C004_PROJECT
+                             where (p.IsActive.Equals(true)) && (p.AreaId == Area)
+                             select new { p.ProjectId, p.ProjectName }).ToList();
+                    return Json(new { data = q });
+                }
+                else {
+                    var q = (from s in _db.C004_PROJECT
+                             where (s.IsActive.Equals(true)) && (s.AreaId == Area) && (s.SubAreaId == SubArea)
+                             select new { s.ProjectId, s.ProjectName }).ToList();
+                    return Json(new { data = q });
+                }
+            }
+        }
+
+
+
         // GET: Tasks
         public ActionResult         Index       ()              {
+            UserIdentity.UserId = 1008;
 
             ViewBag.isAddAllowed    = false;
             ViewBag.isDeleteAllowed = false;

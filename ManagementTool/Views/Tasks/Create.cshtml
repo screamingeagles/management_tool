@@ -365,14 +365,12 @@
                 if (AreaId == "") { return; }
 
                 // call_toggle();
-
-                $("#ProjectId").empty();                
-
+                $("#ProjectId").empty();
                 var postedContent = { Area: AreaId, SubArea: sarea }
 
                 $.ajax({
                     type: "POST",
-                    url: "/Bucket/GetBucketListBySubArea",
+                    url: "/Tasks/GetProjectsByAreaSubArea",
                     data: postedContent,
                     success: function (message) {
 
