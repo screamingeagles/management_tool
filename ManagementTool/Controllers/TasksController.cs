@@ -155,7 +155,7 @@ namespace ManagementTool.Controllers
 
         // GET: Tasks
         public ActionResult         Index       ()              {
-            UserIdentity.UserId = 1008;
+            //UserIdentity.UserId = 1008;
 
             ViewBag.isAddAllowed    = false;
             ViewBag.isDeleteAllowed = false;
@@ -445,14 +445,9 @@ namespace ManagementTool.Controllers
             }
 
             C008_TASK_DATA c008_TASK_DATA = db.C008_TASK_DATA.Find(id);
-            if (c008_TASK_DATA == null) {
-                return HttpNotFound();
-            }
+            if (c008_TASK_DATA == null) { return HttpNotFound(); }
+            if (c008_TASK_DATA.TaskTypeId == 5) { return RedirectToAction("Meetings", "Tasks", new { id = id}); }
 
-            if (c008_TASK_DATA.TaskTypeId == 5) {
-                return RedirectToAction("Meetings", "Tasks", new { id = id});
-            }
-            
             task_base tb = (from t  in db.C008_TASK_DATA
                             join b  in db.C007_BUCKET   on t.BucketId   equals b.BucketId
                             join p  in db.C004_PROJECT  on b.ProjectId  equals p.ProjectId
@@ -469,14 +464,29 @@ namespace ManagementTool.Controllers
                             
                             where (t.TaskId == id)
                             select new task_base { ServiceId    = t.TaskId,
+
+                                                    ProjectId    = p.ProjectId,    
                                                     ProjectName = p.ProjectName,
+                                                    
+                                                    PhaseId     = ph.PhaseId,        
                                                     PhaseName   = ph.PhaseName,
+
+                                                    SubPhaseId  =  x.SubPhaseId,
                                                     SubPhaseName= (x.SubPhaseName == null)? "": x.SubPhaseName,
 
+                                                    LocationId   = l.LocationId,
                                                     LocationName = l.LocationName,
+
+                                                    CompanyId    = c.CompanyId,
                                                     CompanyName  = c.CompanyName,
+
+                                                    DivisionId   = d.DivisionId,
                                                     DivisionName = d.DivisionName,
+
+                                                    AreaId       =  a.AreaId,
                                                     AreaName     = a.AreaName,   
+
+                                                    SubAreaId    = p.SubAreaId,
                                                     SubAreaName  = (z.SubAreaName == null)? "No Sub Area": z.SubAreaName
                             }).FirstOrDefault();
 
@@ -494,11 +504,26 @@ namespace ManagementTool.Controllers
             #endregion
 
             ViewBag.TaskBase    = tb;
-            ViewBag.BucketId    = new SelectList(db.C007_BUCKET     , "BucketId"    , "Name"        , c008_TASK_DATA.BucketId);
-            ViewBag.OwnerId     = new SelectList(db.EndUsers        , "UID"         , "UserName"    , c008_TASK_DATA.OwnerId);
-            ViewBag.StatusId    = new SelectList(db.C015_STATUS     , "StatusId"    , "TaskStatus"  , c008_TASK_DATA.StatusId);
-            ViewBag.TaskTypeId  = new SelectList(db.C014_TASK_TYPE  , "TypeId"      , "TypeName"    , c008_TASK_DATA.TaskTypeId);
+            ViewBag.LocationId  = new SelectList(db.C010_LOCATION   .Where(l => l.IsActive == true).                                        OrderBy(l => l.LocationName),   "LocationId", "LocationName", tb.LocationId);
+            ViewBag.CompanyId   = new SelectList(db.C011_COMPANY    .Where(c => c.LocationId == tb.LocationId && c.IsActive == true).       OrderBy(c => c.CompanyName),    "CompanyId", "CompanyName"  , tb.CompanyId);
 
+            ViewBag.DivisionId  = new SelectList(db.C001_DIVISION   .Where(d => d.IsActive == true).                                        OrderBy(d => d.DivisionName),   "DivisionId", "DivisionName", tb.DivisionId);
+            ViewBag.AreaId      = new SelectList(db.C002_AREA       .Where(a => a.DivisionId == tb.DivisionId   && a.isActive == true).     OrderBy(a => a.AreaName),       "AreaId"    , "AreaName"    , tb.AreaId);
+            ViewBag.SubAreaId   = new SelectList(db.C003_SUB_AREA   .Where(sa => sa.AreaId == tb.AreaId         && sa.AreaActive == true).  OrderBy(sa => sa.SubAreaName),  "SubAreaId" , "SubAreaName" , tb.SubAreaId);
+
+            ViewBag.ProjectId   = new SelectList(db.C004_PROJECT    .Where(p => p.IsActive      == true).                                   OrderBy(p => p.ProjectName),    "ProjectId", "ProjectName",   tb.ProjectId);
+            ViewBag.PhaseId     = new SelectList(db.C005_PHASE      .Where(ph => ph.ProjectId   == tb.ProjectId && ph.IsActive == true).    OrderBy(ph => ph.PhaseName),    "PhaseId",   "PhaseName",     tb.PhaseId);
+            ViewBag.SubPhaseId  = new SelectList(db.C006_SubPhase   .Where(sp => sp.PhaseId     == tb.PhaseId).                             OrderBy(sp => sp.SubPhaseName), "SubPhaseId", "SubPhaseName", tb.SubPhaseId);
+
+
+            ViewBag.BucketId    = new SelectList(db.C007_BUCKET.Where(b => b.ProjectId == tb.ProjectId && b.PhaseId == tb.PhaseId && b.IsActive ==true).OrderBy(b => b.Name)     , "BucketId", "Name", c008_TASK_DATA.BucketId);
+            ViewBag.OwnerId     = new SelectList(db.EndUsers,       "UID",      "UserName",     c008_TASK_DATA.OwnerId);
+            ViewBag.StatusId    = new SelectList(db.C015_STATUS,    "StatusId", "TaskStatus",   c008_TASK_DATA.StatusId);
+            ViewBag.TaskTypeId  = new SelectList(db.C014_TASK_TYPE, "TypeId",   "TypeName",     c008_TASK_DATA.TaskTypeId);
+            ViewBag.UserId = UserIdentity.UserId;
+            ViewBag.UserName = UserIdentity.UserName;
+            
+            
             ViewBag.BucketDetial = Bhai.GetBucketDetail(c008_TASK_DATA.BucketId);
             ViewBag.UserName    = UserIdentity.UserName;
             return View(c008_TASK_DATA);

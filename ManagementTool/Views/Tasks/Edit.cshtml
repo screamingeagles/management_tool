@@ -7,52 +7,46 @@
     task_base tb = (task_base)ViewBag.TaskBase;
 }
 
+@using (Html.BeginForm("Edit", "Tasks", FormMethod.Post, new { id = "frmMain" }))
+{
+    @Html.AntiForgeryToken();
+    @Html.HiddenFor(model => model.TaskId)
 
-<br />
-
-<div class="row">
-
-    <div class="col-lg-10 col-lg-offset-1">
-        <div class="ibox float-e-margins">
-            <div class="ibox-title">
-                <h5 id="dvDetails">Modify Task</h5>
-                <div class="ibox-tools">
-                    <a class="collapse-link">
-                        <i class="fa fa-chevron-up"></i>
-                    </a>
-                    <a class="close-link">
-                        <i class="fa fa-times"></i>
-                    </a>
+    <br />
+    <div class="row">
+        <div class="col-lg-10 col-lg-offset-1">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5 id="dvDetails">Filters for task : @tb.ServiceId</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
                 </div>
-            </div>
-            <div class="ibox-content">
-                <div class="table-responsive">
-                    @using (Html.BeginForm("Edit", "Tasks", FormMethod.Post, new { id = "frmMain" }))
-                    {
-                        @Html.AntiForgeryToken();
-                        @Html.HiddenFor(model => model.TaskId)
 
-                        <!-- / Service Id And Location -->
+                <div class="ibox-content">
+                    <div class="table-responsive">
+                        <!-- Location And Company -->
                         <div class="form-group">
-                            <label class="col-lg-2 control-label">Service Id</label>
-                            <div class="col-lg-4">
-                                <input  type="text" value="@tb.ServiceId" class="form-control m-b" disabled="disabled" name="TaskId" style="background-color:lavenderblush; color:black" />                                
-                            </div>
                             <label class="col-lg-2 control-label">Location</label>
                             <div class="col-lg-4">
-                                <input type="text" value="@tb.LocationName" class="form-control m-b" disabled="disabled" name="Locatoin" id="Locatoin"  style="background-color:lavenderblush; color:black" />                                
+                                @Html.DropDownList("LocationId", null, "Select Location", htmlAttributes: new { @class = "form-control m-b", @onchange = "GetCompanyByLocation(this);" })
+                            </div>
+                            <label class="col-lg-2 control-label">Company</label>
+                            <div class="col-lg-4">
+                                @Html.DropDownList("CompanyId", null, "Select Company", htmlAttributes: new { @class = "form-control m-b" })
                             </div>
                         </div>
 
-                        <!-- / Company And Division -->
+                        <!-- / Division -->
                         <div class="form-group">
-                            <label class="col-lg-2 control-label">Company</label>
-                            <div class="col-lg-4">
-                                <input name="Company" id="Company" type="text" value="@tb.CompanyName" class="form-control m-b" disabled="disabled" style="background-color:lavenderblush; color:black" />
-                            </div>
                             <label class="col-lg-2 control-label">Division</label>
-                            <div class="col-lg-4">
-                                <input name="Division" id="Division" type="text" value="@tb.DivisionName" class="form-control m-b" disabled="disabled" style="background-color:lavenderblush; color:black" />
+                            <div class="col-lg-10">
+                                @Html.DropDownList("DivisionId", null, "Select Division", htmlAttributes: new { @class = "form-control m-b", onchange = "GetAreaByDivision(this);" })
                             </div>
                         </div>
 
@@ -60,11 +54,11 @@
                         <div class="form-group">
                             <label class="col-lg-2 control-label">Area</label>
                             <div class="col-lg-4">
-                                <input name="Area" id="Area" type="text" value="@tb.AreaName" class="form-control m-b" disabled="disabled" style="background-color:lavenderblush; color:black" />
+                                @Html.DropDownList("AreaId", null, "Select Area", htmlAttributes: new { @class = "form-control m-b", onchange = "GetSubAreaByArea(this);" })
                             </div>
                             <label class="col-lg-2 control-label">Sub Area</label>
                             <div class="col-lg-4">
-                                <input name="SubArea" id="SubArea" type="text" value="@tb.SubAreaName" class="form-control m-b" disabled="disabled" style="background-color:lavenderblush; color:black" />
+                                @Html.DropDownList("SubAreaId", null, "Select Sub Area", htmlAttributes: new { @class = "form-control m-b", onchange = "GetProjectsBySubArea(this);" })
                             </div>
                         </div>
 
@@ -72,107 +66,138 @@
                         <div class="form-group">
                             <label class="col-lg-2 control-label">Project</label>
                             <div class="col-lg-4">
-                                <input name="Project" id="Project"  type="text" value="@tb.ProjectName" class="form-control m-b" disabled="disabled" style="background-color:lavenderblush; color:black" />
+                                @Html.DropDownList("ProjectId", null, "Select Project", htmlAttributes: new { @class = "form-control m-b", onchange = "GetPhaseByProject(this);" })
                             </div>
                             <label class="col-lg-2 control-label">Phase</label>
                             <div class="col-lg-4">
-                                <input name="Phase" id="Phase" type="text" value="@tb.PhaseName" class="form-control m-b" disabled="disabled" style="background-color:lavenderblush; color:black" />
+                                @Html.DropDownList("PhaseId", null, "Select Phase", htmlAttributes: new { @class = "form-control m-b", onchange = "GetSubphaseByPhase(this);" })
                             </div>
                         </div>
-                        
+
                         <!-- / Bucket And Sub Sub Phase -->
                         <div class="form-group">
-                            <label class="col-lg-2 control-label">Select Bucket</label>
-                            <div class="col-lg-4">
-                                @Html.DropDownList("BucketId", null, "Select Bucket", htmlAttributes: new { @onchange = "FillBucket(this);", @class = "form-control m-b" })
-                            </div>
                             <label class="col-lg-2 control-label">Sub Phase</label>
                             <div class="col-lg-4">
-                                <input name="SubPhase" id="SubPhase" type="text" value="@tb.SubPhaseName" class="form-control m-b" disabled="disabled" style="background-color:lavenderblush; color:black" />
-                            </div>                           
+                                @Html.DropDownList("SubPhaseId", null, "Select SubPhase", htmlAttributes: new { @class = "form-control m-b", @onchange = "GetBucketBySubphase(this);" })
+                            </div>
+                            <label class="col-lg-2 control-label">Select Bucket</label>
+                            <div class="col-lg-4">
+                                @Html.DropDownList("BucketId", null, "Select Bucket", htmlAttributes: new { @class = "form-control m-b", @onchange = "FillBucketDetails(this);" })
+                            </div>
                         </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <br />
+    <div class="row">
+        <div class="col-lg-10 col-lg-offset-1">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5 id="dvDetails">Modify Task : @tb.ServiceId</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="table-responsive">
 
                         <!-- / Task Name -->
                         <div class="form-group">
-                            <label class="col-lg-2 control-label">New Task Name</label>
+                            <label class="col-lg-2 control-label">Service No.</label>
                             <div class="col-lg-10">
-                                @Html.TextBoxFor(model => model.SName, htmlAttributes: new { @class = "form-control m-b", @placeholder = "Task Name" })
+                                @Html.TextBoxFor(model => model.TaskId, htmlAttributes: new { @class = "form-control m-b", @disabled="disabled", @style="background-color:white;"})
                             </div>
                         </div>
+                                        
+                            <!-- / Task Name -->
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">New Task Name</label>
+                                <div class="col-lg-10">
+                                    @Html.TextBoxFor(model => model.SName, htmlAttributes: new { @class = "form-control m-b", @placeholder = "Task Name" })
+                                </div>
+                            </div>
 
-                         <!-- / Description -->
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">Description</label>
-                            <div class="col-lg-10">
-                                <textarea class="form-control m-b" id="Description" name="Description" rows="2" cols="20">@Model.Description</textarea>
+                             <!-- / Description -->
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">Description</label>
+                                <div class="col-lg-10">
+                                    <textarea class="form-control m-b" id="Description" name="Description" rows="2" cols="20">@Model.Description</textarea>
+                                </div>
                             </div>
-                        </div>
 
-                        <!-- / Start date and End date -->
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">Start Date <small style="font-weight:normal; font-size:8pt;">readonly</small></label>
-                            <div class="col-lg-4">
-                                @Html.TextBoxFor(model => model.StartDate, "{0:dd-MMM-yyyy}", htmlAttributes: new { @class = "form-control m-b", @readonly = "readonly" })
+                            <!-- / Start date and End date -->
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">Start Date <small style="font-weight:normal; font-size:8pt;">readonly</small></label>
+                                <div class="col-lg-4">
+                                    @Html.TextBoxFor(model => model.StartDate, "{0:dd-MMM-yyyy}", htmlAttributes: new { @class = "form-control m-b", @readonly = "readonly" })
+                                </div>
+                                <label class="col-lg-2 control-label">End Date <small style="font-weight:normal; font-size:8pt;">readonly</small></label>
+                                <div class="col-lg-4">
+                                    @Html.TextBoxFor(model => model.Deadline, "{0:dd-MMM-yyyy}", htmlAttributes: new { @class = "form-control m-b", @readonly = "readonly" })
+                                </div>
                             </div>
-                            <label class="col-lg-2 control-label">End Date <small style="font-weight:normal; font-size:8pt;">readonly</small></label>
-                            <div class="col-lg-4">
-                                @Html.TextBoxFor(model => model.Deadline, "{0:dd-MMM-yyyy}", htmlAttributes: new { @class = "form-control m-b", @readonly = "readonly" })
-                            </div>
-                        </div>
 
-                        <!-- / Select Owner and Generated by -->
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">Select Owner</label>
-                            <div class="col-lg-4">
-                                @Html.DropDownList("OwnerId", null, "Select Owner", htmlAttributes: new { @class = "form-control m-b" })
+                            <!-- / Select Owner and Generated by -->
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">Select Owner</label>
+                                <div class="col-lg-4">
+                                    @Html.DropDownList("OwnerId", null, "Select Owner", htmlAttributes: new { @class = "form-control m-b" })
+                                </div>
+                                <label class="col-lg-2 control-label">Created By</label>
+                                <div class="col-lg-4">
+                                    <input id="GeneratedBy" name="GeneratedBy" class="form-control m-b" value="@ViewBag.UserName" placeholder="Created By" disabled="disabled">
+                                </div>
                             </div>
-                            <label class="col-lg-2 control-label">Created By</label>
-                            <div class="col-lg-4">
-                                <input id="GeneratedBy" name="GeneratedBy" class="form-control m-b" value="@ViewBag.UserName" placeholder="Created By" disabled="disabled">
-                            </div>
-                        </div>
 
-                        <!-- / Type and Status -->
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">Task Type</label>
-                            <div class="col-lg-4">
-                                @Html.DropDownList("TaskTypeId", null, "Select Type", htmlAttributes: new { @class = "form-control m-b" })
+                            <!-- / Type and Status -->
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">Task Type</label>
+                                <div class="col-lg-4">
+                                    @Html.DropDownList("TaskTypeId", null, "Select Type", htmlAttributes: new { @class = "form-control m-b" })
+                                </div>
+                                <label class="col-lg-2 control-label">Task Status</label>
+                                <div class="col-lg-4">
+                                    @Html.DropDownList("StatusId", null, "Select Status", htmlAttributes: new { @class = "form-control m-b" })
+                                </div>
                             </div>
-                            <label class="col-lg-2 control-label">Task Status</label>
-                            <div class="col-lg-4">
-                                @Html.DropDownList("StatusId", null, "Select Status", htmlAttributes: new { @class = "form-control m-b" })
-                            </div>
-                        </div>
 
-                        <!-- / Man Days and Doc Links   -->
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">Man Days</label>
-                            <div class="col-lg-4">
-                                @Html.TextBoxFor(model => model.ManDays, htmlAttributes: new { @class = "form-control m-b", @placeholder = "Man Days" })
+                            <!-- / Man Days and Doc Links   -->
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">Man Days</label>
+                                <div class="col-lg-4">
+                                    @Html.TextBoxFor(model => model.ManDays, htmlAttributes: new { @class = "form-control m-b", @placeholder = "Man Days" })
+                                </div>
+                                <label class="col-lg-2 control-label">Doc Links</label>
+                                <div class="col-lg-4">
+                                    @Html.TextBoxFor(model => model.DocsLink, htmlAttributes: new { @class = "form-control m-b", @placeholder = "Document Links" })
+                                </div>
                             </div>
-                            <label class="col-lg-2 control-label">Doc Links</label>
-                            <div class="col-lg-4">
-                                @Html.TextBoxFor(model => model.DocsLink, htmlAttributes: new { @class = "form-control m-b", @placeholder = "Document Links" })
-                            </div>
-                        </div>
 
-                        <!-- / Save Button -->
-                        <div class="form-group">
-                            <div class="col-lg-12">
-                                <button class="btn btn-sm btn-primary pull-left m-t-n-xs" type="submit">
-                                    <strong>Save</strong>
-                                </button>
+                            <!-- / Save Button -->
+                            <div class="form-group">
+                                <div class="col-lg-12">
+                                    <button class="btn btn-sm btn-primary pull-left m-t-n-xs" type="submit">
+                                        <strong>&nbsp; Update &nbsp;</strong>
+                                    </button>
 
-                                @Html.ActionLink("Back to List", "Index", null, htmlAttributes: new { @class = "btn btn-sm btn-primary pull-right m-t-n-xs" })
+                                    @Html.ActionLink("Back to List", "Index", null, htmlAttributes: new { @class = "btn btn-sm btn-primary pull-right m-t-n-xs" })
+                                </div>
                             </div>
-                        </div>
-                        }
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-
+}
 <br />
 <input type="hidden" id="PStartDate" name="PStartDate" value="" />
 <input type="hidden" id="PEndDate" name="PEndDate" value="" />
@@ -180,137 +205,439 @@
 <script type="text/javascript">
     /* $('#ManDays').on('input propertychange paste', function () {}); */
 
-    $("#ManDays").blur(function () {
-        var q = $('#ManDays').val();
-        q = (q / 8).toFixed(2);
-        $('#ManDays').val(q);
-    });
+        $(document).ready(
+        function () {
 
+            $("#ManDays").blur(function () {
+                var q = $('#ManDays').val();
+                q = (q / 8).toFixed(2);
+                $('#ManDays').val(q);
+            });
 
-    $(document).ready(
-    function () {
-        $('#StartDate').datepicker({
-            changeMonth: true,
-            changeYear: true,
-            minDate: "-15w",
-            dateFormat: "dd-M-yy" /*format: 'dd-M-yyyy'*/
-        });
+            $('#StartDate').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                minDate: "-15w",
+                dateFormat: "dd-M-yy" /*format: 'dd-M-yyyy'*/
+            });
 
-        $('#Deadline').datepicker({
-            changeMonth: true,
-            changeYear: true,
-            numberOfMonths: 1,
-            dateFormat: "dd-M-yy"
-        });
+            $('#Deadline').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                numberOfMonths: 1,
+                dateFormat: "dd-M-yy"
+            });
 
-        $("#frmMain").validate({
-            rules: {
-                StartDate   : { required: true },
-                Deadline    : { required: true },
-                SName       : {
-                    minlength: 3,
-                    maxlength: 250,
-                    required: true
+            $("#frmMain").validate({
+                rules: {
+                    StartDate: { required: true },
+                    Deadline: { required: true },
+                    SName: {
+                        minlength: 3,
+                        maxlength: 250,
+                        required: true
+                    },
+                    LocationId: { required: true },
+                    CompanyId: { required: true },
+                    AreaId: { required: true },
+                    BucketId: { required: true },
+                    TaskTypeId: { required: true },
+                    StatusId: { required: true },
                 },
-                LocationId  : { required: true },
-                CompanyId   : { required: true },
-                AreaId      : { required: true },
-                BucketId    : { required: true },
-                TaskTypeId  : { required: true },
-                StatusId    : { required: true },
-            },
-            highlight: function (element) {
-                $(element).closest('.control-group').addClass('has-error');
-            },
-            unhighlight: function (element) {
-                $(element).closest('.control-group').removeClass('has-error');
-            },
-            submitHandler: function (form) { // for demo
-                form.submit();
-                return false;
-            }
-        });
-    });
+                highlight: function (element) {
+                    $(element).closest('.control-group').addClass('has-error');
+                },
+                unhighlight: function (element) {
+                    $(element).closest('.control-group').removeClass('has-error');
+                },
+                submitHandler: function (form) { // for demo
+                    form.submit();
+                    return false;
+                }
+            });
 
-    function FillBucket             (obj)               {
-        var sel     = obj.options[obj.selectedIndex].value;
-        var selText = obj.options[obj.selectedIndex].text
-        if (sel == "") {
-            return;
+            GetCompanyByLocation    = function (param) {
+                if (param.value == "") { return; }
+
+                //call_toggle();
+
+                $("#CompanyId").empty();
+
+                var postedContent = { LocId: param.value }
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Phase/GetCompanyByLocation",
+                    data: postedContent,
+                    success: function (message) {
+
+                        if (message.data.length > 0) {
+                            $('#CompanyId').append($('<option>', { value: '0', text: 'Select Company', selected: true }));
+                            for (var i = 0; i < message.data.length; i++) {
+                                $('#CompanyId').append($('<option>', { value: message.data[i].CompanyId, text: message.data[i].CompanyName }));
+                            } // end of for loop
+                        }
+                        // end of if for length
+                    },
+                    error: function (xerr) {
+                        /* $('#txteng').val("err : " +xerr);*/
+                    }
+                });
+
+                //setTimeout(call_toggle, 500);
+
+            }
+
+            GetAreaByDivision       = function (param) {
+                if (param.value == "") { return; }
+
+                //call_toggle();
+
+                $("#AreaId").empty();
+
+                var postedContent = { DivId: param.value }
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Phase/GetAreaByDivision",
+                    data: postedContent,
+                    success: function (message) {
+
+                        if (message.data.length > 0) {
+                            $('#AreaId').append($('<option>', { value: '0', text: 'Select Area', selected: true }));
+                            for (var i = 0; i < message.data.length; i++) {
+                                $('#AreaId').append($('<option>', { value: message.data[i].AreaId, text: message.data[i].AreaName }));
+                            } // end of for loop
+                        }
+                        // end of if for length
+                    },
+                    error: function (xerr) {
+                        /* $('#txteng').val("err : " +xerr);*/
+                    }
+                });
+
+                //setTimeout(call_toggle, 500);
+
+            }
+
+            GetSubAreaByArea        = function (param) {
+                if (param.value == "") { return; }
+
+                // call_toggle();
+
+                $("#SubAreaId").empty();
+
+                var postedContent = { SelectedArea: param.value }
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Project/GetSubAreaByArea",
+                    data: postedContent,
+                    success: function (message) {
+                        if (message.data.length > 0) {
+                            $('#SubAreaId').append($('<option>', { value: '0', text: 'Select Sub Area', selected: true }));
+                            for (var i = 0; i < message.data.length; i++) {
+                                $('#SubAreaId').append($('<option>', { value: message.data[i].SubAreaId, text: message.data[i].SubAreaName }));
+                            } // end of for loop
+                        }
+                        else {
+                            $('#SubAreaId').append($('<option>', { value: '', text: 'No Sub Area', selected: true }));
+                            $('#SubAreaId').append($('<option>', { value: '0', text: 'Select to Load Project by Area'}));
+                        }
+                        // end of if for length
+                    },
+                    error: function (xerr) {
+                        /* $('#txteng').val("err : " +xerr);*/
+                    }
+                });
+
+                //setTimeout(call_toggle, 500);
+
+            }
+
+            GetProjectsBySubArea    = function (param) {
+                var AreaId = $('#AreaId').find(":selected").val();
+
+                var sarea = (param == null) ? 0 : param.value;
+                if (AreaId == "") { return; }
+
+                // call_toggle();
+                $("#ProjectId").empty();
+                var postedContent = { Area: AreaId, SubArea: sarea }
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Tasks/GetProjectsByAreaSubArea",
+                    data: postedContent,
+                    success: function (message) {
+
+                        if (message.data.length > 0) {
+                            $('#ProjectId').append($('<option>', { value: '0', text: 'Select Project', selected: true }));
+                            for (var i = 0; i < message.data.length; i++) {
+                                $('#ProjectId').append($('<option>', { value: message.data[i].ProjectId, text: message.data[i].ProjectName }));
+                            } // end of for loop
+                        }
+                        // end of if for length
+
+                        //setTimeout(call_toggle, 500);
+                    },
+                    error: function (xerr) {
+                        /* $('#txteng').val("err : " +xerr);*/
+                        //setTimeout(call_toggle, 500);
+                    }
+                });
+
+
+
+            }
+
+            GetPhaseByProject       = function (param) {
+                if (param.value == "") { return; }
+
+                // call_toggle();
+
+                var postedContent = { ProjectId: param.value }
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Bucket/GetBucketListByProject",
+                    data: postedContent,
+                    success: function (message) {
+
+                        if (message.list.length > 0) {
+                            $('#PhaseId').empty();
+                            $('#PhaseId').append($('<option>', { value: '0', text: 'Select Phase', selected: true }));
+                            for (var i = 0; i < message.list.length; i++) {
+                                $('#PhaseId').append($('<option>', { value: message.list[i].PhaseId, text: message.list[i].PhaseName }));
+                            } // end of for loop
+                        }
+
+                        // setTimeout(call_toggle, 500);
+                    },
+                    error: function (xerr) {
+                        // setTimeout(call_toggle, 500);
+                    }
+                });
+
+
+
+            }
+
+            GetSubphaseByPhase      = function (param) {
+
+                if (param.value == "") { return; }
+
+                // call_toggle();
+
+                var postedContent = { PhaseId: param.value }
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Bucket/GetBucketListByPhase",
+                    data: postedContent,
+                    success: function (message) {
+
+                        if (message.list.length > 0) {
+                            $('#SubPhaseId').empty();
+                            $('#SubPhaseId').append($('<option>', { value: '0', text: 'Select Sub Phase', selected: true }));
+                            for (var i = 0; i < message.list.length; i++) {
+                                $('#SubPhaseId').append($('<option>', { value: message.list[i].SubPhaseId, text: message.list[i].SubPhaseName }));
+                            } // end of for loop
+                        }
+
+                        //setTimeout(call_toggle, 500);
+                    },
+                    error: function (xerr) {
+                        // setTimeout(call_toggle, 500);
+                    }
+                });
+
+            }
+
+            GetBucketBySubphase     = function (param) {
+
+                if (param.value == "") { return; }
+
+                // call_toggle();
+                var postedContent = { SubPhaseId : param.value }
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Tasks/GetBucketListbySubPhase",
+                    data: postedContent,
+                    success: function (message) {
+                        // alert();
+                        if (message.data.length > 0) {
+                            $('#BucketId').empty();
+                            $('#BucketId').append($('<option>', { value: '0', text: 'Select Bucket', selected: true }));
+                            for (var i = 0; i < message.data.length; i++) {
+                                $('#BucketId').append($('<option>', { value: message.data[i].BucketId, text: message.data[i].Name }));
+                            } // end of for loop
+                        }
+
+                        //setTimeout(call_toggle, 500);
+                    },
+                    error: function (xerr) {
+                        // setTimeout(call_toggle, 500);
+                    }
+                });
+
+            }
+
+            FillBucketDetails       = function (param) {
+
+                if (param.value == "") { return; }
+
+                // call_toggle();
+                var postedContent = { BucketId: param.value }
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Tasks/GetBucketDetails",
+                    data: postedContent,
+                    success: function (message) {
+
+                        if (message.data.length > 0) {
+
+                            $('#StartDate').datepicker('destroy');
+                            $('#Deadline').datepicker('destroy');
+
+                            $('#PStartDate').empty();
+                            $("#PEndDate").empty();
+
+                            var st = message.StartDate;
+                            var ed = message.EndDate;
+
+                            $("#PStartDate").val(parseJsonDate(st));
+                            $("#PEndDate").val(parseJsonDate(ed));
+
+                            ReActivateDatePickers(st, ed);
+                        }
+
+                        //setTimeout(call_toggle, 500);
+                    },
+                    error: function (xerr) {
+                        // setTimeout(call_toggle, 500);
+                    }
+                });
+
+            }
+
+        });
+
+        // no use here 
+        function FillBucket             (obj) {
+            var sel = obj.options[obj.selectedIndex].value;
+            var selText = obj.options[obj.selectedIndex].text
+            if (sel == "") {
+                $("#lblProjectDetails").empty();
+                return;
+            }
+
+            var postedContent = { SelectedBucket: sel }
+            $.ajax({
+                type: "POST",
+                url: "/Tasks/GetBucketDetails",
+                data: postedContent,
+                success: function (message) {
+
+                    document.getElementById("Locatoin").value = message.LocationName;
+                    document.getElementById("Company").value = message.CompanyName;
+                    document.getElementById("Division").value = message.DivisionName;
+                    document.getElementById("Area").value = message.AreaName;
+                    document.getElementById("SubArea").value = message.SubAreaName;
+
+                    document.getElementById("Project").value = message.ProjectName;
+                    document.getElementById("Phase").value = message.PhaseName;
+                    document.getElementById("SubPhase").value = message.SubPhaseName;
+
+
+                    $('#StartDate').datepicker('destroy');
+                    $('#Deadline').datepicker('destroy');
+
+                    $('#PStartDate').empty();
+                    $("#PEndDate")  .empty();
+
+                    var st = message.StartDate;
+                    var ed = message.EndDate;
+
+                    $("#PStartDate").val(parseJsonDate(st));
+                    $("#PEndDate")  .val(parseJsonDate(ed));
+
+                    ReActivateDatePickers(st, ed);
+
+                },
+                error: function (xerr) {
+                    /* $('#txteng').val("err : " +xerr);*/
+                }
+            });
+
         }
 
-        var postedContent = { SelectedBucket : sel }
-        $.ajax({
-            type: "POST",
-            url: "/Tasks/GetBucketDetails",
-            data: postedContent,
-            success: function (message) {
-                
-                document.getElementById("Locatoin") .value = message.LocationName;
-                document.getElementById("Company")  .value = message.CompanyName;
-                document.getElementById("Division") .value = message.DivisionName;
-                document.getElementById("Area")     .value = message.AreaName;
-                document.getElementById("SubArea")  .value = message.SubAreaName;
+        function FillProjectDetails     (obj) {
+            var sel = obj.options[obj.selectedIndex].value;
+            if (sel == "") { return; }
 
-                document.getElementById("Project")  .value = message.ProjectName;
-                document.getElementById("Phase")    .value = message.PhaseName;
-                document.getElementById("SubPhase") .value = message.SubPhaseName;
+            var postedContent = { ProjectId: sel }
+            $.ajax({
+                type: "POST",
+                url: "/Phase/GetProjectPhases",
+                data: postedContent,
+                success: function (message) {
+                    $("#PhaseId").prop('disabled', false);
+                    $("#PhaseId").empty();
+                    $('#PhaseId').append($('<option>', { value: '', text: 'Select Phase', selected: true }));
+                    var res = message.data;
 
+                    if (res.length > 0) {
+                        for (var i = 0; i < message.data.length; i++) {
+                            $('#PhaseId').append($('<option>', { value: message.data[i].PhaseId, text: message.data[i].PhaseName }));
+                        } // end of for loop
+                    } // end of if for length
+                },
+                error: function (xerr) {
+                    /* $('#txteng').val("err : " +xerr);*/
+                }
+            });
 
-                $('#StartDate') .datepicker('destroy');
-                $('#Deadline')  .datepicker('destroy');
+        }
 
-                $('#PStartDate').empty();
-                $("#PEndDate")  .empty();
+        function ReActivateDatePickers  (StartDate, EndDate) {
+            //alert(StartDate + " < - > " + EndDate);
 
-                var st = message.StartDate;
-                var ed = message.EndDate;
+            $("#StartDate").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                minDate: new Date($('#PStartDate').val()),
+                maxDate: new Date($('#PEndDate').val()),
+                dateFormat: "dd-M-yy" /*format: 'dd-M-yyyy'*/
+            });
 
-                $("#PStartDate").val(parseJsonDate(st));
-                $("#PEndDate")  .val(parseJsonDate(ed));
-
-                ReActivateDatePickers(st, ed);
-            },
-            error: function (xerr) {
-                /* $('#txteng').val("err : " +xerr);*/
-            }
-        });
-
-    }
-
-    function ReActivateDatePickers(StartDate, EndDate) {
-
-        $("#StartDate").datepicker({
-            changeMonth: true,
-            changeYear: true,
-            minDate: new Date($('#PStartDate').val()),
-            maxDate: new Date($('#PEndDate').val()),
-            dateFormat: "dd-M-yy" /*format: 'dd-M-yyyy'*/
-        });
-
-        $("#Deadline").datepicker({
-            changeMonth: true,
-            changeYear: true,
-            minDate: new Date($('#PStartDate').val()),
-            maxDate: new Date($('#PEndDate').val()),
-            dateFormat: "dd-M-yy" /*format: 'dd-M-yyyy'*/
-        });
+            $("#Deadline").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                minDate: new Date($('#PStartDate').val()),
+                maxDate: new Date($('#PEndDate').val()),
+                dateFormat: "dd-M-yy" /*format: 'dd-M-yyyy'*/
+            });
 
 
-    }
+        }
 
-    function parseJsonDate(jsonDateString) {
-        var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        function parseJsonDate          (jsonDateString) {
+            var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-        jsonDateString = jsonDateString.replace('/Date(', '');
-        jsonDateString = jsonDateString.replace(')/', '');
-        var date = new Date(parseInt(jsonDateString));
-        var day = date.getDate();
-        var monthIndex = date.getMonth();
-        var year = date.getFullYear();
-        return day + "-" + monthNames[monthIndex] + "-" + year;
-    }
+            jsonDateString = jsonDateString.replace('/Date(', '');
+            jsonDateString = jsonDateString.replace(')/', '');
+            var date = new Date(parseInt(jsonDateString));
+            var day = date.getDate();
+            var monthIndex = date.getMonth();
+            var year = date.getFullYear();
+            return day + "-" + monthNames[monthIndex] + "-" + year;
+        }
+
 </script>
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
