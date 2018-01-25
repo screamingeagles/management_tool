@@ -279,6 +279,36 @@
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="CreatedBy" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="DB_LoginHistory">
+          <Key>
+            <PropertyRef Name="TID" />
+          </Key>
+          <Property Name="TID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="250" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="250" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="250" />
+          <Property Name="Department" Type="nvarchar" MaxLength="250" />
+          <Property Name="Company" Type="nvarchar" MaxLength="250" />
+          <Property Name="LastLoginDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="DB_SAPUserActivity">
+          <Key>
+            <PropertyRef Name="SID" />
+          </Key>
+          <Property Name="SID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Server" Type="nvarchar" MaxLength="150" />
+          <Property Name="TCode" Type="nvarchar" MaxLength="150" />
+          <Property Name="StartDate" Type="nvarchar" MaxLength="150" />
+          <Property Name="StartTime" Type="nvarchar" MaxLength="150" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="150" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="150" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="150" />
+          <Property Name="Department" Type="nvarchar" MaxLength="150" />
+          <Property Name="CompanyCode" Type="nvarchar" MaxLength="150" />
+          <Property Name="CompanyName" Type="nvarchar" MaxLength="150" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="EndUser">
           <Key>
             <PropertyRef Name="UID" />
@@ -492,6 +522,21 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_ProjectListing' does not
           <Property Name="GeneratedByName" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="GeneratedDate" Type="datetime" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'db_management_tool.dbo.vw_SAPLoginHistory' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vw_SAPLoginHistory">
+          <Key>
+            <PropertyRef Name="TID" />
+            <PropertyRef Name="UserName" />
+          </Key>
+          <Property Name="TID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="250" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="501" Nullable="false" />
+          <Property Name="Department" Type="nvarchar" MaxLength="250" />
+          <Property Name="Company" Type="nvarchar" MaxLength="250" />
+          <Property Name="LastLoginDate" Type="datetime" />
+          <Property Name="SinceUsed" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'db_management_tool.dbo.vw_SearchSource' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -1070,6 +1115,8 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
           <EntitySet Name="022_Notification_Master" EntityType="Self.022_Notification_Master" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="023_Notification_Detail" EntityType="Self.023_Notification_Detail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="024_participants" EntityType="Self.024_participants" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DB_LoginHistory" EntityType="Self.DB_LoginHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DB_SAPUserActivity" EntityType="Self.DB_SAPUserActivity" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EndUser" EntityType="Self.EndUser" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EndUser_Details" EntityType="Self.EndUser_Details" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EndUser_LoginDetails" EntityType="Self.EndUser_LoginDetails" Schema="dbo" store:Type="Tables" />
@@ -1143,6 +1190,17 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
     [vw_ProjectListing].[GeneratedDate] AS [GeneratedDate], 
     [vw_ProjectListing].[IsActive] AS [IsActive]
     FROM [dbo].[vw_ProjectListing] AS [vw_ProjectListing]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vw_SAPLoginHistory" EntityType="Self.vw_SAPLoginHistory" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_SAPLoginHistory].[TID] AS [TID], 
+    [vw_SAPLoginHistory].[UserId] AS [UserId], 
+    [vw_SAPLoginHistory].[UserName] AS [UserName], 
+    [vw_SAPLoginHistory].[Department] AS [Department], 
+    [vw_SAPLoginHistory].[Company] AS [Company], 
+    [vw_SAPLoginHistory].[LastLoginDate] AS [LastLoginDate], 
+    [vw_SAPLoginHistory].[SinceUsed] AS [SinceUsed]
+    FROM [dbo].[vw_SAPLoginHistory] AS [vw_SAPLoginHistory]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vw_SearchSource" EntityType="Self.vw_SearchSource" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -1551,6 +1609,9 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
           <EntitySet Name="vw_SubPhasebyLCDASAP" EntityType="ManagementTool.vw_SubPhasebyLCDASAP" />
           <EntitySet Name="vw_BucketbyLCDASAP" EntityType="ManagementTool.vw_BucketbyLCDASAP" />
           <EntitySet Name="vw_SearchSource" EntityType="ManagementTool.vw_SearchSource" />
+          <EntitySet Name="DB_LoginHistory" EntityType="ManagementTool.DB_LoginHistory" />
+          <EntitySet Name="DB_SAPUserActivity" EntityType="ManagementTool.DB_SAPUserActivity" />
+          <EntitySet Name="vw_SAPLoginHistory" EntityType="ManagementTool.vw_SAPLoginHistory" />
           </EntityContainer>
         <EntityType Name="C002_AREA">
           <Key>
@@ -2657,6 +2718,49 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
           <Property Name="Names" Type="String" Nullable="false" MaxLength="2530" FixedLength="false" Unicode="true" />
           <Property Name="TableCol" Type="String" Nullable="false" MaxLength="7" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="DB_LoginHistory">
+          <Key>
+            <PropertyRef Name="TID" />
+          </Key>
+          <Property Name="TID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Department" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Company" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="LastLoginDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="DB_SAPUserActivity">
+          <Key>
+            <PropertyRef Name="SID" />
+          </Key>
+          <Property Name="SID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Server" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="TCode" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="StartDate" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="StartTime" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="UserName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Department" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyCode" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="vw_SAPLoginHistory">
+          <Key>
+            <PropertyRef Name="TID" />
+            <PropertyRef Name="UserName" />
+          </Key>
+          <Property Name="TID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="501" FixedLength="false" Unicode="true" />
+          <Property Name="Department" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Company" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="LastLoginDate" Type="DateTime" Precision="3" />
+          <Property Name="SinceUsed" Type="Int32" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3263,6 +3367,51 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
                 <ScalarProperty Name="TableCol" ColumnName="TableCol" />
                 <ScalarProperty Name="Names" ColumnName="Names" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DB_LoginHistory">
+            <EntityTypeMapping TypeName="ManagementTool.DB_LoginHistory">
+              <MappingFragment StoreEntitySet="DB_LoginHistory">
+                <ScalarProperty Name="LastLoginDate" ColumnName="LastLoginDate" />
+                <ScalarProperty Name="Company" ColumnName="Company" />
+                <ScalarProperty Name="Department" ColumnName="Department" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="TID" ColumnName="TID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DB_SAPUserActivity">
+            <EntityTypeMapping TypeName="ManagementTool.DB_SAPUserActivity">
+              <MappingFragment StoreEntitySet="DB_SAPUserActivity">
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="CompanyCode" ColumnName="CompanyCode" />
+                <ScalarProperty Name="Department" ColumnName="Department" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="TCode" ColumnName="TCode" />
+                <ScalarProperty Name="Server" ColumnName="Server" />
+                <ScalarProperty Name="SID" ColumnName="SID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_SAPLoginHistory">
+            <EntityTypeMapping TypeName="ManagementTool.vw_SAPLoginHistory">
+              <MappingFragment StoreEntitySet="vw_SAPLoginHistory">
+                <ScalarProperty Name="SinceUsed" ColumnName="SinceUsed" />
+                <ScalarProperty Name="LastLoginDate" ColumnName="LastLoginDate" />
+                <ScalarProperty Name="Company" ColumnName="Company" />
+                <ScalarProperty Name="Department" ColumnName="Department" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="TID" ColumnName="TID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

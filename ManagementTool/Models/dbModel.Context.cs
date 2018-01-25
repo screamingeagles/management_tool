@@ -67,6 +67,9 @@ namespace ManagementTool.Models
         public virtual DbSet<vw_SubPhasebyLCDASAP> vw_SubPhasebyLCDASAP { get; set; }
         public virtual DbSet<vw_BucketbyLCDASAP> vw_BucketbyLCDASAP { get; set; }
         public virtual DbSet<vw_SearchSource> vw_SearchSource { get; set; }
+        public virtual DbSet<DB_LoginHistory> DB_LoginHistory { get; set; }
+        public virtual DbSet<DB_SAPUserActivity> DB_SAPUserActivity { get; set; }
+        public virtual DbSet<vw_SAPLoginHistory> vw_SAPLoginHistory { get; set; }
     
         public virtual ObjectResult<SP_BUCKET_LIST_Result> SP_BUCKET_LIST()
         {

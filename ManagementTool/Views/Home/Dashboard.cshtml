@@ -1,0 +1,167 @@
+﻿@model ManagementTool.Common.dashboardInterface
+@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    string ur = Request.Url.AbsoluteUri.ToString();
+    ur = ur.Substring(ur.LastIndexOf('/') + 1);
+
+    int aIndex = 1;
+    int hIndex = 1;
+
+    string BackgroundColor = "";
+}
+
+<div class="row"><br/><br/></div>
+<div class="row">
+
+    <div class="col-lg-6">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>How Many Activities Completed by SAP User</h5>
+                <div class="ibox-tools">
+                    <a class="collapse-link">
+                        <i class="fa fa-chevron-up"></i>
+                    </a>
+                    <!--a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-wrench"></i>
+                    </!--a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li> <a href="#">Weekly View</a> </li>
+                        <li> <a href="#">Bi-Weekly View</a> </li>
+                        <li> <a href="#">Month's View</a> </li>
+                        <li> <a href="#">All Records</a> </li>
+                    </ul-->
+                    <a class="close-link">
+                        <i class="fa fa-times"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="ibox-content">                
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+
+                                <th>#</th>
+                                <th>User Name</th>
+                                <th>Company</th>
+                                <th>Activity Completed</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var l in Model.SAPUserActivity)
+                            {
+                                <tr>
+                                    <td>@aIndex</td>
+                                    <td>@l.UserName</td>
+                                    <td>@l.CompanyName</td>
+                                    <td>@l.CreatedBy</td>
+                                    <!-- td><span class="pie">CreatedBy/4169</span></td-->  
+                                </tr>
+                                aIndex=aIndex+1;
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-6">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Custom responsive table</h5>
+                <div class="ibox-tools">
+                    <a class="collapse-link">
+                        <i class="fa fa-chevron-up"></i>
+                    </a>
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-wrench"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li> <a href="@Url.Content("~/Home/Dashboard/1")">3 Days View</a> </li>
+                        <li> <a href="@Url.Content("~/Home/Dashboard/2")">Week's View</a> </li>
+                        <li> <a href="@Url.Content("~/Home/Dashboard/3")">Month's View</a> </li>
+                        <li> <a href="@Url.Content("~/Home/Dashboard")">All Records</a> </li>
+                    </ul>
+                    <a class="close-link">
+                        <i class="fa fa-times"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="ibox-content">
+                <!--div class="row">
+                    <div class="col-sm-9 m-b-xs">
+                        <div data-toggle="buttons" class="btn-group">
+                            <label class="btn btn-sm btn-white"> <input type="radio" id="option1" name="options"> Day </label>
+                            <label class="btn btn-sm btn-white active"> <input type="radio" id="option2" name="options"> Week </label>
+                            <label class="btn btn-sm btn-white"> <input type="radio" id="option3" name="options"> Month </label>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="input-group">
+                            <input type="text" placeholder="Search" class="input-sm form-control"> <span class="input-group-btn">
+                                <button type="button" class="btn btn-sm btn-primary"> Go!</button>
+                            </span>
+                        </div>
+                    </div>
+                </div-->
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>User Name </th>
+                                <th>Company</th>
+                                <th>Department</th>
+                                <th>LoginDate</th>
+                                <th>Login Since</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var h in Model.login_history)
+                            {
+                                if (ur.Equals("Dashboard")){
+                                    if (h.LoginSince >= 30) { BackgroundColor = "red"; }
+                                    else if (h.LoginSince >= 7) { BackgroundColor = "darkseagreen"; }
+                                    else if (h.LoginSince >= 3) { BackgroundColor = "papayawhip"; }
+                                    else                        { BackgroundColor = "#e7eaec"; }
+                                }
+
+                                <tr style="color: black; background-color:@BackgroundColor ;">
+                                    <td>@hIndex      </td>
+                                    <td>@h.UserName  </td>                                    
+                                    <td>@h.Company   </td>                                    
+                                    <td>@h.Department</td>
+                                    <td>@h.LastLoginDate</td>
+                                    <td>@h.LoginSince</td>
+                                    
+                                    <!-- td><span class="pie">CreatedBy/4169</span></td-->
+                                </tr>
+                                hIndex = hIndex + 1;
+                            }
+                            
+                            <!--tr>
+                                <td>3</td>
+                                <td>Betha project</td>
+                                <td>John Smith</td>
+                                <td>0800 1111</td>
+                                <td>Erat Volutpat</td>
+                                <td><span class="pie">3,1</span></td>
+                                <td>75%</td>
+                                <td>Jul 18, 2013</td>
+                                <td><a href="#"><i class="fa fa-check text-navy"></i></a></td>
+                            </tr-->
+
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+

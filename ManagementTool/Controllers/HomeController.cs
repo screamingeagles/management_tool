@@ -25,6 +25,114 @@ namespace ManagementTool.Controllers
             return View();
         }
 
+        public ActionResult Dashboard(int? id)
+        {
+            dashboardInterface dbi = new dashboardInterface();
+            List<LoginHistory_Interface> login_history = new List<LoginHistory_Interface>();
+          //UserIdentity.UserId = 1020;
+          //UserIdentity.UserName = "Arsalan Ahmed";
+
+          // only for this we are checking the session of user.
+          int _sid = 0;
+            _sid = (HttpContext.Session["SessionId"] == null) ? 0 : Convert.ToInt32(HttpContext.Session["SessionId"].ToString());
+            if (_sid == 0) { return RedirectToAction("Index", "Home", new { x = 1 }); }
+
+
+            if (id == null)
+            {
+                #region All records
+                login_history = (from lh in db.vw_SAPLoginHistory
+                                where (lh.LastLoginDate != null)
+                                select new LoginHistory_Interface
+                                {
+                                    TID = lh.TID,
+                                    UserName = lh.UserName,
+                                    Department = lh.Department,
+                                    Company = lh.Company,
+                                    LastLoginDate = lh.LastLoginDate.Value,
+                                    LoginSince = (lh.SinceUsed.HasValue) ? lh.SinceUsed.Value : 0
+                                }).OrderByDescending(x => x.LoginSince).ToList();
+                #endregion
+            }
+            else {
+                #region Date Range has been Selected
+                
+                if (id == 1) {
+                    DateTime EndDate = DateTime.Today.AddDays(-3);
+                    login_history = (from lh in db.vw_SAPLoginHistory
+                                where (lh.LastLoginDate != null) && (lh.LastLoginDate >= EndDate)
+                                select new LoginHistory_Interface
+                                {
+                                    TID = lh.TID,
+                                    UserName = lh.UserName,
+                                    Department = lh.Department,
+                                    Company = lh.Company,
+                                    LastLoginDate = lh.LastLoginDate.Value,
+                                    LoginSince = (lh.SinceUsed.HasValue) ? lh.SinceUsed.Value : 0
+                                }).OrderByDescending(x => x.LoginSince).ToList();
+                }
+                else if (id == 2) {
+                    DateTime EndDate = DateTime.Today.AddDays(-7);
+                    login_history = (from lh in db.vw_SAPLoginHistory
+                                    where (lh.LastLoginDate != null) && (lh.LastLoginDate >= EndDate)
+                                     select new LoginHistory_Interface
+                                    {
+                                        TID = lh.TID,
+                                        UserName = lh.UserName,
+                                        Department = lh.Department,
+                                        Company = lh.Company,
+                                        LastLoginDate = lh.LastLoginDate.Value,
+                                        LoginSince = (lh.SinceUsed.HasValue) ? lh.SinceUsed.Value : 0
+                                    }).OrderByDescending(x => x.LoginSince).ToList();
+                }
+                else if (id == 3) {
+                    DateTime EndDate = DateTime.Today.AddDays(-30);
+                    login_history = (from lh in db.vw_SAPLoginHistory
+                                    where (lh.LastLoginDate != null) && (lh.LastLoginDate >= EndDate)
+                                     select new LoginHistory_Interface
+                                    {
+                                        TID = lh.TID,
+                                        UserName = lh.UserName,
+                                        Department = lh.Department,
+                                        Company = lh.Company,
+                                        LastLoginDate = lh.LastLoginDate.Value,
+                                        LoginSince = (lh.SinceUsed.HasValue) ? lh.SinceUsed.Value : 0
+                                    }).OrderByDescending(x => x.LoginSince).ToList();
+                }
+                #endregion
+            }
+
+
+            dbi.login_history = login_history;
+
+            List<SAPUserActivity_interface> sapUA = (from su in db.DB_SAPUserActivity
+                                                     group su by new { su.UserName, su.CompanyName, su.TCode}  into g
+                                                     select new SAPUserActivity_interface {
+                                                         UserName   = g.Key.UserName,
+                                                         CompanyName = g.Key.CompanyName,
+                                                         CreatedBy  = g.Count()
+                                                     }).OrderBy( x => x.CompanyName).ThenBy(x => x.CreatedBy).ToList();
+
+
+//select new SAPUserActivity_interface
+//            {
+//                SID = su.SID,
+//                FirstName = su.FirstName,
+//                LastName = su.LastName,
+//                UserName = su.UserName,
+//                Department = su.Department,
+//                CompanyName = su.CompanyName,
+//                StartDate =su.StartDate,
+//                CompanyCode = su.CompanyCode,
+//                TCode = su.TCode
+//            }).ToList();
+            dbi.SAPUserActivity = sapUA;
+
+
+            return View(dbi);
+        }
+
+
         public ActionResult Welcome()
         {
 

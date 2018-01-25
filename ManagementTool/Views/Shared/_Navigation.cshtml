@@ -57,8 +57,12 @@
                 </ul>
             </li>
 
-            <li class="active"> @*@Html.IsSelected(action: "Index")*@
+            <li class=""> @*@Html.IsSelected(action: "Index")*@
                 <a href="@Url.Action("Index", "Tasks")"><i class="fa fa-laptop"></i> <span class="nav-label">Major Tasks</span> </a>
+            </li>
+
+            <li class="">                
+                <a href="@Url.Action("Dashboard", "Home")"><i class="fa fa-dashboard"></i> <span class="nav-label">SAP Dashboard</span> </a>
             </li>
         </ul>
     </div>
