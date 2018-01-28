@@ -4,11 +4,13 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 
     string ur = Request.Url.AbsoluteUri.ToString();
-    ur = ur.Substring(ur.LastIndexOf('/') + 1);
+    ur =   ur.Substring(ur.LastIndexOf('/') + 1);
+    ur =  (ur.LastIndexOf('?') > 0) ? ur.Substring(0, ur.LastIndexOf('?')) : ur;
 
     int aIndex = 1;
     int hIndex = 1;
 
+    string Company = ViewBag.Company;
     string BackgroundColor = "";
 }
 
@@ -45,7 +47,18 @@
 
                                 <th>#</th>
                                 <th>User Name</th>
-                                <th>Company</th>
+                                <th>
+                                    @using (Html.BeginForm("Dashboard", "Home", FormMethod.Post, new { @class = "m-t", role = "form" })) {
+                                        <select onchange="this.form.submit();" name="lstAComp" id="lstAComp" class="form-control m-b">
+                                            <option value="">All Companies</option>
+                                            @foreach (SelectListItem c in Model.ActivityCompanySelector) {
+                                                <option value="@c.Value" @((c.Selected)?"Selected":"")>@c.Text</option>
+                                            }
+                                        </select>
+                                    }
+
+                                    
+                                </th>
                                 <th>Activity Completed</th>
                             </tr>
                         </thead>
@@ -72,7 +85,7 @@
     <div class="col-lg-6">
         <div class="ibox float-e-margins">
             <div class="ibox-title">
-                <h5>Custom responsive table</h5>
+                <h5>Login Time table @ur</h5>
                 <div class="ibox-tools">
                     <a class="collapse-link">
                         <i class="fa fa-chevron-up"></i>
@@ -81,10 +94,10 @@
                         <i class="fa fa-wrench"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        <li> <a href="@Url.Content("~/Home/Dashboard/1")">3 Days View</a> </li>
-                        <li> <a href="@Url.Content("~/Home/Dashboard/2")">Week's View</a> </li>
-                        <li> <a href="@Url.Content("~/Home/Dashboard/3")">Month's View</a> </li>
-                        <li> <a href="@Url.Content("~/Home/Dashboard")">All Records</a> </li>
+                        <li> <a href="@Url.Content("~/Home/Dashboard/1?lstLCSel="+Company)">3 Days View</a> </li>
+                        <li> <a href="@Url.Content("~/Home/Dashboard/2?lstLCSel="+Company)">Week's View</a> </li>
+                        <li> <a href="@Url.Content("~/Home/Dashboard/3?lstLCSel="+Company)">Month's View</a> </li>
+                        <li> <a href="@Url.Content("~/Home/Dashboard?lstLCSel="+Company)">All Records</a> </li>
                     </ul>
                     <a class="close-link">
                         <i class="fa fa-times"></i>
@@ -114,7 +127,18 @@
                             <tr>
                                 <th>#</th>
                                 <th>User Name </th>
-                                <th>Company</th>
+                                <th style="width:100px">
+                                    @using (Html.BeginForm("Dashboard", "Home", FormMethod.Post, new { role = "form" })) {
+                                        <select onchange="this.form.submit();" name="lstLCSel" id="lstLCSel" class="form-control m-b">
+                                            <option value="">All Companies</option>
+                                            @foreach (SelectListItem c in Model.LoginCompanySelector) {
+                                                <option value="@c.Value" @((c.Selected) ? "Selected" : "")>@c.Text</option>
+                                            }
+                                        </select>
+                                    }
+
+
+                                </th>
                                 <th>Department</th>
                                 <th>LoginDate</th>
                                 <th>Login Since</th>

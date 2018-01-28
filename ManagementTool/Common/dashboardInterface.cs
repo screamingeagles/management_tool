@@ -9,7 +9,8 @@ namespace ManagementTool.Common
 {
     public class dashboardInterface
     {
-        public List<SelectListItem> mSelector{ get; set; }
+        public List<SelectListItem> LoginCompanySelector{ get; set; }
+        public List<SelectListItem> ActivityCompanySelector { get; set; }
 
         public List<LoginHistory_Interface> login_history { get; set; }
 

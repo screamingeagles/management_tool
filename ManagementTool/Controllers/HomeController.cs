@@ -27,20 +27,32 @@ namespace ManagementTool.Controllers
 
         public ActionResult Dashboard(int? id)
         {
+            string Company = "";
             dashboardInterface dbi = new dashboardInterface();
             List<LoginHistory_Interface> login_history = new List<LoginHistory_Interface>();
+            List<SAPUserActivity_interface> sapUA = new List<SAPUserActivity_interface>();
           //UserIdentity.UserId = 1020;
           //UserIdentity.UserName = "Arsalan Ahmed";
 
-          // only for this we are checking the session of user.
-          int _sid = 0;
-            _sid = (HttpContext.Session["SessionId"] == null) ? 0 : Convert.ToInt32(HttpContext.Session["SessionId"].ToString());
+            // only for this we are checking the session of user.
+            int _sid = 0;
+                _sid = (HttpContext.Session["SessionId"] == null) ? 0 : Convert.ToInt32(HttpContext.Session["SessionId"].ToString());
             if (_sid == 0) { return RedirectToAction("Index", "Home", new { x = 1 }); }
+
+
+            Company = (string.IsNullOrEmpty(Request.Form["lstLCSel"])       ) ? ""      : Request.Form["lstLCSel"]          .ToString();
+            Company = (string.IsNullOrEmpty(Request.QueryString["lstLCSel"])) ? Company : Request.QueryString["lstLCSel"]   .ToString();
+            List<SelectListItem> lcs = (from lc in db.vw_SAPLoginHistory
+                                         group lc by new { lc.Company } into grouped
+                                         select new SelectListItem { Value = grouped.Key.Company, Text = grouped.Key.Company }).ToList();
+            foreach (SelectListItem item in lcs) { if (Company.Equals(item.Value)) { item.Selected = true; } }
+            dbi.LoginCompanySelector = lcs;
 
 
             if (id == null)
             {
                 #region All records
+                         
                 login_history = (from lh in db.vw_SAPLoginHistory
                                 where (lh.LastLoginDate != null)
                                 select new LoginHistory_Interface
@@ -52,6 +64,8 @@ namespace ManagementTool.Controllers
                                     LastLoginDate = lh.LastLoginDate.Value,
                                     LoginSince = (lh.SinceUsed.HasValue) ? lh.SinceUsed.Value : 0
                                 }).OrderByDescending(x => x.LoginSince).ToList();
+               
+
                 #endregion
             }
             else {
@@ -102,33 +116,55 @@ namespace ManagementTool.Controllers
                 #endregion
             }
 
+            if (string.IsNullOrEmpty(Company) == false) {             
+                login_history = (from lhsec in login_history
+                                 where (lhsec.Company.Equals(Company))
+                                 select new LoginHistory_Interface {
+                                     TID        = lhsec.TID,
+                                     UserName   = lhsec.UserName,
+                                     Department = lhsec.Department,
+                                     Company    = lhsec.Company,
+                                     LastLoginDate = lhsec.LastLoginDate,
+                                     LoginSince = lhsec.LoginSince
+                                 }).OrderByDescending(x => x.LoginSince).ToList();
 
+            }
             dbi.login_history = login_history;
 
-            List<SAPUserActivity_interface> sapUA = (from su in db.DB_SAPUserActivity
-                                                     group su by new { su.UserName, su.CompanyName, su.TCode}  into g
-                                                     select new SAPUserActivity_interface {
-                                                         UserName   = g.Key.UserName,
-                                                         CompanyName = g.Key.CompanyName,
-                                                         CreatedBy  = g.Count()
-                                                     }).OrderBy( x => x.CompanyName).ThenBy(x => x.CreatedBy).ToList();
 
+            #region Login Activity Selector and table 
+            string CompanyCode = (string.IsNullOrEmpty(Request.Form["lstAComp"])) ? "" : Request.Form["lstAComp"].ToString();    
+            List<SelectListItem> suac= (from lc in db.DB_SAPUserActivity
+                                        group lc by new { lc.CompanyCode, lc.CompanyName } into grouped
+                                        select new SelectListItem { Value= grouped.Key.CompanyCode, Text = grouped.Key.CompanyName }).ToList();
+            foreach (SelectListItem item in suac) { if (CompanyCode.Equals(item.Value)){ item.Selected = true; } }
+            dbi.ActivityCompanySelector = suac;
 
-//select new SAPUserActivity_interface
-//            {
-//                SID = su.SID,
-//                FirstName = su.FirstName,
-//                LastName = su.LastName,
-//                UserName = su.UserName,
-//                Department = su.Department,
-//                CompanyName = su.CompanyName,
-//                StartDate =su.StartDate,
-//                CompanyCode = su.CompanyCode,
-//                TCode = su.TCode
-//            }).ToList();
+            if (string.IsNullOrEmpty(CompanyCode)) {
+                sapUA = (from su in db.DB_SAPUserActivity
+                        group su by new { su.UserName, su.CompanyName, su.TCode } into g
+                        select new SAPUserActivity_interface {
+                            UserName = g.Key.UserName,
+                            CompanyName = g.Key.CompanyName,
+                            CreatedBy = g.Count()
+                        }).OrderBy(x => x.CompanyName).ThenBy(x => x.CreatedBy).ToList();
+            
+            }
+            else {
+                sapUA = (from su in db.DB_SAPUserActivity
+                        where (su.CompanyCode == CompanyCode)
+                        group su by new { su.UserName, su.CompanyName, su.TCode } into g
+                        select new SAPUserActivity_interface {
+                            UserName = g.Key.UserName,
+                            CompanyName = g.Key.CompanyName,
+                            CreatedBy = g.Count()
+                        }).OrderBy(x => x.CompanyName).ThenBy(x => x.CreatedBy).ToList();
+               
+            }
             dbi.SAPUserActivity = sapUA;
+            #endregion 
 
-
+            ViewBag.Company = Company;
             return View(dbi);
         }
 
