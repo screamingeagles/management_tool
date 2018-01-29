@@ -149,14 +149,14 @@
                             @foreach (var h in Model.login_history)
                             {
                                 if (ur.Equals("Dashboard")){
-                                    if (h.LoginSince >= 30) { BackgroundColor = "red"; }
-                                    else if (h.LoginSince >= 7) { BackgroundColor = "darkseagreen"; }
-                                    else if (h.LoginSince >= 3) { BackgroundColor = "papayawhip"; }
-                                    else                        { BackgroundColor = "#e7eaec"; }
+                                          if (h.LoginSince >= 30)   { BackgroundColor = "danger"; }
+                                    else if (h.LoginSince >= 7)     { BackgroundColor = "info"; }
+                                    else if (h.LoginSince >= 3)     { BackgroundColor = "success"; }
+                                    else                            { BackgroundColor = "default"; }
                                 }
 
-                                <tr style="color: black; background-color:@BackgroundColor ;">
-                                    <td>@hIndex      </td>
+                                <tr>
+                                    <td><span class="label label-@BackgroundColor pull-left"> &nbsp; @hIndex &nbsp; </span></td>
                                     <td>@h.UserName  </td>                                    
                                     <td>@h.Company   </td>                                    
                                     <td>@h.Department</td>
