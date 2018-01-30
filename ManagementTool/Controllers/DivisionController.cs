@@ -18,7 +18,7 @@ namespace ManagementTool.Controllers
         // GET: Division
         public ActionResult Index()
         {
-            return View(db.C001_DIVISION.Include(c => c.EndUser).ToList());
+            return View(db.C001_DIVISION.Where(d => d.IsActive == true).Include(c => c.EndUser).ToList());
         }
 
         // GET: Division/Details/5
