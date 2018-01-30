@@ -14,8 +14,7 @@ namespace ManagementTool.Common
 
         public List<LoginHistory_Interface> login_history { get; set; }
 
-        public List<SAPUserActivity_interface> SAPUserActivity { get; set; }
-        
+        public List<SAPUserActivity_interface> SAPUserActivity { get; set; }    
     }
 
 
