@@ -107,7 +107,7 @@ namespace ManagementTool.Controllers
         // GET: SubPhase
         public ActionResult Index()
         {
-            ViewBag.LocationId  = new SelectList(db.C010_LOCATION.OrderBy(l => l.LocationName), "LocationId", "LocationName");
+            ViewBag.LocationId  = new SelectList(db.C010_LOCATION.Where(l => l.IsActive == true).OrderBy(l => l.LocationName), "LocationId", "LocationName");
             ViewBag.CompanyId   = new SelectList(db.C011_COMPANY.Take(0), "CompanyId", "CompanyName");
 
             ViewBag.DivisionId  = new SelectList(db.C001_DIVISION.Where(d => d.IsActive == true).OrderBy(d => d.DivisionName), "DivisionId", "DivisionName");
