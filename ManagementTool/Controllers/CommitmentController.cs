@@ -40,7 +40,7 @@ namespace ManagementTool.Controllers
         }
 
         [HttpPost]
-        public JsonResult AddNew        (int CommitmentID, string TCommit, string TDesc, string TRemarks, int ProjectId)    
+        public JsonResult AddNew        (int CommitmentID, string TCommit, string TDesc, string TRemarks)    
         {
             if (CommitmentID > 0) {
                 C021_CommimentDetails cm= new C021_CommimentDetails();
@@ -48,7 +48,7 @@ namespace ManagementTool.Controllers
                 cm.CommimentName        = TCommit;
                 cm.CDescription         = TDesc;
                 cm.CRemarks             = TRemarks;
-                cm.ProjectId            = ProjectId;
+                cm.ProjectId            = 0;
                 cm.IsActive             = true;
                 cm.GeneratedBy          = UserIdentity.UserId;
                 cm.GeneratedDate        = DateTime.Now.AddHours(4);

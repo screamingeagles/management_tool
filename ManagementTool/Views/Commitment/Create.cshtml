@@ -192,11 +192,6 @@
                                     @Html.TextArea("txtRemarks", new { @class = "form-control m-b", rows = "3" })
                                 </div>
 
-                                <label class="col-lg-3 control-label">Select Project Link</label>
-                                <div class="col-lg-9">
-                                    @Html.DropDownList("ProjectId", null, "Link to Project", htmlAttributes: new { @class = "form-control m-b" })
-                                </div>
-
                             </div>
                         </div>
 
@@ -269,14 +264,12 @@
         var txtcommit = $('#txtCommitment')         .val();
         var txtdesc   = $('#txtDescription')        .val();
         var txtremrks = $('#txtRemarks')            .val();
-        var projId    = $('#ProjectId :selected')   .val();
 
         var postedContent = {
             CommitmentID: commitId,
             TCommit     : txtcommit,
             TDesc       : txtdesc,
-            TRemarks    : txtremrks,
-            ProjectId   : projId
+            TRemarks    : txtremrks
         }
 
         $.ajax({
@@ -380,8 +373,7 @@
                     maxlength: 250,
                     required: true
                 },
-                CommitmentId: { required: true },
-                ProjectId: { required: true },
+                CommitmentId: { required: true }
             },
             highlight: function (element) {
                 $(element).closest('.control-group').addClass('has-error');
