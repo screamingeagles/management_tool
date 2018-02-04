@@ -48,7 +48,7 @@ namespace ManagementTool.Controllers
                 cm.CommimentName        = TCommit;
                 cm.CDescription         = TDesc;
                 cm.CRemarks             = TRemarks;
-                cm.ProjectId            = 0;
+                cm.ProjectId            = 0; // nothing new
                 cm.IsActive             = true;
                 cm.GeneratedBy          = UserIdentity.UserId;
                 cm.GeneratedDate        = DateTime.Now.AddHours(4);
