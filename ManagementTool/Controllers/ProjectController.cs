@@ -80,7 +80,7 @@ namespace ManagementTool.Controllers
                          select new {
                              CompanyId = c.CompanyId,
                              CompanyName = c.CompanyName, 
-                             ProjectId = (pi.ProjectId == null) ? 0 : pi.ProjectId                             /*, Projects       = x.ProjectId*/
+                             ProjectId =  pi.ProjectId                             /*, Projects       = x.ProjectId*/
                          });
 
 
