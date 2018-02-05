@@ -50,7 +50,6 @@ namespace ManagementTool.Models
         public virtual DbSet<DB_SAPUserActivity> DB_SAPUserActivity { get; set; }
         public virtual DbSet<EndUser> EndUsers { get; set; }
         public virtual DbSet<EndUser_Details> EndUser_Details { get; set; }
-        public virtual DbSet<EndUser_LoginDetails> EndUser_LoginDetails { get; set; }
         public virtual DbSet<Mailer_Details> Mailer_Details { get; set; }
         public virtual DbSet<matched> matcheds { get; set; }
         public virtual DbSet<ROLE_DETAIL> ROLE_DETAIL { get; set; }
@@ -58,17 +57,12 @@ namespace ManagementTool.Models
         public virtual DbSet<Smart_Login> Smart_Login { get; set; }
         public virtual DbSet<STATS_TABLE> STATS_TABLE { get; set; }
         public virtual DbSet<STATUS> STATUS { get; set; }
-        public virtual DbSet<LOGIN_DETAIL> LOGIN_DETAIL { get; set; }
-        public virtual DbSet<vw_BucketbyLCDASAP> vw_BucketbyLCDASAP { get; set; }
-        public virtual DbSet<vw_PhasebyLCDASAP> vw_PhasebyLCDASAP { get; set; }
-        public virtual DbSet<vw_ProjectListing> vw_ProjectListing { get; set; }
         public virtual DbSet<vw_SAPLoginHistory> vw_SAPLoginHistory { get; set; }
         public virtual DbSet<vw_SearchSource> vw_SearchSource { get; set; }
         public virtual DbSet<vw_SessionUser> vw_SessionUser { get; set; }
-        public virtual DbSet<vw_SubAreaListByDivision> vw_SubAreaListByDivision { get; set; }
-        public virtual DbSet<vw_SubPhasebyLCDASAP> vw_SubPhasebyLCDASAP { get; set; }
         public virtual DbSet<vw_Task_Details> vw_Task_Details { get; set; }
         public virtual DbSet<vw_ProjectsCountByArea> vw_ProjectsCountByArea { get; set; }
+        public virtual DbSet<EndUser_LoginDetails> EndUser_LoginDetails { get; set; }
     
         public virtual ObjectResult<SP_BUCKET_LIST_Result> SP_BUCKET_LIST()
         {

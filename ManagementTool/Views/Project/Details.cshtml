@@ -1,0 +1,107 @@
+﻿@model ManagementTool.Models.C003_PROJECT
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>C003_PROJECT</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ProjectName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProjectName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StartDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EndDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EndDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GeneratedDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GeneratedDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsActive)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.C001_DIVISION.DivisionName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.C001_DIVISION.DivisionName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.C002_AREA.AreaName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.C002_AREA.AreaName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EndUser.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EndUser.UserName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.C011_COMPANY.CompanyName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.C011_COMPANY.CompanyName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.C010_LOCATION.LocationName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.C010_LOCATION.LocationName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.C013_PROJECT_TYPE.ProjectType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.C013_PROJECT_TYPE.ProjectType)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ProjectId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

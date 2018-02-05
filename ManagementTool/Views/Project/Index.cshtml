@@ -1,0 +1,94 @@
+﻿@model IEnumerable<ManagementTool.Models.C003_PROJECT>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ProjectName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EndDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GeneratedDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.C001_DIVISION.DivisionName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.C002_AREA.AreaName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EndUser.UserName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.C011_COMPANY.CompanyName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.C010_LOCATION.LocationName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.C013_PROJECT_TYPE.ProjectType)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProjectName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StartDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EndDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GeneratedDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsActive)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.C001_DIVISION.DivisionName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.C002_AREA.AreaName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EndUser.UserName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.C011_COMPANY.CompanyName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.C010_LOCATION.LocationName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.C013_PROJECT_TYPE.ProjectType)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ProjectId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ProjectId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ProjectId })
+        </td>
+    </tr>
+}
+
+</table>

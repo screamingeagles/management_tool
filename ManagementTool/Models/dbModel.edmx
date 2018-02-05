@@ -309,22 +309,6 @@
           <Property Name="UserIp" Type="nvarchar" MaxLength="20" />
           <Property Name="LoginLocation" Type="nvarchar" MaxLength="250" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'db_management_tool.dbo.LOGIN_DETAIL' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="LOGIN_DETAIL">
-          <Key>
-            <PropertyRef Name="LID" />
-            <PropertyRef Name="UserId" />
-          </Key>
-          <Property Name="LID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="UserId" Type="int" Nullable="false" />
-          <Property Name="SessionId" Type="nvarchar" MaxLength="250" />
-          <Property Name="LoginDate" Type="datetime" />
-          <Property Name="LogOut" Type="datetime" />
-          <Property Name="SessionDuration" Type="numeric" Precision="18" Scale="0" />
-          <Property Name="UserIp" Type="nvarchar" MaxLength="20" />
-          <Property Name="LoginLocation" Type="nvarchar" MaxLength="250" />
-        </EntityType>
         <EntityType Name="Mailer_Details">
           <Key>
             <PropertyRef Name="TicketId" />
@@ -407,101 +391,12 @@ warning 6002: The table/view 'db_management_tool.dbo.LOGIN_DETAIL' does not have
           <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'db_management_tool.dbo.vw_BucketbyLCDASAP' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="vw_BucketbyLCDASAP">
-          <Key>
-            <PropertyRef Name="BucketId" />
-            <PropertyRef Name="BucketName" />
-            <PropertyRef Name="GeneratedBy" />
-            <PropertyRef Name="GeneratedUserName" />
-            <PropertyRef Name="GenerationDate" />
-            <PropertyRef Name="SubPhaseId" />
-            <PropertyRef Name="SubAreaId" />
-          </Key>
-          <Property Name="BucketId" Type="int" Nullable="false" />
-          <Property Name="BucketName" Type="nvarchar" MaxLength="250" Nullable="false" />
-          <Property Name="GeneratedBy" Type="int" Nullable="false" />
-          <Property Name="GeneratedUserName" Type="nvarchar" MaxLength="250" Nullable="false" />
-          <Property Name="GenerationDate" Type="datetime" Nullable="false" />
-          <Property Name="SubPhaseId" Type="int" Nullable="false" />
-          <Property Name="PhaseId" Type="int" />
-          <Property Name="ProjectId" Type="int" />
-          <Property Name="LocationId" Type="int" />
-          <Property Name="CompanyId" Type="int" />
-          <Property Name="DivisionId" Type="int" />
-          <Property Name="AreaId" Type="int" />
-          <Property Name="SubAreaId" Type="int" Nullable="false" />
-        </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'db_management_tool.dbo.vw_PhasebyLCDASAP' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="vw_PhasebyLCDASAP">
-          <Key>
-            <PropertyRef Name="PhaseId" />
-            <PropertyRef Name="PhaseName" />
-            <PropertyRef Name="SubAreaId" />
-          </Key>
-          <Property Name="PhaseId" Type="int" Nullable="false" />
-          <Property Name="PhaseName" Type="nvarchar" MaxLength="550" Nullable="false" />
-          <Property Name="LocationId" Type="int" />
-          <Property Name="CompanyId" Type="int" />
-          <Property Name="DivisionId" Type="int" />
-          <Property Name="AreaId" Type="int" />
-          <Property Name="SubAreaId" Type="int" Nullable="false" />
-          <Property Name="ProjectId" Type="int" />
-        </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'db_management_tool.dbo.vw_ProjectListing' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="vw_ProjectListing">
-          <Key>
-            <PropertyRef Name="ProjectId" />
-            <PropertyRef Name="LocationId" />
-            <PropertyRef Name="LocationName" />
-            <PropertyRef Name="CompanyId" />
-            <PropertyRef Name="CompanyName" />
-            <PropertyRef Name="DivisionId" />
-            <PropertyRef Name="DivisionName" />
-            <PropertyRef Name="AreaId" />
-            <PropertyRef Name="AreaName" />
-            <PropertyRef Name="SubAreaId" />
-            <PropertyRef Name="SubAreaName" />
-            <PropertyRef Name="ProjectName" />
-            <PropertyRef Name="ProjectType" />
-            <PropertyRef Name="ProjectTypeName" />
-            <PropertyRef Name="StartDate" />
-            <PropertyRef Name="EndDate" />
-            <PropertyRef Name="GeneratedBy" />
-            <PropertyRef Name="GeneratedByName" />
-            <PropertyRef Name="GeneratedDate" />
-            <PropertyRef Name="IsActive" />
-          </Key>
-          <Property Name="ProjectId" Type="int" Nullable="false" />
-          <Property Name="LocationId" Type="int" Nullable="false" />
-          <Property Name="LocationName" Type="nvarchar" MaxLength="250" Nullable="false" />
-          <Property Name="CompanyId" Type="int" Nullable="false" />
-          <Property Name="CompanyName" Type="nvarchar" MaxLength="250" Nullable="false" />
-          <Property Name="DivisionId" Type="int" Nullable="false" />
-          <Property Name="DivisionName" Type="nvarchar" MaxLength="250" Nullable="false" />
-          <Property Name="AreaId" Type="int" Nullable="false" />
-          <Property Name="AreaName" Type="nvarchar" MaxLength="250" Nullable="false" />
-          <Property Name="SubAreaId" Type="int" Nullable="false" />
-          <Property Name="SubAreaName" Type="nvarchar" MaxLength="250" Nullable="false" />
-          <Property Name="ProjectName" Type="nvarchar" MaxLength="250" Nullable="false" />
-          <Property Name="ProjectType" Type="int" Nullable="false" />
-          <Property Name="ProjectTypeName" Type="nvarchar" MaxLength="250" Nullable="false" />
-          <Property Name="StartDate" Type="datetime" Nullable="false" />
-          <Property Name="EndDate" Type="datetime" Nullable="false" />
-          <Property Name="GeneratedBy" Type="int" Nullable="false" />
-          <Property Name="GeneratedByName" Type="nvarchar" MaxLength="250" Nullable="false" />
-          <Property Name="GeneratedDate" Type="datetime" Nullable="false" />
-          <Property Name="IsActive" Type="bit" Nullable="false" />
-        </EntityType>
-        <!--Errors Found During Generation:
 warning 6002: The table/view 'db_management_tool.dbo.vw_ProjectsCountByArea' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vw_ProjectsCountByArea">
           <Key>
-            <PropertyRef Name="AreaId" />
             <PropertyRef Name="DivisionId" />
             <PropertyRef Name="AreaName" />
+            <PropertyRef Name="AreaId" />
           </Key>
           <Property Name="AreaId" Type="int" Nullable="false" />
           <Property Name="DivisionId" Type="int" Nullable="false" />
@@ -558,43 +453,6 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_SessionUser' does not ha
           <Property Name="LastLogin" Type="datetime" />
           <Property Name="UserCreated" Type="datetime" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
-        </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'db_management_tool.dbo.vw_SubAreaListByDivision' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="vw_SubAreaListByDivision">
-          <Key>
-            <PropertyRef Name="DivisionId" />
-            <PropertyRef Name="AreaId" />
-          </Key>
-          <Property Name="DivisionId" Type="int" Nullable="false" />
-          <Property Name="AreaId" Type="int" Nullable="false" />
-          <Property Name="AreaName" Type="nvarchar" MaxLength="256" />
-        </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'db_management_tool.dbo.vw_SubPhasebyLCDASAP' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="vw_SubPhasebyLCDASAP">
-          <Key>
-            <PropertyRef Name="SubPhaseId" />
-            <PropertyRef Name="SubPhaseName" />
-            <PropertyRef Name="StartDate" />
-            <PropertyRef Name="EndDate" />
-            <PropertyRef Name="GeneratedBy" />
-            <PropertyRef Name="GeneratedDate" />
-            <PropertyRef Name="SubAreaId" />
-          </Key>
-          <Property Name="SubPhaseId" Type="int" Nullable="false" />
-          <Property Name="SubPhaseName" Type="nvarchar" MaxLength="550" Nullable="false" />
-          <Property Name="StartDate" Type="datetime" Nullable="false" />
-          <Property Name="EndDate" Type="datetime" Nullable="false" />
-          <Property Name="GeneratedBy" Type="int" Nullable="false" />
-          <Property Name="GeneratedDate" Type="datetime" Nullable="false" />
-          <Property Name="LocationId" Type="int" />
-          <Property Name="CompanyId" Type="int" />
-          <Property Name="DivisionId" Type="int" />
-          <Property Name="AreaId" Type="int" />
-          <Property Name="SubAreaId" Type="int" Nullable="false" />
-          <Property Name="ProjectId" Type="int" />
-          <Property Name="PhaseId" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -1013,71 +871,6 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
           <EntitySet Name="Smart_Login" EntityType="Self.Smart_Login" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="STATS_TABLE" EntityType="Self.STATS_TABLE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="STATUS" EntityType="Self.STATUS" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="LOGIN_DETAIL" EntityType="Self.LOGIN_DETAIL" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [LOGIN_DETAIL].[LID] AS [LID], 
-    [LOGIN_DETAIL].[UserId] AS [UserId], 
-    [LOGIN_DETAIL].[SessionId] AS [SessionId], 
-    [LOGIN_DETAIL].[LoginDate] AS [LoginDate], 
-    [LOGIN_DETAIL].[LogOut] AS [LogOut], 
-    [LOGIN_DETAIL].[SessionDuration] AS [SessionDuration], 
-    [LOGIN_DETAIL].[UserIp] AS [UserIp], 
-    [LOGIN_DETAIL].[LoginLocation] AS [LoginLocation]
-    FROM [dbo].[LOGIN_DETAIL] AS [LOGIN_DETAIL]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="vw_BucketbyLCDASAP" EntityType="Self.vw_BucketbyLCDASAP" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [vw_BucketbyLCDASAP].[BucketId] AS [BucketId], 
-    [vw_BucketbyLCDASAP].[BucketName] AS [BucketName], 
-    [vw_BucketbyLCDASAP].[GeneratedBy] AS [GeneratedBy], 
-    [vw_BucketbyLCDASAP].[GeneratedUserName] AS [GeneratedUserName], 
-    [vw_BucketbyLCDASAP].[GenerationDate] AS [GenerationDate], 
-    [vw_BucketbyLCDASAP].[SubPhaseId] AS [SubPhaseId], 
-    [vw_BucketbyLCDASAP].[PhaseId] AS [PhaseId], 
-    [vw_BucketbyLCDASAP].[ProjectId] AS [ProjectId], 
-    [vw_BucketbyLCDASAP].[LocationId] AS [LocationId], 
-    [vw_BucketbyLCDASAP].[CompanyId] AS [CompanyId], 
-    [vw_BucketbyLCDASAP].[DivisionId] AS [DivisionId], 
-    [vw_BucketbyLCDASAP].[AreaId] AS [AreaId], 
-    [vw_BucketbyLCDASAP].[SubAreaId] AS [SubAreaId]
-    FROM [dbo].[vw_BucketbyLCDASAP] AS [vw_BucketbyLCDASAP]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="vw_PhasebyLCDASAP" EntityType="Self.vw_PhasebyLCDASAP" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [vw_PhasebyLCDASAP].[PhaseId] AS [PhaseId], 
-    [vw_PhasebyLCDASAP].[PhaseName] AS [PhaseName], 
-    [vw_PhasebyLCDASAP].[LocationId] AS [LocationId], 
-    [vw_PhasebyLCDASAP].[CompanyId] AS [CompanyId], 
-    [vw_PhasebyLCDASAP].[DivisionId] AS [DivisionId], 
-    [vw_PhasebyLCDASAP].[AreaId] AS [AreaId], 
-    [vw_PhasebyLCDASAP].[SubAreaId] AS [SubAreaId], 
-    [vw_PhasebyLCDASAP].[ProjectId] AS [ProjectId]
-    FROM [dbo].[vw_PhasebyLCDASAP] AS [vw_PhasebyLCDASAP]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="vw_ProjectListing" EntityType="Self.vw_ProjectListing" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [vw_ProjectListing].[ProjectId] AS [ProjectId], 
-    [vw_ProjectListing].[LocationId] AS [LocationId], 
-    [vw_ProjectListing].[LocationName] AS [LocationName], 
-    [vw_ProjectListing].[CompanyId] AS [CompanyId], 
-    [vw_ProjectListing].[CompanyName] AS [CompanyName], 
-    [vw_ProjectListing].[DivisionId] AS [DivisionId], 
-    [vw_ProjectListing].[DivisionName] AS [DivisionName], 
-    [vw_ProjectListing].[AreaId] AS [AreaId], 
-    [vw_ProjectListing].[AreaName] AS [AreaName], 
-    [vw_ProjectListing].[SubAreaId] AS [SubAreaId], 
-    [vw_ProjectListing].[SubAreaName] AS [SubAreaName], 
-    [vw_ProjectListing].[ProjectName] AS [ProjectName], 
-    [vw_ProjectListing].[ProjectType] AS [ProjectType], 
-    [vw_ProjectListing].[ProjectTypeName] AS [ProjectTypeName], 
-    [vw_ProjectListing].[StartDate] AS [StartDate], 
-    [vw_ProjectListing].[EndDate] AS [EndDate], 
-    [vw_ProjectListing].[GeneratedBy] AS [GeneratedBy], 
-    [vw_ProjectListing].[GeneratedByName] AS [GeneratedByName], 
-    [vw_ProjectListing].[GeneratedDate] AS [GeneratedDate], 
-    [vw_ProjectListing].[IsActive] AS [IsActive]
-    FROM [dbo].[vw_ProjectListing] AS [vw_ProjectListing]</DefiningQuery>
-          </EntitySet>
           <EntitySet Name="vw_ProjectsCountByArea" EntityType="Self.vw_ProjectsCountByArea" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vw_ProjectsCountByArea].[AreaId] AS [AreaId], 
@@ -1120,30 +913,6 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
     [vw_SessionUser].[UserCreated] AS [UserCreated], 
     [vw_SessionUser].[IsActive] AS [IsActive]
     FROM [dbo].[vw_SessionUser] AS [vw_SessionUser]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="vw_SubAreaListByDivision" EntityType="Self.vw_SubAreaListByDivision" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [vw_SubAreaListByDivision].[DivisionId] AS [DivisionId], 
-    [vw_SubAreaListByDivision].[AreaId] AS [AreaId], 
-    [vw_SubAreaListByDivision].[AreaName] AS [AreaName]
-    FROM [dbo].[vw_SubAreaListByDivision] AS [vw_SubAreaListByDivision]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="vw_SubPhasebyLCDASAP" EntityType="Self.vw_SubPhasebyLCDASAP" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [vw_SubPhasebyLCDASAP].[SubPhaseId] AS [SubPhaseId], 
-    [vw_SubPhasebyLCDASAP].[SubPhaseName] AS [SubPhaseName], 
-    [vw_SubPhasebyLCDASAP].[StartDate] AS [StartDate], 
-    [vw_SubPhasebyLCDASAP].[EndDate] AS [EndDate], 
-    [vw_SubPhasebyLCDASAP].[GeneratedBy] AS [GeneratedBy], 
-    [vw_SubPhasebyLCDASAP].[GeneratedDate] AS [GeneratedDate], 
-    [vw_SubPhasebyLCDASAP].[LocationId] AS [LocationId], 
-    [vw_SubPhasebyLCDASAP].[CompanyId] AS [CompanyId], 
-    [vw_SubPhasebyLCDASAP].[DivisionId] AS [DivisionId], 
-    [vw_SubPhasebyLCDASAP].[AreaId] AS [AreaId], 
-    [vw_SubPhasebyLCDASAP].[SubAreaId] AS [SubAreaId], 
-    [vw_SubPhasebyLCDASAP].[ProjectId] AS [ProjectId], 
-    [vw_SubPhasebyLCDASAP].[PhaseId] AS [PhaseId]
-    FROM [dbo].[vw_SubPhasebyLCDASAP] AS [vw_SubPhasebyLCDASAP]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vw_Task_Details" EntityType="Self.vw_Task_Details" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -1319,7 +1088,6 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
           <EntitySet Name="DB_SAPUserActivity" EntityType="ManagementTool.DB_SAPUserActivity" />
           <EntitySet Name="EndUsers" EntityType="ManagementTool.EndUser" />
           <EntitySet Name="EndUser_Details" EntityType="ManagementTool.EndUser_Details" />
-          <EntitySet Name="EndUser_LoginDetails" EntityType="ManagementTool.EndUser_LoginDetails" />
           <EntitySet Name="Mailer_Details" EntityType="ManagementTool.Mailer_Details" />
           <EntitySet Name="matcheds" EntityType="ManagementTool.matched" />
           <EntitySet Name="ROLE_DETAIL" EntityType="ManagementTool.ROLE_DETAIL" />
@@ -1327,15 +1095,9 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
           <EntitySet Name="Smart_Login" EntityType="ManagementTool.Smart_Login" />
           <EntitySet Name="STATS_TABLE" EntityType="ManagementTool.STATS_TABLE" />
           <EntitySet Name="STATUS" EntityType="ManagementTool.STATUS" />
-          <EntitySet Name="LOGIN_DETAIL" EntityType="ManagementTool.LOGIN_DETAIL" />
-          <EntitySet Name="vw_BucketbyLCDASAP" EntityType="ManagementTool.vw_BucketbyLCDASAP" />
-          <EntitySet Name="vw_PhasebyLCDASAP" EntityType="ManagementTool.vw_PhasebyLCDASAP" />
-          <EntitySet Name="vw_ProjectListing" EntityType="ManagementTool.vw_ProjectListing" />
           <EntitySet Name="vw_SAPLoginHistory" EntityType="ManagementTool.vw_SAPLoginHistory" />
           <EntitySet Name="vw_SearchSource" EntityType="ManagementTool.vw_SearchSource" />
           <EntitySet Name="vw_SessionUser" EntityType="ManagementTool.vw_SessionUser" />
-          <EntitySet Name="vw_SubAreaListByDivision" EntityType="ManagementTool.vw_SubAreaListByDivision" />
-          <EntitySet Name="vw_SubPhasebyLCDASAP" EntityType="ManagementTool.vw_SubPhasebyLCDASAP" />
           <EntitySet Name="vw_Task_Details" EntityType="ManagementTool.vw_Task_Details" />
           <AssociationSet Name="FK__AREA__DIVISION" Association="ManagementTool.FK__AREA__DIVISION">
             <End Role="C001_DIVISION" EntitySet="C001_DIVISION" />
@@ -1442,6 +1204,7 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
             <End Role="ROLE_DETAIL" EntitySet="ROLE_DETAIL" />
           </AssociationSet>
           <EntitySet Name="vw_ProjectsCountByArea" EntityType="ManagementTool.vw_ProjectsCountByArea" />
+          <EntitySet Name="EndUser_LoginDetails" EntityType="ManagementTool.EndUser_LoginDetails" />
           </EntityContainer>
         <ComplexType Name="SP_BUCKET_LIST_Result">
           <Property Type="Int32" Name="BucketId" Nullable="false" />
@@ -1798,19 +1561,6 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
           <Property Name="UserName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="UserEmail" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="EndUser_LoginDetails">
-          <Key>
-            <PropertyRef Name="LID" />
-          </Key>
-          <Property Name="LID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserId" Type="Int32" Nullable="false" />
-          <Property Name="SessionId" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="LoginDate" Type="DateTime" Precision="3" />
-          <Property Name="LogOut" Type="DateTime" Precision="3" />
-          <Property Name="SessionDuration" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="UserIp" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="LoginLocation" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-        </EntityType>
         <EntityType Name="Mailer_Details">
           <Key>
             <PropertyRef Name="TicketId" />
@@ -1894,103 +1644,6 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
         </EntityType>
-        <EntityType Name="LOGIN_DETAIL">
-          <Key>
-            <PropertyRef Name="LID" />
-            <PropertyRef Name="UserId" />
-          </Key>
-          <Property Name="LID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserId" Type="Int32" Nullable="false" />
-          <Property Name="SessionId" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="LoginDate" Type="DateTime" Precision="3" />
-          <Property Name="LogOut" Type="DateTime" Precision="3" />
-          <Property Name="SessionDuration" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="UserIp" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="LoginLocation" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="vw_BucketbyLCDASAP">
-          <Key>
-            <PropertyRef Name="BucketId" />
-            <PropertyRef Name="BucketName" />
-            <PropertyRef Name="GeneratedBy" />
-            <PropertyRef Name="GeneratedUserName" />
-            <PropertyRef Name="GenerationDate" />
-            <PropertyRef Name="SubPhaseId" />
-            <PropertyRef Name="SubAreaId" />
-          </Key>
-          <Property Name="BucketId" Type="Int32" Nullable="false" />
-          <Property Name="BucketName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="GeneratedBy" Type="Int32" Nullable="false" />
-          <Property Name="GeneratedUserName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="GenerationDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="SubPhaseId" Type="Int32" Nullable="false" />
-          <Property Name="PhaseId" Type="Int32" />
-          <Property Name="ProjectId" Type="Int32" />
-          <Property Name="LocationId" Type="Int32" />
-          <Property Name="CompanyId" Type="Int32" />
-          <Property Name="DivisionId" Type="Int32" />
-          <Property Name="AreaId" Type="Int32" />
-          <Property Name="SubAreaId" Type="Int32" Nullable="false" />
-        </EntityType>
-        <EntityType Name="vw_PhasebyLCDASAP">
-          <Key>
-            <PropertyRef Name="PhaseId" />
-            <PropertyRef Name="PhaseName" />
-            <PropertyRef Name="SubAreaId" />
-          </Key>
-          <Property Name="PhaseId" Type="Int32" Nullable="false" />
-          <Property Name="PhaseName" Type="String" Nullable="false" MaxLength="550" FixedLength="false" Unicode="true" />
-          <Property Name="LocationId" Type="Int32" />
-          <Property Name="CompanyId" Type="Int32" />
-          <Property Name="DivisionId" Type="Int32" />
-          <Property Name="AreaId" Type="Int32" />
-          <Property Name="SubAreaId" Type="Int32" Nullable="false" />
-          <Property Name="ProjectId" Type="Int32" />
-        </EntityType>
-        <EntityType Name="vw_ProjectListing">
-          <Key>
-            <PropertyRef Name="ProjectId" />
-            <PropertyRef Name="LocationId" />
-            <PropertyRef Name="LocationName" />
-            <PropertyRef Name="CompanyId" />
-            <PropertyRef Name="CompanyName" />
-            <PropertyRef Name="DivisionId" />
-            <PropertyRef Name="DivisionName" />
-            <PropertyRef Name="AreaId" />
-            <PropertyRef Name="AreaName" />
-            <PropertyRef Name="SubAreaId" />
-            <PropertyRef Name="SubAreaName" />
-            <PropertyRef Name="ProjectName" />
-            <PropertyRef Name="ProjectType" />
-            <PropertyRef Name="ProjectTypeName" />
-            <PropertyRef Name="StartDate" />
-            <PropertyRef Name="EndDate" />
-            <PropertyRef Name="GeneratedBy" />
-            <PropertyRef Name="GeneratedByName" />
-            <PropertyRef Name="GeneratedDate" />
-            <PropertyRef Name="IsActive" />
-          </Key>
-          <Property Name="ProjectId" Type="Int32" Nullable="false" />
-          <Property Name="LocationId" Type="Int32" Nullable="false" />
-          <Property Name="LocationName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="CompanyId" Type="Int32" Nullable="false" />
-          <Property Name="CompanyName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="DivisionId" Type="Int32" Nullable="false" />
-          <Property Name="DivisionName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="AreaId" Type="Int32" Nullable="false" />
-          <Property Name="AreaName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="SubAreaId" Type="Int32" Nullable="false" />
-          <Property Name="SubAreaName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="ProjectName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="ProjectType" Type="Int32" Nullable="false" />
-          <Property Name="ProjectTypeName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="GeneratedBy" Type="Int32" Nullable="false" />
-          <Property Name="GeneratedByName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="GeneratedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-        </EntityType>
         <EntityType Name="vw_SAPLoginHistory">
           <Key>
             <PropertyRef Name="TID" />
@@ -2035,39 +1688,6 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
           <Property Name="LastLogin" Type="DateTime" Precision="3" />
           <Property Name="UserCreated" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
-        </EntityType>
-        <EntityType Name="vw_SubAreaListByDivision">
-          <Key>
-            <PropertyRef Name="DivisionId" />
-            <PropertyRef Name="AreaId" />
-          </Key>
-          <Property Name="DivisionId" Type="Int32" Nullable="false" />
-          <Property Name="AreaId" Type="Int32" Nullable="false" />
-          <Property Name="AreaName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="vw_SubPhasebyLCDASAP">
-          <Key>
-            <PropertyRef Name="SubPhaseId" />
-            <PropertyRef Name="SubPhaseName" />
-            <PropertyRef Name="StartDate" />
-            <PropertyRef Name="EndDate" />
-            <PropertyRef Name="GeneratedBy" />
-            <PropertyRef Name="GeneratedDate" />
-            <PropertyRef Name="SubAreaId" />
-          </Key>
-          <Property Name="SubPhaseId" Type="Int32" Nullable="false" />
-          <Property Name="SubPhaseName" Type="String" Nullable="false" MaxLength="550" FixedLength="false" Unicode="true" />
-          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="GeneratedBy" Type="Int32" Nullable="false" />
-          <Property Name="GeneratedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="LocationId" Type="Int32" />
-          <Property Name="CompanyId" Type="Int32" />
-          <Property Name="DivisionId" Type="Int32" />
-          <Property Name="AreaId" Type="Int32" />
-          <Property Name="SubAreaId" Type="Int32" Nullable="false" />
-          <Property Name="ProjectId" Type="Int32" />
-          <Property Name="PhaseId" Type="Int32" />
         </EntityType>
         <EntityType Name="vw_Task_Details">
           <Key>
@@ -2453,14 +2073,27 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
         </Association>
         <EntityType Name="vw_ProjectsCountByArea">
           <Key>
-            <PropertyRef Name="AreaId" />
             <PropertyRef Name="DivisionId" />
             <PropertyRef Name="AreaName" />
+            <PropertyRef Name="AreaId" />
           </Key>
           <Property Name="AreaId" Type="Int32" Nullable="false" />
           <Property Name="DivisionId" Type="Int32" Nullable="false" />
           <Property Name="AreaName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="ProjectCounts" Type="Int32" />
+        </EntityType>
+        <EntityType Name="EndUser_LoginDetails">
+          <Key>
+            <PropertyRef Name="LID" />
+          </Key>
+          <Property Name="LID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="SessionId" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="LoginDate" Type="DateTime" Precision="3" />
+          <Property Name="LogOut" Type="DateTime" Precision="3" />
+          <Property Name="SessionDuration" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="UserIp" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="LoginLocation" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -2800,20 +2433,6 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="EndUser_LoginDetails">
-            <EntityTypeMapping TypeName="ManagementTool.EndUser_LoginDetails">
-              <MappingFragment StoreEntitySet="EndUser_LoginDetails">
-                <ScalarProperty Name="LoginLocation" ColumnName="LoginLocation" />
-                <ScalarProperty Name="UserIp" ColumnName="UserIp" />
-                <ScalarProperty Name="SessionDuration" ColumnName="SessionDuration" />
-                <ScalarProperty Name="LogOut" ColumnName="LogOut" />
-                <ScalarProperty Name="LoginDate" ColumnName="LoginDate" />
-                <ScalarProperty Name="SessionId" ColumnName="SessionId" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="LID" ColumnName="LID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Mailer_Details">
             <EntityTypeMapping TypeName="ManagementTool.Mailer_Details">
               <MappingFragment StoreEntitySet="Mailer_Details">
@@ -2902,79 +2521,6 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="LOGIN_DETAIL">
-            <EntityTypeMapping TypeName="ManagementTool.LOGIN_DETAIL">
-              <MappingFragment StoreEntitySet="LOGIN_DETAIL">
-                <ScalarProperty Name="LoginLocation" ColumnName="LoginLocation" />
-                <ScalarProperty Name="UserIp" ColumnName="UserIp" />
-                <ScalarProperty Name="SessionDuration" ColumnName="SessionDuration" />
-                <ScalarProperty Name="LogOut" ColumnName="LogOut" />
-                <ScalarProperty Name="LoginDate" ColumnName="LoginDate" />
-                <ScalarProperty Name="SessionId" ColumnName="SessionId" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="LID" ColumnName="LID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="vw_BucketbyLCDASAP">
-            <EntityTypeMapping TypeName="ManagementTool.vw_BucketbyLCDASAP">
-              <MappingFragment StoreEntitySet="vw_BucketbyLCDASAP">
-                <ScalarProperty Name="SubAreaId" ColumnName="SubAreaId" />
-                <ScalarProperty Name="AreaId" ColumnName="AreaId" />
-                <ScalarProperty Name="DivisionId" ColumnName="DivisionId" />
-                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
-                <ScalarProperty Name="LocationId" ColumnName="LocationId" />
-                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
-                <ScalarProperty Name="PhaseId" ColumnName="PhaseId" />
-                <ScalarProperty Name="SubPhaseId" ColumnName="SubPhaseId" />
-                <ScalarProperty Name="GenerationDate" ColumnName="GenerationDate" />
-                <ScalarProperty Name="GeneratedUserName" ColumnName="GeneratedUserName" />
-                <ScalarProperty Name="GeneratedBy" ColumnName="GeneratedBy" />
-                <ScalarProperty Name="BucketName" ColumnName="BucketName" />
-                <ScalarProperty Name="BucketId" ColumnName="BucketId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="vw_PhasebyLCDASAP">
-            <EntityTypeMapping TypeName="ManagementTool.vw_PhasebyLCDASAP">
-              <MappingFragment StoreEntitySet="vw_PhasebyLCDASAP">
-                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
-                <ScalarProperty Name="SubAreaId" ColumnName="SubAreaId" />
-                <ScalarProperty Name="AreaId" ColumnName="AreaId" />
-                <ScalarProperty Name="DivisionId" ColumnName="DivisionId" />
-                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
-                <ScalarProperty Name="LocationId" ColumnName="LocationId" />
-                <ScalarProperty Name="PhaseName" ColumnName="PhaseName" />
-                <ScalarProperty Name="PhaseId" ColumnName="PhaseId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="vw_ProjectListing">
-            <EntityTypeMapping TypeName="ManagementTool.vw_ProjectListing">
-              <MappingFragment StoreEntitySet="vw_ProjectListing">
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="GeneratedDate" ColumnName="GeneratedDate" />
-                <ScalarProperty Name="GeneratedByName" ColumnName="GeneratedByName" />
-                <ScalarProperty Name="GeneratedBy" ColumnName="GeneratedBy" />
-                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
-                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
-                <ScalarProperty Name="ProjectTypeName" ColumnName="ProjectTypeName" />
-                <ScalarProperty Name="ProjectType" ColumnName="ProjectType" />
-                <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
-                <ScalarProperty Name="SubAreaName" ColumnName="SubAreaName" />
-                <ScalarProperty Name="SubAreaId" ColumnName="SubAreaId" />
-                <ScalarProperty Name="AreaName" ColumnName="AreaName" />
-                <ScalarProperty Name="AreaId" ColumnName="AreaId" />
-                <ScalarProperty Name="DivisionName" ColumnName="DivisionName" />
-                <ScalarProperty Name="DivisionId" ColumnName="DivisionId" />
-                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
-                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
-                <ScalarProperty Name="LocationName" ColumnName="LocationName" />
-                <ScalarProperty Name="LocationId" ColumnName="LocationId" />
-                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="vw_SAPLoginHistory">
             <EntityTypeMapping TypeName="ManagementTool.vw_SAPLoginHistory">
               <MappingFragment StoreEntitySet="vw_SAPLoginHistory">
@@ -3013,34 +2559,6 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
                 <ScalarProperty Name="SessionId" ColumnName="SessionId" />
                 <ScalarProperty Name="UID" ColumnName="UID" />
                 <ScalarProperty Name="LID" ColumnName="LID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="vw_SubAreaListByDivision">
-            <EntityTypeMapping TypeName="ManagementTool.vw_SubAreaListByDivision">
-              <MappingFragment StoreEntitySet="vw_SubAreaListByDivision">
-                <ScalarProperty Name="AreaName" ColumnName="AreaName" />
-                <ScalarProperty Name="AreaId" ColumnName="AreaId" />
-                <ScalarProperty Name="DivisionId" ColumnName="DivisionId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="vw_SubPhasebyLCDASAP">
-            <EntityTypeMapping TypeName="ManagementTool.vw_SubPhasebyLCDASAP">
-              <MappingFragment StoreEntitySet="vw_SubPhasebyLCDASAP">
-                <ScalarProperty Name="PhaseId" ColumnName="PhaseId" />
-                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
-                <ScalarProperty Name="SubAreaId" ColumnName="SubAreaId" />
-                <ScalarProperty Name="AreaId" ColumnName="AreaId" />
-                <ScalarProperty Name="DivisionId" ColumnName="DivisionId" />
-                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
-                <ScalarProperty Name="LocationId" ColumnName="LocationId" />
-                <ScalarProperty Name="GeneratedDate" ColumnName="GeneratedDate" />
-                <ScalarProperty Name="GeneratedBy" ColumnName="GeneratedBy" />
-                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
-                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
-                <ScalarProperty Name="SubPhaseName" ColumnName="SubPhaseName" />
-                <ScalarProperty Name="SubPhaseId" ColumnName="SubPhaseId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3093,6 +2611,20 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
                 <ScalarProperty Name="AreaName" ColumnName="AreaName" />
                 <ScalarProperty Name="DivisionId" ColumnName="DivisionId" />
                 <ScalarProperty Name="AreaId" ColumnName="AreaId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EndUser_LoginDetails">
+            <EntityTypeMapping TypeName="ManagementTool.EndUser_LoginDetails">
+              <MappingFragment StoreEntitySet="EndUser_LoginDetails">
+                <ScalarProperty Name="LoginLocation" ColumnName="LoginLocation" />
+                <ScalarProperty Name="UserIp" ColumnName="UserIp" />
+                <ScalarProperty Name="SessionDuration" ColumnName="SessionDuration" />
+                <ScalarProperty Name="LogOut" ColumnName="LogOut" />
+                <ScalarProperty Name="LoginDate" ColumnName="LoginDate" />
+                <ScalarProperty Name="SessionId" ColumnName="SessionId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="LID" ColumnName="LID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
