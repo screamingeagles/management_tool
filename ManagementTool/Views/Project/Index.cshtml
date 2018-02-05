@@ -180,6 +180,33 @@
 
         }
 
+        ProjectsListByCompany = function (param) {
+            if (param.value == "") { return; }
+
+            call_toggle();
+
+            $("#tblList > tbody").empty();
+
+            var postedContent = { CompanyId: param.value }
+
+            $.ajax({
+                type: "POST",
+                url: "/Project/GetPhaseByProject",
+                data: postedContent,
+                success: function (message) {
+                    filltable(message.data);
+                },
+                error: function (xerr) {
+                    /* $('#txteng').val("err : " +xerr);*/
+                }
+            });
+
+            setTimeout(call_toggle, 500);
+
+        }
+
+
+
         FillPhaseByCompany = function (param) {
             if (param.value == "") { return; }
 
@@ -318,30 +345,7 @@
 
         }
 
-        GetPhaseListByProject = function (param) {
-            if (param.value == "") { return; }
-
-            call_toggle();
-
-            $("#tblList > tbody").empty();
-
-            var postedContent = { ProjectId: param.value }
-
-            $.ajax({
-                type: "POST",
-                url: "/Phase/GetPhaseByProject",
-                data: postedContent,
-                success: function (message) {
-                    filltable(message.data);
-                },
-                error: function (xerr) {
-                    /* $('#txteng').val("err : " +xerr);*/
-                }
-            });
-
-            setTimeout(call_toggle, 500);
-
-        }
+        
     });
 
     function filltable(obj) {

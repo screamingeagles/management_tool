@@ -445,6 +445,27 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_SearchSource' does not h
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'db_management_tool.dbo.vw_SessionUser' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vw_SessionUser">
+          <Key>
+            <PropertyRef Name="LID" />
+            <PropertyRef Name="UserName" />
+            <PropertyRef Name="UserCreated" />
+            <PropertyRef Name="IsActive" />
+          </Key>
+          <Property Name="LID" Type="int" Nullable="false" />
+          <Property Name="UID" Type="int" Nullable="false" />
+          <Property Name="SessionId" Type="nvarchar" MaxLength="250" />
+          <Property Name="LoginDate" Type="datetime" />
+          <Property Name="LogOut" Type="datetime" />
+          <Property Name="SessionDuration" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="UserIp" Type="nvarchar" MaxLength="20" />
+          <Property Name="LoginLocation" Type="nvarchar" MaxLength="250" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="UserEmail" Type="nvarchar" MaxLength="250" />
+          <Property Name="LastLogin" Type="datetime" />
+          <Property Name="UserCreated" Type="datetime" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vw_Task_Details">
@@ -896,6 +917,23 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
     [vw_SearchSource].[TableCol] AS [TableCol]
     FROM [dbo].[vw_SearchSource] AS [vw_SearchSource]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="vw_SessionUser" EntityType="Self.vw_SessionUser" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_SessionUser].[LID] AS [LID], 
+    [vw_SessionUser].[UID] AS [UID], 
+    [vw_SessionUser].[SessionId] AS [SessionId], 
+    [vw_SessionUser].[LoginDate] AS [LoginDate], 
+    [vw_SessionUser].[LogOut] AS [LogOut], 
+    [vw_SessionUser].[SessionDuration] AS [SessionDuration], 
+    [vw_SessionUser].[UserIp] AS [UserIp], 
+    [vw_SessionUser].[LoginLocation] AS [LoginLocation], 
+    [vw_SessionUser].[UserName] AS [UserName], 
+    [vw_SessionUser].[UserEmail] AS [UserEmail], 
+    [vw_SessionUser].[LastLogin] AS [LastLogin], 
+    [vw_SessionUser].[UserCreated] AS [UserCreated], 
+    [vw_SessionUser].[IsActive] AS [IsActive]
+    FROM [dbo].[vw_SessionUser] AS [vw_SessionUser]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="vw_Task_Details" EntityType="Self.vw_Task_Details" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vw_Task_Details].[TaskId] AS [TaskId], 
@@ -1079,7 +1117,6 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
           <EntitySet Name="STATUS" EntityType="ManagementTool.STATUS" />
           <EntitySet Name="vw_SAPLoginHistory" EntityType="ManagementTool.vw_SAPLoginHistory" />
           <EntitySet Name="vw_SearchSource" EntityType="ManagementTool.vw_SearchSource" />
-          <EntitySet Name="vw_SessionUser" EntityType="ManagementTool.vw_SessionUser" />
           <EntitySet Name="vw_Task_Details" EntityType="ManagementTool.vw_Task_Details" />
           <AssociationSet Name="FK__AREA__DIVISION" Association="ManagementTool.FK__AREA__DIVISION">
             <End Role="C001_DIVISION" EntitySet="C001_DIVISION" />
@@ -1188,6 +1225,7 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
           <EntitySet Name="vw_ProjectsCountByArea" EntityType="ManagementTool.vw_ProjectsCountByArea" />
           <EntitySet Name="EndUser_LoginDetails" EntityType="ManagementTool.EndUser_LoginDetails" />
           <EntitySet Name="vw_ProjectsCountByCompany" EntityType="ManagementTool.vw_ProjectsCountByCompany" />
+          <EntitySet Name="vw_SessionUser" EntityType="ManagementTool.vw_SessionUser" />
           </EntityContainer>
         <ComplexType Name="SP_BUCKET_LIST_Result">
           <Property Type="Int32" Name="BucketId" Nullable="false" />
@@ -1647,28 +1685,6 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
           <Property Name="Names" Type="String" Nullable="false" MaxLength="2530" FixedLength="false" Unicode="true" />
           <Property Name="TableCol" Type="String" Nullable="false" MaxLength="7" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="vw_SessionUser">
-          <Key>
-            <PropertyRef Name="LID" />
-            <PropertyRef Name="UID" />
-            <PropertyRef Name="UserName" />
-            <PropertyRef Name="UserCreated" />
-            <PropertyRef Name="IsActive" />
-          </Key>
-          <Property Name="LID" Type="Int32" Nullable="false" />
-          <Property Name="UID" Type="Int32" Nullable="false" />
-          <Property Name="SessionId" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="LoginDate" Type="DateTime" Precision="3" />
-          <Property Name="LogOut" Type="DateTime" Precision="3" />
-          <Property Name="SessionDuration" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="UserIp" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="LoginLocation" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="UserName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="UserEmail" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="LastLogin" Type="DateTime" Precision="3" />
-          <Property Name="UserCreated" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-        </EntityType>
         <EntityType Name="vw_Task_Details">
           <Key>
             <PropertyRef Name="TaskId" />
@@ -2082,6 +2098,27 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
           <Property Name="CompanyId" Type="Int32" Nullable="false" />
           <Property Name="CompanyName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="ProjectCount" Type="Int32" />
+        </EntityType>
+        <EntityType Name="vw_SessionUser">
+          <Key>
+            <PropertyRef Name="LID" />
+            <PropertyRef Name="UserName" />
+            <PropertyRef Name="UserCreated" />
+            <PropertyRef Name="IsActive" />
+          </Key>
+          <Property Name="LID" Type="Int32" Nullable="false" />
+          <Property Name="UID" Type="Int32" Nullable="false" />
+          <Property Name="SessionId" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="LoginDate" Type="DateTime" Precision="3" />
+          <Property Name="LogOut" Type="DateTime" Precision="3" />
+          <Property Name="SessionDuration" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="UserIp" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="LoginLocation" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="UserEmail" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="LastLogin" Type="DateTime" Precision="3" />
+          <Property Name="UserCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -2604,6 +2641,25 @@ warning 6002: The table/view 'db_management_tool.dbo.vw_Task_Details' does not h
                 <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
                 <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
                 <ScalarProperty Name="LocationId" ColumnName="LocationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_SessionUser">
+            <EntityTypeMapping TypeName="ManagementTool.vw_SessionUser">
+              <MappingFragment StoreEntitySet="vw_SessionUser">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="UserCreated" ColumnName="UserCreated" />
+                <ScalarProperty Name="LastLogin" ColumnName="LastLogin" />
+                <ScalarProperty Name="UserEmail" ColumnName="UserEmail" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="LoginLocation" ColumnName="LoginLocation" />
+                <ScalarProperty Name="UserIp" ColumnName="UserIp" />
+                <ScalarProperty Name="SessionDuration" ColumnName="SessionDuration" />
+                <ScalarProperty Name="LogOut" ColumnName="LogOut" />
+                <ScalarProperty Name="LoginDate" ColumnName="LoginDate" />
+                <ScalarProperty Name="SessionId" ColumnName="SessionId" />
+                <ScalarProperty Name="UID" ColumnName="UID" />
+                <ScalarProperty Name="LID" ColumnName="LID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

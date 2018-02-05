@@ -37,7 +37,6 @@
         <EntityTypeShape EntityType="ManagementTool.STATUS" Width="1.5" PointX="11.75" PointY="5.75" />
         <EntityTypeShape EntityType="ManagementTool.vw_SAPLoginHistory" Width="2.125" PointX="17.5" PointY="10.25" />
         <EntityTypeShape EntityType="ManagementTool.vw_SearchSource" Width="2.25" PointX="17.5" PointY="13.125" />
-        <EntityTypeShape EntityType="ManagementTool.vw_SessionUser" Width="2.5" PointX="16.75" PointY="3.75" />
         <EntityTypeShape EntityType="ManagementTool.vw_Task_Details" Width="1.5" PointX="16.75" PointY="16.75" />
         <AssociationConnector Association="ManagementTool.FK__AREA__DIVISION" />
         <AssociationConnector Association="ManagementTool.FK__DIVISION__PROJECT" />
@@ -68,6 +67,7 @@
         <EntityTypeShape EntityType="ManagementTool.vw_ProjectsCountByArea" Width="2.125" PointX="17.875" PointY="1" />
         <EntityTypeShape EntityType="ManagementTool.EndUser_LoginDetails" Width="2.125" PointX="8.375" PointY="4.75" />
         <EntityTypeShape EntityType="ManagementTool.vw_ProjectsCountByCompany" Width="2.75" PointX="17.5" PointY="8.125" />
+        <EntityTypeShape EntityType="ManagementTool.vw_SessionUser" Width="2.625" PointX="16.375" PointY="3.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
