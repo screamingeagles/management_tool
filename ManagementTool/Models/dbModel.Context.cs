@@ -63,6 +63,7 @@ namespace ManagementTool.Models
         public virtual DbSet<vw_Task_Details> vw_Task_Details { get; set; }
         public virtual DbSet<vw_ProjectsCountByArea> vw_ProjectsCountByArea { get; set; }
         public virtual DbSet<EndUser_LoginDetails> EndUser_LoginDetails { get; set; }
+        public virtual DbSet<vw_ProjectsCountByCompany> vw_ProjectsCountByCompany { get; set; }
     
         public virtual ObjectResult<SP_BUCKET_LIST_Result> SP_BUCKET_LIST()
         {

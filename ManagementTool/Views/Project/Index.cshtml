@@ -1,94 +1,391 @@
 ﻿@model IEnumerable<ManagementTool.Models.C003_PROJECT>
 
 @{
+    int index = 1;
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<link href="/Content/css/plugins/toastr/toastr.min.css" rel="stylesheet">
+<br />
+<div class="row">
+    <br />
+    <div class="col-lg-12">
+        <button class="btn btn-sm btn-primary pull-left m-t-n-xs" type="button" onclick="newOnClick();"><strong>Add New Project</strong></button>
+    </div>
 
-<h2>Index</h2>
+    <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5 id="dvDetails">Filters for Project Listing</h5>
+                <div class="ibox-tools">
+                    <a class="collapse-link">
+                        <i class="fa fa-chevron-up"></i>
+                    </a>
+                    <a class="close-link">
+                        <i class="fa fa-times"></i>
+                    </a>
+                </div>
+            </div>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.ProjectName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.StartDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EndDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.GeneratedDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsActive)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.C001_DIVISION.DivisionName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.C002_AREA.AreaName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EndUser.UserName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.C011_COMPANY.CompanyName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.C010_LOCATION.LocationName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.C013_PROJECT_TYPE.ProjectType)
-        </th>
-        <th></th>
-    </tr>
+            <div class="ibox-content" id="ibox1">
+                <div class="sk-spinner sk-spinner-cube-grid">
+                    <div class="sk-cube"></div>
+                    <div class="sk-cube"></div>
+                    <div class="sk-cube"></div>
+                    <div class="sk-cube"></div>
+                    <div class="sk-cube"></div>
+                    <div class="sk-cube"></div>
+                    <div class="sk-cube"></div>
+                    <div class="sk-cube"></div>
+                    <div class="sk-cube"></div>
+                </div>
+                <div class="table-responsive">
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.ProjectName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.StartDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EndDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.GeneratedDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsActive)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.C001_DIVISION.DivisionName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.C002_AREA.AreaName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EndUser.UserName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.C011_COMPANY.CompanyName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.C010_LOCATION.LocationName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.C013_PROJECT_TYPE.ProjectType)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ProjectId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ProjectId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ProjectId })
-        </td>
-    </tr>
-}
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Select Location </label>
+                        <div class="col-lg-10">
+                            @Html.DropDownList("LocationId", null, "Select Location", htmlAttributes: new { @class = "form-control m-b", onchange = "GetCompanyByLocation(this);" })
+                        </div>
+                    </div>
 
-</table>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Select Company</label>
+                        <div class="col-lg-10">
+                            @Html.DropDownList("CompanyId", null, "Select Company", htmlAttributes: new { @class = "form-control m-b", onchange = "ProjectsListByCompany(this);" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Select Division </label>
+                        <div class="col-lg-10">
+                            @Html.DropDownList("DivisionId", null, "Select Division", htmlAttributes: new { @class = "form-control m-b", onchange = "GetAreaByDivision(this);" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Select Area </label>
+                        <div class="col-lg-10">
+                            @Html.DropDownList("AreaId", null, "Select Area", htmlAttributes: new { @class = "form-control m-b", onchange = "FillSubArea(this);" })
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Complete Projects Listing</h5>
+                <div class="ibox-tools">
+                    <a class="collapse-link">
+                        <i class="fa fa-chevron-up"></i>
+                    </a>
+                    <a class="close-link">
+                        <i class="fa fa-times"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="ibox-content">
+                <div class="table-responsive">
+                    <table class="table table-striped" id="tblList">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Location        </th>
+                                <th>Company         </th>
+                                <th>Division Name   </th>
+                                <th>Area Name       </th>
+                                <th>Project Name    </th>
+                                <th>Status          </th>
+                                <th>Generated By    </th>
+                                <th>Generated Date  </th>
+                                <th>Action          </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@index                                              </td>
+                                    <td><small>@item.C010_LOCATION.LocationName     </small></td>
+                                    <td><small>@item.C011_COMPANY.CompanyName       </small></td>
+                                    <td><small>@item.C001_DIVISION.DivisionName     </small></td>
+                                    <td><small>@item.C002_AREA.AreaName             </small></td>
+                                    <td>@item.ProjectName                                   </td>
+                                    <td>
+                                        @if (item.IsActive == true) {
+                                            WriteLiteral("<i class='fa fa-check-square text-navy'></i>");
+                                        }
+                                        else {
+                                            WriteLiteral("<i class='fa fa-square text-navy'></i>");
+                                        }
+                                    </td>
+                                    <td>@Html.DisplayFor(modelItem => item.EndUser.UserName)                </td>
+                                    <td>@item.GeneratedDate.ToString("MMM dd, yyyy")                        </td>
+                                    <td>
+                                        @Html.ActionLink("Edit", "Edit", new { id = item.ProjectId }) |
+                                        @Html.ActionLink("Details", "Details", new { id = item.ProjectId }) |
+                                        @Html.ActionLink("Delete", "Delete", new { id = item.ProjectId })
+                                    </td>
+                                </tr>
+                                index = index + 1;
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--script src="~/Scripts/js/pages/project.js"></script-->
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        GetCompanyByLocation = function (param) {
+            if (param.value == "") { return; }
+
+            call_toggle();
+
+            $("#CompanyId").empty();
+            $("#tblList > tbody").empty();
+
+            var postedContent = { LocId: param.value }
+
+            $.ajax({
+                type: "POST",
+                url: "/Project/GetCompanyByLocation",
+                data: postedContent,
+                success: function (message) {
+
+                    if (message.data.length > 0) {
+                        $('#CompanyId').append($('<option>', { value: '0', text: 'Select Company', selected: true }));
+                        for (var i = 0; i < message.data.length; i++) {
+                            $('#CompanyId').append($('<option>', { value: message.data[i].CompanyId, text: message.data[i].CompanyName + ' (' + message.data[i].ProjectCount + ')' }));
+                        } // end of for loop
+                    }
+                    // end of if for length
+                },
+                error: function (xerr) {
+                    /* $('#txteng').val("err : " +xerr);*/
+                }
+            });
+
+            setTimeout(call_toggle, 500);
+
+        }
+
+        FillPhaseByCompany = function (param) {
+            if (param.value == "") { return; }
+
+            call_toggle();
+
+            $("#tblList > tbody").empty();
+
+            var postedContent = { CompanyId: param.value }
+
+            $.ajax({
+                type: "POST",
+                url: "/Phase/GetPhaseByCompany",
+                data: postedContent,
+                success: function (message) {
+                    filltable(message.data);
+                },
+                error: function (xerr) {
+                    /* $('#txteng').val("err : " +xerr);*/
+                }
+            });
+
+            setTimeout(call_toggle, 500);
+
+        }
+
+
+        GetAreaByDivision = function (param) {
+            if (param.value == "") { return; }
+
+            call_toggle();
+
+            $("#AreaId").empty();
+            $("#tblList > tbody").empty();
+
+            var postedContent = { DivId: param.value }
+
+            $.ajax({
+                type: "POST",
+                url: "/Phase/GetAreaByDivision",
+                data: postedContent,
+                success: function (message) {
+
+                    if (message.data.length > 0) {
+                        $('#AreaId').append($('<option>', { value: '0', text: 'Select Area', selected: true }));
+                        for (var i = 0; i < message.data.length; i++) {
+                            $('#AreaId').append($('<option>', { value: message.data[i].AreaId, text: message.data[i].AreaName }));
+                        } // end of for loop
+                    }
+                    // end of if for length
+                },
+                error: function (xerr) {
+                    /* $('#txteng').val("err : " +xerr);*/
+                }
+            });
+
+            setTimeout(call_toggle, 500);
+
+        }
+
+        GetSubAreaByArea = function (param) {
+            if (param.value == "") { return; }
+
+            call_toggle();
+
+            $("#SubAreaId").empty();
+            $("#tblList > tbody").empty();
+
+            var postedContent = { SelectedArea: param.value }
+
+            $.ajax({
+                type: "POST",
+                url: "/Project/GetSubAreaByArea",
+                data: postedContent,
+                success: function (message) {
+                    if (message.data.length > 0) {
+                        $('#SubAreaId').append($('<option>', { value: '0', text: 'Select Sub Area', selected: true }));
+                        for (var i = 0; i < message.data.length; i++) {
+                            $('#SubAreaId').append($('<option>', { value: message.data[i].SubAreaId, text: message.data[i].SubAreaName }));
+                        } // end of for loop
+                    }
+                    else {
+                        $('#SubAreaId').append($('<option>', { value: '', text: 'No Sub Area', selected: true }));
+                        $('#SubAreaId').append($('<option>', { value: '0', text: 'Select To Load Project For Area' }));
+                    }
+                    // end of if for length
+                },
+                error: function (xerr) {
+                    /* $('#txteng').val("err : " +xerr);*/
+                }
+            });
+
+            setTimeout(call_toggle, 500);
+
+        }
+
+        GetPhaseListBySubArea = function (param) {
+            var AreaId = $('#AreaId').find(":selected").val();
+
+            var sarea = (param == null) ? 0 : param.value;
+            if (AreaId == "") { return; }
+
+            call_toggle();
+
+            $("#ProjectId").empty();
+            $("#tblList > tbody").empty();
+
+            var postedContent = { Area: AreaId, SubArea: sarea }
+
+            //alert(AreaId +  " -- " + postedContent.SubArea );
+            $.ajax({
+                type: "POST",
+                url: "/Phase/GetPhaseBySubArea",
+                data: postedContent,
+                success: function (message) {
+
+                    if (message.data.length > 0) {
+                        $('#ProjectId').append($('<option>', { value: '0', text: 'Select Project', selected: true }));
+                        for (var i = 0; i < message.data.length; i++) {
+                            $('#ProjectId').append($('<option>', { value: message.data[i].ProjectId, text: message.data[i].ProjectName }));
+                        } // end of for loop
+                    }
+                    // end of if for length
+
+
+                    filltable(message.list);
+
+                    setTimeout(call_toggle, 500);
+                },
+                error: function (xerr) {
+                    /* $('#txteng').val("err : " +xerr);*/
+                    setTimeout(call_toggle, 500);
+                }
+            });
+
+
+
+        }
+
+        GetPhaseListByProject = function (param) {
+            if (param.value == "") { return; }
+
+            call_toggle();
+
+            $("#tblList > tbody").empty();
+
+            var postedContent = { ProjectId: param.value }
+
+            $.ajax({
+                type: "POST",
+                url: "/Phase/GetPhaseByProject",
+                data: postedContent,
+                success: function (message) {
+                    filltable(message.data);
+                },
+                error: function (xerr) {
+                    /* $('#txteng').val("err : " +xerr);*/
+                }
+            });
+
+            setTimeout(call_toggle, 500);
+
+        }
+    });
+
+    function filltable(obj) {
+        var innerhtml = "";
+
+        for (var i = 0; i < obj.length; i++) {
+            var res = obj[i];
+            innerhtml += "<tr>" +
+                            "<td>" + (i + 1) + "</td>" +
+                            "<td>" + res.ProjectName + "</td>" +
+                            "<td>" + res.PhaseName + "</td>" +
+                            "<td>" + parseJsonDate(res.StartDate) + "</td>" +
+                            "<td>" + parseJsonDate(res.EndDate) + "</td>" +
+                            "<td>" + ((res.IsActive == true) ? "<i class='fa fa-check-square text-navy'></i>" : "<i class='fa fa-square text-navy'></i>") + "</td>" +
+                            "<td>" + res.UserName + "</td>" +
+                            "<td>" + parseJsonDate(res.GeneratedDate) + "</td>" +
+                            "<td>" +
+                                "<a href='/Phase/Edit/" + res.PhaseId + "'>Edit    </a> |" +
+                                "<a href='/Phase/Details/" + res.PhaseId + "'>Details </a> |" +
+                                "<a href='/Phase/Delete/" + res.PhaseId + "'>Delete  </a>" +
+                            "</td>" +
+                         "</tr>";
+
+        }
+        // end of for loop
+
+        $("#tblList > tbody").append(innerhtml);
+    }
+
+    function call_toggle() {
+        $('#ibox1').toggleClass('sk-loading');
+    }
+
+    function parseJsonDate(jsonDateString) {
+        var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+        jsonDateString = jsonDateString.replace('/Date(', '');
+        jsonDateString = jsonDateString.replace(')/', '');
+        var date = new Date(parseInt(jsonDateString));
+        var day = date.getDate();
+        var monthIndex = date.getMonth();
+        var year = date.getFullYear();
+        return day + "-" + monthNames[monthIndex] + "-" + year;
+    }
+
+
+</script>

@@ -788,6 +788,9 @@
     <Compile Include="Models\vw_ProjectsCountByArea.cs">
       <DependentUpon>dbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\vw_ProjectsCountByCompany.cs">
+      <DependentUpon>dbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\vw_SAPLoginHistory.cs">
       <DependentUpon>dbModel.tt</DependentUpon>
     </Compile>

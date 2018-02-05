@@ -14,10 +14,28 @@ namespace ManagementTool.Controllers
     {
         private ProjectEntities db = new ProjectEntities();
 
+        [HttpPost]
+        public JsonResult GetCompanyByLocation(int LocId) {
+            using (ProjectEntities db = new ProjectEntities()) {
+                var q = (from c in db.vw_ProjectsCountByCompany
+                         where (c.LocationId == LocId) 
+                         select new { c.CompanyId, c.CompanyName, c.ProjectCount }).ToList();
+                return Json(new { data = q });
+            }
+        }
+
+
+
+
         // GET: Project
         public ActionResult Index()
         {
-            var c003_PROJECT = db.C003_PROJECT.Include(c => c.C001_DIVISION).Include(c => c.C002_AREA).Include(c => c.EndUser).Include(c => c.C011_COMPANY).Include(c => c.C010_LOCATION).Include(c => c.C013_PROJECT_TYPE);
+            ViewBag.LocationId  = new SelectList(db.C010_LOCATION.Where(l => l.IsActive == true).OrderBy(l => l.LocationName)   , "LocationId", "LocationName");
+            ViewBag.CompanyId   = new SelectList(db.C011_COMPANY.Take(0)                                                        , "CompanyId", "CompanyName");
+            ViewBag.DivisionId  = new SelectList(db.C001_DIVISION.Where(d => d.IsActive == true).OrderBy(d => d.DivisionName)   , "DivisionId", "DivisionName");
+            ViewBag.AreaId      = new SelectList(db.C002_AREA.Take(0)                                                           , "AreaId", "AreaName");
+
+            var c003_PROJECT    = db.C003_PROJECT.Include(c => c.C001_DIVISION).Include(c => c.C002_AREA).Include(c => c.EndUser).Include(c => c.C011_COMPANY).Include(c => c.C010_LOCATION).Include(c => c.C013_PROJECT_TYPE);
             return View(c003_PROJECT.ToList());
         }
 
