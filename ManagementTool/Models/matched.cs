@@ -12,16 +12,10 @@ namespace ManagementTool.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class C024_participants
+    public partial class matched
     {
-        public int PId { get; set; }
-        public int TaskId { get; set; }
-        public int UserId { get; set; }
-        public string PDesc { get; set; }
-        public System.DateTime CreatedDate { get; set; }
-        public int CreatedBy { get; set; }
-    
-        public virtual C005_TASK_DATA C005_TASK_DATA { get; set; }
-        public virtual EndUser EndUser { get; set; }
+        public int TID { get; set; }
+        public string Users { get; set; }
+        public string Company { get; set; }
     }
 }

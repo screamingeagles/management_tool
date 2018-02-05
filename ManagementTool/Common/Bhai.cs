@@ -264,18 +264,7 @@ namespace ManagementTool.Common
 
 
 
-        public static string getSubArea         (int SubAreaId)                             {            
 
-            if (SubAreaId == 0) { return "N/A"; }
-            using (ProjectEntities db = new ProjectEntities())
-            {
-                var q = (from e in db.C003_SUB_AREA
-                         where (e.SubAreaId == SubAreaId)
-                         select e.SubAreaName).FirstOrDefault();
-                return q.ToString();
-            }
-            
-        }
 
         public static string getProjectType     (int ProjectTypeId)                         
         {
@@ -291,45 +280,6 @@ namespace ManagementTool.Common
 
         }
 
-        public static string getSubPhase        (int SubPhaseId)                            
-        {
-
-            if (SubPhaseId == 0) { return "N/A"; }
-            using (ProjectEntities db = new ProjectEntities())
-            {
-                var q = (from e in db.C006_SubPhase
-                         where (e.SubPhaseId == SubPhaseId)
-                         select e.SubPhaseName).FirstOrDefault();
-                return q.ToString();
-            }
-
-        }
-
-
-        public static string GetBucketDetail(int BucketId)
-        {
-
-            if (BucketId == 0) { return "N/A"; }
-            using (ProjectEntities db = new ProjectEntities())
-            {
-                var q = (from b  in db.C007_BUCKET
-                         join p  in db.C004_PROJECT     on b.ProjectId  equals p.ProjectId
-                         join ph in db.C005_PHASE       on b.PhaseId    equals ph.PhaseId
-                         join sp in db.C006_SubPhase    on b.SubPhaseId equals sp.SubPhaseId
-                         into jointable from z in jointable.DefaultIfEmpty()
-                         where (b.IsActive.Equals(true)) && (b.BucketId == BucketId)
-                         select new {
-                             ProjectName = p.ProjectName,
-                             ProjectId = p.ProjectId,
-                             PhaseName = ph.PhaseName,
-                             PhaseId = ph.PhaseId,
-                             SubPhaseName = (z.SubPhaseName == null) ? "" : z.SubPhaseName
-                         }).FirstOrDefault();
-
-                return q.ProjectName + "(" + q.ProjectId + ") >> " + q.PhaseName + "(" + q.PhaseId + ") >> " + q.SubPhaseName;
-            }
-
-        }
 
         public static int                       SaveStatsImport       (List<STATS_TABLE_LOCAL> l) {
             int result = 0;

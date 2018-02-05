@@ -12,16 +12,18 @@ namespace ManagementTool.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class C003_SUB_AREA
+    public partial class C004_PHASE
     {
-        public int SubAreaId { get; set; }
-        public int AreaId { get; set; }
-        public string SubAreaName { get; set; }
-        public int GeneratedBy { get; set; }
+        public int PhaseId { get; set; }
+        public int ProjectId { get; set; }
+        public string PhaseName { get; set; }
+        public System.DateTime StartDate { get; set; }
+        public System.DateTime EndDate { get; set; }
+        public bool IsActive { get; set; }
         public System.DateTime GeneratedDate { get; set; }
-        public bool AreaActive { get; set; }
+        public int GeneratedBy { get; set; }
     
-        public virtual C002_AREA C002_AREA { get; set; }
+        public virtual C003_PROJECT C003_PROJECT { get; set; }
         public virtual EndUser EndUser { get; set; }
     }
 }

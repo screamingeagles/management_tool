@@ -134,6 +134,7 @@ function newOnClick() {
     window.location.href = "/Project/Create?div=" + selDivisionId + "&area=" + selAreaId + "&sa=" + selSubAreaId + "&LocId=" + selLocId + "&CompId=" + selCompId;
 }
 
+// this has to be removed
 function FillProjectsList(obj) {
     var selDiv = $('#DivisionId').find(":selected").val();
     var selArea = $('#AreaId').find(":selected").val();

@@ -18,7 +18,7 @@ namespace ManagementTool.Models
         public C001_DIVISION()
         {
             this.C002_AREA = new HashSet<C002_AREA>();
-            this.C004_PROJECT = new HashSet<C004_PROJECT>();
+            this.C003_PROJECT = new HashSet<C003_PROJECT>();
         }
     
         public int DivisionId { get; set; }
@@ -29,8 +29,8 @@ namespace ManagementTool.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<C002_AREA> C002_AREA { get; set; }
-        public virtual EndUser EndUser { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<C004_PROJECT> C004_PROJECT { get; set; }
+        public virtual ICollection<C003_PROJECT> C003_PROJECT { get; set; }
+        public virtual EndUser EndUser { get; set; }
     }
 }

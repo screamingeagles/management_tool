@@ -17,7 +17,7 @@ namespace ManagementTool.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public C011_COMPANY()
         {
-            this.C004_PROJECT = new HashSet<C004_PROJECT>();
+            this.C003_PROJECT = new HashSet<C003_PROJECT>();
         }
     
         public int CompanyId { get; set; }
@@ -28,6 +28,6 @@ namespace ManagementTool.Models
         public bool IsActive { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<C004_PROJECT> C004_PROJECT { get; set; }
+        public virtual ICollection<C003_PROJECT> C003_PROJECT { get; set; }
     }
 }

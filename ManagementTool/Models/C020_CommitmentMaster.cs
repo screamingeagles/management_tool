@@ -27,8 +27,8 @@ namespace ManagementTool.Models
         public Nullable<System.DateTime> GeneratedDate { get; set; }
         public Nullable<bool> IsActive { get; set; }
     
-        public virtual EndUser EndUser { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<C021_CommimentDetails> C021_CommimentDetails { get; set; }
+        public virtual EndUser EndUser { get; set; }
     }
 }

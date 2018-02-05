@@ -21,6 +21,6 @@ namespace ManagementTool.Models
         public System.DateTime CreatedDate { get; set; }
         public int CreatedBy { get; set; }
     
-        public virtual C004_PROJECT C004_PROJECT { get; set; }
+        public virtual C003_PROJECT C003_PROJECT { get; set; }
     }
 }

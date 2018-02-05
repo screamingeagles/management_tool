@@ -17,7 +17,7 @@ namespace ManagementTool.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public C015_STATUS()
         {
-            this.C008_TASK_DATA = new HashSet<C008_TASK_DATA>();
+            this.C005_TASK_DATA = new HashSet<C005_TASK_DATA>();
         }
     
         public int StatusId { get; set; }
@@ -27,6 +27,6 @@ namespace ManagementTool.Models
         public System.DateTime TaskCreatedDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<C008_TASK_DATA> C008_TASK_DATA { get; set; }
+        public virtual ICollection<C005_TASK_DATA> C005_TASK_DATA { get; set; }
     }
 }

@@ -21,6 +21,6 @@ namespace ManagementTool.Models
         public int CreatedBy { get; set; }
         public bool IsActive { get; set; }
     
-        public virtual C008_TASK_DATA C008_TASK_DATA { get; set; }
+        public virtual C005_TASK_DATA C005_TASK_DATA { get; set; }
     }
 }

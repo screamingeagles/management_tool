@@ -90,7 +90,7 @@ namespace ManagementTool.Controllers
             List<commitment_service> cs = commitment_service.GetUserCommitment(Userid);
 
             ViewBag.UserName            = UserIdentity.UserName;
-            ViewBag.ProjectId           = new SelectList(db.C004_PROJECT            .Where(p => p.IsActive == true).OrderBy(p => p.ProjectName     ), "ProjectId", "ProjectName");
+            ViewBag.ProjectId           = new SelectList(db.C003_PROJECT            .Where(p => p.IsActive == true).OrderBy(p => p.ProjectName     ), "ProjectId", "ProjectName");
             ViewBag.CommitmentId        = new SelectList(db.C020_CommitmentMaster   .Where(x => x.IsActive == true).OrderBy(x => x.CommitmentHeader), "CommitmentId", "CommitmentHeader");
             return View(cs);
         }

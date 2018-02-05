@@ -12,17 +12,18 @@ namespace ManagementTool.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class C008_TASK_DATA
+    public partial class C005_TASK_DATA
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public C008_TASK_DATA()
+        public C005_TASK_DATA()
         {
-            this.C016_CYCLED = new HashSet<C016_CYCLED>();
             this.C024_participants = new HashSet<C024_participants>();
+            this.C016_CYCLED = new HashSet<C016_CYCLED>();
         }
     
         public int TaskId { get; set; }
-        public int BucketId { get; set; }
+        public int ProjectId { get; set; }
+        public Nullable<int> PhaseId { get; set; }
         public string SName { get; set; }
         public string Description { get; set; }
         public Nullable<System.DateTime> StartDate { get; set; }
@@ -37,14 +38,13 @@ namespace ManagementTool.Models
         public int StatusId { get; set; }
         public bool IsActive { get; set; }
     
-        public virtual C007_BUCKET C007_BUCKET { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<C024_participants> C024_participants { get; set; }
         public virtual EndUser EndUser { get; set; }
         public virtual EndUser EndUser1 { get; set; }
         public virtual C015_STATUS C015_STATUS { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<C016_CYCLED> C016_CYCLED { get; set; }
         public virtual C014_TASK_TYPE C014_TASK_TYPE { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<C024_participants> C024_participants { get; set; }
     }
 }

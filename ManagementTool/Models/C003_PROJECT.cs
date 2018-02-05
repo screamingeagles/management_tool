@@ -12,13 +12,12 @@ namespace ManagementTool.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class C004_PROJECT
+    public partial class C003_PROJECT
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public C004_PROJECT()
+        public C003_PROJECT()
         {
-            this.C007_BUCKET = new HashSet<C007_BUCKET>();
-            this.C005_PHASE = new HashSet<C005_PHASE>();
+            this.C004_PHASE = new HashSet<C004_PHASE>();
             this.C019_Attachments = new HashSet<C019_Attachments>();
             this.C018_coOwners = new HashSet<C018_coOwners>();
         }
@@ -28,7 +27,6 @@ namespace ManagementTool.Models
         public int CompanyId { get; set; }
         public int DivisionId { get; set; }
         public int AreaId { get; set; }
-        public int SubAreaId { get; set; }
         public string ProjectName { get; set; }
         public int ProjectType { get; set; }
         public System.DateTime StartDate { get; set; }
@@ -40,12 +38,10 @@ namespace ManagementTool.Models
         public virtual C001_DIVISION C001_DIVISION { get; set; }
         public virtual C002_AREA C002_AREA { get; set; }
         public virtual EndUser EndUser { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<C007_BUCKET> C007_BUCKET { get; set; }
         public virtual C011_COMPANY C011_COMPANY { get; set; }
         public virtual C010_LOCATION C010_LOCATION { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<C005_PHASE> C005_PHASE { get; set; }
+        public virtual ICollection<C004_PHASE> C004_PHASE { get; set; }
         public virtual C013_PROJECT_TYPE C013_PROJECT_TYPE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<C019_Attachments> C019_Attachments { get; set; }

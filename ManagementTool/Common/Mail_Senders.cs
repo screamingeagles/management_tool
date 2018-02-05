@@ -53,7 +53,7 @@ namespace helpdesk.Common
 
                 using (ProjectEntities _db = new ProjectEntities())
                 {
-                    var q = (from m in _db.C008_TASK_DATA
+                    var q = (from m in _db.C005_TASK_DATA
                              join u in _db.EndUsers on m.OwnerId equals u.UID
                              join x in _db.EndUsers on m.GeneratedBy equals x.UID
                              where (m.TaskId == ServiceId)
